@@ -1,0 +1,74 @@
+classicReportTemplate ws-testimonials (
+    name: Website - Testimonials
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Quotes #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Quotes--carousel" data-ws-base-class="ws-Quotes">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <figure class="ws-Quote">
+              <span class="ws-Stars" data-r="#RATING#" aria-hidden="true"></span>
+              <blockquote>#QUOTE#</blockquote>
+              <figcaption><span class="ws-Avatar ws-Media" data-img="#IMAGE_URL#" data-initials="#NAME#"></span><span><b>#NAME#</b><small>#ROLE#</small></span></figcaption>
+            </figure>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Testimonials (Website Studio). What customers say. RATING is 0 to 5 stars (empty hides the stars). Columns (all optional): QUOTE, NAME, ROLE, IMAGE_URL, RATING.
+    }
+
+    templateOption quotes-wall (
+        name: Wall
+        group: @report/wsr-quotes-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Quotes--wall
+        }
+    )
+
+    templateOption quotes-spotlight (
+        name: Spotlight
+        group: @report/wsr-quotes-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Quotes--spotlight
+        }
+    )
+
+    templateOption auto-4 (
+        name: 4 Seconds
+        group: @report/wsr-autoplay
+        sequence: 10
+        appearance {
+            cssClasses: ws-Auto--4
+        }
+    )
+
+    templateOption auto-9 (
+        name: 9 Seconds
+        group: @report/wsr-autoplay
+        sequence: 20
+        appearance {
+            cssClasses: ws-Auto--9
+        }
+    )
+
+    templateOption auto-off (
+        name: Off
+        group: @report/wsr-autoplay
+        sequence: 30
+        appearance {
+            cssClasses: ws-Auto--off
+        }
+    )
+)

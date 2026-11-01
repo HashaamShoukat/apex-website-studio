@@ -1,0 +1,6 @@
+{
+  "name": "website-studio-build",
+  "private": true,
+  "description": "Builds the Website Studio APEXlang sources (cd apexlang; node _src/build.mjs) and runs the QA harness (qa/)",
+  "type": "module"
+}

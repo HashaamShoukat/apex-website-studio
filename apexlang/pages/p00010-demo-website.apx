@@ -1,0 +1,2169 @@
+page 10 (
+    name: Demo Website
+    alias: WEBSITE
+    title: Halcyon - Brand and Digital Design Studio
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Accent--tangerine
+            ws-Font--grotesk
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Halcyon
+        title: Halcyon
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'We design brands people *remember*.' as title,
+                       'Brand and digital studio - Lisbon' as subtitle,
+                       'Strategy, identity and websites for companies with something to say.' as text,
+                       'See our work' as button_label,
+                       '#work' as button_link,
+                       'Book a call' as button2_label,
+                       '#contact' as button2_link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Websites that *work* as hard as you do.' as title,
+                       'Websites' as subtitle,
+                       'Fast, accessible sites your team can update without calling a developer.' as text,
+                       'Our services' as button_label,
+                       '#services' as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'From first sketch to *global* launch.' as title,
+                       'Since 2011' as subtitle,
+                       'One senior team from kickoff to the day you go live, and after.' as text,
+                       'Start a project' as button_label,
+                       '#contact' as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            staticId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+        )
+    )
+
+    region clients (
+        name: Trusted by teams at
+        title: Trusted by teams at
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Northpeak' as name,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Orbital' as name,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Lumen Bank' as name,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Kestrel' as name,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Fieldnote' as name,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Vantage' as name,
+                       6 as sort_order
+                  from dual
+                union all
+                select 'Tidewater' as name,
+                       7 as sort_order
+                  from dual
+                union all
+                select 'Monogram' as name,
+                       8 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--center
+            ]
+            cssClasses: ws-Sec--small
+        }
+        advanced {
+            staticId: clients
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-logos
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 20
+            }
+        )
+    )
+
+    region about (
+        name: About
+        title: About us
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <div class="ws-Split">
+                  <div class="ws-Media" data-img="" role="img" aria-label="The Halcyon studio in Lisbon"></div>
+                  <div class="ws-Stack">
+                    <p class="ws-Eyebrow">About us</p>
+                    <h2 class="ws-Title">A small studio with a *long* memory.</h2>
+                    <p class="ws-Lead">We started Halcyon in 2011 in a two-desk room above a bakery in Alfama. Today we are 24 people across Lisbon and Porto, and we still sketch every idea on paper first.</p>
+                    <p class="ws-Muted">We work with a handful of clients at a time, so the people you meet in the pitch are the people who do the work.</p>
+                    <ul class="ws-Checks">
+                      <li>Senior team on every project</li>
+                      <li>Strategy, identity, web and product under one roof</li>
+                      <li>Carbon-neutral studio since 2020</li>
+                    </ul>
+                    <a class="ws-More" href="#team">Meet the team</a>
+                  </div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            staticId: about
+            customAttributes: data-menu="About"
+        }
+    )
+
+    region numbers (
+        name: Halcyon in numbers
+        title: Halcyon in numbers
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '140' as value,
+                       '+' as suffix,
+                       'Brands launched' as label,
+                       1 as sort_order
+                  from dual
+                union all
+                select '13' as value,
+                       null as suffix,
+                       'Years in business' as label,
+                       2 as sort_order
+                  from dual
+                union all
+                select '24' as value,
+                       null as suffix,
+                       'People in the studio' as label,
+                       3 as sort_order
+                  from dual
+                union all
+                select '98' as value,
+                       '%' as suffix,
+                       'Clients who come back' as label,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            staticId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUFFIX (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region services (
+        name: Services
+        title: Six disciplines, *one* team.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-compass' as icon,
+                       'Brand strategy' as title,
+                       'Positioning, naming and messaging grounded in interviews with your customers.' as text,
+                       null as link,
+                       null as link_label,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-magic' as icon,
+                       'Visual identity' as title,
+                       'Logos, type, colour and motion systems that hold up from favicon to billboard.' as text,
+                       null as link,
+                       null as link_label,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-code' as icon,
+                       'Websites' as title,
+                       'Fast, accessible marketing sites built on a CMS your team can actually use.' as text,
+                       '#work' as link,
+                       'See websites we built' as link_label,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'fa-object-group' as icon,
+                       'Product design' as title,
+                       'Interfaces and design systems for web and mobile apps, tested with real users.' as text,
+                       null as link,
+                       null as link_label,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'fa-line-chart' as icon,
+                       'Content and growth' as title,
+                       'Editorial calendars, campaign art and landing pages that convert.' as text,
+                       null as link,
+                       null as link_label,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'fa-users' as icon,
+                       'Workshops' as title,
+                       'Half-day sessions that get founders and teams aligned before a rebrand.' as text,
+                       null as link,
+                       null as link_label,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 60
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+        }
+        advanced {
+            staticId: services
+            customAttributes: data-menu="Services"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">What we do</p><p class="ws-Lead">Most of our clients start with one project and stay for three. Here is where we can help.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-features
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+        )
+    )
+
+    region vision (
+        name: Our vision
+        title: Our vision
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <div class="ws-Stack">
+                  <p class="ws-Eyebrow">Our vision</p>
+                  <p class="ws-Statement">Every company deserves a brand it can be *proud* to put its name on.</p>
+                </div>
+                <div class="ws-Pillars">
+                  <div><h3>Vision</h3><p>A world where small, honest companies look as good as the giants, and earn trust because of it.</p></div>
+                  <div><h3>Mission</h3><p>Give each client a senior team, a clear process and work that still feels right in ten years.</p></div>
+                  <div><h3>Values</h3><p>Say what we mean. Sweat the details. Leave every project, and every person, better than we found them.</p></div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 70
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--dark
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            staticId: vision
+        }
+    )
+
+    region work (
+        name: Work
+        title: Recent *projects*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Tidewater Ferries' as title,
+                       'Branding' as category,
+                       'Identity - 2024' as meta,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Lumen Bank' as title,
+                       'Web' as category,
+                       'Website - 2024' as meta,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Fieldnote' as title,
+                       'Product' as category,
+                       'App design - 2023' as meta,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Kestrel Coffee' as title,
+                       'Branding' as category,
+                       'Packaging - 2023' as meta,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Orbital Labs' as title,
+                       'Web' as category,
+                       'Website - 2023' as meta,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Vantage Hotels' as title,
+                       'Branding' as category,
+                       'Identity - 2022' as meta,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--split
+            ]
+        }
+        advanced {
+            staticId: work
+            customAttributes: data-menu="Work"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Selected work</p><p class="ws-Lead">Identities, websites and products from the last two years.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-gallery
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column META (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region process (
+        name: A clear process, no surprises
+        title: A clear process, *no* surprises
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Discover' as title,
+                       'Interviews, audits and a workshop to learn what makes you different.' as text,
+                       '2 weeks' as duration,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Define' as title,
+                       'A strategy and creative brief we both sign off before any design starts.' as text,
+                       '1 week' as duration,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Design' as title,
+                       'Concepts, rounds of refinement and testing with your customers.' as text,
+                       '4 to 6 weeks' as duration,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Deliver' as title,
+                       'Launch, guidelines, files and training so your team owns the result.' as text,
+                       '2 weeks' as duration,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 90
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+            ]
+        }
+        advanced {
+            staticId: process
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">How we work</p><p class="ws-Lead">Every project follows the same four stages, so you always know what happens next and what it costs.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-steps
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column DURATION (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region clients-say (
+        name: Clients who stayed
+        title: Clients who *stayed*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Halcyon understood our business faster than our own board did. The new brand paid for itself in the first quarter.' as quote,
+                       'Sofia Marques' as name,
+                       'CEO, Tidewater Ferries' as role,
+                       '5' as rating,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'They are the rare studio that is as good at listening as they are at design. Our site conversion doubled after launch.' as quote,
+                       'Daniel Brook' as name,
+                       'Head of Marketing, Lumen Bank' as role,
+                       '5' as rating,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Calm, honest and very talented. Three projects in and we would not go anywhere else.' as quote,
+                       'Priya Nair' as name,
+                       'Founder, Fieldnote' as role,
+                       '5' as rating,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 100
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            staticId: clients-say
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Customers</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+        )
+    )
+
+    region team (
+        name: Team
+        title: The people you will *actually* work with
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Ines Duarte' as name,
+                       'Founder and Creative Director' as role,
+                       'https://www.linkedin.com/' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Tomas Ferreira' as name,
+                       'Design Director' as role,
+                       'https://www.linkedin.com/' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Amara Okafor' as name,
+                       'Head of Strategy' as role,
+                       'https://www.linkedin.com/' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Leo Brandt' as name,
+                       'Engineering Lead' as role,
+                       'https://www.linkedin.com/' as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 110
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+            ]
+        }
+        advanced {
+            staticId: team
+            customAttributes: data-menu="Team"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Team</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-team
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region history (
+        name: Thirteen years, one desk at a time
+        title: Thirteen years, *one* desk at a time
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '2011' as year,
+                       'Founded in Alfama' as title,
+                       'Two designers, one borrowed printer and a first client who still works with us.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select '2015' as year,
+                       'First international client' as title,
+                       'A rebrand for a Berlin fintech took us beyond Portugal.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select '2019' as year,
+                       'Studio of the Year' as title,
+                       'A regional design award for our work with a ferry operator.' as text,
+                       3 as sort_order
+                  from dual
+                union all
+                select '2024' as year,
+                       'Porto studio opens' as title,
+                       'Ten new people and a riverside room with very good light.' as text,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 120
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            staticId: history
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Our story</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-timeline
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column YEAR (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region careers (
+        name: Careers
+        title: Do the best work of your *life*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Senior Brand Designer' as title,
+                       'Design' as team,
+                       'Lisbon' as location,
+                       'Full-time' as type,
+                       'Lead identity projects from concept to guidelines, and mentor two mid-level designers.' as description,
+                       'mailto:jobs@example.com?subject=Senior%20Brand%20Designer' as apply_link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Frontend Engineer' as title,
+                       'Engineering' as team,
+                       'Remote (EU)' as location,
+                       'Full-time' as type,
+                       'Build fast, accessible marketing sites with our designers.' as description,
+                       'mailto:jobs@example.com?subject=Frontend%20Engineer' as apply_link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Brand Strategist' as title,
+                       'Strategy' as team,
+                       'Porto' as location,
+                       'Full-time' as type,
+                       'Run research and workshops, and write the strategies our design work stands on.' as description,
+                       'mailto:jobs@example.com?subject=Brand%20Strategist' as apply_link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Design Intern' as title,
+                       'Design' as team,
+                       'Lisbon' as location,
+                       '6-month internship' as type,
+                       'Paid internship for a recent graduate. You work on real client projects from week one.' as description,
+                       'mailto:jobs@example.com?subject=Design%20Intern' as apply_link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 130
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+            ]
+        }
+        advanced {
+            staticId: careers
+            customAttributes: data-menu="Careers"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Careers</p><p class="ws-Lead">We hire slowly and keep people for a long time. Our average tenure is six years.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-jobs
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEAM (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LOCATION (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column TYPE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column DESCRIPTION (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column APPLY_LINK (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+        )
+    )
+
+    region pricing (
+        name: Pricing
+        title: Simple, *fixed* prices
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Brand Sprint' as name,
+                       'EUR 6,900' as price,
+                       'one-off' as period,
+                       'For new companies that need to look credible, fast.' as description,
+                       'Two-week sprint|Logo and word mark|Colour and type system|One-page guidelines' as features,
+                       'Book a sprint' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Brand and Website' as name,
+                       'EUR 18,500' as price,
+                       'one-off' as period,
+                       'Our most popular project: a full identity and a site to launch it.' as description,
+                       'Strategy workshop|Complete visual identity|8-page website on your CMS|Full guidelines and assets|60 days of launch support' as features,
+                       'Start a project' as button_label,
+                       '#contact' as button_link,
+                       'Y' as is_featured,
+                       'Most popular' as badge,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Partnership' as name,
+                       'EUR 4,200' as price,
+                       'per month' as period,
+                       'A senior team on call for ongoing design and campaigns.' as description,
+                       'Up to 40 hours a month|Dedicated designer and strategist|Monthly planning session|Cancel with 30 days notice' as features,
+                       'Talk to us' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 140
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            staticId: pricing
+            customAttributes: data-menu="Pricing"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Pricing</p><p class="ws-Lead">Every engagement has a fixed fee agreed up front. No hourly billing, no surprise invoices.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-pricing
+            templateOptions: [
+                #DEFAULT#
+                ws-Plans--lift
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column PRICE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column PERIOD (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column DESCRIPTION (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column FEATURES (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IS_FEATURED (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column BADGE (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+        )
+    )
+
+    region faq (
+        name: Questions we often hear
+        title: Questions we *often* hear
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'How long does a typical project take?' as question,
+                       'A brand sprint takes two weeks. A full identity and website usually takes ten to fourteen weeks from kickoff to launch.' as answer,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Do you work with clients outside Portugal?' as question,
+                       'Yes. About half of our clients are elsewhere in Europe and North America. We run most sessions remotely and travel for key workshops.' as answer,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Can we update the website ourselves?' as question,
+                       'Always. We build on a CMS your team can edit and include a recorded training session with every site.' as answer,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Do you offer payment in instalments?' as question,
+                       'Yes. Projects are billed in three parts: at kickoff, at design approval and at launch.' as answer,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 150
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            staticId: faq
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">FAQ</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-faq
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUESTION (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ANSWER (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+        )
+    )
+
+    region start (
+        name: Have a project in mind?
+        title: Have a project in *mind*?
+        type: staticContent
+        source {
+            htmlCode: <div class="ws-Actions ws-Center"><a class="ws-Btn" href="#contact">Start a project</a><a class="ws-Btn ws-Btn--ghost" href="mailto:hello@example.com">hello@example.com</a></div>
+        }
+        layout {
+            sequence: 160
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--gradient
+                ws-Head--center
+                ws-Width--narrow
+            ]
+        }
+        advanced {
+            staticId: start
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">Tell us about it. We reply to every message within two working days.</p>
+        }
+    )
+
+    region contact (
+        name: Contact
+        title: Let's make something *good*
+        type: staticContent
+        layout {
+            sequence: 170
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            staticId: contact
+            customAttributes: data-menu="Contact"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Contact</p><p class="ws-Lead">Tell us a little about your project and we will get back to you.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-envelope-o' as icon,
+                       'Email' as label,
+                       'hello@example.com' as value,
+                       'mailto:hello@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-phone' as icon,
+                       'Phone' as label,
+                       '+351 21 000 4821' as value,
+                       'tel:+351210004821' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-map-marker' as icon,
+                       'Studio' as label,
+                       'Rua da Saudade 18, Lisboa' as value,
+                       'https://www.openstreetmap.org/search?query=Rua%20da%20Saudade%2018%20Lisboa' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'fa-clock-o' as icon,
+                       'Hours' as label,
+                       'Mon to Thu, 9:00 to 18:00' as value,
+                       null as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+        )
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">H</span>Halcyon</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">H</span>Halcyon</a>
+                <p>Brand and digital design studio in Lisbon and Porto.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Dribbble' as label,
+                       'https://dribbble.com/' as link,
+                       'fa-dribbble' as icon,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+        )
+    )
+
+    region f-studio (
+        name: Footer - Studio
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'About' as label,
+                       '#about' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Work' as label,
+                       '#work' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Careers' as label,
+                       '#careers' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Contact' as label,
+                       '#contact' as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: f-studio
+        }
+        headerAndFooter {
+            headerText: <h3>Studio</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+        )
+    )
+
+    region f-services (
+        name: Footer - Services
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Brand strategy' as label,
+                       '#services' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Visual identity' as label,
+                       '#services' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Websites' as label,
+                       '#services' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Product design' as label,
+                       '#services' as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: f-services
+        }
+        headerAndFooter {
+            headerText: <h3>Services</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+        )
+    )
+
+    region f-hello (
+        name: Footer - Say hello
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'hello@example.com' as label,
+                       'mailto:hello@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select '+351 21 000 4821' as label,
+                       'tel:+351210004821' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Rua da Saudade 18, Lisboa' as label,
+                       '#contact' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: f-hello
+        }
+        headerAndFooter {
+            headerText: <h3>Say hello</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Halcyon Studio Lda. All rights reserved.</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Cookies' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Imprint' as label,
+                       '#' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            staticId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        pagination {
+            type: rowRangesXToYNoPagination
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+        )
+    )
+
+    pageItem P10_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P10_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P10_COMPANY (
+        type: textField
+        label {
+            label: Company
+            alignment: left
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P10_MESSAGE (
+        type: textarea
+        label {
+            label: What are you working on?
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button start (
+        buttonName: START
+        label: Start a project
+        layout {
+            sequence: 10
+            slot: headerButtons
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: redirectUrl
+            targetUrl: #contact
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Send message
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- The demo only says thank you. In your app, store or send the message, for example:
+                -- apex_mail.send(p_to => 'hello@example.com', p_from => 'noreply@example.com',
+                --                p_subj => 'Website enquiry from ' || :P10_NAME,
+                --                p_body => :P10_MESSAGE || chr(10) || chr(10) || :P10_NAME || ' <' || :P10_EMAIL || '>, ' || :P10_COMPANY);
+                null;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Thanks for your message. We will reply within two working days.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 10
+            }
+        }
+    )
+
+)

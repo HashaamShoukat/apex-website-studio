@@ -1,0 +1,46 @@
+classicReportTemplate ws-stats (
+    name: Website - Numbers
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Stats #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <div class="ws-Stat">
+              <div class="ws-Stat-n">#PREFIX#<span class="ws-Count" data-to="#VALUE#">#VALUE#</span>#SUFFIX#</div>
+              <div class="ws-Stat-l">#LABEL#</div>
+              <p class="ws-Stat-t" data-opt="text">#TEXT#</p>
+            </div>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Numbers (Website Studio). Key figures that count up when they scroll into view (page option Count Up Numbers). Columns (all optional): VALUE, PREFIX, SUFFIX, LABEL, TEXT.
+    }
+
+    templateOption stats-cards (
+        name: Cards
+        group: @report/wsr-stats-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Stats--cards
+        }
+    )
+
+    templateOption stats-center (
+        name: Center Text
+        sequence: 10
+        appearance {
+            cssClasses: ws-Stats--center
+        }
+    )
+)

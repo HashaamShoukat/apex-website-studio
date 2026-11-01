@@ -1,0 +1,148 @@
+page 1 (
+    name: Gallery
+    alias: HOME
+    title: Website Studio - Gallery
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    javaScript {
+        functionAndGlobalVariableDeclaration:
+            ```javascript-browser
+            // Ready-made looks of the Website Studio templates; thumbnails are app files gallery/<id>.jpg (made from the demo website).
+            var WS_PRESETS = [{"id":"studio","name":"Studio","tags":"light clean","page":"ws-Accent--tangerine ws-Font--grotesk","r":{},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--tangerine%20ws-Font--grotesk"},
+                {"id":"editorial","name":"Editorial","tags":"light editorial","page":"ws-Design--editorial ws-Accent--wine ws-Font--serif ws-Header--centered","r":{"hero":["ws-Hero--centered"],"services":["ws-Features--rows"],"clients-say":["ws-Quotes--spotlight"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--editorial%20ws-Accent--wine%20ws-Font--serif%20ws-Header--centered&r=hero%3Aws-Hero--centered%2Cservices%3Aws-Features--rows%2Cclients-say%3Aws-Quotes--spotlight"},
+                {"id":"bold","name":"Bold","tags":"light bold","page":"ws-Design--bold ws-Accent--amber ws-Font--grotesk","r":{"hero":["ws-Hero--split"],"services":["ws-Features--bento"],"clients-say":["ws-Quotes--wall"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--bold%20ws-Accent--amber%20ws-Font--grotesk&r=hero%3Aws-Hero--split%2Cservices%3Aws-Features--bento%2Cclients-say%3Aws-Quotes--wall"},
+                {"id":"midnight","name":"Midnight","tags":"dark midnight","page":"ws-Design--midnight ws-Accent--violet ws-Font--tech ws-Header--pill","r":{"hero":["ws-Hero--fullbleed"],"work":["ws-Works--editorial"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--midnight%20ws-Accent--violet%20ws-Font--tech%20ws-Header--pill&r=hero%3Aws-Hero--fullbleed%2Cwork%3Aws-Works--editorial"},
+                {"id":"glass","name":"Glass","tags":"light glass","page":"ws-Design--glass ws-Accent--cyan ws-Font--friendly ws-Header--pill ws-Corners--round","r":{"hero":["ws-Hero--centered"],"team":["ws-Team--round"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--glass%20ws-Accent--cyan%20ws-Font--friendly%20ws-Header--pill%20ws-Corners--round&r=hero%3Aws-Hero--centered%2Cteam%3Aws-Team--round"},
+                {"id":"soft","name":"Soft UI","tags":"light soft","page":"ws-Design--soft ws-Accent--indigo ws-Font--friendly ws-Corners--round","r":{"hero":["ws-Hero--split"],"process":["ws-Steps--cards"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--soft%20ws-Accent--indigo%20ws-Font--friendly%20ws-Corners--round&r=hero%3Aws-Hero--split%2Cprocess%3Aws-Steps--cards"},
+                {"id":"minimal","name":"Minimal","tags":"light minimal","page":"ws-Design--minimal ws-Accent--slate ws-Font--tech ws-Space--airy","r":{"hero":["ws-Hero--centered"],"services":["ws-Features--rows"],"history":["ws-Timeline--list"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--minimal%20ws-Accent--slate%20ws-Font--tech%20ws-Space--airy&r=hero%3Aws-Hero--centered%2Cservices%3Aws-Features--rows%2Chistory%3Aws-Timeline--list"},
+                {"id":"luxe-night","name":"Luxe Night","tags":"dark luxe","page":"ws-Scheme--dark ws-Accent--amber ws-Font--luxe ws-Header--transparent ws-Corners--square","r":{"hero":["ws-Hero--fullbleed"],"work":["ws-Works--large"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Scheme--dark%20ws-Accent--amber%20ws-Font--luxe%20ws-Header--transparent%20ws-Corners--square&r=hero%3Aws-Hero--fullbleed%2Cwork%3Aws-Works--large"},
+                {"id":"poster","name":"Poster","tags":"light bold","page":"ws-Accent--rose ws-Font--poster ws-Corners--square ws-Header--transparent","r":{},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--rose%20ws-Font--poster%20ws-Corners--square%20ws-Header--transparent"},
+                {"id":"ocean","name":"Ocean","tags":"light clean","page":"ws-Accent--ocean ws-Header--pill","r":{"hero":["ws-Hero--split"],"clients-say":["ws-Quotes--wall"],"team":["ws-Team--round"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--ocean%20ws-Header--pill&r=hero%3Aws-Hero--split%2Cclients-say%3Aws-Quotes--wall%2Cteam%3Aws-Team--round"},
+                {"id":"emerald","name":"Emerald","tags":"light clean","page":"ws-Accent--emerald ws-Font--serif ws-Header--transparent ws-Footer--accent","r":{},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--emerald%20ws-Font--serif%20ws-Header--transparent%20ws-Footer--accent"},
+                {"id":"editorial-dark","name":"Editorial - Dark","tags":"dark editorial","page":"ws-Design--editorial ws-Scheme--dark ws-Accent--tangerine ws-Font--serif","r":{"hero":["ws-Hero--centered"],"services":["ws-Features--rows"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--editorial%20ws-Scheme--dark%20ws-Accent--tangerine%20ws-Font--serif&r=hero%3Aws-Hero--centered%2Cservices%3Aws-Features--rows"},
+                {"id":"bold-dark","name":"Bold - Dark","tags":"dark bold","page":"ws-Design--bold ws-Scheme--dark ws-Accent--cyan ws-Font--grotesk","r":{"hero":["ws-Hero--split"],"services":["ws-Features--bento"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--bold%20ws-Scheme--dark%20ws-Accent--cyan%20ws-Font--grotesk&r=hero%3Aws-Hero--split%2Cservices%3Aws-Features--bento"},
+                {"id":"soft-dark","name":"Soft UI - Dark","tags":"dark soft","page":"ws-Design--soft ws-Scheme--dark ws-Accent--violet ws-Font--friendly ws-Corners--round","r":{"hero":["ws-Hero--centered"],"team":["ws-Team--round"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--soft%20ws-Scheme--dark%20ws-Accent--violet%20ws-Font--friendly%20ws-Corners--round&r=hero%3Aws-Hero--centered%2Cteam%3Aws-Team--round"},
+                {"id":"corporate","name":"Corporate","tags":"light clean","page":"ws-Accent--indigo ws-Font--serif ws-Corners--soft ws-Footer--light","r":{"hero":["ws-Hero--split"],"clients-say":["ws-Quotes--spotlight"],"team":["ws-Team--list"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--indigo%20ws-Font--serif%20ws-Corners--soft%20ws-Footer--light&r=hero%3Aws-Hero--split%2Cclients-say%3Aws-Quotes--spotlight%2Cteam%3Aws-Team--list"},
+                {"id":"glass-dark","name":"Glass - Dark","tags":"dark glass","page":"ws-Design--glass ws-Scheme--dark ws-Accent--rose ws-Font--tech ws-Header--pill","r":{"hero":["ws-Hero--fullbleed"],"services":["ws-Features--bento"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--glass%20ws-Scheme--dark%20ws-Accent--rose%20ws-Font--tech%20ws-Header--pill&r=hero%3Aws-Hero--fullbleed%2Cservices%3Aws-Features--bento"}];
+            ```
+        executeWhenPageLoads:
+            ```javascript-browser
+            (function ($) {
+                var box = document.getElementById("wss-gallery"), files = box.getAttribute("data-files"),
+                    site = box.getAttribute("data-site"), designer = box.getAttribute("data-designer");
+                function esc(s) { return apex.util.escapeHTML(String(s)); }
+                function regions(p) { return Object.keys(p.r).map(function (k) { return k + ":" + p.r[k].join("+"); }).join(","); }
+                function look(p) { return "#look=" + encodeURIComponent(p.page) + (regions(p) ? "&r=" + encodeURIComponent(regions(p)) : ""); }
+                box.innerHTML = WS_PRESETS.map(function (p) {
+                    return '<article class="wss-Card" data-tags="' + esc(p.tags) + '">' +
+                        '<a class="wss-Card-shot" href="' + esc(designer + look(p)) + '" aria-label="' + esc("Customize " + p.name) + '"><img src="' + esc(files + "gallery/" + p.id + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
+                        '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(p.name) + '</h3>' +
+                        '<div class="wss-Card-tags">' + p.tags.split(" ").map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + '</div>' +
+                        '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" href="' + esc(designer + look(p)) + '"><span class="t-Button-label">Customize</span></a>' +
+                        '<a class="t-Button t-Button--small" target="_blank" rel="noopener" href="' + esc(site + p.hash) + '"><span class="t-Button-label">Full Screen</span></a></div></div></article>';
+                }).join("");
+                $(document).on("click", ".wss-Filter button", function () {
+                    var f = this.getAttribute("data-f");
+                    $(".wss-Filter button").attr("aria-pressed", "false");
+                    this.setAttribute("aria-pressed", "true");
+                    $(".wss-Card").each(function () { this.hidden = !!f && (" " + this.getAttribute("data-tags") + " ").indexOf(" " + f + " ") < 0; });
+                });
+            })(apex.jQuery);
+            ```
+    }
+    css {
+        inline:
+            ```css
+            .wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem); border-radius: 18px; color: #ffffff;
+                        background: radial-gradient(circle at 86% 18%, rgba(255,255,255,.18), transparent 40%), linear-gradient(120deg, #7c2d12, #ea580c 52%, #db2777); }
+            .wss-Hero h1 { margin: 0 0 .5rem; font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+            .wss-Hero p { max-width: 52rem; margin: 0 0 1.25rem; font-size: 1.0625rem; line-height: 1.6; opacity: .94; }
+            .wss-Hero .t-Button { margin: 0 .5rem .5rem 0; }
+            .wss-Hero .t-Button--hot { --a-button-background-color: #ffffff; --a-button-text-color: #7c2d12; --a-button-hover-background-color: #ffedd5; --a-button-hover-text-color: #7c2d12; }
+            .wss-Hero .wss-Ghost { --a-button-background-color: transparent; --a-button-text-color: #ffffff; --a-button-hover-background-color: rgba(255,255,255,.14); --a-button-hover-text-color: #ffffff; border: 1px solid rgba(255,255,255,.6); }
+            .wss-Filter { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0 1rem; }
+            .wss-Filter button { padding: .375rem .95rem; border-radius: 999px; border: 1px solid var(--ut-component-border-color, #d0d5dd); background: var(--ut-component-background-color, #fff); color: inherit; font: inherit; font-size: .875rem; cursor: pointer; }
+            .wss-Filter button[aria-pressed="true"] { background: #7c2d12; border-color: #7c2d12; color: #ffffff; }
+            .wss-Filter button:focus-visible { outline: 2px solid #ea580c; outline-offset: 2px; }
+            .wss-Grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1.25rem; }
+            .wss-Card { display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; border: 1px solid var(--ut-component-border-color, #e4e7ec); background: var(--ut-component-background-color, #fff);
+                        box-shadow: 0 1px 2px rgba(16,24,40,.05); transition: box-shadow .2s ease, transform .2s ease; }
+            .wss-Card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -18px rgba(16,24,40,.35); }
+            .wss-Card[hidden] { display: none; }
+            .wss-Card-shot { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #eef0f4; }
+            .wss-Card-shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+            .wss-Card:hover .wss-Card-shot img { transform: scale(1.03); }
+            .wss-Card-body { display: flex; flex-direction: column; gap: .5rem; padding: .875rem 1rem 1rem; }
+            .wss-Card-title { margin: 0; font-size: 1rem; font-weight: 700; }
+            .wss-Card-tags { display: flex; flex-wrap: wrap; gap: .375rem; }
+            .wss-Card-tags span { padding: .1rem .5rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .75rem; font-weight: 600; text-transform: capitalize; }
+            .wss-Card-actions { display: flex; gap: .5rem; margin-top: .25rem; }
+            .wss-Card-actions .t-Button { flex: 1; justify-content: center; }
+            @media (prefers-reduced-motion: reduce) { .wss-Card, .wss-Card-shot img { transition: none; } .wss-Card:hover { transform: none; } .wss-Card:hover .wss-Card-shot img { transform: none; } }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Website Studio
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="wss-Hero">
+                  <h1>One-page websites for Oracle APEX</h1>
+                  <p>A page template, a section template and 14 report templates for heroes and sliders, services, numbers that count up, team, testimonials, clients, pricing, timeline, careers, FAQ, portfolio, contact details and social links - every list comes from a SQL query. 7 designs, 10 accent colours, light and dark, 6 typefaces. Every look is a template option. Pick one, fine-tune it in the Designer, copy the templates into your app.</p>
+                  <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
+                  <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
+                  <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:HOW-TO-USE:&APP_SESSION."><span class="t-Button-label">How to use it</span></a>
+                </div>
+                <div class="wss-Filter" role="group" aria-label="Filter">
+                  <button type="button" data-f="" aria-pressed="true">All</button>
+                  <button type="button" data-f="light" aria-pressed="false">Light</button>
+                  <button type="button" data-f="dark" aria-pressed="false">Dark</button>
+                  <button type="button" data-f="editorial" aria-pressed="false">Editorial</button>
+                  <button type="button" data-f="bold" aria-pressed="false">Bold</button>
+                  <button type="button" data-f="glass" aria-pressed="false">Glass</button>
+                  <button type="button" data-f="soft" aria-pressed="false">Soft UI</button>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region gallery (
+        name: Gallery
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="wss-Grid" id="wss-gallery" data-files="#APP_FILES#" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION." data-designer="f?p=&APP_ID.:DESIGNER:&APP_SESSION."></div>
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+    )
+
+)

@@ -1,0 +1,278 @@
+templateOptionGroup ws-design (
+    templateType: page
+    name: Design
+    sequence: 5
+    settings {
+        nullText: Clean
+    }
+    help {
+        helpText: The overall look of the website. Accent Color, Color Scheme, Typeface and Corners still change it.
+    }
+)
+
+templateOptionGroup ws-accent (
+    templateType: page
+    name: Accent Color
+    sequence: 10
+    settings {
+        nullText: Theme Color
+    }
+    help {
+        helpText: Buttons, highlights, icons and the built-in artwork. Theme Color uses your theme style's primary colour.
+    }
+)
+
+templateOptionGroup ws-scheme (
+    templateType: page
+    name: Color Scheme
+    sequence: 20
+    settings {
+        nullText: Light
+    }
+    help {
+        helpText: Midnight is always dark. Sections set to Dark or Accent keep their own colours.
+    }
+)
+
+templateOptionGroup ws-font (
+    templateType: page
+    name: Typeface
+    sequence: 30
+    settings {
+        nullText: System
+    }
+    help {
+        helpText: Headline and text fonts. Every choice except System loads its fonts from Google Fonts.
+    }
+)
+
+templateOptionGroup ws-header (
+    templateType: page
+    name: Header
+    sequence: 40
+    settings {
+        nullText: Classic
+    }
+    help {
+        helpText: Transparent lays the header over the first section (use it with a Slider or Full Bleed hero); it turns solid when the visitor scrolls.
+    }
+)
+
+templateOptionGroup ws-corners (
+    templateType: page
+    name: Corners
+    sequence: 50
+    settings {
+        nullText: Rounded
+    }
+)
+
+templateOptionGroup ws-space (
+    templateType: page
+    name: Section Spacing
+    sequence: 60
+    settings {
+        nullText: Comfortable
+    }
+)
+
+templateOptionGroup ws-footer (
+    templateType: page
+    name: Footer
+    sequence: 70
+    settings {
+        nullText: Dark
+    }
+)
+
+templateOptionGroup ws-tone (
+    templateType: region
+    name: Background
+    sequence: 10
+    settings {
+        nullText: Page
+    }
+    help {
+        helpText: Soft is a slightly tinted band, Dark and Accent invert the colours, Gradient runs between the two accent colours.
+    }
+)
+
+templateOptionGroup ws-pad (
+    templateType: region
+    name: Spacing
+    sequence: 20
+    settings {
+        nullText: Normal
+    }
+    help {
+        helpText: None removes the top and bottom space, for a hero or a full-width band.
+    }
+)
+
+templateOptionGroup ws-head (
+    templateType: region
+    name: Heading
+    sequence: 30
+    settings {
+        nullText: Left
+    }
+    help {
+        helpText: The region title is the section heading. Put <p class="ws-Eyebrow">...</p> and <p class="ws-Lead">...</p> at the start of the region's Header text for a small label above and an intro below it.
+    }
+)
+
+templateOptionGroup ws-width (
+    templateType: region
+    name: Width
+    sequence: 40
+    settings {
+        nullText: Normal
+    }
+)
+
+templateOptionGroup wsr-hero-layout (
+    templateType: report
+    name: Layout
+    sequence: 130
+    settings {
+        nullText: Slider
+    }
+    help {
+        helpText: Slider and Full Bleed put the text over the image; Split and Centered put it next to or above it.
+    }
+)
+
+templateOptionGroup wsr-autoplay (
+    templateType: report
+    name: Autoplay
+    sequence: 140
+    settings {
+        nullText: 6 Seconds
+    }
+)
+
+templateOptionGroup wsr-stats-layout (
+    templateType: report
+    name: Layout
+    sequence: 150
+    settings {
+        nullText: Row
+    }
+)
+
+templateOptionGroup wsr-features-layout (
+    templateType: report
+    name: Layout
+    sequence: 160
+    settings {
+        nullText: Cards
+    }
+)
+
+templateOptionGroup wsr-columns (
+    templateType: report
+    name: Columns
+    sequence: 170
+    settings {
+        nullText: 3
+    }
+)
+
+templateOptionGroup wsr-team-layout (
+    templateType: report
+    name: Layout
+    sequence: 180
+    settings {
+        nullText: Portrait Cards
+    }
+)
+
+templateOptionGroup wsr-quotes-layout (
+    templateType: report
+    name: Layout
+    sequence: 190
+    settings {
+        nullText: Carousel
+    }
+)
+
+templateOptionGroup wsr-logos-layout (
+    templateType: report
+    name: Layout
+    sequence: 200
+    settings {
+        nullText: Scrolling Marquee
+    }
+)
+
+templateOptionGroup wsr-plans-style (
+    templateType: report
+    name: Featured Plan
+    sequence: 210
+    settings {
+        nullText: Dark
+    }
+)
+
+templateOptionGroup wsr-timeline-layout (
+    templateType: report
+    name: Layout
+    sequence: 220
+    settings {
+        nullText: Alternating
+    }
+)
+
+templateOptionGroup wsr-steps-layout (
+    templateType: report
+    name: Layout
+    sequence: 230
+    settings {
+        nullText: Connected
+    }
+)
+
+templateOptionGroup wsr-faq-layout (
+    templateType: report
+    name: Layout
+    sequence: 240
+    settings {
+        nullText: List
+    }
+)
+
+templateOptionGroup wsr-jobs-layout (
+    templateType: report
+    name: Layout
+    sequence: 250
+    settings {
+        nullText: List
+    }
+)
+
+templateOptionGroup wsr-works-layout (
+    templateType: report
+    name: Layout
+    sequence: 260
+    settings {
+        nullText: Grid
+    }
+)
+
+templateOptionGroup wsr-links-layout (
+    templateType: report
+    name: Layout
+    sequence: 270
+    settings {
+        nullText: Round Icons
+    }
+)
+
+templateOptionGroup wsr-infos-layout (
+    templateType: report
+    name: Layout
+    sequence: 280
+    settings {
+        nullText: List
+    }
+)

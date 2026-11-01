@@ -1,0 +1,59 @@
+app WEBSITE-STUDIO (
+    name: Website Studio
+    logo {
+        type: text
+        text: Website Studio
+    }
+    navigation {
+        homeUrl: {
+            page: 1
+        }
+    }
+    navigationMenu {
+        listTemplate: @/side-navigation-menu
+        templateOptions: [
+            #DEFAULT#
+            js-defaultCollapsed
+            js-navCollapsed--hidden
+            t-TreeNav--styleA
+        ]
+        list: @navigation-menu
+    }
+    navigationBar {
+        list: @navigation-bar
+        listTemplate: @/navigation-bar
+        templateOptions: #DEFAULT#
+    }
+    userInterface {
+        currentTheme: @universal-theme
+        globalPage: 0
+        addBuiltWithApexToFooter: false
+        autoDismissSuccessMessages: true
+    }
+    appFormatMasks {
+        date: DD-MON-YYYY
+        timestamp: DS
+        timestampTimeZone: DS
+    }
+    authentication {
+        scheme: @no-authentication
+    }
+    security {
+        deepLinking: true
+        embedInFrames: allowSameOrigin
+    }
+    sessionStateProtection {
+        checksumSalt: 7C2E91A04B6D3F58E1A29C7B40D85F16A3E09B72C4D18E5F60A7B3C29D4E81F05
+    }
+    sessionManagement {
+        maxSessionLength: 28800
+        maxSessionIdleTime: 7200
+    }
+
+    substitution APP_NAME (
+        value {
+            staticValue: Website Studio
+        }
+    )
+
+)

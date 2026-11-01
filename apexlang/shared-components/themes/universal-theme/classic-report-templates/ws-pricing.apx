@@ -1,0 +1,52 @@
+classicReportTemplate ws-pricing (
+    name: Website - Pricing
+    templateClass: custom1
+    type: namedColumn
+    templateOptions {
+        preset: ws-Plans--lift
+    }
+    reportTemplate {
+        top: <div class="ws-R ws-Plans #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <article class="ws-Card ws-Plan" data-featured="#IS_FEATURED#">
+              <span class="ws-Badge" data-opt="text">#BADGE#</span>
+              <h3>#NAME#</h3>
+              <p class="ws-Plan-d" data-opt="text">#DESCRIPTION#</p>
+              <div class="ws-Price"><b>#PRICE#</b><span>#PERIOD#</span></div>
+              <a class="ws-Btn" href="#BUTTON_LINK#">#BUTTON_LABEL#</a>
+              <div data-list="#FEATURES#"></div>
+            </article>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Pricing (Website Studio). Plans. FEATURES is one feature per line (or separated by | or ;). IS_FEATURED = Y highlights a plan. Columns (all optional): NAME, PRICE, PERIOD, DESCRIPTION, FEATURES, BUTTON_LABEL, BUTTON_LINK, IS_FEATURED, BADGE.
+    }
+
+    templateOption plans-accent (
+        name: Accent Color
+        group: @report/wsr-plans-style
+        sequence: 10
+        appearance {
+            cssClasses: ws-Plans--accent
+        }
+    )
+
+    templateOption plans-lift (
+        name: Lift the Featured Plan
+        sequence: 10
+        appearance {
+            cssClasses: ws-Plans--lift
+        }
+    )
+)

@@ -1,0 +1,40 @@
+classicReportTemplate ws-logos (
+    name: Website - Logos
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Logos #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Logos--marquee" data-ws-base-class="ws-Logos">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <a class="ws-Logo-item" href="#LINK#"><span class="ws-Logo-img" data-img="#IMAGE_URL#" data-alt="#NAME#"></span><span class="ws-Logo-name">#NAME#</span></a>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Logos (Website Studio). Clients, partners or press. Without IMAGE_URL the name is shown as a word mark. Columns (all optional): NAME, IMAGE_URL, LINK.
+    }
+
+    templateOption logos-grid (
+        name: Grid
+        group: @report/wsr-logos-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Logos--grid
+        }
+    )
+
+    templateOption logos-row (
+        name: Row
+        group: @report/wsr-logos-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Logos--row
+        }
+    )
+)

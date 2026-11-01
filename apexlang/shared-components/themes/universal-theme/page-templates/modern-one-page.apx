@@ -1,0 +1,588 @@
+pageTemplate modern-one-page (
+    name: Modern One Page
+    templateClass: custom1
+    templateOptions {
+        default: [
+            ws-Fx--sticky
+            ws-Fx--reveal
+            ws-Fx--count
+            ws-Fx--top
+        ]
+    }
+    page {
+        header:
+            ```html
+            <!DOCTYPE html>
+            <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID!ATTR. app-&APP_ALIAS!ATTR." lang="&BROWSER_LANGUAGE!ATTR." #TEXT_DIRECTION#>
+            <head>
+              <meta charset="utf-8">
+              <title>#TITLE#</title>
+              #APEX_CSS#
+              #THEME_CSS#
+              #TEMPLATE_CSS#
+              #THEME_STYLE_CSS#
+              #APPLICATION_CSS#
+              #PAGE_CSS#
+              #FAVICONS#
+              #HEAD#
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+            </head>
+            <body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")})(document.body,location.hash);</script>
+            <noscript>&APP_TEXT$APEX_PAGE_NOSCRIPT.</noscript>
+            <a href="#main" class="ws-Skip">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+            #FORM_OPEN#
+            <div class="ws-Progress" aria-hidden="true"></div>
+            <header class="ws-Header" id="ws-header">
+              <div class="ws-Wrap ws-Header-in">
+                <div class="ws-Brand-slot">#REGION_POSITION_07#</div>
+                <a class="ws-Brand ws-Brand-default" href="#HOME_LINK#">#LOGO#</a>
+                <nav class="ws-Nav" id="ws-nav" aria-label="&APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL!ATTR."></nav>
+                <div class="ws-Header-end">#AFTER_NAVIGATION_BAR#<button type="button" class="ws-Burger" aria-expanded="false" aria-controls="ws-nav" aria-label="Menu"><span></span><span></span><span></span></button></div>
+              </div>
+            </header>
+            ```
+        body:
+            ```html
+            <main id="main" class="ws-Main">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="ws-Hero-slot">#REGION_POSITION_01#</div>
+              #BODY#
+            </main>
+            <footer class="ws-Footer" id="ws-footer">
+              <div class="ws-Wrap">
+                <div class="ws-Footer-grid">#REGION_POSITION_05#</div>
+                <div class="ws-Footer-bottom">#REGION_POSITION_06#</div>
+              </div>
+            </footer>
+            <button type="button" class="ws-ToTop" aria-label="Back to top"><span aria-hidden="true">&#8593;</span></button>
+            <div class="ws-Dialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+            ```
+        footer:
+            ```html
+            #FORM_CLOSE#
+            #DEVELOPER_TOOLBAR#
+            #APEX_JAVASCRIPT#
+            #GENERATED_CSS#
+            #THEME_JAVASCRIPT#
+            #TEMPLATE_JAVASCRIPT#
+            #APPLICATION_JAVASCRIPT#
+            #PAGE_JAVASCRIPT#
+            #GENERATED_JAVASCRIPT#
+            </body>
+            </html>
+            ```
+    }
+    javaScript {
+        fileUrls: #APP_FILES#website-studio/website.js
+        executeWhenPageLoads: if (window.wsSite) { wsSite.init(); }
+    }
+    css {
+        fileUrls: #APP_FILES#website-studio/website.css
+    }
+    subtemplate {
+        successMessage: <div class="ws-Alert" id="t_Alert_Success" role="status"><h2 class="u-vh">#SUCCESS_MESSAGE_HEADING#</h2>#SUCCESS_MESSAGE#</div>
+        notification: <div class="ws-Alert ws-Alert--warning" id="t_Alert_Notification" role="alert"><h2 class="u-vh">#ERROR_MESSAGE_HEADING#</h2>#MESSAGE#</div>
+    }
+    layout {
+        maxColumns: 12
+        alwaysUseMaxColumns: true
+        defaultLabelColumnSpan: 2
+        firstColumnAttributes: col-start
+        lastColumnAttributes: col-end
+        containerTemplate:
+            ```html
+            <div class="ws-Grid">
+            #ROWS#
+            </div>
+            ```
+        rowTemplate:
+            ```html
+            <div class="ws-Row #CSS_CLASSES#">
+            #COLUMNS#
+            </div>
+            ```
+        columnTemplate: <div class="ws-Col ws-Col--#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>
+    }
+    errorPage {
+        template:
+            ```html
+            <div class="ws-Alert ws-Alert--warning">
+              <h1>#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div>#TECHNICAL_INFO#</div>
+              <p><button class="a-Error-back t-Button t-Button--hot" type="button">#OK#</button></p>
+            </div>
+            ```
+    }
+    comments {
+        comments: Modern One Page (Website Studio) - a one-page website. The header menu is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
+    }
+
+    templateOption design-editorial (
+        name: Editorial
+        group: @page/ws-design
+        sequence: 10
+        appearance {
+            cssClasses: ws-Design--editorial
+        }
+        help {
+            helpText: Paper colours, serif headlines, fine rules and square corners
+        }
+    )
+
+    templateOption design-bold (
+        name: Bold
+        group: @page/ws-design
+        sequence: 20
+        appearance {
+            cssClasses: ws-Design--bold
+        }
+        help {
+            helpText: Neo-brutalist: ink outlines and hard offset shadows
+        }
+    )
+
+    templateOption design-soft (
+        name: Soft UI
+        group: @page/ws-design
+        sequence: 30
+        appearance {
+            cssClasses: ws-Design--soft
+        }
+        help {
+            helpText: Neumorphic: cards rise out of a soft grey page
+        }
+    )
+
+    templateOption design-glass (
+        name: Glass
+        group: @page/ws-design
+        sequence: 40
+        appearance {
+            cssClasses: ws-Design--glass
+        }
+        help {
+            helpText: Frosted cards over a colour wash in the accent colours
+        }
+    )
+
+    templateOption design-midnight (
+        name: Midnight
+        group: @page/ws-design
+        sequence: 50
+        appearance {
+            cssClasses: ws-Design--midnight
+        }
+        help {
+            helpText: Always dark, with glowing buttons
+        }
+    )
+
+    templateOption design-minimal (
+        name: Minimal
+        group: @page/ws-design
+        sequence: 60
+        appearance {
+            cssClasses: ws-Design--minimal
+        }
+        help {
+            helpText: No cards: hairlines, large type and white space
+        }
+    )
+
+    templateOption accent-ocean (
+        name: Ocean
+        group: @page/ws-accent
+        sequence: 10
+        appearance {
+            cssClasses: ws-Accent--ocean
+        }
+    )
+
+    templateOption accent-indigo (
+        name: Indigo
+        group: @page/ws-accent
+        sequence: 20
+        appearance {
+            cssClasses: ws-Accent--indigo
+        }
+    )
+
+    templateOption accent-violet (
+        name: Violet
+        group: @page/ws-accent
+        sequence: 30
+        appearance {
+            cssClasses: ws-Accent--violet
+        }
+    )
+
+    templateOption accent-emerald (
+        name: Emerald
+        group: @page/ws-accent
+        sequence: 40
+        appearance {
+            cssClasses: ws-Accent--emerald
+        }
+    )
+
+    templateOption accent-rose (
+        name: Rose
+        group: @page/ws-accent
+        sequence: 50
+        appearance {
+            cssClasses: ws-Accent--rose
+        }
+    )
+
+    templateOption accent-amber (
+        name: Amber
+        group: @page/ws-accent
+        sequence: 60
+        appearance {
+            cssClasses: ws-Accent--amber
+        }
+    )
+
+    templateOption accent-slate (
+        name: Slate
+        group: @page/ws-accent
+        sequence: 70
+        appearance {
+            cssClasses: ws-Accent--slate
+        }
+    )
+
+    templateOption accent-wine (
+        name: Wine
+        group: @page/ws-accent
+        sequence: 80
+        appearance {
+            cssClasses: ws-Accent--wine
+        }
+    )
+
+    templateOption accent-tangerine (
+        name: Tangerine
+        group: @page/ws-accent
+        sequence: 90
+        appearance {
+            cssClasses: ws-Accent--tangerine
+        }
+    )
+
+    templateOption accent-cyan (
+        name: Cyan
+        group: @page/ws-accent
+        sequence: 100
+        appearance {
+            cssClasses: ws-Accent--cyan
+        }
+    )
+
+    templateOption scheme-dark (
+        name: Dark
+        group: @page/ws-scheme
+        sequence: 10
+        appearance {
+            cssClasses: ws-Scheme--dark
+        }
+    )
+
+    templateOption scheme-auto (
+        name: Follow Device Setting
+        group: @page/ws-scheme
+        sequence: 20
+        appearance {
+            cssClasses: ws-Scheme--auto
+        }
+    )
+
+    templateOption font-grotesk (
+        name: Grotesk
+        group: @page/ws-font
+        sequence: 10
+        appearance {
+            cssClasses: ws-Font--grotesk
+        }
+        help {
+            helpText: Bricolage Grotesque headlines, DM Sans text
+        }
+    )
+
+    templateOption font-serif (
+        name: Serif
+        group: @page/ws-font
+        sequence: 20
+        appearance {
+            cssClasses: ws-Font--serif
+        }
+        help {
+            helpText: Fraunces headlines, Instrument Sans text
+        }
+    )
+
+    templateOption font-luxe (
+        name: Luxe
+        group: @page/ws-font
+        sequence: 30
+        appearance {
+            cssClasses: ws-Font--luxe
+        }
+        help {
+            helpText: Cormorant Garamond headlines, Montserrat text
+        }
+    )
+
+    templateOption font-tech (
+        name: Tech
+        group: @page/ws-font
+        sequence: 40
+        appearance {
+            cssClasses: ws-Font--tech
+        }
+        help {
+            helpText: Sora headlines, IBM Plex Sans text
+        }
+    )
+
+    templateOption font-poster (
+        name: Poster
+        group: @page/ws-font
+        sequence: 50
+        appearance {
+            cssClasses: ws-Font--poster
+        }
+        help {
+            helpText: Anton capitals, Archivo text
+        }
+    )
+
+    templateOption font-friendly (
+        name: Friendly
+        group: @page/ws-font
+        sequence: 60
+        appearance {
+            cssClasses: ws-Font--friendly
+        }
+        help {
+            helpText: Outfit for headlines and text
+        }
+    )
+
+    templateOption header-centered (
+        name: Centered Logo
+        group: @page/ws-header
+        sequence: 10
+        appearance {
+            cssClasses: ws-Header--centered
+        }
+    )
+
+    templateOption header-pill (
+        name: Floating Pill
+        group: @page/ws-header
+        sequence: 20
+        appearance {
+            cssClasses: ws-Header--pill
+        }
+    )
+
+    templateOption header-transparent (
+        name: Transparent over Hero
+        group: @page/ws-header
+        sequence: 30
+        appearance {
+            cssClasses: ws-Header--transparent
+        }
+    )
+
+    templateOption corners-square (
+        name: Square
+        group: @page/ws-corners
+        sequence: 10
+        appearance {
+            cssClasses: ws-Corners--square
+        }
+    )
+
+    templateOption corners-soft (
+        name: Soft
+        group: @page/ws-corners
+        sequence: 20
+        appearance {
+            cssClasses: ws-Corners--soft
+        }
+    )
+
+    templateOption corners-round (
+        name: Extra Round
+        group: @page/ws-corners
+        sequence: 30
+        appearance {
+            cssClasses: ws-Corners--round
+        }
+    )
+
+    templateOption space-compact (
+        name: Compact
+        group: @page/ws-space
+        sequence: 10
+        appearance {
+            cssClasses: ws-Space--compact
+        }
+    )
+
+    templateOption space-airy (
+        name: Airy
+        group: @page/ws-space
+        sequence: 20
+        appearance {
+            cssClasses: ws-Space--airy
+        }
+    )
+
+    templateOption footer-light (
+        name: Light
+        group: @page/ws-footer
+        sequence: 10
+        appearance {
+            cssClasses: ws-Footer--light
+        }
+    )
+
+    templateOption footer-accent (
+        name: Accent Color
+        group: @page/ws-footer
+        sequence: 20
+        appearance {
+            cssClasses: ws-Footer--accent
+        }
+    )
+
+    templateOption fx-sticky (
+        name: Sticky Header
+        sequence: 100
+        appearance {
+            cssClasses: ws-Fx--sticky
+        }
+        help {
+            helpText: The header stays at the top while the visitor scrolls.
+        }
+    )
+
+    templateOption fx-reveal (
+        name: Reveal on Scroll
+        sequence: 110
+        appearance {
+            cssClasses: ws-Fx--reveal
+        }
+        help {
+            helpText: Sections fade in as they scroll into view. Visitors who prefer reduced motion see them at once.
+        }
+    )
+
+    templateOption fx-count (
+        name: Count Up Numbers
+        sequence: 120
+        appearance {
+            cssClasses: ws-Fx--count
+        }
+        help {
+            helpText: Numbers in the Website - Numbers report count up when they come into view.
+        }
+    )
+
+    templateOption fx-top (
+        name: Back to Top Button
+        sequence: 130
+        appearance {
+            cssClasses: ws-Fx--top
+        }
+        help {
+            helpText: A round button in the corner after the visitor has scrolled down.
+        }
+    )
+
+    templateOption fx-progress (
+        name: Scroll Progress Bar
+        sequence: 140
+        appearance {
+            cssClasses: ws-Fx--progress
+        }
+        help {
+            helpText: A thin bar in the accent colour at the top of the page.
+        }
+    )
+
+    slot hero (
+        name: Hero
+        staticId: REGION_POSITION_01
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot logo (
+        name: Logo
+        staticId: REGION_POSITION_07
+        gridLayout {
+            gridSupport: false
+            newRow: false
+        }
+    )
+
+    slot headerButtons (
+        name: Header Buttons
+        staticId: AFTER_NAVIGATION_BAR
+        supports {
+            items: true
+            buttons: true
+        }
+        gridLayout {
+            gridSupport: false
+            newRow: false
+        }
+    )
+
+    slot body (
+        name: Body
+        staticId: BODY
+        supports {
+            items: true
+            buttons: true
+        }
+        gridLayout {
+            maxFixedColumns: 12
+        }
+    )
+
+    slot footer (
+        name: Footer
+        staticId: REGION_POSITION_05
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot footerBottom (
+        name: Footer Bottom
+        staticId: REGION_POSITION_06
+        supports {
+            buttons: true
+        }
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot inlineDialogs (
+        name: Inline Dialogs
+        staticId: REGION_POSITION_04
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+)

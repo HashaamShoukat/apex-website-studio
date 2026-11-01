@@ -1,0 +1,207 @@
+regionTemplate modern-section (
+    name: Modern Section
+    templateClass: custom1
+    templateOptions {
+        preset: ws-Sec--menu
+    }
+    region {
+        template:
+            ```html
+            <section class="ws-Sec #REGION_CSS_CLASSES#" id="#DOM_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+              <div class="ws-Wrap">
+                <header class="ws-Head"><h2 class="ws-Title" id="#DOM_ID#_heading">#TITLE#</h2></header>
+                <div class="ws-Body">#BODY##SUB_REGIONS#</div>
+                <div class="ws-Btns">#PREVIOUS##NEXT#</div>
+              </div>
+            </section>
+            ```
+    }
+    accessibility {
+        landmarkType: region
+        regionTitleHtmlId: #DOM_ID#_heading
+    }
+    comments {
+        comments: Modern Section (Website Studio) - one band of a one-page website. The region title is the heading (*word* highlights a word); the Static ID is the menu anchor. Header text can start with <p class="ws-Eyebrow"> and <p class="ws-Lead">.
+    }
+
+    templateOption tone-soft (
+        name: Soft
+        group: @region/ws-tone
+        sequence: 10
+        appearance {
+            cssClasses: ws-Tone--soft
+        }
+    )
+
+    templateOption tone-dark (
+        name: Dark
+        group: @region/ws-tone
+        sequence: 20
+        appearance {
+            cssClasses: ws-Tone--dark
+        }
+    )
+
+    templateOption tone-accent (
+        name: Accent
+        group: @region/ws-tone
+        sequence: 30
+        appearance {
+            cssClasses: ws-Tone--accent
+        }
+    )
+
+    templateOption tone-gradient (
+        name: Gradient
+        group: @region/ws-tone
+        sequence: 40
+        appearance {
+            cssClasses: ws-Tone--gradient
+        }
+    )
+
+    templateOption pad-tight (
+        name: Tight
+        group: @region/ws-pad
+        sequence: 10
+        appearance {
+            cssClasses: ws-Pad--tight
+        }
+    )
+
+    templateOption pad-roomy (
+        name: Roomy
+        group: @region/ws-pad
+        sequence: 20
+        appearance {
+            cssClasses: ws-Pad--roomy
+        }
+    )
+
+    templateOption pad-none (
+        name: None
+        group: @region/ws-pad
+        sequence: 30
+        appearance {
+            cssClasses: ws-Pad--none
+        }
+    )
+
+    templateOption head-center (
+        name: Centered
+        group: @region/ws-head
+        sequence: 10
+        appearance {
+            cssClasses: ws-Head--center
+        }
+    )
+
+    templateOption head-split (
+        name: Split
+        group: @region/ws-head
+        sequence: 20
+        appearance {
+            cssClasses: ws-Head--split
+        }
+    )
+
+    templateOption head-hidden (
+        name: Hidden
+        group: @region/ws-head
+        sequence: 30
+        appearance {
+            cssClasses: ws-Head--hidden
+        }
+    )
+
+    templateOption width-narrow (
+        name: Narrow
+        group: @region/ws-width
+        sequence: 10
+        appearance {
+            cssClasses: ws-Width--narrow
+        }
+    )
+
+    templateOption width-wide (
+        name: Wide
+        group: @region/ws-width
+        sequence: 20
+        appearance {
+            cssClasses: ws-Width--wide
+        }
+    )
+
+    templateOption width-full (
+        name: Full Width
+        group: @region/ws-width
+        sequence: 30
+        appearance {
+            cssClasses: ws-Width--full
+        }
+    )
+
+    templateOption sec-menu (
+        name: Show in Menu
+        sequence: 100
+        appearance {
+            cssClasses: ws-Sec--menu
+        }
+        help {
+            helpText: Adds the section to the header menu, labelled with the region title. The section's Static ID is the link anchor.
+        }
+    )
+
+    templateOption divider (
+        name: Top Divider
+        sequence: 110
+        appearance {
+            cssClasses: ws-Divider
+        }
+        help {
+            helpText: A hairline above the section.
+        }
+    )
+
+    slot next (
+        name: Buttons
+        staticId: NEXT
+        supports {
+            regions: false
+            buttons: true
+        }
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot previous (
+        name: Buttons Before
+        staticId: PREVIOUS
+        supports {
+            regions: false
+            buttons: true
+        }
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot regionBody (
+        name: Region Body
+        staticId: BODY
+        supports {
+            items: true
+            buttons: true
+        }
+    )
+
+    slot subRegions (
+        name: Sub Regions
+        staticId: SUB_REGIONS
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+)
