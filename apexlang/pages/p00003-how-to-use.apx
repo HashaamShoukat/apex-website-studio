@@ -1,0 +1,148 @@
+page 3 (
+    name: How to Use
+    alias: HOW-TO-USE
+    title: Website Studio - How to Use
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    css {
+        inline:
+            ```css
+            .wss-Doc { max-width: 62rem; line-height: 1.7; }
+            .wss-Doc h3 { margin: 1.75rem 0 .5rem; font-size: 1.125rem; }
+            .wss-Doc h3:first-child { margin-top: 0; }
+            .wss-Doc ol, .wss-Doc ul { padding-inline-start: 1.25rem; margin: .25rem 0 .75rem; }
+            .wss-Doc li { margin: .2rem 0; }
+            .wss-Doc pre { margin: .5rem 0 1rem; padding: .875rem 1rem; overflow-x: auto; border-radius: 8px; background: #1f2329; color: #e6edf3; font-size: .8125rem; line-height: 1.55; }
+            .wss-Doc p code, .wss-Doc li code, .wss-Doc td code { padding: .05rem .35rem; border-radius: 4px; background: rgba(127,127,127,.14); font-size: .8125rem; }
+            .wss-Doc table { width: 100%; border-collapse: collapse; margin: .5rem 0 1rem; font-size: .875rem; }
+            .wss-Doc th, .wss-Doc td { padding: .45rem .6rem; border-bottom: 1px solid var(--ut-component-border-color, #e4e7ec); text-align: left; vertical-align: top; }
+            .wss-Doc th { font-weight: 700; opacity: .8; }
+            .wss-Doc td:first-child { font-weight: 600; white-space: nowrap; }
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region breadcrumb (
+        name: How to Use
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 10
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region guide (
+        name: Use Website Studio in Your Own App
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <div class="wss-Doc">
+                <h3>1. Get Website Studio into your workspace</h3>
+                <ol>
+                  <li>Download <code>website-studio.sql</code> from <a href="https://github.com/HashaamShoukat/apex-website-studio" target="_blank" rel="noopener">GitHub</a> (or import the APEXlang source with SQLcl: <code>apex import -input apexlang</code>).</li>
+                  <li><strong>App Builder &gt; Import</strong>, install it with any application ID. No database objects; APEX 26.1 or later.</li>
+                </ol>
+
+                <h3>2. Copy the templates into your application</h3>
+                <p>In <em>your</em> application: <strong>Shared Components &gt; Templates &gt; Create &gt; As a Copy of an Existing Template</strong>, copy from <strong>Website Studio</strong> (tick <em>Subscribe</em> for later updates):</p>
+                <table>
+                  <tr><th>Type</th><th>Template</th><th>Use it for</th></tr>
+                  <tr><td>Page</td><td>Modern One Page</td><td>The website page: header with a menu built from the sections, hero, sections, footer.</td></tr>
+                  <tr><td>Region</td><td>Modern Section</td><td>Every band of the page. The region title is the heading, the Static ID the menu anchor.</td></tr>
+                  <tr><td>Report</td><td>Website - Hero, Numbers, Services, Team, Testimonials, Logos, Pricing, Timeline, Process, FAQ, Careers, Portfolio, Links, Contact Details</td><td>Classic Report templates: each turns the rows of a SQL query into a section.</td></tr>
+                </table>
+                <p>The templates load their CSS and JavaScript from two static files, which the copy does not bring along. Upload <code>website-studio/website.css</code> and <code>website-studio/website.js</code> to <strong>Shared Components &gt; Static Application Files</strong> in your application, in a directory named <code>website-studio</code>. Download them from Website Studio's own Static Application Files, or from <code>apexlang/shared-components/static-files/website-studio</code> on GitHub.</p>
+
+                <h3>3. Build the page</h3>
+                <ol>
+                  <li>Create a blank page and set <strong>Appearance &gt; Page Template</strong> to <strong>Modern One Page</strong>. Make it public if visitors should not sign in. Pick the Template Options you built in the Designer.</li>
+                  <li><strong>Hero</strong>: a Classic Report in the <em>Hero</em> slot. Region template <strong>Modern Section</strong> with Spacing <em>None</em>, Width <em>Full Width</em>, Heading <em>Hidden</em>; report template <strong>Website - Hero</strong>. One row per slide.</li>
+                  <li><strong>Sections</strong>: regions in the <em>Body</em> slot with the <strong>Modern Section</strong> template. Give each a <strong>Static ID</strong> (it becomes <code>#services</code> in the menu) and keep <em>Show in Menu</em> on for the ones you want in the header. The menu label is the region title, or <code>data-menu="Services"</code> in <em>Advanced &gt; Custom Attributes</em> for a shorter one.</li>
+                  <li><strong>Lists of things</strong>: make the region a <strong>Classic Report</strong>, write the SQL with the column names below, and set <strong>Attributes &gt; Appearance &gt; Template</strong> to the matching Website report template. Set <em>Number of Rows</em> high enough (the demo uses 100) and pagination to <em>No Pagination</em>.</li>
+                  <li><strong>Free text</strong> (about, vision, call to action): a Static Content region with the helper classes below.</li>
+                  <li><strong>Contact form</strong>: page items and a button in a Modern Section region with the CSS class <code>ws-Contact</code>, and a process that stores or emails the message. Put a <em>Website - Contact Details</em> report in its Sub Regions for the address, phone and email.</li>
+                  <li><strong>Footer</strong>: regions with the <em>Blank with Attributes</em> template in the <em>Footer</em> slot (one per column - a <em>Website - Links</em> report with layout List makes a link column) and <em>Footer Bottom</em> for the copyright line.</li>
+                  <li><strong>Logo</strong>: a Static Content region in the <em>Logo</em> slot (or the application logo), and a button in <em>Header Buttons</em> for a call to action.</li>
+                </ol>
+                <pre>select title, subtitle, text, image_url,
+                       'See our work' as button_label, '#work' as button_link
+                  from my_slides
+                 order by display_order</pre>
+
+                <h3>4. The report templates and their columns</h3>
+                <p>Every column is optional: a column the query does not return is simply left out. <code>IMAGE_URL</code> takes any URL (<code>&#35;APP_FILES&#35;photo.jpg</code>, a BLOB download URL, an external image); without it the templates draw artwork in the accent colours, or the person's initials. <code>ICON</code> takes a Font APEX class such as <code>fa-lightbulb-o</code>; brand icons (<code>fa-instagram</code>, <code>fa-linkedin</code>, <code>fa-x-twitter</code>, <code>fa-youtube-play</code>, <code>fa-facebook</code>, <code>fa-github</code>, <code>fa-tiktok</code>, <code>fa-whatsapp</code> ...) are drawn by Website Studio, because Font APEX has none.</p>
+                <table>
+                  <tr><th>Template</th><th>What it is</th><th>Columns</th></tr>
+                  <tr><td>Website - Hero</td><td>The opening section. One row is one slide; with more than one row it becomes a slider.</td><td><code>TITLE</code> <code>SUBTITLE</code> <code>TEXT</code> <code>IMAGE_URL</code> <code>BUTTON_LABEL</code> <code>BUTTON_LINK</code> <code>BUTTON2_LABEL</code> <code>BUTTON2_LINK</code></td></tr>
+                  <tr><td>Website - Numbers</td><td>Key figures that count up when they scroll into view (page option Count Up Numbers).</td><td><code>VALUE</code> <code>PREFIX</code> <code>SUFFIX</code> <code>LABEL</code> <code>TEXT</code></td></tr>
+                  <tr><td>Website - Services</td><td>Services, features or benefits. ICON is a Font APEX class such as fa-lightbulb-o.</td><td><code>ICON</code> <code>TITLE</code> <code>TEXT</code> <code>LINK</code> <code>LINK_LABEL</code></td></tr>
+                  <tr><td>Website - Team</td><td>People with a photo (or their initials), role and a profile link. LINK_ICON defaults to fa-linkedin.</td><td><code>NAME</code> <code>ROLE</code> <code>IMAGE_URL</code> <code>BIO</code> <code>LINK</code> <code>LINK_ICON</code></td></tr>
+                  <tr><td>Website - Testimonials</td><td>What customers say. RATING is 0 to 5 stars (empty hides the stars).</td><td><code>QUOTE</code> <code>NAME</code> <code>ROLE</code> <code>IMAGE_URL</code> <code>RATING</code></td></tr>
+                  <tr><td>Website - Logos</td><td>Clients, partners or press. Without IMAGE_URL the name is shown as a word mark.</td><td><code>NAME</code> <code>IMAGE_URL</code> <code>LINK</code></td></tr>
+                  <tr><td>Website - Pricing</td><td>Plans. FEATURES is one feature per line (or separated by | or ;). IS_FEATURED = Y highlights a plan.</td><td><code>NAME</code> <code>PRICE</code> <code>PERIOD</code> <code>DESCRIPTION</code> <code>FEATURES</code> <code>BUTTON_LABEL</code> <code>BUTTON_LINK</code> <code>IS_FEATURED</code> <code>BADGE</code></td></tr>
+                  <tr><td>Website - Timeline</td><td>Milestones of your history.</td><td><code>YEAR</code> <code>TITLE</code> <code>TEXT</code></td></tr>
+                  <tr><td>Website - Process</td><td>How you work, numbered in the order of the query.</td><td><code>TITLE</code> <code>TEXT</code> <code>DURATION</code></td></tr>
+                  <tr><td>Website - FAQ</td><td>Questions that open to show the answer.</td><td><code>QUESTION</code> <code>ANSWER</code></td></tr>
+                  <tr><td>Website - Careers</td><td>Open roles that open to show the description and an apply button. Filter Buttons groups them by TEAM.</td><td><code>TITLE</code> <code>TEAM</code> <code>LOCATION</code> <code>TYPE</code> <code>DESCRIPTION</code> <code>APPLY_LINK</code> <code>APPLY_LABEL</code></td></tr>
+                  <tr><td>Website - Portfolio</td><td>Projects or photos. Filter Buttons groups them by CATEGORY.</td><td><code>TITLE</code> <code>CATEGORY</code> <code>IMAGE_URL</code> <code>LINK</code> <code>META</code></td></tr>
+                  <tr><td>Website - Links</td><td>Social media icons, footer link lists or link tiles. ICON is a Font APEX class such as fa-instagram.</td><td><code>LABEL</code> <code>LINK</code> <code>ICON</code></td></tr>
+                  <tr><td>Website - Contact Details</td><td>Address, phone, email and opening hours. LINK makes the value a link (mailto:, tel:, a map URL).</td><td><code>ICON</code> <code>LABEL</code> <code>VALUE</code> <code>LINK</code></td></tr>
+                </table>
+
+                <h3>5. Helper classes for Static Content</h3>
+                <table>
+                  <tr><th>Class</th><th>What it does</th></tr>
+                  <tr><td><code>ws-Eyebrow</code>, <code>ws-Lead</code></td><td>At the start of a Modern Section's <em>Header</em> text: a small label above the heading and an intro below it.</td></tr>
+                  <tr><td><code>*word*</code> in a title</td><td>Highlights the word in the accent colour (italic with the serif typefaces).</td></tr>
+                  <tr><td><code>ws-Split</code>, <code>ws-Split--reverse</code></td><td>Two columns, for example <code>&lt;div class="ws-Media" data-img="&#35;APP_FILES&#35;studio.jpg"&gt;&lt;/div&gt;</code> next to a <code>ws-Stack</code> of text.</td></tr>
+                  <tr><td><code>ws-Title</code>, <code>ws-Display</code>, <code>ws-Statement</code></td><td>Section heading, hero-size heading, a large statement.</td></tr>
+                  <tr><td><code>ws-Btn</code>, <code>ws-Btn--ghost</code>, <code>ws-More</code>, <code>ws-Actions</code></td><td>Buttons, a text link with an arrow, a row of buttons.</td></tr>
+                  <tr><td><code>ws-Checks</code>, <code>ws-Pillars</code>, <code>ws-Center</code></td><td>A list with check marks, a row of short columns, centred content.</td></tr>
+                </table>
+
+                <h3>6. Good to know</h3>
+                <ul>
+                  <li>The demo website (page <code>WEBSITE</code>) is the best reference: every section is in it, and every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
+                  <li>Texts can be translated with the text messages <code>WEBSITE_STUDIO.MENU</code>, <code>.BACK_TO_TOP</code>, <code>.ALL</code>, <code>.PREVIOUS</code>, <code>.NEXT</code>, <code>.SLIDE</code> and <code>.APPLY</code>.</li>
+                  <li>Typefaces other than System load from Google Fonts. Transparent over Hero needs the Slider or Full Bleed hero; with any other first section it behaves like Classic.</li>
+                  <li>After a partial page refresh of a section, call <code>wsSite.refresh(element)</code> - the templates already do it for <code>apexafterrefresh</code>.</li>
+                  <li>Visitors who prefer reduced motion get no animations; Windows high-contrast mode is respected. The source is in <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code>.</li>
+                </ul>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: #DEFAULT#
+        }
+    )
+
+)

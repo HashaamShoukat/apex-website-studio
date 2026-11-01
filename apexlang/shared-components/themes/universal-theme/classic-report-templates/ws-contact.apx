@@ -1,0 +1,31 @@
+classicReportTemplate ws-contact (
+    name: Website - Contact Details
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Infos #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <div class="ws-Info"><span class="ws-Icon fa #ICON#" data-icon="fa-info-circle" aria-hidden="true"></span><div><small>#LABEL#</small><a href="#LINK#">#VALUE#</a></div></div>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Contact Details (Website Studio). Address, phone, email and opening hours. LINK makes the value a link (mailto:, tel:, a map URL). Columns (all optional): ICON, LABEL, VALUE, LINK.
+    }
+
+    templateOption infos-cards (
+        name: Cards
+        group: @report/wsr-infos-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Infos--cards
+        }
+    )
+)

@@ -1,0 +1,71 @@
+file "gallery/bold-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/bold.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/corporate.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/editorial-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/editorial.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/emerald.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/glass-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/glass.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/luxe-night.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/midnight.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/minimal.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/ocean.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/poster.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/soft-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/soft.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/studio.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/website.css" (
+    mimeType: text/css
+)
+
+file "website-studio/website.js" (
+    mimeType: text/javascript
+)

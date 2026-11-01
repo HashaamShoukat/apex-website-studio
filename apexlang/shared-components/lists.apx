@@ -1,0 +1,85 @@
+list navigation-bar (
+    name: Navigation Bar
+
+    entry github (
+        label: GitHub
+        icon {
+            imageIconCssClasses: fa-github
+        }
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: https://github.com/HashaamShoukat/apex-website-studio
+            }
+        }
+    )
+
+)
+
+list navigation-menu (
+    name: Navigation Menu
+
+    entry home (
+        label: Gallery
+        icon {
+            imageIconCssClasses: fa-th-large
+        }
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+    entry designer (
+        label: Designer
+        icon {
+            imageIconCssClasses: fa-paint-brush
+        }
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 2
+            }
+        }
+    )
+
+    entry how-to-use (
+        label: How to Use
+        icon {
+            imageIconCssClasses: fa-book
+        }
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 3
+            }
+        }
+    )
+
+    entry demo (
+        label: Demo Website
+        icon {
+            imageIconCssClasses: fa-globe
+        }
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+    )
+
+)

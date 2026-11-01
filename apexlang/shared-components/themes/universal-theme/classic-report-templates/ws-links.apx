@@ -1,0 +1,57 @@
+classicReportTemplate ws-links (
+    name: Website - Links
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Links #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Links--icons" data-ws-base-class="ws-Links">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <a class="ws-Link" href="#LINK#" rel="noopener"><span class="fa #ICON#" data-icon="" aria-hidden="true"></span><span class="ws-Link-l">#LABEL#</span></a>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Links (Website Studio). Social media icons, footer link lists or link tiles. ICON is a Font APEX class such as fa-instagram. Columns (all optional): LABEL, LINK, ICON.
+    }
+
+    templateOption links-list (
+        name: List
+        group: @report/wsr-links-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Links--list
+        }
+    )
+
+    templateOption links-inline (
+        name: Inline
+        group: @report/wsr-links-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Links--inline
+        }
+    )
+
+    templateOption links-tiles (
+        name: Tiles
+        group: @report/wsr-links-layout
+        sequence: 30
+        appearance {
+            cssClasses: ws-Links--tiles
+        }
+    )
+
+    templateOption size-big (
+        name: Large Icons
+        sequence: 10
+        appearance {
+            cssClasses: ws-Size--big
+        }
+    )
+)

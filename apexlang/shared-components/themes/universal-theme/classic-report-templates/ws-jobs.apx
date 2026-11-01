@@ -1,0 +1,48 @@
+classicReportTemplate ws-jobs (
+    name: Website - Careers
+    templateClass: custom1
+    type: namedColumn
+    templateOptions {
+        preset: ws-Filter
+    }
+    reportTemplate {
+        top: <div class="ws-R ws-Jobs #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <details class="ws-Job" data-tag="#TEAM#">
+              <summary><span class="ws-Job-main"><b>#TITLE#</b><span class="ws-Job-meta"><span class="ws-Job-team" data-opt="text">#TEAM#</span><span data-opt="text"><span class="fa fa-map-marker" aria-hidden="true"></span>#LOCATION#</span><span data-opt="text"><span class="fa fa-clock-o" aria-hidden="true"></span>#TYPE#</span></span></span><span class="ws-Plus" aria-hidden="true"></span></summary>
+              <div class="ws-Job-d"><p data-opt="text">#DESCRIPTION#</p><a class="ws-Btn" href="#APPLY_LINK#">#APPLY_LABEL#</a></div>
+            </details>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Careers (Website Studio). Open roles that open to show the description and an apply button. Filter Buttons groups them by TEAM. Columns (all optional): TITLE, TEAM, LOCATION, TYPE, DESCRIPTION, APPLY_LINK, APPLY_LABEL.
+    }
+
+    templateOption jobs-cards (
+        name: Cards
+        group: @report/wsr-jobs-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Jobs--cards
+        }
+    )
+
+    templateOption filter (
+        name: Filter Buttons
+        sequence: 10
+        appearance {
+            cssClasses: ws-Filter
+        }
+    )
+)

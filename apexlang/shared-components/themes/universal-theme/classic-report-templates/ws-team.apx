@@ -1,0 +1,51 @@
+classicReportTemplate ws-team (
+    name: Website - Team
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Team #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <article class="ws-Person">
+              <div class="ws-Person-top">
+                <div class="ws-Person-photo ws-Media" data-img="#IMAGE_URL#" data-initials="#NAME#" role="img" aria-label="#NAME#"></div>
+                <a class="ws-Person-link" href="#LINK#" data-opt="href" aria-label="#NAME#"><span class="fa #LINK_ICON#" data-icon="fa-linkedin" aria-hidden="true"></span></a>
+              </div>
+              <h3>#NAME#</h3>
+              <p class="ws-Role">#ROLE#</p>
+              <p class="ws-Bio" data-opt="text">#BIO#</p>
+            </article>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Team (Website Studio). People with a photo (or their initials), role and a profile link. LINK_ICON defaults to fa-linkedin. Columns (all optional): NAME, ROLE, IMAGE_URL, BIO, LINK, LINK_ICON.
+    }
+
+    templateOption team-round (
+        name: Round Photos
+        group: @report/wsr-team-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Team--round
+        }
+    )
+
+    templateOption team-list (
+        name: Compact List
+        group: @report/wsr-team-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Team--list
+        }
+    )
+)

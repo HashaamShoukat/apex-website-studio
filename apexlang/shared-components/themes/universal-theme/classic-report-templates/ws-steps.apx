@@ -1,0 +1,39 @@
+classicReportTemplate ws-steps (
+    name: Website - Process
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <ol class="ws-R ws-Steps #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Steps--line" data-ws-base-class="ws-Steps">
+        bottom: </ol>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <li class="ws-Step">
+              <span class="ws-Step-n" aria-hidden="true"></span>
+              <h3>#TITLE#</h3>
+              <p data-opt="text">#TEXT#</p>
+              <span class="ws-Step-t" data-opt="text">#DURATION#</span>
+            </li>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Process (Website Studio). How you work, numbered in the order of the query. Columns (all optional): TITLE, TEXT, DURATION.
+    }
+
+    templateOption steps-cards (
+        name: Cards
+        group: @report/wsr-steps-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Steps--cards
+        }
+    )
+)

@@ -1,0 +1,87 @@
+classicReportTemplate ws-hero (
+    name: Website - Hero
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Hero #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Hero--slider" data-ws-base-class="ws-Hero">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <div class="ws-Slide">
+              <div class="ws-Slide-media ws-Media" data-img="#IMAGE_URL#" role="img" aria-label="#TITLE#"></div>
+              <div class="ws-Slide-body">
+                <p class="ws-Eyebrow" data-opt="text">#SUBTITLE#</p>
+                <h1 class="ws-Display">#TITLE#</h1>
+                <p class="ws-Lead" data-opt="text">#TEXT#</p>
+                <div class="ws-Actions"><a class="ws-Btn" href="#BUTTON_LINK#">#BUTTON_LABEL#</a><a class="ws-Btn ws-Btn--ghost" href="#BUTTON2_LINK#">#BUTTON2_LABEL#</a></div>
+              </div>
+            </div>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Hero (Website Studio). The opening section. One row is one slide; with more than one row it becomes a slider. Columns (all optional): TITLE, SUBTITLE, TEXT, IMAGE_URL, BUTTON_LABEL, BUTTON_LINK, BUTTON2_LABEL, BUTTON2_LINK.
+    }
+
+    templateOption hero-split (
+        name: Split
+        group: @report/wsr-hero-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hero--split
+        }
+    )
+
+    templateOption hero-centered (
+        name: Centered
+        group: @report/wsr-hero-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Hero--centered
+        }
+    )
+
+    templateOption hero-fullbleed (
+        name: Full Bleed
+        group: @report/wsr-hero-layout
+        sequence: 30
+        appearance {
+            cssClasses: ws-Hero--fullbleed
+        }
+    )
+
+    templateOption auto-4 (
+        name: 4 Seconds
+        group: @report/wsr-autoplay
+        sequence: 10
+        appearance {
+            cssClasses: ws-Auto--4
+        }
+    )
+
+    templateOption auto-9 (
+        name: 9 Seconds
+        group: @report/wsr-autoplay
+        sequence: 20
+        appearance {
+            cssClasses: ws-Auto--9
+        }
+    )
+
+    templateOption auto-off (
+        name: Off
+        group: @report/wsr-autoplay
+        sequence: 30
+        appearance {
+            cssClasses: ws-Auto--off
+        }
+    )
+)

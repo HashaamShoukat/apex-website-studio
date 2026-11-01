@@ -1,0 +1,57 @@
+classicReportTemplate ws-gallery (
+    name: Website - Portfolio
+    templateClass: custom1
+    type: namedColumn
+    templateOptions {
+        preset: ws-Filter
+    }
+    reportTemplate {
+        top: <div class="ws-R ws-Works #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <a class="ws-Work" href="#LINK#" data-tag="#CATEGORY#">
+              <span class="ws-Work-img ws-Media" data-img="#IMAGE_URL#" role="img" aria-label="#TITLE#"></span>
+              <span class="ws-Work-c"><span><b>#TITLE#</b><small>#META#</small></span></span>
+            </a>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Portfolio (Website Studio). Projects or photos. Filter Buttons groups them by CATEGORY. Columns (all optional): TITLE, CATEGORY, IMAGE_URL, LINK, META.
+    }
+
+    templateOption works-editorial (
+        name: Editorial
+        group: @report/wsr-works-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Works--editorial
+        }
+    )
+
+    templateOption works-large (
+        name: Large
+        group: @report/wsr-works-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Works--large
+        }
+    )
+
+    templateOption filter (
+        name: Filter Buttons
+        sequence: 10
+        appearance {
+            cssClasses: ws-Filter
+        }
+    )
+)
