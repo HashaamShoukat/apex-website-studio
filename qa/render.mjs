@@ -35,13 +35,14 @@ const optsOf = (v, defaults = []) => arr(v).flatMap(o => o === "#DEFAULT#" ? def
 function report(region, reports) {
     const t = reports[region.props["componentAppearance.template"]];
     if (!t) { throw new Error("no report template " + region.props["componentAppearance.template"]); }
-    const rows = ROWS[region.props["advanced.staticId"] || region.id] || [];
+    const rows = ROWS[region.props["advanced.htmlDomId"] || region.id] || [];
     const cls = optsOf(region.props["componentAppearance.templateOptions"]).join(" ");
-    const fill = s => s.replace(/#COMPONENT_CSS_CLASSES#/g, cls).replace(/#DOM_ID#/g, region.props["advanced.staticId"] || region.id).replace(/#REPORT_ATTRIBUTES#/g, "");
+    const fill = s => s.replace(/#COMPONENT_CSS_CLASSES#/g, cls).replace(/#DOM_ID#/g, region.props["advanced.htmlDomId"] || region.id).replace(/#REPORT_ATTRIBUTES#/g, "");
     const row = t.props["rowTemplate1.template"];
     // APEX replaces #COLUMN# with the escaped value of that column; columns the query does not return stay as they are
     const body = rows.map(r => row.replace(/#([A-Z0-9_]+)#/g, (m, c) => (c in r ? esc(r[c] ?? "") : m))).join("\n");
-    return fill(t.props["reportTemplate.top"]) + "\n" + body + "\n" + fill(t.props["reportTemplate.bottom"]);
+    // APEX puts every Classic Report inside a "catch" div
+    return `<div id="report_${region.id}_catch">` + fill(t.props["reportTemplate.top"]) + "\n" + body + "\n" + fill(t.props["reportTemplate.bottom"]) + "</div>";
 }
 function itemHtml(it) {
     const p = it.props, id = it.id, req = /required/.test(p["appearance.template"] || "");
@@ -61,7 +62,7 @@ function grid(cells, layout) {
 
 export function renderSite({ pageClasses } = {}) {
     const { pageTpl, regionTpls, reports } = templates();
-    const [page] = read(A + "pages/p00010-demo-website.apx");
+    const [page] = read(A + "pages/p00010-website.apx");
     const regions = page.children.filter(c => c.type === "region"), items = page.children.filter(c => c.type === "pageItem"), buttons = page.children.filter(c => c.type === "button");
     const pp = pageTpl.props;
     const layout = { containerTemplate: pp["layout.containerTemplate"], rowTemplate: pp["layout.rowTemplate"], columnTemplate: pp["layout.columnTemplate"] };
@@ -70,7 +71,7 @@ export function renderSite({ pageClasses } = {}) {
     function regionHtml(r) {
         const p = r.props, tpl = regionTpls[p["appearance.template"]];
         if (!tpl) { throw new Error("no region template " + p["appearance.template"]); }
-        const id = p["advanced.staticId"] || r.id;
+        const id = p["advanced.htmlDomId"] || r.id;
         let content = p.type === "classicReport" ? report(r, reports) : (p["source.htmlCode"] || "");
         const myItems = items.filter(i => i.props["layout.region"] === "@" + r.id).sort(seqSort).map(i => ({ html: itemHtml(i), span: i.props["layout.columnSpan"], newRow: i.props["layout.startNewRow"] !== "false", seq: +i.props["layout.sequence"] }));
         const myButtons = buttons.filter(b => b.props["layout.region"] === "@" + r.id && b.props["layout.slot"] === "regionBody").map(b => ({ html: buttonHtml(b), span: 12, newRow: true, seq: +b.props["layout.sequence"] }));

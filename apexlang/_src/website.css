@@ -223,6 +223,10 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
 
 /* ---------- layout grid and sections ---------- */
 .ws-Main { display: block; }
+/* until website.js has run (sliders, *highlights*, menu) the sections stay hidden; shown after 4s if the script never runs */
+.ws-Loading .ws-Main, .ws-Loading .ws-Footer { opacity: 0; animation: ws-show 0s 4s forwards; }
+.ws-Main, .ws-Footer { transition: opacity .2s ease; }
+@keyframes ws-show { to { opacity: 1; } }
 .ws-Grid { display: block; }
 .ws-Row { display: flex; flex-wrap: wrap; }
 .ws-Col { flex: 1 1 100%; min-width: 0; }
@@ -252,7 +256,9 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
 @media (max-width: 800px) { .ws-Head--split .ws-Head { grid-template-columns: 1fr; } }
 .ws-Head--hidden .ws-Head { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0; }
 .ws-Width--full .ws-Head { padding-inline: var(--ws-gutter); }
-.ws-Body { display: grid; gap: 1.5rem; }
+.ws-Body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+/* APEX wraps a Classic Report in <div id="report_<id>_catch">: without min-width 0 a wide report (the logo marquee track) stretches the page */
+.ws-Body > * { min-width: 0; }
 .ws-Body > .ws-Lead:first-child { margin-top: -1.5rem; }
 .ws-Btns:empty { display: none; }
 .ws-Btns { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
