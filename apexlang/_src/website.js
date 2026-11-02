@@ -44,9 +44,16 @@
         var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
         return { page: g("ws"), regions: g("r") };
     }
+    // the option groups of the report and list templates: { group id: [classes] } (filled in by _src/build.mjs)
+    var GROUPS = {};
+    // c: a class (it replaces the other classes of its option group), -class (removes it) or !group-id (clears the group)
     function setFamily(el, c) {
-        var fam = c.replace(/--.*$/, "--");
-        el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(fam) === 0) { el.classList.remove(x); } });
+        if (c.charAt(0) === "-") { el.classList.remove(c.slice(1)); return; }
+        if (c.charAt(0) === "!") { (GROUPS[c.slice(1)] || []).forEach(function (x) { el.classList.remove(x); }); return; }
+        var fam = null;
+        Object.keys(GROUPS).some(function (k) { if (GROUPS[k].indexOf(c) >= 0) { fam = GROUPS[k]; return true; } return false; });
+        if (fam) { fam.forEach(function (x) { el.classList.remove(x); }); }
+        else if (SEC_FAMILY.test(c)) { var f = c.replace(/--.*$/, "--"); el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(f) === 0) { el.classList.remove(x); } }); }
         el.classList.add(c);
     }
     function applyLook(look) {

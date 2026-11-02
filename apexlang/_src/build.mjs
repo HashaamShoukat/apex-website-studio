@@ -61,7 +61,8 @@ function groups(type, gs) {
 fs.mkdirSync(FILES + "website-studio", { recursive: true });
 // website.css is shipped minified (comments and indentation removed); the readable source stays in _src
 const minCss = c => c.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, " ").replace(/\s*([{};])\s*/g, "$1").replace(/;}/g, "}").replace(/}/g, "}\n").trim();
-const css = "/* Website Studio " + new Date().getFullYear() + " - source: github.com/HashaamShoukat/apex-website-studio apexlang/_src/website.css (MIT) */\n" + minCss(read("website.css") + brandCss()), js = read("website.js");
+const css = "/* Website Studio " + new Date().getFullYear() + " - source: github.com/HashaamShoukat/apex-website-studio apexlang/_src/website.css (MIT) */\n" + minCss(read("website.css") + brandCss()), js = read("website.js").replace("var GROUPS = {};", "var GROUPS = " + JSON.stringify(Object.fromEntries([...REPORTS.flatMap(r => r.groups || []), ...MENU.groups]
+    .map(g => [g.id, [...(g.nulClass ? [g.nulClass] : []), ...g.options.map(o => o[0])]]))) + ";");
 fs.writeFileSync(FILES + "website-studio/website.css", css);
 fs.writeFileSync(FILES + "website-studio/website.js", js);
 LIMITS.push(`website.css ${bytes(css)} (static file)`, `website.js ${bytes(js)} (static file)`);

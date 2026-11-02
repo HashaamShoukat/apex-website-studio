@@ -12,45 +12,47 @@ page 2 (
     javaScript {
         executeWhenPageLoads:
             ```javascript-browser
-            // Designer: every choice is a template option (a CSS class) of Modern One Page or of a Website report template.
-            // The preview iframe shows the real demo website; the classes travel in its URL hash (#ws=<page classes>&r=<static id>:<classes>,...).
+            // Designer: every choice is a template option (a CSS class) of Modern One Page or of a Website report or list template.
+            // The preview iframe shows a real website page; the classes travel in its URL hash (#ws=<page classes>&r=@<template>:<classes>,...).
             (function ($) {
                 var DEF = "ws-Fx--sticky ws-Fx--reveal ws-Fx--count ws-Fx--top".split(" ");
-                var SELECTS = [
-                    { item: "P2_DESIGN", group: "Design" }, { item: "P2_ACCENT", group: "Accent Color" }, { item: "P2_SCHEME", group: "Color Scheme" },
-                    { item: "P2_FONT", group: "Typeface" }, { item: "P2_HEADER", group: "Header" }, { item: "P2_CORNERS", group: "Corners" },
-                    { item: "P2_SPACE", group: "Section Spacing" }, { item: "P2_FOOTER", group: "Footer" }
-                ];
-                var SWITCHES = [
-                    { item: "P2_STICKY", css: "ws-Fx--sticky", label: "Sticky Header" }, { item: "P2_REVEAL", css: "ws-Fx--reveal", label: "Reveal on Scroll" },
-                    { item: "P2_COUNT", css: "ws-Fx--count", label: "Count Up Numbers" }, { item: "P2_TOP", css: "ws-Fx--top", label: "Back to Top Button" },
-                    { item: "P2_PROGRESS", css: "ws-Fx--progress", label: "Scroll Progress Bar" }
-                ];
-                // [item, label, static id, report template, [[option, class]...]] - the first option is the template's default
-                var SECTIONS = [["P2_HERO","Hero","hero","ws-hero",[["Slider","ws-Hero--slider"],["Split","ws-Hero--split"],["Centered","ws-Hero--centered"],["Full Bleed","ws-Hero--fullbleed"]]],["P2_LOGOS","Clients","clients","ws-logos",[["Scrolling Marquee","ws-Logos--marquee"],["Grid","ws-Logos--grid"],["Row","ws-Logos--row"]]],["P2_SERVICES","Services","services","ws-features",[["Cards","ws-Features--cards"],["Rows","ws-Features--rows"],["Bento","ws-Features--bento"],["Icons Only","ws-Features--icons"]]],["P2_WORK","Portfolio","work","ws-gallery",[["Grid","ws-Works--grid"],["Editorial","ws-Works--editorial"],["Large","ws-Works--large"]]],["P2_PROCESS","Process","process","ws-steps",[["Connected","ws-Steps--line"],["Cards","ws-Steps--cards"]]],["P2_QUOTES","Testimonials","clients-say","ws-testimonials",[["Carousel","ws-Quotes--carousel"],["Wall","ws-Quotes--wall"],["Spotlight","ws-Quotes--spotlight"]]],["P2_TEAM","Team","team","ws-team",[["Portrait Cards","ws-Team--cards"],["Round Photos","ws-Team--round"],["Compact List","ws-Team--list"]]],["P2_HISTORY","Timeline","history","ws-timeline",[["Alternating","ws-Timeline--alternate"],["List","ws-Timeline--list"]]]];
-                var PRESET = {"ws-hero":[],"ws-stats":[],"ws-features":[],"ws-team":[],"ws-testimonials":[],"ws-logos":[],"ws-pricing":["ws-Plans--lift"],"ws-timeline":[],"ws-steps":[],"ws-faq":[],"ws-jobs":["ws-Filter"],"ws-gallery":["ws-Filter"],"ws-links":[],"ws-contact":[]};
-                var frame = document.getElementById("wsd-frame"), site = frame.getAttribute("data-site"), lastRegions = null;
+                var SELECTS = [{"item":"P2_DESIGN","group":"Design"},{"item":"P2_ACCENT","group":"Accent Color"},{"item":"P2_SCHEME","group":"Color Scheme"},{"item":"P2_FONT","group":"Typeface"},{"item":"P2_HEADER","group":"Header"},{"item":"P2_CORNERS","group":"Corners"},{"item":"P2_SPACE","group":"Section Spacing"},{"item":"P2_FOOTER","group":"Footer"},{"item":"P2_PH","group":"Placeholder Images"}];
+                var SWITCHES = [{"item":"P2_STICKY","css":"ws-Fx--sticky","label":"Sticky Header"},{"item":"P2_REVEAL","css":"ws-Fx--reveal","label":"Reveal on Scroll"},{"item":"P2_COUNT","css":"ws-Fx--count","label":"Count Up Numbers"},{"item":"P2_TOP","css":"ws-Fx--top","label":"Back to Top Button"},{"item":"P2_PROGRESS","css":"ws-Fx--progress","label":"Scroll Progress Bar"},{"item":"P2_THEME","css":"ws-Fx--theme","label":"Light/Dark Toggle"},{"item":"P2_CHAT","css":"ws-Fx--chat","label":"WhatsApp Button"}];
+                // [item, label, template, [[option, value]...]]
+                var SECTIONS = [["P2_HERO_LAYOUT","Hero - Layout","ws-hero",[["Slider","ws-Hero--slider"],["Split","ws-Hero--split"],["Centered","ws-Hero--centered"],["Full Bleed","ws-Hero--fullbleed"]]],["P2_HERO_HEIGHT","Hero - Height","ws-hero",[["Large","!wsr-hero-height"],["Full Screen","ws-Hero--full"],["Medium","ws-Hero--medium"]]],["P2_HERO_OVERLAY","Hero - Image Overlay","ws-hero",[["Normal","!wsr-hero-overlay"],["Light","ws-Hero--light"],["Strong","ws-Hero--strong"]]],["P2_HERO_MOVE","Hero - Transition","ws-hero",[["Fade","!wsr-hero-move"],["Slide","ws-Hero--slide"]]],["P2_HERO_ZOOM","Hero - Slow Zoom","ws-hero",[["On","ws-Hero--zoom"],["Off","-ws-Hero--zoom"]]],["P2_HERO_AUTOPLAY","Hero - Autoplay","ws-hero",[["6 Seconds","!wsr-autoplay"],["4 Seconds","ws-Auto--4"],["9 Seconds","ws-Auto--9"],["Off","ws-Auto--off"]]],["P2_MENU_ALIGN","Menu - Alignment","website-menu",[["Right","!wsm-align"],["Center","ws-Menu--center"],["Left","ws-Menu--left"]]],["P2_MENU_MAX","Menu - Visible Entries","website-menu",[["All","!wsm-max"],["4, then More","ws-Menu--max4"],["5, then More","ws-Menu--max5"],["6, then More","ws-Menu--max6"],["7, then More","ws-Menu--max7"]]],["P2_MENU_MOBILE","Menu - On Phones","website-menu",[["Drop-down Panel","!wsm-mobile"],["Full-screen Overlay","ws-Menu--overlay"],["Side Drawer","ws-Menu--drawer"]]],["P2_MENU_CTA","Menu - Last Entry as Button","website-menu",[["On","ws-Menu--cta"],["Off","-ws-Menu--cta"]]],["P2_FEATURES_LAYOUT","Services - Layout","ws-features",[["Cards","!wsr-features-layout"],["Rows","ws-Features--rows"],["Bento","ws-Features--bento"],["Icons Only","ws-Features--icons"]]],["P2_TESTIMONIALS_LAYOUT","Testimonials - Layout","ws-testimonials",[["Carousel","ws-Quotes--carousel"],["Wall","ws-Quotes--wall"],["Spotlight","ws-Quotes--spotlight"]]],["P2_TEAM_LAYOUT","Team - Layout","ws-team",[["Portrait Cards","!wsr-team-layout"],["Round Photos","ws-Team--round"],["Compact List","ws-Team--list"]]],["P2_GALLERY_LAYOUT","Portfolio - Layout","ws-gallery",[["Grid","!wsr-works-layout"],["Editorial","ws-Works--editorial"],["Large","ws-Works--large"]]],["P2_LOGOS_LAYOUT","Logos - Layout","ws-logos",[["Scrolling Marquee","ws-Logos--marquee"],["Grid","ws-Logos--grid"],["Row","ws-Logos--row"]]],["P2_LOGOS_SPEED","Logos - Marquee Speed","ws-logos",[["Normal","!wsr-logos-speed"],["Slow","ws-Speed--slow"],["Fast","ws-Speed--fast"]]],["P2_STEPS_LAYOUT","Process - Layout","ws-steps",[["Connected","ws-Steps--line"],["Cards","ws-Steps--cards"]]],["P2_TIMELINE_LAYOUT","Timeline - Layout","ws-timeline",[["Alternating","ws-Timeline--alternate"],["List","ws-Timeline--list"]]],["P2_NEWS_LAYOUT","News - Layout","ws-news",[["Cards","!wsr-news-layout"],["First Post Large","ws-News--featured"],["List","ws-News--list"]]],["P2_PRODUCTS_LAYOUT","Products - Layout","ws-products",[["Cards","!wsr-products-layout"],["Menu List","ws-Products--menu"],["Compact","ws-Products--compact"]]],["P2_PHOTOS_LAYOUT","Photo Gallery - Layout","ws-photos",[["Grid","!wsr-photos-layout"],["Masonry","ws-Photos--masonry"],["Scrolling Strip","ws-Photos--strip"]]],["P2_EVENTS_LAYOUT","Events - Layout","ws-events",[["Agenda","!wsr-events-layout"],["Cards","ws-Events--cards"]]],["P2_HOURS_LAYOUT","Opening Hours - Layout","ws-hours",[["Table","!wsr-hours-layout"],["Cards","ws-Hours--cards"]]]];
+                var PRESET = {"ws-hero":["ws-Hero--zoom"],"ws-stats":[],"ws-features":[],"ws-team":[],"ws-testimonials":[],"ws-logos":[],"ws-pricing":["ws-Plans--lift"],"ws-timeline":[],"ws-steps":[],"ws-faq":[],"ws-jobs":["ws-Filter"],"ws-gallery":["ws-Filter"],"ws-links":[],"ws-contact":[],"ws-news":[],"ws-products":["ws-Filter"],"ws-photos":[],"ws-zigzag":[],"ws-events":[],"ws-hours":[],"ws-compare":[],"ws-video":[],"ws-map":[]}, TPL_NAME = {"ws-hero":"Website - Hero","ws-stats":"Website - Numbers","ws-features":"Website - Services","ws-team":"Website - Team","ws-testimonials":"Website - Testimonials","ws-logos":"Website - Logos","ws-pricing":"Website - Pricing","ws-timeline":"Website - Timeline","ws-steps":"Website - Process","ws-faq":"Website - FAQ","ws-jobs":"Website - Careers","ws-gallery":"Website - Portfolio","ws-links":"Website - Links","ws-contact":"Website - Contact Details","ws-news":"Website - News","ws-products":"Website - Products","ws-photos":"Website - Photo Gallery","ws-zigzag":"Website - Image and Text","ws-events":"Website - Events","ws-hours":"Website - Opening Hours","ws-compare":"Website - Comparison","ws-video":"Website - Video","ws-map":"Website - Map","website-menu":"Website - Menu"};
+                var SITES = {"WEBSITE":{"look":"ws-Accent--tangerine ws-Font--grotesk","name":"Design Studio","page":10,"sql":[{"id":"hero","name":"Halcyon (Website - Hero)","sql":"select 'We design brands people *remember*.' as title,\n       'Brand and digital studio - Lisbon' as subtitle,\n       'Strategy, identity and websites for companies with something to say.' as text,\n       'See our work' as button_label,\n       '#work' as button_link,\n       'Book a call' as button2_label,\n       '#contact' as button2_link,\n       'website-studio/img/studio-hero-1.jpg' as image_file,\n       'Designers around a table covered in sketches' as image_alt,\n       'center 40%' as image_position,\n       1 as sort_order\n  from dual\nunion all\nselect 'Websites that *work* as hard as you do.' as title,\n       'Websites' as subtitle,\n       'Fast, accessible sites your team can update without calling a developer.' as text,\n       'Our services' as button_label,\n       '#services' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/studio-hero-2.jpg' as image_file,\n       'A bright studio with long desks and plants' as image_alt,\n       null as image_position,\n       2 as sort_order\n  from dual\nunion all\nselect 'From first sketch to *global* launch.' as title,\n       'Since 2011' as subtitle,\n       'One senior team from kickoff to the day you go live, and after.' as text,\n       'Start a project' as button_label,\n       '#contact' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/studio-hero-3.jpg' as image_file,\n       'A team discussing ideas on a glass wall' as image_alt,\n       null as image_position,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"work","name":"Work (Website - Portfolio)","sql":"select 'Tidewater Ferries' as title,\n       'Branding' as category,\n       'Identity - 2024' as meta,\n       'website-studio/img/work-1.jpg' as image_file,\n       'Brand identity on business cards and paper' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Lumen Bank' as title,\n       'Web' as category,\n       'Website - 2024' as meta,\n       'website-studio/img/work-2.jpg' as image_file,\n       'A website design on a laptop' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Fieldnote' as title,\n       'Product' as category,\n       'App design - 2023' as meta,\n       'website-studio/img/work-3.jpg' as image_file,\n       'A mobile app on a phone' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Kestrel Coffee' as title,\n       'Branding' as category,\n       'Packaging - 2023' as meta,\n       'website-studio/img/work-4.jpg' as image_file,\n       'Coffee packaging' as image_alt,\n       4 as sort_order\n  from dual\nunion all\nselect 'Orbital Labs' as title,\n       'Web' as category,\n       'Website - 2023' as meta,\n       'website-studio/img/work-5.jpg' as image_file,\n       'A product dashboard on a large screen' as image_alt,\n       5 as sort_order\n  from dual\nunion all\nselect 'Vantage Hotels' as title,\n       'Branding' as category,\n       'Identity - 2022' as meta,\n       'website-studio/img/work-6.jpg' as image_file,\n       'A hotel lobby with the new signage' as image_alt,\n       6 as sort_order\n  from dual\norder by sort_order"},{"id":"clients-say","name":"Clients who stayed (Website - Testimonials)","sql":"select 'Halcyon understood our business faster than our own board did. The new brand paid for itself in the first quarter.' as quote,\n       'Sofia Marques' as name,\n       'CEO, Tidewater Ferries' as role,\n       '5' as rating,\n       'website-studio/img/person-3.jpg' as image_file,\n       'Portrait of a woman with curly hair' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'They are the rare studio that is as good at listening as they are at design. Our site conversion doubled after launch.' as quote,\n       'Daniel Brook' as name,\n       'Head of Marketing, Lumen Bank' as role,\n       '5' as rating,\n       'website-studio/img/person-6.jpg' as image_file,\n       'Portrait of a man in a suit' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Calm, honest and very talented. Three projects in and we would not go anywhere else.' as quote,\n       'Priya Nair' as name,\n       'Founder, Fieldnote' as role,\n       '5' as rating,\n       'website-studio/img/person-5.jpg' as image_file,\n       'Portrait of a woman in an office' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"team","name":"Team (Website - Team)","sql":"select 'Ines Duarte' as name,\n       'Founder and Creative Director' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-1.jpg' as image_file,\n       'Portrait of a woman smiling' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Tomas Ferreira' as name,\n       'Design Director' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-2.jpg' as image_file,\n       'Portrait of a man in a shirt' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Amara Okafor' as name,\n       'Head of Strategy' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-5.jpg' as image_file,\n       'Portrait of a woman in an office' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Leo Brandt' as name,\n       'Engineering Lead' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-4.jpg' as image_file,\n       'Portrait of a man with a beard' as image_alt,\n       4 as sort_order\n  from dual\norder by sort_order"}]},"COMPANY":{"look":"ws-Design--corporate ws-Accent--indigo ws-Font--tech ws-Header--centered","name":"Company","page":11,"sql":[{"id":"hero","name":"Meridian (Website - Hero)","sql":"select 'Infrastructure that *lasts* a generation.' as title,\n       'Engineering and advisory since 1998' as subtitle,\n       'We plan, build and run the roads, grids and water networks that cities depend on.' as text,\n       'Our services' as button_label,\n       '#services' as button_link,\n       'Talk to an expert' as button2_label,\n       '#contact' as button2_link,\n       'website-studio/img/company-hero.jpg' as image_file,\n       'A modern office building' as image_alt,\n       1 as sort_order\n  from dual\norder by sort_order"},{"id":"about","name":"About (Website - Image and Text)","sql":"select 'About us' as eyebrow,\n       'Four hundred engineers, *one* standard.' as title,\n       'From offices in Riyadh, Dubai and Rotterdam we work with public and private clients on projects that must still work in fifty years.' as text,\n       '#team' as link,\n       'Meet the leadership' as link_label,\n       'website-studio/img/company-team.jpg' as image_file,\n       'Colleagues working on laptops' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'How we work' as eyebrow,\n       'Plan first, build once.' as title,\n       'Every project starts with a digital model of the asset, so cost, risk and carbon are clear before the first contract is signed.' as text,\n       '#services' as link,\n       'Our services' as link_label,\n       'website-studio/img/company-plan.jpg' as image_file,\n       'Planning notes and charts on a desk' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Sustainability' as eyebrow,\n       'Net zero on our own sites by *2030*.' as title,\n       'We publish our emissions every year and design every project to the lowest carbon option the client can afford.' as text,\n       null as link,\n       null as link_label,\n       'website-studio/img/company-meeting.jpg' as image_file,\n       'A meeting around a table' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"news","name":"Insights (Website - News)","sql":"select 'What digital twins changed on the Atlas Rail extension' as title,\n       'Two years in, the model has saved four months of site work. Here is what we learned.' as text,\n       '12 Oct 2026' as post_date,\n       'Case study' as category,\n       '#' as link,\n       'website-studio/img/news-1.jpg' as image_file,\n       'Charts on a laptop' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Meridian opens a Rotterdam office' as title,\n       'Forty engineers join to lead our water and port work in Northern Europe.' as text,\n       '28 Sep 2026' as post_date,\n       'News' as category,\n       '#' as link,\n       'website-studio/img/news-2.jpg' as image_file,\n       'A desk with a laptop and coffee' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Five questions to ask before a feasibility study' as title,\n       'A short guide for project owners from our advisory practice.' as text,\n       '3 Sep 2026' as post_date,\n       'Guide' as category,\n       '#' as link,\n       'website-studio/img/news-3.jpg' as image_file,\n       'A presentation in a meeting room' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"team","name":"Team (Website - Team)","sql":"select 'Omar Al-Harbi' as name,\n       'Chief Executive' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-2.jpg' as image_file,\n       'Portrait of a man in a shirt' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Sara Lindqvist' as name,\n       'Head of Engineering' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-5.jpg' as image_file,\n       'Portrait of a woman in an office' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Daniel Okoro' as name,\n       'Head of Advisory' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-6.jpg' as image_file,\n       'Portrait of a man in a suit' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Maya Chen' as name,\n       'Head of Sustainability' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-3.jpg' as image_file,\n       'Portrait of a woman with curly hair' as image_alt,\n       4 as sort_order\n  from dual\norder by sort_order"},{"id":"clients-say","name":"What clients say (Website - Testimonials)","sql":"select 'Meridian found savings in the design that paid for their whole contract. Calm, precise and always on time.' as quote,\n       'Khalid Mansour' as name,\n       'Programme Director, Atlas Rail' as role,\n       '5' as rating,\n       'website-studio/img/person-4.jpg' as image_file,\n       'Portrait of a man with a beard' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'The best engineering partner we have had in twenty years of building water networks.' as quote,\n       'Laila Haddad' as name,\n       'CEO, Gulf Water' as role,\n       '5' as rating,\n       'website-studio/img/person-1.jpg' as image_file,\n       'Portrait of a woman smiling' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"}]},"RESTAURANT":{"look":"ws-Design--organic ws-Accent--wine ws-Font--serif ws-Header--transparent","name":"Restaurant","page":12,"sql":[{"id":"hero","name":"Osteria Lume (Website - Hero)","sql":"select 'Slow food, *good* wine, long evenings.' as title,\n       'Italian kitchen and wine bar' as subtitle,\n       'Seasonal plates from a small kitchen, open every evening from six.' as text,\n       'Book a table' as button_label,\n       '#contact' as button_link,\n       'See the menu' as button2_label,\n       '#menu' as button2_link,\n       'website-studio/img/food-hero-1.jpg' as image_file,\n       'A table with plates of food' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'A dining room made for *sharing*.' as title,\n       'Since 2014' as subtitle,\n       'Forty seats, one long table and a bar for walk-ins.' as text,\n       'Plan your visit' as button_label,\n       '#visit' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/food-hero-2.jpg' as image_file,\n       'The dining room in the evening' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Everything made *here*, every day.' as title,\n       'From our kitchen' as subtitle,\n       'Pasta rolled each morning, bread from our wood oven.' as text,\n       'Our story' as button_label,\n       '#story' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/food-hero-3.jpg' as image_file,\n       'A chef plating a dish' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"menu","name":"Menu (Website - Products)","sql":"select 'Burrata and roasted peppers' as name,\n       'Basil oil, sourdough from our oven' as text,\n       'SAR 58' as price,\n       'Starters' as category,\n       'website-studio/img/dish-2.jpg' as image_file,\n       'A fresh salad bowl' as image_alt,\n       null as badge,\n       1 as sort_order\n  from dual\nunion all\nselect 'Grilled sea bream' as name,\n       'Lemon, capers, charred greens' as text,\n       'SAR 124' as price,\n       'Mains' as category,\n       'website-studio/img/dish-1.jpg' as image_file,\n       'Grilled fish with lemon' as image_alt,\n       'Chef''s choice' as badge,\n       2 as sort_order\n  from dual\nunion all\nselect 'Margherita from the wood oven' as name,\n       'San Marzano tomato, fior di latte' as text,\n       'SAR 72' as price,\n       'Mains' as category,\n       'website-studio/img/dish-3.jpg' as image_file,\n       'Wood-fired pizza' as image_alt,\n       null as badge,\n       3 as sort_order\n  from dual\nunion all\nselect 'Tagliatelle al pomodoro' as name,\n       'Fresh egg pasta, slow tomato, basil' as text,\n       'SAR 84' as price,\n       'Mains' as category,\n       'website-studio/img/dish-5.jpg' as image_file,\n       'Pasta with tomato and basil' as image_alt,\n       null as badge,\n       4 as sort_order\n  from dual\nunion all\nselect 'Dark chocolate torta' as name,\n       'Olive oil, sea salt, cream' as text,\n       'SAR 42' as price,\n       'Desserts' as category,\n       'website-studio/img/dish-4.jpg' as image_file,\n       'A chocolate dessert' as image_alt,\n       null as badge,\n       5 as sort_order\n  from dual\nunion all\nselect 'Espresso and cornetto' as name,\n       'Until noon at the bar' as text,\n       'SAR 26' as price,\n       'Desserts' as category,\n       'website-studio/img/dish-6.jpg' as image_file,\n       'Coffee and pastries' as image_alt,\n       null as badge,\n       6 as sort_order\n  from dual\norder by sort_order"},{"id":"gallery","name":"Gallery (Website - Photo Gallery)","sql":"select 'The bar' as title,\n       'website-studio/img/room-1.jpg' as image_file,\n       'The bar with warm lights' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Grilled sea bream' as title,\n       'website-studio/img/dish-1.jpg' as image_file,\n       'Grilled fish with lemon' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Friday supper' as title,\n       'website-studio/img/room-2.jpg' as image_file,\n       'Friends sharing a meal' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'The dining room' as title,\n       'website-studio/img/food-hero-2.jpg' as image_file,\n       'The dining room in the evening' as image_alt,\n       4 as sort_order\n  from dual\nunion all\nselect 'Wood-fired pizza' as title,\n       'website-studio/img/dish-3.jpg' as image_file,\n       'Wood-fired pizza' as image_alt,\n       5 as sort_order\n  from dual\nunion all\nselect 'Chocolate torta' as title,\n       'website-studio/img/dish-4.jpg' as image_file,\n       'A chocolate dessert' as image_alt,\n       6 as sort_order\n  from dual\norder by sort_order"}]},"CLINIC":{"look":"ws-Accent--emerald ws-Font--arabic ws-Corners--round ws-Fx--chat ws-Fx--theme","name":"Clinic (Arabic, RTL)","page":13,"sql":[{"id":"hero","name":"عيادات الشفاء (Website - Hero)","sql":"select 'رعاية طبية *قريبة* منك ومن عائلتك.' as title,\n       'عيادات الشفاء - الرياض' as subtitle,\n       'أطباء استشاريون، مختبر حديث، ومواعيد في نفس اليوم.' as text,\n       'احجز موعدا' as button_label,\n       '#contact' as button_link,\n       'خدماتنا' as button2_label,\n       '#services' as button2_link,\n       'website-studio/img/clinic-hero.jpg' as image_file,\n       'طبيب يتحدث مع مريض' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'مختبر *دقيق* ونتائج سريعة.' as title,\n       'المختبر' as subtitle,\n       'معظم النتائج جاهزة خلال ٢٤ ساعة وتصلك على جوالك.' as text,\n       'اعرف المزيد' as button_label,\n       '#about' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/clinic-lab.jpg' as image_file,\n       'مختبر بأجهزة حديثة' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"},{"id":"about","name":"من نحن (Website - Image and Text)","sql":"select 'من نحن' as eyebrow,\n       'رعاية *إنسانية* قبل كل شيء.' as title,\n       'منذ عام ٢٠١٢ نخدم أحياء شمال الرياض بفريق يضع راحة المريض أولا، ويشرح كل خطوة بوضوح.' as text,\n       '#doctors' as link,\n       'تعرف على الأطباء' as link_label,\n       'website-studio/img/clinic-room.jpg' as image_file,\n       'غرفة كشف مضيئة' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'التقنية' as eyebrow,\n       'ملفك الطبي معك أينما كنت.' as title,\n       'احجز موعدك، واطلع على نتائجك ووصفاتك من جوالك في أي وقت.' as text,\n       null as link,\n       null as link_label,\n       'website-studio/img/clinic-lab.jpg' as image_file,\n       'مختبر بأجهزة حديثة' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"},{"id":"doctors","name":"الأطباء (Website - Team)","sql":"select 'د. نورة القحطاني' as name,\n       'استشارية طب الأسرة' as role,\n       'website-studio/img/doctor-1.jpg' as image_file,\n       'د. نورة القحطاني' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'د. أحمد السبيعي' as name,\n       'استشاري طب الأطفال' as role,\n       'website-studio/img/doctor-2.jpg' as image_file,\n       'د. أحمد السبيعي' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'د. ريم العتيبي' as name,\n       'أخصائية طب الأسنان' as role,\n       'website-studio/img/doctor-3.jpg' as image_file,\n       'د. ريم العتيبي' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"}]},"REAL-ESTATE":{"look":"ws-Design--luxury ws-Accent--amber ws-Font--luxe ws-Header--transparent","name":"Real Estate","page":14,"sql":[{"id":"hero","name":"Harbor & Stone (Website - Hero)","sql":"select 'Find a home you will *love* coming back to.' as title,\n       'Homes for sale and rent' as subtitle,\n       'Hand-picked houses and apartments, and agents who know every street.' as text,\n       'Browse homes' as button_label,\n       '#homes' as button_link,\n       'Book a valuation' as button2_label,\n       '#contact' as button2_link,\n       'website-studio/img/home-hero-1.jpg' as image_file,\n       'A modern house with large windows' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Selling? We will get you *more*.' as title,\n       'Valuations' as subtitle,\n       'Our homes sell for 4% above asking on average.' as text,\n       'Free valuation' as button_label,\n       '#contact' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/home-hero-2.jpg' as image_file,\n       'A white villa at dusk' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"},{"id":"homes","name":"Homes (Website - Products)","sql":"select 'Garden house, Al Nakheel' as name,\n       '4 bedrooms - 3 bathrooms - 410 m2' as text,\n       'SAR 3,950,000' as price,\n       'For sale' as category,\n       'New' as badge,\n       'website-studio/img/home-1.jpg' as image_file,\n       'A family house with a garden' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Bright apartment, Olaya' as name,\n       '2 bedrooms - 2 bathrooms - 140 m2' as text,\n       'SAR 9,500 / month' as price,\n       'For rent' as category,\n       null as badge,\n       'website-studio/img/home-2.jpg' as image_file,\n       'A bright living room' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Penthouse with a view' as name,\n       '3 bedrooms - roof terrace - 220 m2' as text,\n       'SAR 4,600,000' as price,\n       'For sale' as category,\n       null as badge,\n       'website-studio/img/home-3.jpg' as image_file,\n       'An apartment with a view' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Family villa, Hittin' as name,\n       '5 bedrooms - kitchen garden - 520 m2' as text,\n       'SAR 6,200,000' as price,\n       'New developments' as category,\n       'Off plan' as badge,\n       'website-studio/img/home-4.jpg' as image_file,\n       'A modern kitchen' as image_alt,\n       4 as sort_order\n  from dual\nunion all\nselect 'Villa with pool' as name,\n       '6 bedrooms - pool - 680 m2' as text,\n       'SAR 28,000 / month' as price,\n       'For rent' as category,\n       null as badge,\n       'website-studio/img/home-5.jpg' as image_file,\n       'A house with a pool' as image_alt,\n       5 as sort_order\n  from dual\nunion all\nselect 'Townhouse, Diplomatic Quarter' as name,\n       '3 bedrooms - courtyard - 260 m2' as text,\n       'SAR 2,850,000' as price,\n       'For sale' as category,\n       null as badge,\n       'website-studio/img/home-6.jpg' as image_file,\n       'A townhouse street' as image_alt,\n       6 as sort_order\n  from dual\norder by sort_order"},{"id":"services","name":"Services (Website - Image and Text)","sql":"select 'Buying' as eyebrow,\n       'We find it before it is *listed*.' as title,\n       'Tell us what you want and we call you first when a home matches, often before it reaches the portals.' as text,\n       '#contact' as link,\n       'Register your search' as link_label,\n       'website-studio/img/home-2.jpg' as image_file,\n       'A bright living room' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Selling' as eyebrow,\n       'Photography, staging and a *fair* fee.' as title,\n       'Professional photos, a floor plan and a video tour for every home. One fixed fee, paid only when you sell.' as text,\n       '#contact' as link,\n       'Book a valuation' as link_label,\n       'website-studio/img/home-4.jpg' as image_file,\n       'A modern kitchen' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Renting' as eyebrow,\n       'Property management without the *worry*.' as title,\n       'Tenant checks, rent collection and repairs handled by a team you can call.' as text,\n       null as link,\n       null as link_label,\n       'website-studio/img/home-6.jpg' as image_file,\n       'A townhouse street' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"},{"id":"agents","name":"Agents (Website - Team)","sql":"select 'Hessa Al-Rashid' as name,\n       'Founder and Director' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-5.jpg' as image_file,\n       'Portrait of a woman in an office' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Yousef Karim' as name,\n       'Sales' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-4.jpg' as image_file,\n       'Portrait of a man with a beard' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Clara Martins' as name,\n       'Lettings' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-1.jpg' as image_file,\n       'Portrait of a woman smiling' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Majed Saleh' as name,\n       'Property management' as role,\n       'https://www.linkedin.com/' as link,\n       'website-studio/img/person-6.jpg' as image_file,\n       'Portrait of a man in a suit' as image_alt,\n       4 as sort_order\n  from dual\norder by sort_order"},{"id":"reviews","name":"Reviews (Website - Testimonials)","sql":"select 'Sold in eleven days, above asking. Hessa handled everything while we were abroad.' as quote,\n       'The Al-Fahad family' as name,\n       'Sold a villa in Hittin' as role,\n       '5' as rating,\n       'website-studio/img/person-2.jpg' as image_file,\n       'Portrait of a man in a shirt' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'They found us an apartment that was never even advertised. Honest and quick.' as quote,\n       'Emma and Tariq' as name,\n       'Bought in Olaya' as role,\n       '5' as rating,\n       'website-studio/img/person-3.jpg' as image_file,\n       'Portrait of a woman with curly hair' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"}]},"CONFERENCE":{"look":"ws-Design--techgrid ws-Accent--cyan ws-Font--tech ws-Header--pill","name":"Conference","page":15,"sql":[{"id":"hero","name":"Northwind Data Summit (Website - Hero)","sql":"select 'Where data people *meet*.' as title,\n       '9 - 10 March 2027 - Riyadh' as subtitle,\n       'Two days, 40 speakers and 1,200 engineers, analysts and leaders.' as text,\n       'Get tickets' as button_label,\n       '#tickets' as button_link,\n       'See the programme' as button2_label,\n       '#agenda' as button2_link,\n       'website-studio/img/event-hero-1.jpg' as image_file,\n       'A speaker on stage in front of an audience' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Workshops you can *use* on Monday.' as title,\n       'Hands-on' as subtitle,\n       'Twelve half-day workshops, limited to 30 seats each.' as text,\n       'View workshops' as button_label,\n       '#agenda' as button_link,\n       null as button2_label,\n       null as button2_link,\n       'website-studio/img/event-hero-2.jpg' as image_file,\n       'A conference audience' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"},{"id":"speakers","name":"Speakers (Website - Team)","sql":"select 'Rana Aziz' as name,\n       'Chief Data Officer, Atlas Bank' as role,\n       'website-studio/img/person-5.jpg' as image_file,\n       'Portrait of a woman in an office' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Tom Becker' as name,\n       'Principal Engineer, Orbital' as role,\n       'website-studio/img/person-4.jpg' as image_file,\n       'Portrait of a man with a beard' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Lina Park' as name,\n       'AI Lead, Fieldnote' as role,\n       'website-studio/img/person-3.jpg' as image_file,\n       'Portrait of a woman with curly hair' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Faisal Al-Mutairi' as name,\n       'Director of AI, Digital Government' as role,\n       'website-studio/img/person-6.jpg' as image_file,\n       'Portrait of a man in a suit' as image_alt,\n       4 as sort_order\n  from dual\nunion all\nselect 'Aisha Rahman' as name,\n       'VP Analytics, Northgrid' as role,\n       'website-studio/img/person-1.jpg' as image_file,\n       'Portrait of a woman smiling' as image_alt,\n       5 as sort_order\n  from dual\nunion all\nselect 'Marco Rossi' as name,\n       'Data Quality Lead, Kestrel' as role,\n       'website-studio/img/person-2.jpg' as image_file,\n       'Portrait of a man in a shirt' as image_alt,\n       6 as sort_order\n  from dual\norder by sort_order"},{"id":"video","name":"Highlights from 2026 (Website - Video)","sql":"select 'https://www.youtube.com/watch?v=aqz-KE-bpKQ' as video_url,\n       'Northwind Data Summit 2026 in three minutes' as title,\n       'website-studio/img/event-hero-2.jpg' as image_file,\n       'A conference audience' as image_alt,\n       1 as sort_order\n  from dual\norder by sort_order"},{"id":"venue","name":"Venue (Website - Image and Text)","sql":"select 'Venue' as eyebrow,\n       'Riyadh Front *Exhibition* Centre' as title,\n       'Ten minutes from the airport, with hotels and a metro station next door. Prayer rooms, a family room and step-free access throughout.' as text,\n       '#map' as link,\n       'Map and directions' as link_label,\n       'website-studio/img/event-venue.jpg' as image_file,\n       'The conference hall' as image_alt,\n       1 as sort_order\n  from dual\norder by sort_order"}]},"PORTFOLIO":{"look":"ws-Design--swiss ws-Accent--rose ws-Font--grotesk","name":"Portfolio","page":16,"sql":[{"id":"hero","name":"Lina Haddad (Website - Hero)","sql":"select 'I design products people *enjoy* using.' as title,\n       'Product and brand designer - Jeddah' as subtitle,\n       'Ten years of apps, identities and websites for startups and banks.' as text,\n       'Selected work' as button_label,\n       '#work' as button_link,\n       'Hire me' as button2_label,\n       '#contact' as button2_link,\n       'website-studio/img/portfolio-hero.jpg' as image_file,\n       'A designer''s desk with sketches' as image_alt,\n       1 as sort_order\n  from dual\norder by sort_order"},{"id":"work","name":"Work (Website - Portfolio)","sql":"select 'Kestrel Coffee' as title,\n       'Branding' as category,\n       'Identity and packaging - 2025' as meta,\n       'website-studio/img/work-4.jpg' as image_file,\n       'Coffee packaging' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Lumen Bank app' as title,\n       'Product' as category,\n       'Mobile banking - 2025' as meta,\n       'website-studio/img/work-3.jpg' as image_file,\n       'A mobile app on a phone' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'Orbital website' as title,\n       'Web' as category,\n       'Marketing site - 2024' as meta,\n       'website-studio/img/work-2.jpg' as image_file,\n       'A website design on a laptop' as image_alt,\n       3 as sort_order\n  from dual\nunion all\nselect 'Northgrid dashboard' as title,\n       'Product' as category,\n       'Data product - 2024' as meta,\n       'website-studio/img/work-5.jpg' as image_file,\n       'A product dashboard on a large screen' as image_alt,\n       4 as sort_order\n  from dual\nunion all\nselect 'Vantage Hotels' as title,\n       'Branding' as category,\n       'Identity - 2023' as meta,\n       'website-studio/img/work-6.jpg' as image_file,\n       'A hotel lobby with the new signage' as image_alt,\n       5 as sort_order\n  from dual\nunion all\nselect 'Fieldnote' as title,\n       'Web' as category,\n       'Website and brand - 2023' as meta,\n       'website-studio/img/work-1.jpg' as image_file,\n       'Brand identity on business cards and paper' as image_alt,\n       6 as sort_order\n  from dual\norder by sort_order"},{"id":"clients-say","name":"Kind words (Website - Testimonials)","sql":"select 'Lina turned a messy brief into an app our customers love. Ratings went from 3.1 to 4.7.' as quote,\n       'Daniel Brook' as name,\n       'Head of Digital, Lumen Bank' as role,\n       '5' as rating,\n       'website-studio/img/person-2.jpg' as image_file,\n       'Portrait of a man in a shirt' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Thoughtful, fast and a joy to work with.' as quote,\n       'Priya Nair' as name,\n       'Founder, Fieldnote' as role,\n       '5' as rating,\n       'website-studio/img/person-3.jpg' as image_file,\n       'Portrait of a woman with curly hair' as image_alt,\n       2 as sort_order\n  from dual\norder by sort_order"}]},"SAAS":{"look":"ws-Design--saas ws-Accent--violet ws-Font--friendly ws-Header--pill ws-Fx--theme","name":"SaaS Product","page":17,"sql":[{"id":"hero","name":"Ledgerline (Website - Hero)","sql":"select 'Invoices out. Money *in*. Books done.' as title,\n       'For small businesses' as subtitle,\n       'Ledgerline sends your invoices, chases late payers and keeps your books ready for VAT.' as text,\n       'Start free for 30 days' as button_label,\n       '#contact' as button_link,\n       'See pricing' as button2_label,\n       '#pricing' as button2_link,\n       'website-studio/img/saas-hero.jpg' as image_file,\n       'A finance dashboard on a laptop' as image_alt,\n       1 as sort_order\n  from dual\norder by sort_order"},{"id":"how","name":"How it works (Website - Image and Text)","sql":"select 'Get paid' as eyebrow,\n       'Send an invoice from your *phone*.' as title,\n       'Customers pay by card, Apple Pay or bank transfer. You see it the moment they do.' as text,\n       'website-studio/img/saas-1.jpg' as image_file,\n       'A person reviewing invoices on a tablet' as image_alt,\n       null as link,\n       null as link_label,\n       1 as sort_order\n  from dual\nunion all\nselect 'Stay ready' as eyebrow,\n       'Books that are always *up to date*.' as title,\n       'Every payment and expense lands in the right place, so VAT returns take minutes.' as text,\n       'website-studio/img/saas-2.jpg' as image_file,\n       'A small business owner at a laptop' as image_alt,\n       '#features' as link,\n       'All features' as link_label,\n       2 as sort_order\n  from dual\norder by sort_order"},{"id":"customers","name":"Customers (Website - Testimonials)","sql":"select 'I used to spend Sunday nights on invoices. Now it takes ten minutes on Monday.' as quote,\n       'Noura Al-Saud' as name,\n       'Owner, Bloom Florist' as role,\n       '5' as rating,\n       'website-studio/img/person-1.jpg' as image_file,\n       'Portrait of a woman smiling' as image_alt,\n       1 as sort_order\n  from dual\nunion all\nselect 'Our customers pay a week earlier since we switched. That changed our cash flow.' as quote,\n       'Chris Evans' as name,\n       'Director, Kestrel Coffee' as role,\n       '5' as rating,\n       'website-studio/img/person-4.jpg' as image_file,\n       'Portrait of a man with a beard' as image_alt,\n       2 as sort_order\n  from dual\nunion all\nselect 'My accountant loves it, which says a lot.' as quote,\n       'Hamad Q.' as name,\n       'Freelance architect' as role,\n       '5' as rating,\n       'website-studio/img/person-6.jpg' as image_file,\n       'Portrait of a man in a suit' as image_alt,\n       3 as sort_order\n  from dual\norder by sort_order"}]}};
+                var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null;
                 function esc(s) { return apex.util.escapeHTML(String(s)); }
+                function siteUrl() { return app + ($v("P2_SITE") || "WEBSITE") + ses; }
 
-                // a look passed from the Gallery: #look=<page classes>&r=<static id>:<classes>,...
-                (function fromHash() {
-                    var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
-                    if (g("look") === null) { return; }
-                    var cls = g("look").split(/[\s+]+/), rs = {};
-                    (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\s+]+/); } });
+                // page options of a look: every select and switch follows the list of classes
+                function setPage(cls) {
                     SELECTS.forEach(function (s) {
                         var hit = $("#" + s.item + " option").filter(function () { return this.value && cls.indexOf(this.value) >= 0; }).first();
                         apex.item(s.item).setValue(hit.length ? hit.val() : "", null, true);
                     });
                     SWITCHES.forEach(function (s) { apex.item(s.item).setValue(DEF.indexOf(s.css) >= 0 || cls.indexOf(s.css) >= 0 ? "Y" : "N", null, true); });
+                }
+                function setSections(rs) {
                     SECTIONS.forEach(function (s) {
-                        var mine = rs[s[2]] || [], hit = s[4].filter(function (o) { return mine.indexOf(o[1]) >= 0; })[0];
-                        apex.item(s[0]).setValue(hit ? hit[1] : s[4][0][1], null, true);
+                        var mine = rs["@" + s[2]] || [], hit = s[3].filter(function (o) { return mine.indexOf(o[1]) >= 0; })[0];
+                        apex.item(s[0]).setValue(hit ? hit[1] : "", null, true);
                     });
+                }
+                // from the Gallery: #site=<page alias>&look=<page classes>&r=@<template>:<classes>,...
+                (function fromHash() {
+                    var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+                    if (g("site") && SITES[g("site")]) { apex.item("P2_SITE").setValue(g("site"), null, true); }
+                    var look = g("look"), rs = {};
+                    (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\s+]+/); } });
+                    setPage((look !== null ? look : SITES[$v("P2_SITE") || "WEBSITE"].look).split(/[\s+]+/));
+                    setSections(rs);
                 })();
+                $("#P2_SITE").on("change", function () { setPage(SITES[$v("P2_SITE")].look.split(/\s+/)); setSections({}); sqlPanel(); render(); });
 
                 function chosen() {
-                    var page = [], rows = [], extra = [], allDefaults = true, regions = [], changed = [];
+                    var page = [], rows = [], extra = [], allDefaults = true, tpl = {}, changed = [];
                     SELECTS.forEach(function (s) {
                         var v = $v(s.item), text = $("#" + s.item + " option:selected").text();
                         if (v) { page.push(v); extra.push(v); }
@@ -64,40 +66,51 @@ page 2 (
                         rows.push({ group: s.label, option: on ? "On" : "Off", isDefault: on === isDef });
                     });
                     SECTIONS.forEach(function (s) {
-                        var v = $v(s[0]) || s[4][0][1], isDef = v === s[4][0][1];
-                        regions.push(s[2] + ":" + v);
-                        rows.push({ group: s[1], option: $("#" + s[0] + " option:selected").text(), isDefault: isDef, section: true });
-                        if (!isDef) { changed.push({ id: s[2], label: s[1], tpl: s[3], cls: v }); }
+                        var v = $v(s[0]);
+                        if (!v) { return; }
+                        (tpl[s[2]] = tpl[s[2]] || []).push(v);
+                        changed.push({ tpl: s[2], label: s[1], option: $("#" + s[0] + " option:selected").text(), cls: v });
                     });
-                    return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, regions: regions.join(","), changed: changed };
+                    return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, tpl: tpl, changed: changed,
+                             regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(",") };
                 }
                 function arr(list, n) {
                     var pad = new Array(n + 1).join(" ");
                     return list.length === 1 ? " " + list[0] + "\n" : " [\n" + list.map(function (x) { return pad + "    " + x + "\n"; }).join("") + pad + "]\n";
                 }
                 function relevance() {
-                    var hero = $v("P2_HERO"), transparent = $v("P2_HEADER") === "ws-Header--transparent", photo = /slider|fullbleed/.test(hero);
-                    $("#P2_HEADER_CONTAINER").toggleClass("wsd-Off", transparent && !photo).attr("data-why", transparent && !photo ? "Transparent needs the Slider or Full Bleed hero; with this hero it shows as Classic" : null);
-                    $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", $v("P2_DESIGN") === "ws-Design--midnight").attr("data-why", $v("P2_DESIGN") === "ws-Design--midnight" ? "Midnight is always dark" : null);
+                    var dark = /midnight|techgrid/.test($v("P2_DESIGN"));
+                    $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "Midnight and Tech Grid are always dark" : null);
                 }
                 function render() {
-                    var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + "&r=" + encodeURIComponent(c.regions);
+                    var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : ""), src = siteUrl();
                     relevance();
-                    // section layouts need a fresh page; page options follow the hash without a reload
-                    if (c.regions !== lastRegions || !frame.getAttribute("src")) { frame.setAttribute("src", site + hash); }
-                    else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", site + hash); } }
-                    lastRegions = c.regions;
-                    $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.filter(function (r) { return !r.section; }).map(function (r) {
+                    // section options and another site need a fresh page; page options follow the hash without a reload
+                    if (src + c.regions !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
+                    else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", src + hash); } }
+                    lastSrc = src + c.regions;
+                    $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.map(function (r) {
                         return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
-                    }).join("") + '</dl><p class="wsd-H">Sections</p><dl class="wsd-List">' + c.rows.filter(function (r) { return r.section; }).map(function (r) {
-                        return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
-                    }).join("") + "</dl>");
+                    }).join("") + "</dl>" + (c.changed.length ? '<p class="wsd-H">Sections</p><dl class="wsd-List">' + c.changed.map(function (r) {
+                        return "<dt>" + esc(r.label) + "</dt><dd>" + esc(r.option) + "</dd>";
+                    }).join("") + "</dl>" : ""));
                     var code = "appearance {\n    pageTemplate: @modern-one-page\n    templateOptions:" + arr(c.snippet, 4) + "}";
-                    c.changed.forEach(function (s) {
-                        code += "\n\n// region " + s.id + " (" + s.label + ")\ncomponentAppearance {\n    templateType: theme\n    template: @" + s.tpl + "\n    templateOptions:" + arr(["#DEFAULT#"].concat(PRESET[s.tpl] || [], [s.cls]), 4) + "}";
+                    Object.keys(c.tpl).forEach(function (t) {
+                        var on = (PRESET[t] || []).concat(c.tpl[t].filter(function (x) { return /^ws-/.test(x); })), off = c.tpl[t].filter(function (x) { return x.charAt(0) === "-"; }).map(function (x) { return x.slice(1); });
+                        on = on.filter(function (x, i) { return off.indexOf(x) < 0 && on.indexOf(x) === i; });
+                        code += "\n\n// every region with " + TPL_NAME[t] + "\ncomponentAppearance {\n" + (t === "website-menu" ? "    listTemplate: @website-menu\n" : "    templateType: theme\n    template: @" + t + "\n") +
+                            "    templateOptions:" + arr(["#DEFAULT#"].concat(on), 4) + "}";
                     });
                     $("#wsd-code").text(code);
                 }
+                // the SQL of the sections with pictures on the chosen site
+                function sqlPanel() {
+                    var list = SITES[$v("P2_SITE") || "WEBSITE"].sql, sel = $("#wsd-sqlpick");
+                    sel.html(list.map(function (x, i) { return '<option value="' + i + '">' + esc(x.name) + "</option>"; }).join(""));
+                    showSql();
+                }
+                function showSql() { var x = SITES[$v("P2_SITE") || "WEBSITE"].sql[+$("#wsd-sqlpick").val() || 0]; $("#wsd-sql").text(x ? x.sql : ""); }
+                $(document).on("change", "#wsd-sqlpick", showSql);
 
                 $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).join(",")).on("change", render);
                 // Desktop: the page is laid out at 1280px and scaled down to fit the preview
@@ -111,10 +124,11 @@ page 2 (
                 $("#P2_DEVICE").on("change", fit);
                 $(window).on("resize apexwindowresized", fit);
                 fit();
-                $(document).on("click", ".js-wsd-copy", function () {
-                    navigator.clipboard.writeText($("#wsd-code").text()).then(function () { apex.message.showPageSuccess("Copied."); });
-                });
+                function copy(text) { navigator.clipboard.writeText(text).then(function () { apex.message.showPageSuccess("Copied."); }); }
+                $(document).on("click", ".js-wsd-copy", function () { copy($("#wsd-code").text()); });
+                $(document).on("click", ".js-wsd-copysql", function () { copy($("#wsd-sql").text()); });
                 $(document).on("click", ".js-wsd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
+                sqlPanel();
                 render();
             })(apex.jQuery);
             ```
@@ -136,7 +150,8 @@ page 2 (
             .wsd-List dd.is-default::after { content: " (default)"; font-weight: 400; opacity: .7; }
             .wsd-Code { margin: 0 0 1rem; padding: .875rem 1rem; overflow-x: auto; border-radius: 8px; background: #1f2329; color: #e6edf3; font-size: .8125rem; line-height: 1.5; white-space: pre-wrap; }
             .wsd-Where { margin: 0 0 .75rem; padding: .625rem .875rem; border-radius: 8px; background: rgba(234,88,12,.08); font-size: .8125rem; line-height: 1.5; }
-            .wsd-H { margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
+            .wsd-H { display: block; margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
+            .wsd-Pick { width: 100%; max-width: 32rem; margin-bottom: .75rem; }
             .wsd-Off { opacity: .6; }
             .wsd-Off[data-why]::after { content: attr(data-why); display: block; padding: 0 .75rem .25rem; font-size: .75rem; font-style: italic; }
             @media (max-width: 640px) { .wsd-Stage { height: 72vh; min-height: 460px; } }
@@ -186,7 +201,7 @@ page 2 (
     )
 
     region sections (
-        name: Section Layouts
+        name: Section Options
         type: staticContent
         layout {
             sequence: 5
@@ -206,7 +221,7 @@ page 2 (
         name: Live Preview
         type: staticContent
         source {
-            htmlCode: <div class="wsd-Stage" id="wsd-stage" data-device="DESKTOP"><iframe id="wsd-frame" title="Website preview" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION."></iframe></div>
+            htmlCode: <div class="wsd-Stage" id="wsd-stage" data-device="DESKTOP"><iframe id="wsd-frame" title="Website preview" data-app="f?p=&APP_ID.:" data-session=":&APP_SESSION."></iframe></div>
         }
         layout {
             sequence: 30
@@ -229,7 +244,7 @@ page 2 (
         source {
             htmlCode:
                 ```html
-                <p class="wsd-Where">Page Designer: select your one page, <strong>Appearance &gt; Page Template</strong> = <strong>Modern One Page</strong>, then tick the <strong>Template Options</strong> listed below. For a section, select its Classic Report region, <strong>Attributes &gt; Appearance</strong>, and set the Template Options of its Website report template. Or paste the APEXlang into the page file.</p>
+                <p class="wsd-Where">Page Designer: select your one page, <strong>Appearance &gt; Page Template</strong> = <strong>Modern One Page</strong>, then tick the <strong>Template Options</strong> listed below. Section Options act on every region with that template: select the region, <strong>Attributes &gt; Appearance &gt; Template Options</strong> (for the menu: the List region's Template Options). Or paste the APEXlang into the page file.</p>
                 <div id="wsd-summary"></div>
                 <p class="wsd-H">APEXlang (page file)</p>
                 <pre class="wsd-Code" id="wsd-code"></pre>
@@ -250,6 +265,36 @@ page 2 (
         }
     )
 
+    pageItem P2_SITE (
+        type: selectList
+        label {
+            label: Website
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Design Studio;WEBSITE,Company;COMPANY,Restaurant;RESTAURANT,Clinic (Arabic RTL);CLINIC,Real Estate;REAL-ESTATE,Conference;CONFERENCE,Portfolio;PORTFOLIO,SaaS Product;SAAS
+            displayNullValue: false
+        }
+        layout {
+            sequence: 1
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: WEBSITE
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
     pageItem P2_DESIGN (
         type: selectList
         label {
@@ -258,11 +303,11 @@ page 2 (
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Editorial;ws-Design--editorial,Bold;ws-Design--bold,Soft UI;ws-Design--soft,Glass;ws-Design--glass,Midnight;ws-Design--midnight,Minimal;ws-Design--minimal
+            staticValues: STATIC2:Editorial;ws-Design--editorial,Bold;ws-Design--bold,Soft UI;ws-Design--soft,Glass;ws-Design--glass,Midnight;ws-Design--midnight,Minimal;ws-Design--minimal,Corporate;ws-Design--corporate,Startup / SaaS;ws-Design--saas,Elegant / Luxury;ws-Design--luxury,Playful;ws-Design--playful,Organic / Nature;ws-Design--organic,Tech Grid;ws-Design--techgrid,Swiss;ws-Design--swiss,Retro Print;ws-Design--retro
             nullDisplayValue: Clean
         }
         layout {
-            sequence: 5
+            sequence: 6
             region: @options
             slot: regionBody
             alignment: left
@@ -288,7 +333,7 @@ page 2 (
             nullDisplayValue: Theme Color
         }
         layout {
-            sequence: 10
+            sequence: 11
             region: @options
             slot: regionBody
             alignment: left
@@ -296,10 +341,6 @@ page 2 (
         appearance {
             template: @/optional-floating
             templateOptions: #DEFAULT#
-        }
-        default {
-            type: static
-            staticValue: ws-Accent--tangerine
         }
         sessionState {
             storage: request
@@ -318,7 +359,7 @@ page 2 (
             nullDisplayValue: Light
         }
         layout {
-            sequence: 20
+            sequence: 16
             region: @options
             slot: regionBody
             alignment: left
@@ -340,11 +381,11 @@ page 2 (
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Grotesk;ws-Font--grotesk,Serif;ws-Font--serif,Luxe;ws-Font--luxe,Tech;ws-Font--tech,Poster;ws-Font--poster,Friendly;ws-Font--friendly
+            staticValues: STATIC2:Grotesk;ws-Font--grotesk,Serif;ws-Font--serif,Luxe;ws-Font--luxe,Tech;ws-Font--tech,Poster;ws-Font--poster,Friendly;ws-Font--friendly,Arabic;ws-Font--arabic
             nullDisplayValue: System
         }
         layout {
-            sequence: 30
+            sequence: 21
             region: @options
             slot: regionBody
             alignment: left
@@ -352,10 +393,6 @@ page 2 (
         appearance {
             template: @/optional-floating
             templateOptions: #DEFAULT#
-        }
-        default {
-            type: static
-            staticValue: ws-Font--grotesk
         }
         sessionState {
             storage: request
@@ -374,7 +411,7 @@ page 2 (
             nullDisplayValue: Classic
         }
         layout {
-            sequence: 40
+            sequence: 26
             region: @options
             slot: regionBody
             alignment: left
@@ -400,7 +437,7 @@ page 2 (
             nullDisplayValue: Rounded
         }
         layout {
-            sequence: 50
+            sequence: 31
             region: @options
             slot: regionBody
             alignment: left
@@ -426,7 +463,7 @@ page 2 (
             nullDisplayValue: Comfortable
         }
         layout {
-            sequence: 60
+            sequence: 36
             region: @options
             slot: regionBody
             alignment: left
@@ -452,7 +489,33 @@ page 2 (
             nullDisplayValue: Dark
         }
         layout {
-            sequence: 70
+            sequence: 41
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_PH (
+        type: selectList
+        label {
+            label: Placeholder Images
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Subtle Pattern;ws-Ph--pattern,Duotone Shapes;ws-Ph--shapes,Plain Colour;ws-Ph--plain
+            nullDisplayValue: Soft Gradient
+        }
+        layout {
+            sequence: 46
             region: @options
             slot: regionBody
             alignment: left
@@ -473,7 +536,7 @@ page 2 (
             alignment: left
         }
         layout {
-            sequence: 80
+            sequence: 100
             region: @options
             slot: regionBody
             alignment: left
@@ -498,7 +561,7 @@ page 2 (
             alignment: left
         }
         layout {
-            sequence: 81
+            sequence: 101
             region: @options
             slot: regionBody
             alignment: left
@@ -524,7 +587,7 @@ page 2 (
             alignment: left
         }
         layout {
-            sequence: 82
+            sequence: 102
             region: @options
             slot: regionBody
             alignment: left
@@ -549,7 +612,7 @@ page 2 (
             alignment: left
         }
         layout {
-            sequence: 83
+            sequence: 103
             region: @options
             slot: regionBody
             alignment: left
@@ -575,7 +638,7 @@ page 2 (
             alignment: left
         }
         layout {
-            sequence: 84
+            sequence: 104
             region: @options
             slot: regionBody
             alignment: left
@@ -593,16 +656,67 @@ page 2 (
         }
     )
 
-    pageItem P2_HERO (
+    pageItem P2_THEME (
+        type: switch
+        label {
+            label: Light/Dark Toggle
+            alignment: left
+        }
+        layout {
+            sequence: 105
+            region: @options
+            slot: regionBody
+            alignment: left
+            startNewRow: false
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_CHAT (
+        type: switch
+        label {
+            label: WhatsApp Button
+            alignment: left
+        }
+        layout {
+            sequence: 106
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_HERO_LAYOUT (
         type: selectList
         label {
-            label: Hero
+            label: Hero - Layout
             alignment: left
         }
         lov {
             type: staticValues
             staticValues: STATIC2:Slider;ws-Hero--slider,Split;ws-Hero--split,Centered;ws-Hero--centered,Full Bleed;ws-Hero--fullbleed
-            displayNullValue: false
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 10
@@ -614,25 +728,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Hero--slider
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_LOGOS (
+    pageItem P2_HERO_HEIGHT (
         type: selectList
         label {
-            label: Clients
+            label: Hero - Height
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Scrolling Marquee;ws-Logos--marquee,Grid;ws-Logos--grid,Row;ws-Logos--row
-            displayNullValue: false
+            staticValues: STATIC2:Large;!wsr-hero-height,Full Screen;ws-Hero--full,Medium;ws-Hero--medium
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 20
@@ -644,25 +754,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Logos--marquee
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_SERVICES (
+    pageItem P2_HERO_OVERLAY (
         type: selectList
         label {
-            label: Services
+            label: Hero - Image Overlay
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Cards;ws-Features--cards,Rows;ws-Features--rows,Bento;ws-Features--bento,Icons Only;ws-Features--icons
-            displayNullValue: false
+            staticValues: STATIC2:Normal;!wsr-hero-overlay,Light;ws-Hero--light,Strong;ws-Hero--strong
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 30
@@ -674,25 +780,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Features--cards
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_WORK (
+    pageItem P2_HERO_MOVE (
         type: selectList
         label {
-            label: Portfolio
+            label: Hero - Transition
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Grid;ws-Works--grid,Editorial;ws-Works--editorial,Large;ws-Works--large
-            displayNullValue: false
+            staticValues: STATIC2:Fade;!wsr-hero-move,Slide;ws-Hero--slide
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 40
@@ -704,25 +806,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Works--grid
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_PROCESS (
+    pageItem P2_HERO_ZOOM (
         type: selectList
         label {
-            label: Process
+            label: Hero - Slow Zoom
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Connected;ws-Steps--line,Cards;ws-Steps--cards
-            displayNullValue: false
+            staticValues: STATIC2:On;ws-Hero--zoom,Off;-ws-Hero--zoom
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 50
@@ -734,25 +832,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Steps--line
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_QUOTES (
+    pageItem P2_HERO_AUTOPLAY (
         type: selectList
         label {
-            label: Testimonials
+            label: Hero - Autoplay
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Carousel;ws-Quotes--carousel,Wall;ws-Quotes--wall,Spotlight;ws-Quotes--spotlight
-            displayNullValue: false
+            staticValues: STATIC2:6 Seconds;!wsr-autoplay,4 Seconds;ws-Auto--4,9 Seconds;ws-Auto--9,Off;ws-Auto--off
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 60
@@ -764,25 +858,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Quotes--carousel
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_TEAM (
+    pageItem P2_MENU_ALIGN (
         type: selectList
         label {
-            label: Team
+            label: Menu - Alignment
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Portrait Cards;ws-Team--cards,Round Photos;ws-Team--round,Compact List;ws-Team--list
-            displayNullValue: false
+            staticValues: STATIC2:Right;!wsm-align,Center;ws-Menu--center,Left;ws-Menu--left
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 70
@@ -794,25 +884,21 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Team--cards
-        }
         sessionState {
             storage: request
         }
     )
 
-    pageItem P2_HISTORY (
+    pageItem P2_MENU_MAX (
         type: selectList
         label {
-            label: Timeline
+            label: Menu - Visible Entries
             alignment: left
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Alternating;ws-Timeline--alternate,List;ws-Timeline--list
-            displayNullValue: false
+            staticValues: STATIC2:All;!wsm-max,4 then More;ws-Menu--max4,5 then More;ws-Menu--max5,6 then More;ws-Menu--max6,7 then More;ws-Menu--max7
+            nullDisplayValue: As on the page
         }
         layout {
             sequence: 80
@@ -824,12 +910,425 @@ page 2 (
             template: @/optional-floating
             templateOptions: #DEFAULT#
         }
-        default {
-            type: static
-            staticValue: ws-Timeline--alternate
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_MENU_MOBILE (
+        type: selectList
+        label {
+            label: Menu - On Phones
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Drop-down Panel;!wsm-mobile,Full-screen Overlay;ws-Menu--overlay,Side Drawer;ws-Menu--drawer
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 90
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
         }
         sessionState {
             storage: request
+        }
+    )
+
+    pageItem P2_MENU_CTA (
+        type: selectList
+        label {
+            label: Menu - Last Entry as Button
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:On;ws-Menu--cta,Off;-ws-Menu--cta
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 100
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_FEATURES_LAYOUT (
+        type: selectList
+        label {
+            label: Services - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Cards;!wsr-features-layout,Rows;ws-Features--rows,Bento;ws-Features--bento,Icons Only;ws-Features--icons
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 110
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TESTIMONIALS_LAYOUT (
+        type: selectList
+        label {
+            label: Testimonials - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Carousel;ws-Quotes--carousel,Wall;ws-Quotes--wall,Spotlight;ws-Quotes--spotlight
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 120
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TEAM_LAYOUT (
+        type: selectList
+        label {
+            label: Team - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Portrait Cards;!wsr-team-layout,Round Photos;ws-Team--round,Compact List;ws-Team--list
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 130
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_GALLERY_LAYOUT (
+        type: selectList
+        label {
+            label: Portfolio - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Grid;!wsr-works-layout,Editorial;ws-Works--editorial,Large;ws-Works--large
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 140
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_LOGOS_LAYOUT (
+        type: selectList
+        label {
+            label: Logos - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Scrolling Marquee;ws-Logos--marquee,Grid;ws-Logos--grid,Row;ws-Logos--row
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 150
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_LOGOS_SPEED (
+        type: selectList
+        label {
+            label: Logos - Marquee Speed
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Normal;!wsr-logos-speed,Slow;ws-Speed--slow,Fast;ws-Speed--fast
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 160
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_STEPS_LAYOUT (
+        type: selectList
+        label {
+            label: Process - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Connected;ws-Steps--line,Cards;ws-Steps--cards
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 170
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TIMELINE_LAYOUT (
+        type: selectList
+        label {
+            label: Timeline - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Alternating;ws-Timeline--alternate,List;ws-Timeline--list
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 180
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_NEWS_LAYOUT (
+        type: selectList
+        label {
+            label: News - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Cards;!wsr-news-layout,First Post Large;ws-News--featured,List;ws-News--list
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 190
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_PRODUCTS_LAYOUT (
+        type: selectList
+        label {
+            label: Products - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Cards;!wsr-products-layout,Menu List;ws-Products--menu,Compact;ws-Products--compact
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 200
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_PHOTOS_LAYOUT (
+        type: selectList
+        label {
+            label: Photo Gallery - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Grid;!wsr-photos-layout,Masonry;ws-Photos--masonry,Scrolling Strip;ws-Photos--strip
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 210
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_EVENTS_LAYOUT (
+        type: selectList
+        label {
+            label: Events - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Agenda;!wsr-events-layout,Cards;ws-Events--cards
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 220
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_HOURS_LAYOUT (
+        type: selectList
+        label {
+            label: Opening Hours - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Table;!wsr-hours-layout,Cards;ws-Hours--cards
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 230
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    region sql (
+        name: Section SQL
+        type: staticContent
+        source {
+            htmlCode:
+                ```html
+                <p class="wsd-Where">The query of a section with pictures on this website. Copy it into a Classic Report region, then swap <code>from dual</code> for your own table. IMAGE_FILE is a file in Static Application Files; IMAGE_URL takes any image URL instead (see How to Use for BLOB columns).</p>
+                <label class="wsd-H" for="wsd-sqlpick">Section</label>
+                <select id="wsd-sqlpick" class="selectlist apex-item-select wsd-Pick"></select>
+                <pre class="wsd-Code" id="wsd-sql"></pre>
+                <button type="button" class="t-Button t-Button--small t-Button--iconLeft js-wsd-copysql"><span class="t-Icon fa fa-copy" aria-hidden="true"></span><span class="t-Button-label">Copy SQL</span></button>
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @preview
+            slot: subRegions
+        }
+        appearance {
+            template: @/content-block
+            templateOptions: [
+                #DEFAULT#
+                t-ContentBlock--h3
+            ]
         }
     )
 

@@ -44,9 +44,16 @@
         var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
         return { page: g("ws"), regions: g("r") };
     }
+    // the option groups of the report and list templates: { group id: [classes] } (filled in by _src/build.mjs)
+    var GROUPS = {"wsr-hero-layout":["ws-Hero--slider","ws-Hero--split","ws-Hero--centered","ws-Hero--fullbleed"],"wsr-hero-height":["ws-Hero--full","ws-Hero--medium"],"wsr-hero-overlay":["ws-Hero--light","ws-Hero--strong"],"wsr-hero-move":["ws-Hero--slide"],"wsr-autoplay":["ws-Auto--4","ws-Auto--9","ws-Auto--off"],"wsr-stats-layout":["ws-Stats--cards"],"wsr-features-layout":["ws-Features--rows","ws-Features--bento","ws-Features--icons"],"wsr-columns":["ws-Cols--2","ws-Cols--4"],"wsr-team-layout":["ws-Team--round","ws-Team--list"],"wsr-quotes-layout":["ws-Quotes--carousel","ws-Quotes--wall","ws-Quotes--spotlight"],"wsr-logos-layout":["ws-Logos--marquee","ws-Logos--grid","ws-Logos--row"],"wsr-logos-speed":["ws-Speed--slow","ws-Speed--fast"],"wsr-plans-style":["ws-Plans--accent"],"wsr-timeline-layout":["ws-Timeline--alternate","ws-Timeline--list"],"wsr-steps-layout":["ws-Steps--line","ws-Steps--cards"],"wsr-faq-layout":["ws-Faqs--columns"],"wsr-jobs-layout":["ws-Jobs--cards"],"wsr-works-layout":["ws-Works--editorial","ws-Works--large"],"wsr-links-layout":["ws-Links--icons","ws-Links--list","ws-Links--inline","ws-Links--tiles"],"wsr-infos-layout":["ws-Infos--cards"],"wsr-news-layout":["ws-News--featured","ws-News--list"],"wsr-products-layout":["ws-Products--menu","ws-Products--compact"],"wsr-photos-layout":["ws-Photos--masonry","ws-Photos--strip"],"wsr-zigzag-start":["ws-Zigzag--text"],"wsr-events-layout":["ws-Events--cards"],"wsr-hours-layout":["ws-Hours--cards"],"wsr-compare-hl":["ws-Compare--hl1","ws-Compare--hl2","ws-Compare--hl3","ws-Compare--hl4"],"wsr-video-layout":["ws-Videos--cards"],"wsr-map-layout":["ws-Maps--full"],"wsm-align":["ws-Menu--center","ws-Menu--left"],"wsm-max":["ws-Menu--max4","ws-Menu--max5","ws-Menu--max6","ws-Menu--max7"],"wsm-mobile":["ws-Menu--overlay","ws-Menu--drawer"]};
+    // c: a class (it replaces the other classes of its option group), -class (removes it) or !group-id (clears the group)
     function setFamily(el, c) {
-        var fam = c.replace(/--.*$/, "--");
-        el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(fam) === 0) { el.classList.remove(x); } });
+        if (c.charAt(0) === "-") { el.classList.remove(c.slice(1)); return; }
+        if (c.charAt(0) === "!") { (GROUPS[c.slice(1)] || []).forEach(function (x) { el.classList.remove(x); }); return; }
+        var fam = null;
+        Object.keys(GROUPS).some(function (k) { if (GROUPS[k].indexOf(c) >= 0) { fam = GROUPS[k]; return true; } return false; });
+        if (fam) { fam.forEach(function (x) { el.classList.remove(x); }); }
+        else if (SEC_FAMILY.test(c)) { var f = c.replace(/--.*$/, "--"); el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(f) === 0) { el.classList.remove(x); } }); }
         el.classList.add(c);
     }
     function applyLook(look) {
