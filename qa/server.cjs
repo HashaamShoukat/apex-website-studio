@@ -14,6 +14,8 @@ http.createServer((req, res) => {
   else if (u.pathname.startsWith("/gallery/")) { file = path.join(STATIC, decodeURIComponent(u.pathname)); }
   fs.readFile(file, (err, data) => {
     if (err) { res.writeHead(404); res.end("not found"); return; }
+    // ?dir=rtl serves a page right to left (the RTL QA run)
+    if (u.searchParams.get("dir") === "rtl" && path.extname(file) === ".html") { data = Buffer.from(String(data).replace(/<html /, '<html dir="rtl" ')); }
     res.writeHead(200, { "Content-Type": TYPES[path.extname(file)] || "application/octet-stream" }); res.end(data);
   });
 }).listen(port, () => console.log("harness on http://localhost:" + port));
