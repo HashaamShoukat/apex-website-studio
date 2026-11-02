@@ -11,11 +11,12 @@ import { PHOTOS } from "../apexlang/_src/photos.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1")), "..");
 const FILES = path.join(ROOT, "apexlang/shared-components/static-files");
-const BUDGET = 5 * 1024 * 1024;                     // all photos together
-const MAX = w => (w >= 1400 ? 420 : 200) * 1024;     // one photo: heroes 420 KB, the rest 200 KB
+const BUDGET = 6 * 1024 * 1024;                     // all photos together
+const MAX = w => (w >= 1400 ? 240 : 90) * 1024;      // one photo: heroes 240 KB, the rest 90 KB
 const force = process.argv.includes("--force");
 
-const url = (id, p, q) => `https://images.unsplash.com/${id}?w=${p.w}&h=${p.h}&fit=crop&crop=entropy&q=${q}&fm=jpg&auto=format`;
+// crop=faces,entropy keeps faces in portraits; without a face it falls back to the busiest part of the photo
+const url = (id, p, q) => `https://images.unsplash.com/${id}?w=${p.w}&h=${p.h}&fit=crop&crop=faces,entropy&q=${q}&fm=jpg&auto=format`;
 async function get(u) {
     const r = await fetch(u, { headers: { "User-Agent": "website-studio-fetch-photos" } });
     if (!r.ok) { throw new Error(r.status + " " + r.statusText); }
@@ -33,10 +34,10 @@ for (const p of PHOTOS) {
     for (const id of done ? [] : p.ids) {
         try {
             // lower the quality until the photo fits its size limit
-            for (const q of [72, 64, 56, 48]) {
+            for (const q of [64, 56, 48, 40]) {
                 const buf = await get(url(id, p, q));
                 if (buf[0] !== 0xff || buf[1] !== 0xd8) { throw new Error("not a JPEG"); }
-                if (buf.length <= MAX(p.w) || q === 48) { fs.writeFileSync(out, buf); done = { id, size: buf.length, q }; break; }
+                if (buf.length <= MAX(p.w) || q === 40) { fs.writeFileSync(out, buf); done = { id, size: buf.length, q }; break; }
             }
             break;
         } catch (e) { console.warn(`  ${p.file}: ${id} failed (${e.message}), trying the next one`); }
@@ -56,12 +57,12 @@ They may not be sold without significant modification, or compiled to build a si
 They were downloaded, cropped and compressed by \`tools/fetch-photos.mjs\` (the Unsplash CDN does the cropping).
 Each source link opens the original photo.
 
-Total size: ${(total / 1024 / 1024).toFixed(2)} MB for ${rows.length} photos (budget 5 MB).
+Total size: ${(total / 1024 / 1024).toFixed(2)} MB for ${rows.length} photos (budget 6 MB).
 
 | File | What it shows | Source | Licence |
 |---|---|---|---|
 ${rows.join("\n")}
 `);
 console.log(`\n${rows.length} photos, ${(total / 1024 / 1024).toFixed(2)} MB${failed ? `, ${failed} missing` : ""}. docs/CREDITS.md written.`);
-if (total > BUDGET) { console.warn("Over the 5 MB budget: lower the w/h values in apexlang/_src/photos.mjs and run again with --force."); }
+if (total > BUDGET) { console.warn("Over the 6 MB budget: lower the w/h values in apexlang/_src/photos.mjs and run again with --force."); }
 console.log("Next: cd apexlang && node _src/build.mjs   (adds the photos to static-files.apx)");
