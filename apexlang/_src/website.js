@@ -1,34 +1,48 @@
-/* Website Studio - behaviour of Modern One Page and the Website report templates.
+/* Website Studio - behaviour of Modern One Page, Website - Menu and the Website report templates.
    Everything is switched by template options (CSS classes). Reports are Classic Reports: a column the query does not
    return stays as its #COLUMN# placeholder, and this script treats it as empty, so every column is optional.
    Public API: wsSite.init() (called by the page template), wsSite.refresh(element) after a partial page refresh. */
 (function (W, d) {
     "use strict";
     var b = d.body, PH = /^#[A-Z][A-Z0-9_$]*#$/, reduce = W.matchMedia && W.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var rtl = function () { return (d.documentElement.getAttribute("dir") || b.getAttribute("dir") || "").toLowerCase() === "rtl"; };
     var FONTS = {
         grotesk: "family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700",
         serif: "family=Fraunces:ital,wght@0,500;0,600;1,500&family=Instrument+Sans:wght@400;500;600",
         luxe: "family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@400;500;600",
         tech: "family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600",
         poster: "family=Anton&family=Archivo:wght@400;500;600;700",
-        friendly: "family=Outfit:wght@400;500;600;700"
+        friendly: "family=Outfit:wght@400;500;600;700",
+        arabic: "family=IBM+Plex+Sans+Arabic:wght@400;500;600;700"
     };
-    var TEXT = { menu: "Menu", top: "Back to top", all: "All", prev: "Previous", next: "Next", slide: "Slide", apply: "Apply for this role" };
+    var TEXT = { menu: "Menu", top: "Back to top", all: "All", prev: "Previous", next: "Next", slide: "Slide", apply: "Apply for this role",
+                 more: "More", close: "Close", play: "Play", dark: "Dark mode", map: "Map" };
 
     function $$(sel, root) { return Array.prototype.slice.call((root || d).querySelectorAll(sel)); }
-    function val(s) { s = s == null ? "" : String(s).trim(); return PH.test(s) ? "" : s; }
+    function val(s) { s = s == null ? "" : String(s).trim(); return PH.test(s) || /#[A-Z][A-Z0-9_]*#/.test(s) ? "" : s; }
     function msg(key) {
-        // optional translations: text messages WEBSITE_STUDIO.MENU, .BACK_TO_TOP, .ALL, .PREVIOUS, .NEXT, .SLIDE, .APPLY
-        try { var k = "WEBSITE_STUDIO." + key.toUpperCase(), m = W.apex && apex.lang && apex.lang.getMessage(k); if (m && m !== k) { return m; } } catch (e) { /* no apex.lang */ }
+        // optional translations: text messages WEBSITE_STUDIO.MENU, .BACK_TO_TOP, .ALL, .PREVIOUS, .NEXT, .SLIDE, .APPLY, .MORE, .CLOSE, .PLAY, .DARK_MODE, .MAP
+        var keys = { top: "BACK_TO_TOP", dark: "DARK_MODE", prev: "PREVIOUS" };
+        try { var k = "WEBSITE_STUDIO." + (keys[key] || key.toUpperCase()), m = W.apex && apex.lang && apex.lang.getMessage(k); if (m && m !== k) { return m; } } catch (e) { /* no apex.lang */ }
         return TEXT[key];
     }
 
-    /* ---------- look from the URL (Designer preview): #ws=<page classes>&r=<static id>:<classes>,<static id>:<classes> ---------- */
-    var PAGE_FAMILY = /^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/;
+    /* ---------- look from the URL (Designer preview): #ws=<page classes>&r=<target>:<classes>,...
+       A target is a static id (one section or report) or @<report template> (every report of that template, e.g. @ws-hero). ---------- */
+    var PAGE_FAMILY = /^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/;
     var SEC_FAMILY = /^ws-(Tone|Pad|Head|Width)--/;
+    var BASE = { "ws-hero": "ws-Hero", "ws-stats": "ws-Stats", "ws-features": "ws-Features", "ws-team": "ws-Team", "ws-testimonials": "ws-Quotes", "ws-logos": "ws-Logos",
+                 "ws-pricing": "ws-Plans", "ws-timeline": "ws-Timeline", "ws-steps": "ws-Steps", "ws-faq": "ws-Faqs", "ws-jobs": "ws-Jobs", "ws-gallery": "ws-Works",
+                 "ws-links": "ws-Links", "ws-contact": "ws-Infos", "ws-news": "ws-News", "ws-products": "ws-Products", "ws-photos": "ws-Photos", "ws-zigzag": "ws-Zigzag",
+                 "ws-events": "ws-Events", "ws-hours": "ws-Hours", "ws-compare": "ws-Compare", "ws-video": "ws-Videos", "ws-map": "ws-Maps", "website-menu": "ws-Menu" };
     function hashLook() {
         var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
         return { page: g("ws"), regions: g("r") };
+    }
+    function setFamily(el, c) {
+        var fam = c.replace(/--.*$/, "--");
+        el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(fam) === 0) { el.classList.remove(x); } });
+        el.classList.add(c);
     }
     function applyLook(look) {
         if (look.page !== null) {
@@ -37,15 +51,17 @@
         }
         if (look.regions) {
             look.regions.split(",").forEach(function (part) {
-                var i = part.indexOf(":"), id = part.slice(0, i), cls = part.slice(i + 1).split(/[\s+]+/).filter(Boolean),
-                    sec = id && d.getElementById(id), rep = sec && sec.querySelector(".ws-R");
+                var i = part.indexOf(":"), id = part.slice(0, i), cls = part.slice(i + 1).split(/[\s+]+/).filter(Boolean);
+                if (id.charAt(0) === "@") {
+                    // every report of one template
+                    var base = BASE[id.slice(1)];
+                    if (base) { $$(".ws-R." + base).forEach(function (rep) { cls.forEach(function (c) { setFamily(rep, c); }); }); }
+                    return;
+                }
+                var sec = id && d.getElementById(id), rep = sec && sec.querySelector(".ws-R");
                 if (!sec) { return; }
                 // each class replaces the classes of its own family only (ws-Tone--soft replaces ws-Tone--dark, ws-Hero--split replaces ws-Hero--slider)
-                cls.forEach(function (c) {
-                    var el = SEC_FAMILY.test(c) || !rep ? sec : rep, fam = c.replace(/--.*$/, "--");
-                    el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(fam) === 0) { el.classList.remove(x); } });
-                    el.classList.add(c);
-                });
+                cls.forEach(function (c) { setFamily(SEC_FAMILY.test(c) || !rep ? sec : rep, c); });
             });
         }
         fonts();
@@ -75,12 +91,14 @@
         $$(".ws-Job", root).forEach(function (job) { var a = job.querySelector(".ws-Btn"); if (a && !val(a.textContent) && val(a.getAttribute("href"))) { a.textContent = msg("apply"); } });
         $$(".ws-Btn, .ws-More", root).forEach(function (a) { if (!val(a.textContent)) { a.parentNode.removeChild(a); } });
         $$("a[href]", root).forEach(function (a) { if (!val(a.getAttribute("href"))) { a.removeAttribute("href"); } });
+        $$("a[target='']", root).forEach(function (a) { a.removeAttribute("target"); });
         $$("[data-opt]", root).forEach(function (el) {
             var kind = el.getAttribute("data-opt"), keep = kind === "href" ? el.hasAttribute("href") : !!val(el.textContent);
             if (!keep) { el.parentNode.removeChild(el); }
         });
         $$(".ws-Actions", root).forEach(function (a) { if (!a.children.length) { a.parentNode.removeChild(a); } });
         $$(".ws-Info a:not([href])", root).forEach(function (a) { a.className = "ws-Info-v"; });
+        $$(".ws-Product h3 a:not([href])", root).forEach(function (a) { a.replaceWith(d.createTextNode(a.textContent)); });
         // an icon column the query does not return: the data-icon default, or no icon
         $$(".fa", root).forEach(function (i) {
             if (i.className.replace(/\b(fa|ws-Icon)\b/g, "").trim()) { return; }
@@ -90,38 +108,95 @@
         // the default layout of a report: its class when no layout option is chosen
         $$("[data-ws-null]", root.matches && root.matches("[data-ws-null]") ? root.parentNode : root).forEach(function (r) {
             var base = (r.getAttribute("data-ws-base-class") || "") + "--";
-            if (!r.className.split(/\s+/).some(function (c) { return c.indexOf(base) === 0; })) { r.classList.add(r.getAttribute("data-ws-null")); }
+            if (!r.className.split(/\s+/).some(function (c) { return c.indexOf(base) === 0 && !/--(zoom|full|medium|light|strong|slide)$/.test(c); })) { r.classList.add(r.getAttribute("data-ws-null")); }
         });
     }
 
-    /* ---------- images: data-img -> background; none -> artwork or initials ---------- */
-    var artN = 0;
+    /* ---------- images ----------
+       IMAGE_URL (data-img): any URL, or #APP_FILES#file. IMAGE_FILE (data-file): a file name in Static Application Files.
+       The #APP_FILES# folder: the body's data-ws-files (page template) or else the folder website.css was loaded from. */
+    var filesDir = null;
+    function appFiles() {
+        if (filesDir !== null) { return filesDir; }
+        var f = b.getAttribute("data-ws-files") || "";
+        if (!f || /#APP_FILES#/.test(f)) {
+            f = "";
+            $$("link[rel=stylesheet]").some(function (l) {
+                var m = /^(.*\/)?website-studio\/website(\.min)?\.css(\?.*)?$/.exec(l.getAttribute("href") || "");
+                if (m) { f = m[1] || ""; return true; }
+                return false;
+            });
+        }
+        filesDir = f;
+        return f;
+    }
+    function source(el) {
+        var raw = (el.getAttribute("data-img") || "").trim(), url = val(raw), file = val(el.getAttribute("data-file"));
+        if (!url && /^#APP_FILES#[^#]/.test(raw)) { url = raw; }
+        if (url) { return url.replace(/^#APP_FILES#/, appFiles()); }
+        if (file) { return /^(https?:)?\/\//.test(file) || file.charAt(0) === "/" ? file : appFiles() + file.replace(/^#APP_FILES#/, ""); }
+        return "";
+    }
+    var phN = 0, lazy = "IntersectionObserver" in W ? new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { lazy.unobserve(e.target); load(e.target); } });
+    }, { rootMargin: "600px 0px" }) : null;
+    function placeholder(el) {
+        el.classList.remove("has-img", "is-loading");
+        el.style.backgroundImage = "";
+        if (!el.classList.contains("ws-Ph")) { el.classList.add("ws-Ph", "ws-Ph--n" + ((phN++ % 6) + 1)); }
+    }
+    function load(el) {
+        var src = el.__wsSrc;
+        if (!src || el.__wsLoaded) { return; }
+        el.__wsLoaded = true;
+        var probe = new Image();
+        probe.onload = function () { el.style.backgroundImage = "url(\"" + src.replace(/["\\\n]/g, encodeURIComponent) + "\")"; el.classList.remove("is-loading", "ws-Ph"); el.classList.add("has-img"); };
+        probe.onerror = function () { placeholder(el); };
+        probe.src = src;
+    }
     function media(root) {
-        $$("[data-img]", root).forEach(function (el) {
-            var src = val(el.getAttribute("data-img"));
+        $$("[data-img], [data-file]", root).forEach(function (el) {
+            if (el.__wsImg) { return; }
+            el.__wsImg = true;
+            var src = source(el), alt = val(el.getAttribute("data-alt"));
             if (el.classList.contains("ws-Logo-img")) {
-                if (src) { var img = d.createElement("img"); img.src = src; img.alt = val(el.getAttribute("data-alt")); img.loading = "lazy"; el.parentNode.replaceChild(img, el); }
+                if (src) { var img = d.createElement("img"); img.src = src; img.alt = alt; img.loading = "lazy"; img.onerror = function () { img.remove(); }; el.parentNode.replaceChild(img, el); }
                 else { el.parentNode.removeChild(el); }
                 return;
             }
-            if (src) {
-                el.style.backgroundImage = "url(\"" + src.replace(/["\\\n]/g, encodeURIComponent) + "\")";
-                el.classList.add("has-img");
-            } else if (!el.classList.contains("has-img")) {
-                el.classList.add("ws-Art", "ws-Art--" + ((artN++ % 6) + 1));
-            }
+            if (alt) { el.setAttribute("aria-label", alt); }
+            if (!val(el.getAttribute("aria-label"))) { el.setAttribute("aria-hidden", "true"); el.removeAttribute("role"); }
+            var pos = val(el.getAttribute("data-pos"));
+            if (pos) { el.style.backgroundPosition = pos; }
             var ini = el.getAttribute("data-initials");
             if (ini !== null) {
                 var words = val(ini).split(/\s+/).filter(Boolean);
-                el.setAttribute("data-initials", words.length ? (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase() : "");
-                if (!words.length) { el.removeAttribute("data-initials"); }
+                if (words.length) { el.setAttribute("data-initials", (words[0][0] + (words.length > 1 ? words[words.length - 1][0] : "")).toUpperCase()); }
+                else { el.removeAttribute("data-initials"); }
             }
+            if (!src) { placeholder(el); return; }
+            el.__wsSrc = src;
+            el.classList.add("is-loading");
+            // the first slide of the hero loads at once; everything else when it comes near the screen
+            var hero = el.closest(".ws-Hero"), first = hero && el.closest(".ws-Slide") === hero.querySelector(".ws-Slide");
+            if (first || !lazy) { load(el); } else { lazy.observe(el); }
+            video(el);
         });
+    }
+    // a hero background video (VIDEO_URL: .mp4 / .webm), muted and looping, the image is its poster
+    function video(el) {
+        var v = val(el.getAttribute("data-video"));
+        if (!v || reduce || !/\.(mp4|webm|m4v)(\?|#|$)/i.test(v)) { return; }
+        var vid = d.createElement("video");
+        vid.className = "ws-Bg-video"; vid.muted = true; vid.loop = true; vid.autoplay = true; vid.playsInline = true; vid.setAttribute("playsinline", ""); vid.setAttribute("aria-hidden", "true");
+        vid.src = v.replace(/^#APP_FILES#/, appFiles());
+        el.appendChild(vid);
+        var p = vid.play && vid.play(); if (p && p.catch) { p.catch(function () { /* autoplay refused: the image stays */ }); }
     }
 
     /* ---------- emphasis: *word* in titles becomes <em> ---------- */
     function emphasis(root) {
-        $$(".ws-Title, .ws-Display, .ws-Statement, .ws-Quote blockquote", root).forEach(function (el) {
+        $$(".ws-Title, .ws-Display, .ws-Statement, .ws-Quote blockquote, .ws-Zig-t", root).forEach(function (el) {
             if (el.children.length || el.textContent.indexOf("*") < 0) { return; }
             var t = el.textContent, out = "", re = /\*([^*]+)\*/g, last = 0, m, esc = function (s) { var x = d.createElement("span"); x.textContent = s; return x.innerHTML; };
             while ((m = re.exec(t))) { out += esc(t.slice(last, m.index)) + "<em>" + esc(m[1]) + "</em>"; last = re.lastIndex; }
@@ -167,10 +242,10 @@
     function counters(root) {
         if (!("IntersectionObserver" in W)) { return; }
         $$(".ws-Count", root).forEach(function (el) {
-            var raw = val(el.getAttribute("data-to") || el.textContent), clean = raw.replace(/[^\d.\-]/g, ""), to = parseFloat(clean);
+            var raw = val(el.getAttribute("data-to") || el.textContent), num = raw.replace(/[^\d.\-]/g, ""), to = parseFloat(num);
             if (!b.classList.contains("ws-Fx--count") || reduce || isNaN(to) || el.__ws) { return; }
             el.__ws = true;
-            var dec = (clean.split(".")[1] || "").length, grp = /\d[,\s]\d{3}/.test(raw);
+            var dec = (num.split(".")[1] || "").length, grp = /\d[,\s]\d{3}/.test(raw);
             var fmt = function (v) { var s = v.toFixed(dec); return grp ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s; };
             var io = new IntersectionObserver(function (es) {
                 es.forEach(function (e) {
@@ -217,9 +292,130 @@
             track.className = "ws-Track";
             items.forEach(function (i) { track.appendChild(i); });
             items.forEach(function (i) { var c = i.cloneNode(true); c.setAttribute("aria-hidden", "true"); c.setAttribute("tabindex", "-1"); track.appendChild(c); });
-            track.style.setProperty("--ws-speed", Math.max(20, items.length * 5) + "s");
+            var per = rep.classList.contains("ws-Speed--slow") ? 8 : rep.classList.contains("ws-Speed--fast") ? 2.6 : 4.5;
+            track.style.setProperty("--ws-speed", Math.max(14, items.length * per) + "s");
             rep.appendChild(track);
         });
+    }
+    // Opening Hours: today's row (DAY_NUMBER 1 = Monday ... 7 = Sunday, or the day name)
+    function hours(root) {
+        var now = new Date(), iso = now.getDay() === 0 ? 7 : now.getDay(), names = [];
+        try { names = [now.toLocaleDateString(d.documentElement.lang || undefined, { weekday: "long" }), now.toLocaleDateString("en", { weekday: "long" }), now.toLocaleDateString("en", { weekday: "short" })].map(function (x) { return x.toLowerCase(); }); } catch (e) { /* old browser */ }
+        $$(".ws-Hours", root).forEach(function (rep) {
+            var days = $$(".ws-Day", rep), hit = days.filter(function (r) { return +val(r.getAttribute("data-day")) === iso; })[0];
+            if (!hit) { hit = days.filter(function (r) { var n = (r.querySelector(".ws-Day-n") || {}).textContent || ""; return names.indexOf(n.trim().toLowerCase()) >= 0; })[0]; }
+            if (hit) { hit.classList.add("is-today"); hit.setAttribute("aria-current", "date"); }
+        });
+    }
+    // Comparison: the header row, Y/N as tick and dash, empty plan columns hidden
+    function compare(root) {
+        $$(".ws-Compare", root).forEach(function (rep) {
+            if (rep.__wsC) { return; }
+            rep.__wsC = true;
+            rep.setAttribute("role", "table");
+            var rows = $$(".ws-Cmp-row", rep), used = [false, false, false, false];
+            rows.forEach(function (r) {
+                if (/^(y|yes|1|true)$/i.test(val(r.getAttribute("data-head")))) { r.classList.add("is-head"); }
+                $$(".ws-Cmp-c", r).forEach(function (c, i) {
+                    var t = val(c.textContent);
+                    if (t) { used[i] = true; }
+                    if (!r.classList.contains("is-head")) {
+                        if (/^(y|yes|true)$/i.test(t)) { c.innerHTML = '<span class="ws-Yes" role="img" aria-label="Yes"></span>'; }
+                        else if (/^(n|no|false|-)$/i.test(t)) { c.innerHTML = '<span class="ws-No" role="img" aria-label="No"></span>'; }
+                    }
+                });
+            });
+            var n = used.lastIndexOf(true) + 1;
+            rep.style.setProperty("--ws-cols", n || 1);
+            rows.forEach(function (r) { $$(".ws-Cmp-c", r).forEach(function (c, i) { if (i >= n) { c.remove(); } }); });
+            var head = rows.filter(function (r) { return r.classList.contains("is-head"); })[0];
+            if (head && head !== rep.firstElementChild) { rep.insertBefore(head, rep.firstElementChild); }
+        });
+    }
+    // Video: a cover with a play button; YouTube / Vimeo / a file only load when pressed
+    function videos(root) {
+        $$(".ws-Video", root).forEach(function (fig) {
+            var url = val(fig.getAttribute("data-video")), btn = fig.querySelector(".ws-Video-play");
+            if (!btn || fig.__wsV) { return; }
+            fig.__wsV = true;
+            if (!url) { btn.disabled = true; return; }
+            btn.setAttribute("aria-label", msg("play") + ": " + (btn.getAttribute("aria-label") || ""));
+            btn.addEventListener("click", function () {
+                var yt = /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{6,})/.exec(url), vm = /vimeo\.com\/(?:video\/)?(\d+)/.exec(url), el;
+                if (yt || vm) {
+                    el = d.createElement("iframe");
+                    el.src = yt ? "https://www.youtube-nocookie.com/embed/" + yt[1] + "?autoplay=1&rel=0" : "https://player.vimeo.com/video/" + vm[1] + "?autoplay=1";
+                    el.allow = "autoplay; fullscreen; picture-in-picture"; el.setAttribute("allowfullscreen", ""); el.title = btn.getAttribute("aria-label");
+                } else {
+                    el = d.createElement("video"); el.src = url.replace(/^#APP_FILES#/, appFiles()); el.controls = true; el.autoplay = true; el.playsInline = true;
+                }
+                el.className = "ws-Video-frame";
+                btn.replaceWith(el);
+                if (el.focus) { el.focus(); }
+            });
+        });
+    }
+    // Map: the embed loads when it comes near the screen
+    function maps(root) {
+        $$(".ws-Map-frame", root).forEach(function (fr) {
+            var url = val(fr.getAttribute("data-map"));
+            if (fr.__wsMap) { return; }
+            fr.__wsMap = true;
+            if (!url) { fr.classList.add("ws-Ph", "ws-Ph--n2"); return; }
+            var go = function () { var f = d.createElement("iframe"); f.src = url; f.loading = "lazy"; f.title = val(fr.getAttribute("data-title")) || msg("map"); f.referrerPolicy = "no-referrer-when-downgrade"; fr.appendChild(f); };
+            if ("IntersectionObserver" in W) { var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: "300px 0px" }); io.observe(fr); } else { go(); }
+        });
+    }
+    // Photo Gallery: a lightbox with arrows, swipe and Escape
+    var box = null;
+    function lightbox(root) {
+        $$(".ws-Photos", root).forEach(function (rep) {
+            if (rep.__wsL) { return; }
+            rep.__wsL = true;
+            rep.addEventListener("click", function (e) {
+                var btn = e.target.closest(".ws-Photo-btn"); if (!btn) { return; }
+                var list = $$(".ws-Photo", rep).filter(function (f) { return !f.hidden && !f.closest("[aria-hidden=true]"); }), i = list.indexOf(btn.closest(".ws-Photo"));
+                openBox(list, i, btn);
+            });
+        });
+    }
+    function openBox(list, i, opener) {
+        if (!box) {
+            box = d.createElement("div");
+            box.className = "ws-Lightbox"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
+            box.innerHTML = '<figure class="ws-Lightbox-fig"><img alt=""><figcaption></figcaption></figure>' +
+                '<button type="button" class="ws-Lightbox-close"><span aria-hidden="true">&times;</span></button>' +
+                '<button type="button" class="ws-Arrow ws-Lightbox-prev"><span aria-hidden="true">&#8592;</span></button><button type="button" class="ws-Arrow ws-Lightbox-next"><span aria-hidden="true">&#8594;</span></button>';
+            b.appendChild(box);
+        }
+        var img = box.querySelector("img"), cap = box.querySelector("figcaption"), cur = Math.max(0, i), x0 = null;
+        box.querySelector(".ws-Lightbox-close").setAttribute("aria-label", msg("close"));
+        box.querySelector(".ws-Lightbox-prev").setAttribute("aria-label", msg("prev"));
+        box.querySelector(".ws-Lightbox-next").setAttribute("aria-label", msg("next"));
+        function show() {
+            var fig = list[cur], m = fig.querySelector(".ws-Media");
+            if (m && !m.__wsLoaded) { load(m); }
+            img.src = (m && m.__wsSrc) || ""; img.alt = (m && m.getAttribute("aria-label")) || "";
+            if (!img.getAttribute("src")) { img.removeAttribute("src"); }
+            cap.textContent = ((fig.querySelector("figcaption") || {}).textContent || "").trim();
+            box.classList.toggle("is-empty", !img.getAttribute("src"));
+        }
+        function go(k) { cur = (k + list.length) % list.length; show(); }
+        function close() { box.hidden = true; d.removeEventListener("keydown", key); b.classList.remove("ws-Locked"); if (opener) { opener.focus(); } }
+        function key(e) {
+            if (e.key === "Escape") { close(); }
+            else if (e.key === "ArrowRight") { go(cur + (rtl() ? -1 : 1)); } else if (e.key === "ArrowLeft") { go(cur + (rtl() ? 1 : -1)); }
+        }
+        box.querySelector(".ws-Lightbox-close").onclick = close;
+        box.querySelector(".ws-Lightbox-prev").onclick = function () { go(cur - 1); };
+        box.querySelector(".ws-Lightbox-next").onclick = function () { go(cur + 1); };
+        box.onclick = function (e) { if (e.target === box) { close(); } };
+        box.ontouchstart = function (e) { x0 = e.touches[0].clientX; };
+        box.ontouchend = function (e) { if (x0 === null) { return; } var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(cur + ((dx < 0) !== rtl() ? 1 : -1)); } x0 = null; };
+        box.hidden = false; b.classList.add("ws-Locked");
+        d.addEventListener("keydown", key);
+        show();
+        box.querySelector(".ws-Lightbox-close").focus();
     }
 
     /* ---------- slider: Hero (rows = slides) and Testimonials carousel ---------- */
@@ -241,16 +437,27 @@
             dot.addEventListener("click", function () { go(k); });
             dots.push(dot); dotBox.appendChild(dot);
         });
-        var arrow = function (dir) { var a = d.createElement("button"); a.type = "button"; a.className = "ws-Arrow"; a.setAttribute("aria-label", msg(dir)); a.innerHTML = '<span aria-hidden="true">' + (dir === "prev" ? "&#8592;" : "&#8594;") + "</span>"; a.addEventListener("click", function () { go(i + (dir === "prev" ? -1 : 1)); }); return a; };
+        var arrow = function (dir) {
+            var a = d.createElement("button"); a.type = "button"; a.className = "ws-Arrow ws-Arrow--" + dir; a.setAttribute("aria-label", msg(dir));
+            a.innerHTML = '<span aria-hidden="true">' + (dir === "prev" ? "&#8592;" : "&#8594;") + "</span>";
+            a.addEventListener("click", function () { go(i + (dir === "prev" ? -1 : 1)); });
+            return a;
+        };
         if (rep.classList.contains("ws-Hero")) { ctl.appendChild(count); }
         if (rep.classList.contains("ws-Quotes")) { ctl.appendChild(arrow("prev")); ctl.appendChild(dotBox); ctl.appendChild(arrow("next")); }
         else { ctl.appendChild(dotBox); ctl.appendChild(arrow("prev")); ctl.appendChild(arrow("next")); }
         rep.appendChild(ctl);
         rep.style.setProperty("--ws-ms", ms + "ms");
-        function show() {
-            slides.forEach(function (s, k) { s.classList.toggle("is-active", k === i); s.setAttribute("aria-hidden", k === i ? "false" : "true"); if ("inert" in s) { s.inert = k !== i; } });
+        function show(back) {
+            slides.forEach(function (s, k) {
+                s.classList.toggle("is-active", k === i);
+                s.classList.toggle("is-before", back ? k > i : k < i);
+                s.setAttribute("aria-hidden", k === i ? "false" : "true"); if ("inert" in s) { s.inert = k !== i; }
+            });
             dots.forEach(function (dt, k) { dt.classList.toggle("is-active", k === i); dt.setAttribute("aria-current", k === i ? "true" : "false"); });
             count.firstChild.textContent = (i < 9 ? "0" : "") + (i + 1);
+            // a slide's picture loads just before the slide shows
+            [i, (i + 1) % slides.length].forEach(function (k) { $$(".ws-Media.is-loading", slides[k]).forEach(function (el) { if (lazy) { lazy.unobserve(el); } load(el); }); });
         }
         function start() {
             clearInterval(timer);
@@ -258,39 +465,162 @@
             rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run");
             timer = setInterval(function () { go(i + 1, true); }, ms);
         }
-        function go(k, auto) { i = (k + slides.length) % slides.length; show(); if (!auto) { start(); } else { rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run"); } }
+        function go(k, auto) {
+            var back = k < i;
+            i = (k + slides.length) % slides.length; show(back);
+            if (!auto) { start(); } else { rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run"); }
+        }
         rep.addEventListener("mouseenter", function () { if (ms) { clearInterval(timer); rep.classList.add("ws-Paused"); } });
         rep.addEventListener("mouseleave", function () { if (ms) { rep.classList.remove("ws-Paused"); start(); } });
         rep.addEventListener("focusin", function () { if (ms) { clearInterval(timer); rep.classList.add("ws-Paused"); } });
-        rep.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") { go(i - 1); } else if (e.key === "ArrowRight") { go(i + 1); } });
+        rep.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowLeft") { go(i + (rtl() ? 1 : -1)); } else if (e.key === "ArrowRight") { go(i + (rtl() ? -1 : 1)); }
+        });
         var x0 = null;
         rep.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-        rep.addEventListener("touchend", function (e) { if (x0 === null) { return; } var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(i + (dx < 0 ? 1 : -1)); } x0 = null; });
+        rep.addEventListener("touchend", function (e) { if (x0 === null) { return; } var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(i + ((dx < 0) !== rtl() ? 1 : -1)); } x0 = null; });
         show(); start();
     }
 
-    /* ---------- menu from the sections ---------- */
+    /* ---------- the header menu ----------
+       1. a Website - Menu list in the Menu slot (static or SQL list; parent entries get a drop-down)
+       2. otherwise built from the Modern Section regions with Show in Menu */
+    var menuDone = false;
     function menu() {
         var nav = d.getElementById("ws-nav"), burger = d.querySelector(".ws-Burger");
         if (!nav) { return; }
-        var secs = $$(".ws-Sec.ws-Sec--menu[id]").filter(function (s) { return s.offsetParent !== null || s.getClientRects().length; });
-        nav.innerHTML = "";
-        secs.forEach(function (s) {
-            var t = s.getAttribute("data-menu") || (s.querySelector(".ws-Title") || {}).textContent || "";
-            t = val(t).replace(/\*/g, "");
-            if (!t) { return; }
-            var a = d.createElement("a"); a.href = "#" + s.id; a.textContent = t; nav.appendChild(a);
+        var list = d.querySelector(".ws-Menu-slot .ws-Menu") || nav.querySelector(".ws-Menu");
+        if (list && list.parentNode !== nav) { nav.innerHTML = ""; nav.appendChild(list); }
+        if (list && list.hasAttribute("data-ws-menu")) { b.classList.add("ws-Has-list"); }
+        if (!list) {
+            list = d.createElement("ul");
+            list.className = "ws-Menu ws-Menu--auto";
+            $$(".ws-Sec.ws-Sec--menu[id]").filter(function (s) { return s.getClientRects().length; }).forEach(function (s) {
+                var t = s.getAttribute("data-menu") || (s.querySelector(".ws-Title") || {}).textContent || "";
+                t = val(t).replace(/\*/g, "");
+                if (!t) { return; }
+                var li = d.createElement("li"), a = d.createElement("a");
+                li.className = "ws-Menu-item"; a.className = "ws-Menu-link"; a.href = "#" + s.id; a.textContent = t;
+                li.appendChild(a); list.appendChild(li);
+            });
+            nav.innerHTML = "";
+            if (list.children.length) { nav.appendChild(list); }
+        }
+        var slot = d.querySelector(".ws-Menu-slot"); if (slot) { slot.hidden = true; }
+        // the menu options act on the whole header
+        b.className.split(/\s+/).forEach(function (c) { if (/^ws-MenuOpt--/.test(c)) { b.classList.remove(c); } });
+        list.className.split(/\s+/).forEach(function (c) { var m = /^ws-Menu--(center|left|overlay|drawer)$/.exec(c); if (m) { b.classList.add("ws-MenuOpt--" + m[1]); } });
+        b.classList.toggle("ws-No-menu", !list.children.length);
+        if (!list.children.length || menuDone) { return; }
+        menuDone = true;
+        // anchors on this page are "current" while their section is on screen, not because APEX marked the page
+        $$("a", list).forEach(function (a) {
+            var h = a.getAttribute("href") || "";
+            if (h.charAt(0) === "#" || /^[^#]*#[\w-]+$/.test(h) && h.split("#")[0] === location.pathname + location.search) { a.closest("li").classList.remove("is-current"); a.removeAttribute("aria-current"); }
         });
+        // Last Entry as Button
+        var tops = $$(":scope > li", list);
+        if (list.classList.contains("ws-Menu--cta") && tops.length) { tops[tops.length - 1].classList.add("ws-Menu-cta"); }
+        // Visible Entries: the rest go into More on wide screens (the phone menu shows them in the More accordion)
+        var mx = /ws-Menu--max(\d)/.exec(list.className), plain = tops.filter(function (li) { return !li.classList.contains("ws-Menu-cta"); });
+        if (mx && plain.length > +mx[1] + 1) {
+            var more = d.createElement("li"), sub = d.createElement("ul");
+            more.className = "ws-Menu-item ws-Menu-item--parent ws-Menu-more";
+            more.innerHTML = '<a class="ws-Menu-link" href="#"></a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh"></span></button>';
+            more.querySelector("a").textContent = msg("more"); more.querySelector(".u-vh").textContent = msg("more");
+            sub.className = "ws-Menu-sub";
+            plain.slice(+mx[1]).forEach(function (li) {
+                // a moved parent keeps its children one level down
+                sub.appendChild(li);
+            });
+            more.appendChild(sub);
+            list.insertBefore(more, list.querySelector(":scope > .ws-Menu-cta"));
+        }
+        // drop-downs: hover and click on wide screens, an accordion in the phone menu; Escape closes
+        var wide = function () { return W.matchMedia("(min-width: 901px)").matches; };
+        var closeAll = function (except) {
+            $$(".ws-Menu-item--parent.is-open", list).forEach(function (o) { if (!except || !o.contains(except)) { o.classList.remove("is-open"); o.querySelector(":scope > .ws-Menu-toggle").setAttribute("aria-expanded", "false"); } });
+        };
+        $$(".ws-Menu-item--parent", list).forEach(function (li) {
+            var btn = li.querySelector(":scope > .ws-Menu-toggle"), a = li.querySelector(":scope > .ws-Menu-link"), sub = li.querySelector(":scope > .ws-Menu-sub");
+            if (!btn || !sub) { return; }
+            sub.id = sub.id || "ws-sub-" + Math.random().toString(36).slice(2, 8); btn.setAttribute("aria-controls", sub.id);
+            var set = function (open) {
+                if (open) { closeAll(li); }
+                li.classList.toggle("is-open", open); btn.setAttribute("aria-expanded", open ? "true" : "false");
+            };
+            btn.addEventListener("click", function (e) { e.stopPropagation(); set(!li.classList.contains("is-open")); });
+            // a parent without its own page (href "#" or empty) opens its drop-down
+            if (a && (!a.getAttribute("href") || a.getAttribute("href") === "#")) {
+                a.setAttribute("role", "button"); a.setAttribute("aria-expanded", "false");
+                a.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); set(!li.classList.contains("is-open")); a.setAttribute("aria-expanded", li.classList.contains("is-open") ? "true" : "false"); });
+            }
+            li.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && li.classList.contains("is-open")) { set(false); btn.focus(); e.stopPropagation(); }
+                if (e.key === "ArrowDown" && e.target === btn) { e.preventDefault(); set(true); var f = sub.querySelector("a"); if (f) { f.focus(); } }
+            });
+            li.addEventListener("focusout", function (e) { if (wide() && !li.contains(e.relatedTarget)) { set(false); } });
+            var hoverT;
+            li.addEventListener("mouseenter", function () { if (wide() && W.matchMedia("(hover: hover)").matches) { clearTimeout(hoverT); set(true); } });
+            li.addEventListener("mouseleave", function () { if (wide() && W.matchMedia("(hover: hover)").matches) { hoverT = setTimeout(function () { set(false); }, 200); } });
+        });
+        d.addEventListener("click", function (e) { if (!e.target.closest(".ws-Menu")) { closeAll(); } });
         if (burger) {
             burger.setAttribute("aria-label", msg("menu"));
             burger.onclick = function () { var open = b.classList.toggle("ws-Nav-open"); burger.setAttribute("aria-expanded", open ? "true" : "false"); };
         }
-        nav.onclick = function (e) { if (e.target.closest("a")) { b.classList.remove("ws-Nav-open"); if (burger) { burger.setAttribute("aria-expanded", "false"); } } };
-        if (!("IntersectionObserver" in W) || !nav.children.length) { return; }
-        var links = $$("a", nav), io = new IntersectionObserver(function (es) {
-            es.forEach(function (e) { if (e.isIntersecting) { links.forEach(function (a) { a.classList.toggle("is-current", a.getAttribute("href") === "#" + e.target.id); }); } });
+        d.addEventListener("keydown", function (e) {
+            if (e.key !== "Escape") { return; }
+            if (list.querySelector(".is-open")) { closeAll(); return; }
+            if (b.classList.contains("ws-Nav-open")) { b.classList.remove("ws-Nav-open"); if (burger) { burger.setAttribute("aria-expanded", "false"); burger.focus(); } }
+        });
+        nav.addEventListener("click", function (e) {
+            var a = e.target.closest("a[href]");
+            if (a && a.getAttribute("href") !== "#") { b.classList.remove("ws-Nav-open"); closeAll(); if (burger) { burger.setAttribute("aria-expanded", "false"); } }
+        });
+        // the current section while scrolling
+        if (!("IntersectionObserver" in W)) { return; }
+        var links = $$("a[href^='#']", list).filter(function (a) { return a.getAttribute("href").length > 1; }), secs = [];
+        links.forEach(function (a) { var s = d.getElementById(a.getAttribute("href").slice(1)); if (s && secs.indexOf(s) < 0) { secs.push(s); } });
+        var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+                if (!e.isIntersecting) { return; }
+                links.forEach(function (a) {
+                    var on = a.getAttribute("href") === "#" + e.target.id;
+                    a.classList.toggle("is-current", on);
+                    if (on) { a.setAttribute("aria-current", "location"); } else { a.removeAttribute("aria-current"); }
+                });
+                // a parent shows as current while one of its children is
+                $$(".ws-Menu-item--parent", list).forEach(function (p) { p.classList.toggle("is-current-parent", !!p.querySelector(".ws-Menu-sub a.is-current")); });
+            });
         }, { rootMargin: "-45% 0px -50% 0px" });
         secs.forEach(function (s) { io.observe(s); });
+    }
+
+    /* ---------- header extras: light/dark toggle, WhatsApp button ---------- */
+    function extras() {
+        var t = d.querySelector(".ws-ThemeBtn");
+        if (t) {
+            var isDark = function () {
+                return b.classList.contains("ws-Scheme--dark") || b.classList.contains("ws-Design--midnight") || b.classList.contains("ws-Design--techgrid") ||
+                    (b.classList.contains("ws-Scheme--auto") && !!W.matchMedia && W.matchMedia("(prefers-color-scheme: dark)").matches);
+            };
+            t.setAttribute("aria-label", msg("dark"));
+            t.setAttribute("aria-pressed", isDark() ? "true" : "false");
+            t.onclick = function () {
+                var dark = !isDark();
+                b.classList.remove("ws-Scheme--auto", "ws-Scheme--dark");
+                if (dark) { b.classList.add("ws-Scheme--dark"); }
+                t.setAttribute("aria-pressed", dark ? "true" : "false");
+                try { localStorage.setItem("ws-scheme", dark ? "dark" : "light"); } catch (e) { /* private mode */ }
+            };
+        }
+        var chat = d.querySelector(".ws-Chat");
+        if (chat && !chat.__ws) {
+            chat.__ws = true;
+            var raw = chat.getAttribute("data-number") || "", num = raw.replace(/[^\d]/g, "");
+            if (!num || /&/.test(raw)) { chat.remove(); } else { chat.href = "https://wa.me/" + num; }
+        }
     }
 
     /* ---------- scroll: header state, progress bar, back to top ---------- */
@@ -316,7 +646,7 @@
         }, { threshold: .06, rootMargin: "0px 0px -4% 0px" });
         // only the sections of the page; the header and footer are always shown
         $$(".ws-Main .ws-Head, .ws-Main .ws-R > *:not(.ws-Ctl):not(.ws-Track), .ws-Main .ws-Split > *, .ws-Main .ws-Pillars > *, .ws-Main .ws-Statement, .ws-Main .ws-Body > .ws-Grid", root).forEach(function (el) {
-            if (el.__wsRv || el.closest(".is-slider, .ws-Logos--marquee")) { return; }
+            if (el.__wsRv || el.closest(".is-slider, .ws-Logos--marquee, .ws-Compare, .ws-Photos--strip")) { return; }
             el.__wsRv = true;
             if (el.getBoundingClientRect().top < W.innerHeight * .92) { return; }
             var k = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
@@ -330,7 +660,7 @@
         root = root || d;
         $$(".ws-R", root).forEach(function (r) { if (!r.hasAttribute("data-ws-base")) { r.setAttribute("data-ws-base", r.className.split(/\s+/).filter(function (c) { return c === "ws-R" || !/--/.test(c); }).join(" ")); } clean(r); });
         $$(".ws-Sec, .ws-Footer, .ws-Hero-slot", root === d ? d : root).forEach(function (s) { clean(s); });
-        media(root); emphasis(root); heads(root); stars(root); plans(root);
+        media(root); emphasis(root); heads(root); stars(root); plans(root); hours(root); compare(root); videos(root); maps(root); lightbox(root);
         $$(".ws-Hero", root).forEach(function (r) { slider(r, ".ws-Slide"); });
         $$(".ws-Quotes--carousel", root).forEach(function (r) { slider(r, ".ws-Quote"); });
         marquee(root); filters(root); counters(root); reveal(root);
@@ -349,13 +679,14 @@
         if (d.querySelector(".ws-Brand-slot") && val(d.querySelector(".ws-Brand-slot").textContent)) { b.classList.add("ws-Has-brand"); }
         refresh(d);
         menu();
+        extras();
         scrolling();
         b.classList.remove("ws-Loading");
         // the Designer changes the hash: page options apply at once, section options reload the page
         W.addEventListener("hashchange", function () {
             var nl = hashLook();
             if (nl.regions !== look.regions) { location.reload(); return; }
-            look = nl; applyLook(nl); menu();
+            look = nl; applyLook(nl); menu(); extras();
         });
         if (W.apex && apex.jQuery) { apex.jQuery(d).on("apexafterrefresh", function (e) { refresh(e.target); }); }
     }
