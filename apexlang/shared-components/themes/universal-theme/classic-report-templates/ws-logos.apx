@@ -7,7 +7,7 @@ classicReportTemplate ws-logos (
         bottom: </div>
     }
     rowTemplate1 {
-        template: <a class="ws-Logo-item" href="#LINK#"><span class="ws-Logo-img" data-img="#IMAGE_URL#" data-alt="#NAME#"></span><span class="ws-Logo-name">#NAME#</span></a>
+        template: <a class="ws-Logo-item" href="#LINK#"><span class="ws-Logo-img" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-alt="#NAME#"></span><span class="ws-Logo-name">#NAME#</span></a>
     }
     pagination {
         template: <span class="t-Report-paginationText">#TEXT#</span>
@@ -17,7 +17,7 @@ classicReportTemplate ws-logos (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Logos (Website Studio). Clients, partners or press. Without IMAGE_URL the name is shown as a word mark. Columns (all optional): NAME, IMAGE_URL, LINK.
+        comments: Website - Logos (Website Studio). Clients, partners or press. Without an image the name is shown as a word mark. Columns (all optional): NAME, IMAGE_URL, IMAGE_FILE, LINK.
     }
 
     templateOption logos-grid (
@@ -35,6 +35,35 @@ classicReportTemplate ws-logos (
         sequence: 20
         appearance {
             cssClasses: ws-Logos--row
+        }
+    )
+
+    templateOption speed-slow (
+        name: Slow
+        group: @report/wsr-logos-speed
+        sequence: 10
+        appearance {
+            cssClasses: ws-Speed--slow
+        }
+    )
+
+    templateOption speed-fast (
+        name: Fast
+        group: @report/wsr-logos-speed
+        sequence: 20
+        appearance {
+            cssClasses: ws-Speed--fast
+        }
+    )
+
+    templateOption logos-reverse (
+        name: Scroll the Other Way
+        sequence: 10
+        appearance {
+            cssClasses: ws-Logos--reverse
+        }
+        help {
+            helpText: The marquee moves the other way (it already turns round on right-to-left pages).
         }
     )
 )

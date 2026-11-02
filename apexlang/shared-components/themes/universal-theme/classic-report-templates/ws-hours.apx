@@ -1,0 +1,31 @@
+classicReportTemplate ws-hours (
+    name: Website - Opening Hours
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Hours #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <div class="ws-Day" data-day="#DAY_NUMBER#"><b class="ws-Day-n">#DAY_NAME#</b><span class="ws-Day-h">#HOURS#</span><small class="ws-Day-note" data-opt="text">#NOTE#</small></div>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Opening Hours (Website Studio). Opening hours. DAY_NUMBER (1 = Monday ... 7 = Sunday) highlights today; without it the day name is compared with today's name. Columns (all optional): DAY_NAME, HOURS, NOTE, DAY_NUMBER.
+    }
+
+    templateOption hours-cards (
+        name: Cards
+        group: @report/wsr-hours-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hours--cards
+        }
+    )
+)

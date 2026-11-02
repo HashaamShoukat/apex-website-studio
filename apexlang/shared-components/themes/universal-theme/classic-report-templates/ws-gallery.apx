@@ -13,7 +13,7 @@ classicReportTemplate ws-gallery (
         template:
             ```html
             <a class="ws-Work" href="#LINK#" data-tag="#CATEGORY#">
-              <span class="ws-Work-img ws-Media" data-img="#IMAGE_URL#" role="img" aria-label="#TITLE#"></span>
+              <div class="ws-Work-img ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#TITLE#"></div>
               <span class="ws-Work-c"><span><b>#TITLE#</b><small>#META#</small></span></span>
             </a>
             ```
@@ -26,7 +26,7 @@ classicReportTemplate ws-gallery (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Portfolio (Website Studio). Projects or photos. Filter Buttons groups them by CATEGORY. Columns (all optional): TITLE, CATEGORY, IMAGE_URL, LINK, META.
+        comments: Website - Portfolio (Website Studio). Projects with a picture and a link. Filter Buttons groups them by CATEGORY. Columns (all optional): TITLE, CATEGORY, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, LINK, META.
     }
 
     templateOption works-editorial (
@@ -52,6 +52,9 @@ classicReportTemplate ws-gallery (
         sequence: 10
         appearance {
             cssClasses: ws-Filter
+        }
+        help {
+            helpText: Buttons above the list that show one category at a time.
         }
     )
 )

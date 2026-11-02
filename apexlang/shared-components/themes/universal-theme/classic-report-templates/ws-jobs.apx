@@ -44,5 +44,8 @@ classicReportTemplate ws-jobs (
         appearance {
             cssClasses: ws-Filter
         }
+        help {
+            helpText: Buttons above the list that show one category at a time.
+        }
     )
 )

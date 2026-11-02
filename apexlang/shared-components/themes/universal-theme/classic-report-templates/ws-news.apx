@@ -1,0 +1,46 @@
+classicReportTemplate ws-news (
+    name: Website - News
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-News #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <a class="ws-Card ws-Post" href="#LINK#">
+              <div class="ws-Post-img ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#TITLE#"></div>
+              <span class="ws-Post-b"><span class="ws-Post-meta"><span class="ws-Tag" data-opt="text">#CATEGORY#</span><time data-opt="text">#POST_DATE#</time></span><b class="ws-Post-t">#TITLE#</b><span class="ws-Post-x" data-opt="text">#TEXT#</span></span>
+            </a>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - News (Website Studio). News or blog posts. POST_DATE is shown as it comes from the query (format it with to_char). Columns (all optional): TITLE, TEXT, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, POST_DATE, CATEGORY, LINK.
+    }
+
+    templateOption news-featured (
+        name: First Post Large
+        group: @report/wsr-news-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-News--featured
+        }
+    )
+
+    templateOption news-list (
+        name: List
+        group: @report/wsr-news-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-News--list
+        }
+    )
+)

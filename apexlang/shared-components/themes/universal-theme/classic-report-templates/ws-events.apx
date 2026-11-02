@@ -1,0 +1,38 @@
+classicReportTemplate ws-events (
+    name: Website - Events
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Events #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <article class="ws-Event" data-tag="#CATEGORY#">
+              <div class="ws-Event-when"><b data-opt="text">#EVENT_TIME#</b><span data-opt="text">#EVENT_DATE#</span></div>
+              <div class="ws-Event-b"><h3>#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p><p class="ws-Event-meta"><span data-opt="text"><span class="fa fa-user-o" aria-hidden="true"></span>#SPEAKER#</span><span data-opt="text"><span class="fa fa-map-marker" aria-hidden="true"></span>#LOCATION#</span></p></div>
+              <a class="ws-More" href="#LINK#">#LINK_LABEL#</a>
+            </article>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Events (Website Studio). An agenda or events list. EVENT_DATE and EVENT_TIME are shown as they come from the query. Columns (all optional): EVENT_DATE, EVENT_TIME, TITLE, TEXT, LOCATION, SPEAKER, LINK, LINK_LABEL, CATEGORY.
+    }
+
+    templateOption events-cards (
+        name: Cards
+        group: @report/wsr-events-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Events--cards
+        }
+    )
+)

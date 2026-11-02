@@ -27,8 +27,8 @@ pageTemplate modern-one-page (
               #HEAD#
               <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
             </head>
-            <body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
-            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")})(document.body,location.hash);</script>
+            <body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody" data-ws-files="#APP_FILES#">
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(m){b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>
             <noscript>&APP_TEXT$APEX_PAGE_NOSCRIPT.</noscript>
             <a href="#main" class="ws-Skip">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
             #FORM_OPEN#
@@ -38,7 +38,8 @@ pageTemplate modern-one-page (
                 <div class="ws-Brand-slot">#REGION_POSITION_07#</div>
                 <a class="ws-Brand ws-Brand-default" href="#HOME_LINK#">#LOGO#</a>
                 <nav class="ws-Nav" id="ws-nav" aria-label="&APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL!ATTR."></nav>
-                <div class="ws-Header-end">#AFTER_NAVIGATION_BAR#<button type="button" class="ws-Burger" aria-expanded="false" aria-controls="ws-nav" aria-label="Menu"><span></span><span></span><span></span></button></div>
+                <div class="ws-Menu-slot">#REGION_POSITION_08#</div>
+                <div class="ws-Header-end">#AFTER_NAVIGATION_BAR#<button type="button" class="ws-ThemeBtn" aria-pressed="false" aria-label="Dark mode"><span aria-hidden="true"></span></button><button type="button" class="ws-Burger" aria-expanded="false" aria-controls="ws-nav" aria-label="Menu"><span></span><span></span><span></span></button></div>
               </div>
             </header>
             ```
@@ -56,6 +57,7 @@ pageTemplate modern-one-page (
               </div>
             </footer>
             <button type="button" class="ws-ToTop" aria-label="Back to top"><span aria-hidden="true">&#8593;</span></button>
+            <a class="ws-Chat" href="https://wa.me/&WHATSAPP_NUMBER." data-number="&WHATSAPP_NUMBER." target="_blank" rel="noopener" aria-label="WhatsApp"><span class="fa fa-whatsapp" aria-hidden="true"></span></a>
             <div class="ws-Dialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
             ```
         footer:
@@ -116,7 +118,7 @@ pageTemplate modern-one-page (
             ```
     }
     comments {
-        comments: Modern One Page (Website Studio) - a one-page website. The header menu is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
+        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
     }
 
     templateOption design-editorial (
@@ -188,6 +190,102 @@ pageTemplate modern-one-page (
         }
         help {
             helpText: No cards: hairlines, large type and white space
+        }
+    )
+
+    templateOption design-corporate (
+        name: Corporate
+        group: @page/ws-design
+        sequence: 70
+        appearance {
+            cssClasses: ws-Design--corporate
+        }
+        help {
+            helpText: Structured and image-led: navy and grey, square buttons, a ruled heading
+        }
+    )
+
+    templateOption design-saas (
+        name: Startup / SaaS
+        group: @page/ws-design
+        sequence: 80
+        appearance {
+            cssClasses: ws-Design--saas
+        }
+        help {
+            helpText: A soft gradient mesh, framed product shots and glowing cards
+        }
+    )
+
+    templateOption design-luxury (
+        name: Elegant / Luxury
+        group: @page/ws-design
+        sequence: 90
+        appearance {
+            cssClasses: ws-Design--luxury
+        }
+        help {
+            helpText: Cream or black, thin serif headings, gold details, no rounded corners
+        }
+    )
+
+    templateOption design-playful (
+        name: Playful
+        group: @page/ws-design
+        sequence: 100
+        appearance {
+            cssClasses: ws-Design--playful
+        }
+        help {
+            helpText: Rounded and bright: sticker labels, tinted cards and offset shadows
+        }
+    )
+
+    templateOption design-organic (
+        name: Organic / Nature
+        group: @page/ws-design
+        sequence: 110
+        appearance {
+            cssClasses: ws-Design--organic
+        }
+        help {
+            helpText: Earthy colours, soft organic shapes and a paper texture
+        }
+    )
+
+    templateOption design-techgrid (
+        name: Tech Grid
+        group: @page/ws-design
+        sequence: 120
+        appearance {
+            cssClasses: ws-Design--techgrid
+        }
+        help {
+            helpText: Dark, fine grid lines, monospace details and sharp corners
+        }
+    )
+
+    templateOption design-swiss (
+        name: Swiss
+        group: @page/ws-design
+        sequence: 130
+        appearance {
+            cssClasses: ws-Design--swiss
+        }
+        help {
+            helpText: A strict grid, big sans-serif type, red details and hairline rules
+        }
+    )
+
+    templateOption design-retro (
+        name: Retro Print
+        group: @page/ws-design
+        sequence: 140
+        appearance {
+            cssClasses: ws-Design--retro
+        }
+        help {
+            helpText: Newsprint colours, ink borders, halftone dots and stamped labels
         }
     )
 
@@ -371,6 +469,18 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption font-arabic (
+        name: Arabic
+        group: @page/ws-font
+        sequence: 70
+        appearance {
+            cssClasses: ws-Font--arabic
+        }
+        help {
+            helpText: IBM Plex Sans Arabic for Arabic and Latin text
+        }
+    )
+
     templateOption header-centered (
         name: Centered Logo
         group: @page/ws-header
@@ -461,6 +571,33 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption ph-pattern (
+        name: Subtle Pattern
+        group: @page/ws-ph
+        sequence: 10
+        appearance {
+            cssClasses: ws-Ph--pattern
+        }
+    )
+
+    templateOption ph-shapes (
+        name: Duotone Shapes
+        group: @page/ws-ph
+        sequence: 20
+        appearance {
+            cssClasses: ws-Ph--shapes
+        }
+    )
+
+    templateOption ph-plain (
+        name: Plain Colour
+        group: @page/ws-ph
+        sequence: 30
+        appearance {
+            cssClasses: ws-Ph--plain
+        }
+    )
+
     templateOption fx-sticky (
         name: Sticky Header
         sequence: 100
@@ -516,6 +653,28 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption fx-theme (
+        name: Light/Dark Toggle
+        sequence: 150
+        appearance {
+            cssClasses: ws-Fx--theme
+        }
+        help {
+            helpText: A button in the header that switches between light and dark; the choice is remembered in the browser.
+        }
+    )
+
+    templateOption fx-chat (
+        name: WhatsApp Button
+        sequence: 160
+        appearance {
+            cssClasses: ws-Fx--chat
+        }
+        help {
+            helpText: A floating WhatsApp button. The number comes from the substitution string WHATSAPP_NUMBER (international format, digits only).
+        }
+    )
+
     slot hero (
         name: Hero
         staticId: REGION_POSITION_01
@@ -527,6 +686,15 @@ pageTemplate modern-one-page (
     slot logo (
         name: Logo
         staticId: REGION_POSITION_07
+        gridLayout {
+            gridSupport: false
+            newRow: false
+        }
+    )
+
+    slot menu (
+        name: Menu
+        staticId: REGION_POSITION_08
         gridLayout {
             gridSupport: false
             newRow: false

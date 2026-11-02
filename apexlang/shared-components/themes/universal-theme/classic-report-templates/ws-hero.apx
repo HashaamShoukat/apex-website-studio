@@ -2,6 +2,9 @@ classicReportTemplate ws-hero (
     name: Website - Hero
     templateClass: custom1
     type: namedColumn
+    templateOptions {
+        preset: ws-Hero--zoom
+    }
     reportTemplate {
         top: <div class="ws-R ws-Hero #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#" data-ws-null="ws-Hero--slider" data-ws-base-class="ws-Hero">
         bottom: </div>
@@ -10,7 +13,7 @@ classicReportTemplate ws-hero (
         template:
             ```html
             <div class="ws-Slide">
-              <div class="ws-Slide-media ws-Media" data-img="#IMAGE_URL#" role="img" aria-label="#TITLE#"></div>
+              <div class="ws-Slide-media ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#TITLE#" data-video="#VIDEO_URL#"></div>
               <div class="ws-Slide-body">
                 <p class="ws-Eyebrow" data-opt="text">#SUBTITLE#</p>
                 <h1 class="ws-Display">#TITLE#</h1>
@@ -28,7 +31,7 @@ classicReportTemplate ws-hero (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Hero (Website Studio). The opening section. One row is one slide; with more than one row it becomes a slider. Columns (all optional): TITLE, SUBTITLE, TEXT, IMAGE_URL, BUTTON_LABEL, BUTTON_LINK, BUTTON2_LABEL, BUTTON2_LINK.
+        comments: Website - Hero (Website Studio). The opening section. One row is one slide; with more than one row it becomes a slider. VIDEO_URL (an .mp4 or .webm file) plays muted behind the text, with the image as its poster. Columns (all optional): TITLE, SUBTITLE, TEXT, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, VIDEO_URL, BUTTON_LABEL, BUTTON_LINK, BUTTON2_LABEL, BUTTON2_LINK.
     }
 
     templateOption hero-split (
@@ -58,6 +61,51 @@ classicReportTemplate ws-hero (
         }
     )
 
+    templateOption hero-full (
+        name: Full Screen
+        group: @report/wsr-hero-height
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hero--full
+        }
+    )
+
+    templateOption hero-medium (
+        name: Medium
+        group: @report/wsr-hero-height
+        sequence: 20
+        appearance {
+            cssClasses: ws-Hero--medium
+        }
+    )
+
+    templateOption hero-light (
+        name: Light
+        group: @report/wsr-hero-overlay
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hero--light
+        }
+    )
+
+    templateOption hero-strong (
+        name: Strong
+        group: @report/wsr-hero-overlay
+        sequence: 20
+        appearance {
+            cssClasses: ws-Hero--strong
+        }
+    )
+
+    templateOption hero-slide (
+        name: Slide
+        group: @report/wsr-hero-move
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hero--slide
+        }
+    )
+
     templateOption auto-4 (
         name: 4 Seconds
         group: @report/wsr-autoplay
@@ -82,6 +130,17 @@ classicReportTemplate ws-hero (
         sequence: 30
         appearance {
             cssClasses: ws-Auto--off
+        }
+    )
+
+    templateOption hero-zoom (
+        name: Slow Zoom
+        sequence: 10
+        appearance {
+            cssClasses: ws-Hero--zoom
+        }
+        help {
+            helpText: The picture zooms out slowly while a slide is shown (Ken Burns).
         }
     )
 )
