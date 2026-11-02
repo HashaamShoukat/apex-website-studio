@@ -35,7 +35,7 @@ ${val("sqlQuery", sql(rows), 12)}
 ${opts(sec, 12)}${css ? `\n            cssClasses: ${css}` : ""}
         }
         advanced {
-            staticId: ${id}${menu ? `\n            customAttributes: data-menu="${menu}"` : ""}
+            htmlDomId: ${id}${menu ? `\n            customAttributes: data-menu="${menu}"` : ""}
         }${header ? `
         headerAndFooter {
             headerText: ${header}
@@ -49,9 +49,6 @@ ${opts(sec, 12)}${css ? `\n            cssClasses: ${css}` : ""}
             template: @${template}
 ${opts(reportOptions, 12)}
         }
-        pagination {
-            type: rowRangesXToYNoPagination
-        }
         messages {
             whenNoDataFound: Nothing to show yet.
         }
@@ -59,7 +56,10 @@ ${cols.map((c, i) => `
         column ${c} (
             layout {
                 sequence: ${(i + 1) * 10}
-            }
+            }${c === "SORT_ORDER" ? `
+            sorting {
+                defaultSequence: 1
+            }` : ""}
         )`).join("\n")}
     )`;
 }
@@ -79,7 +79,7 @@ ${val("htmlCode", html, 12)}
 ${opts(sec, 12)}${css ? `\n            cssClasses: ${css}` : ""}
         }
         advanced {
-            staticId: ${id}${menu ? `\n            customAttributes: data-menu="${menu}"` : ""}
+            htmlDomId: ${id}${menu ? `\n            customAttributes: data-menu="${menu}"` : ""}
         }${header ? `
         headerAndFooter {
             headerText: ${header}
@@ -240,5 +240,5 @@ ${item("P10_MESSAGE", "textarea", "What are you working on?", 40, 12, true, true
 
 )
 `;
-fs.writeFileSync(ROOT + "pages/p00010-demo-website.apx", page);
+fs.writeFileSync(ROOT + "pages/p00010-website.apx", page);
 console.log("demo website written:", SECTIONS.length, "sections,", (page.match(/^    region /gm) || []).length, "regions");

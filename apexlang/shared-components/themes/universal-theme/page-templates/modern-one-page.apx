@@ -28,7 +28,7 @@ pageTemplate modern-one-page (
               <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
             </head>
             <body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
-            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")})(document.body,location.hash);</script>
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")})(document.body,location.hash);</script>
             <noscript>&APP_TEXT$APEX_PAGE_NOSCRIPT.</noscript>
             <a href="#main" class="ws-Skip">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
             #FORM_OPEN#

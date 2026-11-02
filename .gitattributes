@@ -1,0 +1,4 @@
+# APEXlang rejects CRLF line endings, so text files always check out with LF (also on Windows)
+* text=auto eol=lf
+*.jpg binary
+*.png binary

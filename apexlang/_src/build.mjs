@@ -65,8 +65,9 @@ fs.writeFileSync(FILES + "website-studio/website.js", js);
 LIMITS.push(`website.css ${bytes(css)} (static file)`, `website.js ${bytes(js)} (static file)`);
 
 // ---------- Modern One Page ----------
-// applies a look passed in the URL (#ws=...) before the page is drawn, so the Designer preview does not flash
-const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/)).join(" ")})(document.body,location.hash);</script>`;
+// applies a look passed in the URL (#ws=...) before the page is drawn, so the Designer preview does not flash;
+// ws-Loading keeps the sections hidden until website.js has set them up (website.css shows them after 4s anyway)
+const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/)).join(" ")})(document.body,location.hash);</script>`;
 const header = `<!DOCTYPE html>
 <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID!ATTR. app-&APP_ALIAS!ATTR." lang="&BROWSER_LANGUAGE!ATTR." #TEXT_DIRECTION#>
 <head>

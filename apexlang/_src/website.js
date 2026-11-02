@@ -350,6 +350,7 @@
         refresh(d);
         menu();
         scrolling();
+        b.classList.remove("ws-Loading");
         // the Designer changes the hash: page options apply at once, section options reload the page
         W.addEventListener("hashchange", function () {
             var nl = hashLook();

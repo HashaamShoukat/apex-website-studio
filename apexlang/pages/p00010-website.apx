@@ -73,7 +73,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: hero
+            htmlDomId: hero
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -85,9 +85,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -138,6 +135,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -198,7 +198,7 @@ page 10 (
             cssClasses: ws-Sec--small
         }
         advanced {
-            staticId: clients
+            htmlDomId: clients
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -210,9 +210,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -227,6 +224,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 20
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -267,7 +267,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: about
+            htmlDomId: about
             customAttributes: data-menu="About"
         }
     )
@@ -320,7 +320,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: numbers
+            htmlDomId: numbers
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -332,9 +332,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -361,6 +358,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -435,7 +435,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: services
+            htmlDomId: services
             customAttributes: data-menu="Services"
         }
         headerAndFooter {
@@ -451,9 +451,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -493,6 +490,9 @@ page 10 (
             layout {
                 sequence: 60
             }
+            sorting {
+                defaultSequence: 1
+            }
         )
     )
 
@@ -526,7 +526,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: vision
+            htmlDomId: vision
         }
     )
 
@@ -589,7 +589,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: work
+            htmlDomId: work
             customAttributes: data-menu="Work"
         }
         headerAndFooter {
@@ -606,9 +606,6 @@ page 10 (
                 #DEFAULT#
                 ws-Filter
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -635,6 +632,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -685,7 +685,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: process
+            htmlDomId: process
         }
         headerAndFooter {
             headerText: <p class="ws-Eyebrow">How we work</p><p class="ws-Lead">Every project follows the same four stages, so you always know what happens next and what it costs.</p>
@@ -700,9 +700,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -729,6 +726,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -776,7 +776,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: clients-say
+            htmlDomId: clients-say
         }
         headerAndFooter {
             headerText: <p class="ws-Eyebrow">Customers</p>
@@ -791,9 +791,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -826,6 +823,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -877,7 +877,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: team
+            htmlDomId: team
             customAttributes: data-menu="Team"
         }
         headerAndFooter {
@@ -893,9 +893,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -922,6 +919,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -972,7 +972,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: history
+            htmlDomId: history
         }
         headerAndFooter {
             headerText: <p class="ws-Eyebrow">Our story</p>
@@ -987,9 +987,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1016,6 +1013,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1079,7 +1079,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: careers
+            htmlDomId: careers
             customAttributes: data-menu="Careers"
         }
         headerAndFooter {
@@ -1096,9 +1096,6 @@ page 10 (
                 #DEFAULT#
                 ws-Filter
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1143,6 +1140,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1206,7 +1206,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: pricing
+            htmlDomId: pricing
             customAttributes: data-menu="Pricing"
         }
         headerAndFooter {
@@ -1223,9 +1223,6 @@ page 10 (
                 #DEFAULT#
                 ws-Plans--lift
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1289,6 +1286,9 @@ page 10 (
             layout {
                 sequence: 100
             }
+            sorting {
+                defaultSequence: 1
+            }
         )
     )
 
@@ -1335,7 +1335,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: faq
+            htmlDomId: faq
         }
         headerAndFooter {
             headerText: <p class="ws-Eyebrow">FAQ</p>
@@ -1350,9 +1350,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1373,6 +1370,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1397,7 +1397,7 @@ page 10 (
             ]
         }
         advanced {
-            staticId: start
+            htmlDomId: start
         }
         headerAndFooter {
             headerText: <p class="ws-Lead">Tell us about it. We reply to every message within two working days.</p>
@@ -1420,7 +1420,7 @@ page 10 (
             cssClasses: ws-Contact
         }
         advanced {
-            staticId: contact
+            htmlDomId: contact
             customAttributes: data-menu="Contact"
         }
         headerAndFooter {
@@ -1476,7 +1476,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: contact-details
+            htmlDomId: contact-details
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -1488,9 +1488,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1524,6 +1521,9 @@ page 10 (
             layout {
                 sequence: 50
             }
+            sorting {
+                defaultSequence: 1
+            }
         )
     )
 
@@ -1542,7 +1542,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: logo
+            htmlDomId: logo
         }
     )
 
@@ -1565,7 +1565,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: footer-about
+            htmlDomId: footer-about
         }
     )
 
@@ -1613,7 +1613,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: social
+            htmlDomId: social
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -1625,9 +1625,6 @@ page 10 (
             templateOptions: [
                 #DEFAULT#
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1654,6 +1651,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1697,7 +1697,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: f-studio
+            htmlDomId: f-studio
         }
         headerAndFooter {
             headerText: <h3>Studio</h3>
@@ -1713,9 +1713,6 @@ page 10 (
                 #DEFAULT#
                 ws-Links--list
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1736,6 +1733,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1779,7 +1779,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: f-services
+            htmlDomId: f-services
         }
         headerAndFooter {
             headerText: <h3>Services</h3>
@@ -1795,9 +1795,6 @@ page 10 (
                 #DEFAULT#
                 ws-Links--list
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1818,6 +1815,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
@@ -1856,7 +1856,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: f-hello
+            htmlDomId: f-hello
         }
         headerAndFooter {
             headerText: <h3>Say hello</h3>
@@ -1872,9 +1872,6 @@ page 10 (
                 #DEFAULT#
                 ws-Links--list
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1896,6 +1893,9 @@ page 10 (
             layout {
                 sequence: 30
             }
+            sorting {
+                defaultSequence: 1
+            }
         )
     )
 
@@ -1914,7 +1914,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: copyright
+            htmlDomId: copyright
         }
     )
 
@@ -1952,7 +1952,7 @@ page 10 (
             templateOptions: #DEFAULT#
         }
         advanced {
-            staticId: legal
+            htmlDomId: legal
         }
         reportLayout {
             numberOfRowsType: staticValue
@@ -1965,9 +1965,6 @@ page 10 (
                 #DEFAULT#
                 ws-Links--inline
             ]
-        }
-        pagination {
-            type: rowRangesXToYNoPagination
         }
         messages {
             whenNoDataFound: Nothing to show yet.
@@ -1988,6 +1985,9 @@ page 10 (
         column SORT_ORDER (
             layout {
                 sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
             }
         )
     )
