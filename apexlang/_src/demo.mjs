@@ -148,7 +148,10 @@ export const HTML = {
 };
 
 // the SQL a report region runs: one select per row, in order
-const lit = v => v == null || v === "" ? "null" : "'" + String(v).replace(/'/g, "''") + "'";
+// "page:ALIAS#anchor" is a link to another page of the application (multi-page websites): apex_page.get_url adds the session
+const lit = v => v == null || v === "" ? "null"
+    : /^page:/.test(v) ? (([p, a]) => `apex_page.get_url(p_page => '${p}')${a ? ` || '#${a}'` : ""}`)(String(v).slice(5).split("#"))
+    : "'" + String(v).replace(/'/g, "''") + "'";
 export function sql(rows) {
     const cols = [...new Set(rows.flatMap(r => Object.keys(r)))];
     return rows.map((r, i) => "select " + cols.map(c => `${lit(r[c])} as ${c.toLowerCase()}`).join(",\n       ") + `,\n       ${i + 1} as sort_order\n  from dual`)

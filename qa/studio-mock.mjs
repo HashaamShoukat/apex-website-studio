@@ -32,6 +32,7 @@ ${pg.props["css.inline"] || ""}</style></head><body class="t-PageBody apex-icons
 ${body}</form>
 <script>var apex_img_dir = "/i/"; var apex = { env: { APP_ID: "100", APP_PAGE_ID: "${no}", APP_SESSION: "1", APEX_FILES: "/i/" } };</script>
 <script src="/i/libraries/apex/minified/desktop_all.min.js"></script>
+${(pg.props["javaScript.fileUrls"] || "").split("\n").filter(Boolean).map(u => `<script src="${sub(u.trim())}"></script>`).join("")}
 <script>${init}
 ${sub(pg.props["javaScript.functionAndGlobalVariableDeclaration"] || "")}
 apex.jQuery(function () { apex.page.init(this, function () {

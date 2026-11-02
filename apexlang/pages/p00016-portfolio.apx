@@ -49,7 +49,7 @@ page 16 (
                        'Hire me' as button2_label,
                        '#contact' as button2_link,
                        'website-studio/img/portfolio-hero.jpg' as image_file,
-                       'A designer''s desk with sketches' as image_alt,
+                       'A designer''s desk with a laptop and a screen' as image_alt,
                        1 as sort_order
                   from dual
                 order by sort_order
@@ -181,7 +181,7 @@ page 16 (
                        'Web' as category,
                        'Marketing site - 2024' as meta,
                        'website-studio/img/work-2.jpg' as image_file,
-                       'A website design on a laptop' as image_alt,
+                       'A website design on a large screen' as image_alt,
                        3 as sort_order
                   from dual
                 union all
@@ -197,7 +197,7 @@ page 16 (
                        'Branding' as category,
                        'Identity - 2023' as meta,
                        'website-studio/img/work-6.jpg' as image_file,
-                       'A hotel lobby with the new signage' as image_alt,
+                       'A beach resort with a pool' as image_alt,
                        5 as sort_order
                   from dual
                 union all
@@ -205,7 +205,7 @@ page 16 (
                        'Web' as category,
                        'Website and brand - 2023' as meta,
                        'website-studio/img/work-1.jpg' as image_file,
-                       'Brand identity on business cards and paper' as image_alt,
+                       'Colour swatches for a brand identity' as image_alt,
                        6 as sort_order
                   from dual
                 order by sort_order
@@ -508,7 +508,7 @@ page 16 (
                        'Head of Digital, Lumen Bank' as role,
                        '5' as rating,
                        'website-studio/img/person-2.jpg' as image_file,
-                       'Portrait of a man in a shirt' as image_alt,
+                       'Portrait of a man smiling' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -517,7 +517,7 @@ page 16 (
                        'Founder, Fieldnote' as role,
                        '5' as rating,
                        'website-studio/img/person-3.jpg' as image_file,
-                       'Portrait of a woman with curly hair' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        2 as sort_order
                   from dual
                 order by sort_order

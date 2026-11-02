@@ -48,7 +48,7 @@ page 10 (
                        'Book a call' as button2_label,
                        '#contact' as button2_link,
                        'website-studio/img/studio-hero-1.jpg' as image_file,
-                       'Designers around a table covered in sketches' as image_alt,
+                       'Designers working on laptops around a table' as image_alt,
                        'center 40%' as image_position,
                        1 as sort_order
                   from dual
@@ -61,7 +61,7 @@ page 10 (
                        null as button2_label,
                        null as button2_link,
                        'website-studio/img/studio-hero-2.jpg' as image_file,
-                       'A bright studio with long desks and plants' as image_alt,
+                       'A long, bright studio floor' as image_alt,
                        null as image_position,
                        2 as sort_order
                   from dual
@@ -74,7 +74,7 @@ page 10 (
                        null as button2_label,
                        null as button2_link,
                        'website-studio/img/studio-hero-3.jpg' as image_file,
-                       'A team discussing ideas on a glass wall' as image_alt,
+                       'Sketching a user flow on a whiteboard' as image_alt,
                        null as image_position,
                        3 as sort_order
                   from dual
@@ -583,7 +583,7 @@ page 10 (
                        'Branding' as category,
                        'Identity - 2024' as meta,
                        'website-studio/img/work-1.jpg' as image_file,
-                       'Brand identity on business cards and paper' as image_alt,
+                       'Colour swatches for a brand identity' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -591,7 +591,7 @@ page 10 (
                        'Web' as category,
                        'Website - 2024' as meta,
                        'website-studio/img/work-2.jpg' as image_file,
-                       'A website design on a laptop' as image_alt,
+                       'A website design on a large screen' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -623,7 +623,7 @@ page 10 (
                        'Branding' as category,
                        'Identity - 2022' as meta,
                        'website-studio/img/work-6.jpg' as image_file,
-                       'A hotel lobby with the new signage' as image_alt,
+                       'A beach resort with a pool' as image_alt,
                        6 as sort_order
                   from dual
                 order by sort_order
@@ -811,7 +811,7 @@ page 10 (
                        'CEO, Tidewater Ferries' as role,
                        '5' as rating,
                        'website-studio/img/person-3.jpg' as image_file,
-                       'Portrait of a woman with curly hair' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -829,7 +829,7 @@ page 10 (
                        'Founder, Fieldnote' as role,
                        '5' as rating,
                        'website-studio/img/person-5.jpg' as image_file,
-                       'Portrait of a woman in an office' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        3 as sort_order
                   from dual
                 order by sort_order
@@ -933,7 +933,7 @@ page 10 (
                        'Design Director' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-2.jpg' as image_file,
-                       'Portrait of a man in a shirt' as image_alt,
+                       'Portrait of a man smiling' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -941,7 +941,7 @@ page 10 (
                        'Head of Strategy' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-5.jpg' as image_file,
-                       'Portrait of a woman in an office' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        3 as sort_order
                   from dual
                 union all
@@ -949,7 +949,7 @@ page 10 (
                        'Engineering Lead' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-4.jpg' as image_file,
-                       'Portrait of a man with a beard' as image_alt,
+                       'Portrait of a man in a grey sweater' as image_alt,
                        4 as sort_order
                   from dual
                 order by sort_order

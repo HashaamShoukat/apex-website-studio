@@ -1,10 +1,12 @@
-// Writes the website pages - the demo (page 10, alias WEBSITE) and the starter websites (pages 11 to 17) - and
-// shared-components/lists.apx (the studio's navigation lists and one Website - Menu list per website): node _src/pages.mjs
+// Writes the website pages - the demo (page 10, alias WEBSITE), the starter websites (pages 11 to 17) and the multi-page
+// websites (pages 20 to 53, multisites.mjs) - and shared-components/lists.apx (the studio's navigation lists and one
+// Website - Menu list per website): node _src/pages.mjs
 // Every section is a region with the Modern Section template; lists of things are Classic Reports with a Website report
 // template; the header menu is a List region with the Website - Menu template in the Menu slot.
 import fs from "node:fs";
 import { sql, columnsOf } from "./demo.mjs";
 import { SITES } from "./sites.mjs";
+import { MULTI } from "./multisites.mjs";
 import { REPORTS } from "./options.mjs";
 import { photoFile } from "./photos.mjs";
 const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -15,7 +17,7 @@ const opts = (arr, n) => !arr.length ? `${" ".repeat(n)}templateOptions: #DEFAUL
 const attr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 export const DEMO_PAGE = 10;
 export const pageFile = s => `pages/p${String(s.page).padStart(5, "0")}-${s.alias.toLowerCase()}.apx`;
-export const menuListId = s => s.key + "-menu";
+export const menuListId = s => s.menuList || s.key + "-menu";   // the pages of a multi-page website share one list
 export const siteTheme = s => ["#DEFAULT#", ...s.look.split(/\s+/).filter(Boolean)];
 
 // a Classic Report region with a Website report template
@@ -205,31 +207,13 @@ export function sitePage(s) {
     parts.push(staticRegion({ id: "copyright", name: "Copyright", slot: "footerBottom", seq: 10, html: s.html.copyright, template: "@/blank-with-attributes" }));
     if (s.legal.length) { parts.push(reportRegion({ id: "legal", name: "Legal Links", slot: "footerBottom", seq: 20, rows: s.legal, template: "ws-links", reportOptions: ["ws-Links--inline"], regionTemplate: "@/blank-with-attributes" })); }
 
+    // the contact form: only on a page with a form section (on a multi-page website, the contact page)
+    const hasForm = s.sections.some(x => x.form);
     const fields = s.form.fields.map((f, i) => ({ ...f, newRow: i === 0 || f.span === 12 || (s.form.fields[i - 1] || {}).span === 12 ? true : false }));
     const items = fields.map((f, i) => item(P, f, (i + 1) * 10)).concat(honeypot(P, fields.length * 10 + 10));
     const names = fields.map(f => f.n);
     const v = n => names.includes(n) ? `:P${P}_${n}` : "null";
-    return `page ${P} (
-    name: ${s.name}
-    alias: ${s.alias}
-    title: ${s.title}
-    appearance {
-        pageTemplate: @modern-one-page
-${opts(siteTheme(s), 8)}
-    }
-    navigation {
-        cursorFocus: doNotFocusCursor
-    }
-    htmlHeader {
-${fence("htmlHeader", htmlHeader(s), 8, "html")}
-    }
-    security {
-        authentication: public
-        pageAccessProtection: argumentsMustHaveChecksum
-        formAutoComplete: false
-    }
-
-${parts.join("\n\n")}
+    const form = `
 
 ${items.join("\n\n")}
 
@@ -295,7 +279,28 @@ ${items.join("\n\n")}
                 page: ${P}
             }
         }
-    )
+    )`;
+    return `page ${P} (
+    name: ${s.name}
+    alias: ${s.alias}
+    title: ${s.title}
+    appearance {
+        pageTemplate: @modern-one-page
+${opts(siteTheme(s), 8)}
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+${fence("htmlHeader", htmlHeader(s), 8, "html")}
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+${parts.join("\n\n")}${hasForm ? form : ""}
 
 )
 `;
@@ -365,17 +370,21 @@ connect by prior id = parent_id
 const studioNav = staticList("navigation-menu", "Navigation Menu", [
     { l: "Gallery", h: 1, icon: "fa-th-large" }, { l: "Designer", h: 2, icon: "fa-paint-brush" }, { l: "How to Use", h: 3, icon: "fa-book" },
     { l: "Demo Website", h: DEMO_PAGE, icon: "fa-globe" },
-    { l: "Starter Websites", h: SITES[1].page, icon: "fa-files-o", c: SITES.slice(1).map(s => ({ l: s.label, h: s.page, icon: s.icon })) }
+    { l: "Starter Websites", h: SITES[1].page, icon: "fa-files-o", c: SITES.slice(1).map(s => ({ l: s.label, h: s.page, icon: s.icon })) },
+    { l: "Multi-page Websites", h: MULTI[0].pages[0].page, icon: "fa-clone", c: MULTI.map(m => ({ l: m.label, h: m.pages[0].page, icon: m.icon })) }
 ]);
 const navBar = staticList("navigation-bar", "Navigation Bar", [{ l: "GitHub", h: "https://github.com/HashaamShoukat/apex-website-studio", icon: "fa-github" }]);
-const lists = [navBar, studioNav, ...SITES.map(s => (s.menu.sql ? sqlList : staticList)(menuListId(s), s.brand.replace(/&amp;/g, "&") + " - Menu", s.menu.entries))];
+const lists = [navBar, studioNav, ...SITES.map(s => (s.menu.sql ? sqlList : staticList)(menuListId(s), s.brand.replace(/&amp;/g, "&") + " - Menu", s.menu.entries)),
+    ...MULTI.map(m => staticList(m.key + "-menu", m.brand.replace(/&amp;/g, "&") + " - Site Menu", m.menu))];
+// every website page: the one-page websites and the pages of the multi-page websites
+export const ALL_PAGES = [...SITES, ...MULTI.flatMap(m => m.pages)];
 
 if (process.argv[1] && process.argv[1].endsWith("pages.mjs")) {
     for (const f of fs.readdirSync(ROOT + "pages")) {
         const n = +f.slice(1, 6);
         if (n >= DEMO_PAGE && n < 100) { fs.unlinkSync(ROOT + "pages/" + f); }
     }
-    for (const s of SITES) {
+    for (const s of ALL_PAGES) {
         const page = sitePage(s);
         fs.writeFileSync(ROOT + pageFile(s), page);
         console.log(pageFile(s), s.sections.length, "sections,", (page.match(/^    region /gm) || []).length, "regions");

@@ -1,0 +1,607 @@
+page 31 (
+    name: Osteria Lume - Menu
+    alias: LUME-MENU
+    title: Menu - Osteria Lume
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--organic
+            ws-Accent--wine
+            ws-Font--serif
+            ws-Header--transparent
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Tonight's menu at Osteria Lume: starters, mains and desserts from a small Italian kitchen.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Menu - Osteria Lume">
+            <meta property="og:description" content="Tonight's menu at Osteria Lume: starters, mains and desserts from a small Italian kitchen.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/food-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/dish-5.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: The menu.
+        title: The *menu*.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'The *menu*.' as title,
+                       'Tonight' as subtitle,
+                       'It changes with the market. Ask us about allergies.' as text,
+                       'website-studio/img/dish-5.jpg' as image_file,
+                       'Spaghetti with prawns and cherry tomatoes' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--compact
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region menu (
+        name: Menu
+        title: The *menu*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Garden bowl' as name,
+                       'Grilled halloumi, soft egg, sweetcorn, greens' as text,
+                       'SAR 58' as price,
+                       'Starters' as category,
+                       'website-studio/img/dish-2.jpg' as image_file,
+                       'A bowl of grilled halloumi, egg and greens' as image_alt,
+                       null as badge,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Roasted salmon' as name,
+                       'Summer vegetables, lemon and herb dressing' as text,
+                       'SAR 124' as price,
+                       'Mains' as category,
+                       'website-studio/img/dish-1.jpg' as image_file,
+                       'Roasted salmon with summer vegetables' as image_alt,
+                       'Chef''s choice' as badge,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Margherita from the wood oven' as name,
+                       'San Marzano tomato, fior di latte' as text,
+                       'SAR 72' as price,
+                       'Mains' as category,
+                       'website-studio/img/dish-3.jpg' as image_file,
+                       'Wood-fired pizza' as image_alt,
+                       null as badge,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Spaghetti with prawns' as name,
+                       'Cherry tomatoes, chilli, parsley' as text,
+                       'SAR 84' as price,
+                       'Mains' as category,
+                       'website-studio/img/dish-5.jpg' as image_file,
+                       'Spaghetti with prawns and cherry tomatoes' as image_alt,
+                       null as badge,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Dark chocolate torta' as name,
+                       'Olive oil, sea salt, cream' as text,
+                       'SAR 42' as price,
+                       'Desserts' as category,
+                       'website-studio/img/dish-4.jpg' as image_file,
+                       'A chocolate dessert' as image_alt,
+                       null as badge,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Espresso or cappuccino' as name,
+                       'Until noon at the bar' as text,
+                       'SAR 26' as price,
+                       'Desserts' as category,
+                       'website-studio/img/dish-6.jpg' as image_file,
+                       'Cups of coffee with latte art' as image_alt,
+                       null as badge,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: menu
+            customAttributes: data-menu="Menu"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Tonight</p><p class="ws-Lead">The menu changes with the market. Ask us about allergies: most dishes can be adapted.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-products
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column PRICE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BADGE (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @lume-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+                <p>Italian kitchen and wine bar. Open every evening except Monday.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'TikTok' as label,
+                       'https://www.tiktok.com/' as link,
+                       'fa-tiktok' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'WhatsApp' as label,
+                       'https://wa.me/966500000000' as link,
+                       'fa-whatsapp' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-visit (
+        name: Footer - Visit
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Menu' as label,
+                       apex_page.get_url(p_page => 'LUME-MENU') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Opening hours' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Find us' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') || '#visit' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Book a table' as label,
+                       apex_page.get_url(p_page => 'LUME-BOOK') as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-visit
+        }
+        headerAndFooter {
+            headerText: <h3>Visit</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Osteria Lume</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

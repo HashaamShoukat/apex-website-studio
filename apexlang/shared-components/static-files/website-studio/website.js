@@ -45,7 +45,7 @@
         return { page: g("ws"), regions: g("r") };
     }
     // the option groups of the report and list templates: { group id: [classes] } (filled in by _src/build.mjs)
-    var GROUPS = {"wsr-hero-layout":["ws-Hero--slider","ws-Hero--split","ws-Hero--centered","ws-Hero--fullbleed"],"wsr-hero-height":["ws-Hero--full","ws-Hero--medium"],"wsr-hero-overlay":["ws-Hero--light","ws-Hero--strong"],"wsr-hero-move":["ws-Hero--slide"],"wsr-autoplay":["ws-Auto--4","ws-Auto--9","ws-Auto--off"],"wsr-stats-layout":["ws-Stats--cards"],"wsr-features-layout":["ws-Features--rows","ws-Features--bento","ws-Features--icons"],"wsr-columns":["ws-Cols--2","ws-Cols--4"],"wsr-team-layout":["ws-Team--round","ws-Team--list"],"wsr-quotes-layout":["ws-Quotes--carousel","ws-Quotes--wall","ws-Quotes--spotlight"],"wsr-logos-layout":["ws-Logos--marquee","ws-Logos--grid","ws-Logos--row"],"wsr-logos-speed":["ws-Speed--slow","ws-Speed--fast"],"wsr-plans-style":["ws-Plans--accent"],"wsr-timeline-layout":["ws-Timeline--alternate","ws-Timeline--list"],"wsr-steps-layout":["ws-Steps--line","ws-Steps--cards"],"wsr-faq-layout":["ws-Faqs--columns"],"wsr-jobs-layout":["ws-Jobs--cards"],"wsr-works-layout":["ws-Works--editorial","ws-Works--large"],"wsr-links-layout":["ws-Links--icons","ws-Links--list","ws-Links--inline","ws-Links--tiles"],"wsr-infos-layout":["ws-Infos--cards"],"wsr-news-layout":["ws-News--featured","ws-News--list"],"wsr-products-layout":["ws-Products--menu","ws-Products--compact"],"wsr-photos-layout":["ws-Photos--masonry","ws-Photos--strip"],"wsr-zigzag-start":["ws-Zigzag--text"],"wsr-events-layout":["ws-Events--cards"],"wsr-hours-layout":["ws-Hours--cards"],"wsr-compare-hl":["ws-Compare--hl1","ws-Compare--hl2","ws-Compare--hl3","ws-Compare--hl4"],"wsr-video-layout":["ws-Videos--cards"],"wsr-map-layout":["ws-Maps--full"],"wsm-align":["ws-Menu--center","ws-Menu--left"],"wsm-max":["ws-Menu--max4","ws-Menu--max5","ws-Menu--max6","ws-Menu--max7"],"wsm-mobile":["ws-Menu--overlay","ws-Menu--drawer"]};
+    var GROUPS = {"wsr-hero-layout":["ws-Hero--slider","ws-Hero--split","ws-Hero--centered","ws-Hero--fullbleed"],"wsr-hero-height":["ws-Hero--full","ws-Hero--medium","ws-Hero--compact"],"wsr-hero-overlay":["ws-Hero--light","ws-Hero--strong"],"wsr-hero-move":["ws-Hero--slide"],"wsr-autoplay":["ws-Auto--4","ws-Auto--9","ws-Auto--off"],"wsr-stats-layout":["ws-Stats--cards"],"wsr-features-layout":["ws-Features--rows","ws-Features--bento","ws-Features--icons"],"wsr-columns":["ws-Cols--2","ws-Cols--4"],"wsr-team-layout":["ws-Team--round","ws-Team--list"],"wsr-quotes-layout":["ws-Quotes--carousel","ws-Quotes--wall","ws-Quotes--spotlight"],"wsr-logos-layout":["ws-Logos--marquee","ws-Logos--grid","ws-Logos--row"],"wsr-logos-speed":["ws-Speed--slow","ws-Speed--fast"],"wsr-plans-style":["ws-Plans--accent"],"wsr-timeline-layout":["ws-Timeline--alternate","ws-Timeline--list"],"wsr-steps-layout":["ws-Steps--line","ws-Steps--cards"],"wsr-faq-layout":["ws-Faqs--columns"],"wsr-jobs-layout":["ws-Jobs--cards"],"wsr-works-layout":["ws-Works--editorial","ws-Works--large"],"wsr-links-layout":["ws-Links--icons","ws-Links--list","ws-Links--inline","ws-Links--tiles"],"wsr-infos-layout":["ws-Infos--cards"],"wsr-news-layout":["ws-News--featured","ws-News--list"],"wsr-products-layout":["ws-Products--menu","ws-Products--compact"],"wsr-photos-layout":["ws-Photos--masonry","ws-Photos--strip"],"wsr-zigzag-start":["ws-Zigzag--text"],"wsr-events-layout":["ws-Events--cards"],"wsr-hours-layout":["ws-Hours--cards"],"wsr-compare-hl":["ws-Compare--hl1","ws-Compare--hl2","ws-Compare--hl3","ws-Compare--hl4"],"wsr-video-layout":["ws-Videos--cards"],"wsr-map-layout":["ws-Maps--full"],"wsm-align":["ws-Menu--center","ws-Menu--left"],"wsm-max":["ws-Menu--max3","ws-Menu--max4","ws-Menu--max5","ws-Menu--max6","ws-Menu--max7"],"wsm-mobile":["ws-Menu--overlay","ws-Menu--drawer"]};
     // c: a class (it replaces the other classes of its option group), -class (removes it) or !group-id (clears the group)
     function setFamily(el, c) {
         if (c.charAt(0) === "-") { el.classList.remove(c.slice(1)); return; }
@@ -497,6 +497,16 @@
     /* ---------- the header menu ----------
        1. a Website - Menu list in the Menu slot (static or SQL list; parent entries get a drop-down)
        2. otherwise built from the Modern Section regions with Show in Menu */
+    // the section a menu link goes to on this page: "#id", or this page's own URL with "#id" (the menu of a multi-page
+    // website); APEX marks a link to the open page as current, but such a link is current only while its section is on screen
+    function sectionOf(a) {
+        var h = a.getAttribute("href") || "", i = h.indexOf("#");
+        if (i < 0 || !/^#[\w-]+$/.test(h.slice(i))) { return null; }
+        if (i === 0) { return h.slice(1); }
+        var u, here = location, page = function (x) { return (new URLSearchParams(x.search).get("p") || "").split(":").slice(0, 2).join(":"); };
+        try { u = new URL(h, here.href); } catch (e) { return null; }
+        return u.origin === here.origin && u.pathname === here.pathname && page(u) === page(here) ? h.slice(i + 1) : null;
+    }
     var menuDone = false;
     function menu() {
         var nav = d.getElementById("ws-nav"), burger = d.querySelector(".ws-Burger");
@@ -527,15 +537,14 @@
         menuDone = true;
         // anchors on this page are "current" while their section is on screen, not because APEX marked the page
         $$("a", list).forEach(function (a) {
-            var h = a.getAttribute("href") || "";
-            if (h.charAt(0) === "#" || /^[^#]*#[\w-]+$/.test(h) && h.split("#")[0] === location.pathname + location.search) { a.closest("li").classList.remove("is-current"); a.removeAttribute("aria-current"); }
+            if (sectionOf(a)) { a.closest("li").classList.remove("is-current"); a.removeAttribute("aria-current"); }
         });
         // Last Entry as Button
         var tops = $$(":scope > li", list);
         if (list.classList.contains("ws-Menu--cta") && tops.length) { tops[tops.length - 1].classList.add("ws-Menu-cta"); }
         // Visible Entries: the rest go into More on wide screens (the phone menu shows them in the More accordion)
         var mx = /ws-Menu--max(\d)/.exec(list.className), plain = tops.filter(function (li) { return !li.classList.contains("ws-Menu-cta"); });
-        if (mx && plain.length > +mx[1] + 1) {
+        if (mx && plain.length > +mx[1]) {
             var more = d.createElement("li"), sub = d.createElement("ul");
             more.className = "ws-Menu-item ws-Menu-item--parent ws-Menu-more";
             more.innerHTML = '<a class="ws-Menu-link" href="#"></a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh"></span></button>';
@@ -592,13 +601,13 @@
         });
         // the current section while scrolling
         if (!("IntersectionObserver" in W)) { return; }
-        var links = $$("a[href^='#']", list).filter(function (a) { return a.getAttribute("href").length > 1; }), secs = [];
-        links.forEach(function (a) { var s = d.getElementById(a.getAttribute("href").slice(1)); if (s && secs.indexOf(s) < 0) { secs.push(s); } });
+        var links = $$("a[href]", list).filter(function (a) { return sectionOf(a); }), secs = [];
+        links.forEach(function (a) { var s = d.getElementById(sectionOf(a)); if (s && secs.indexOf(s) < 0) { secs.push(s); } });
         var io = new IntersectionObserver(function (es) {
             es.forEach(function (e) {
                 if (!e.isIntersecting) { return; }
                 links.forEach(function (a) {
-                    var on = a.getAttribute("href") === "#" + e.target.id;
+                    var on = sectionOf(a) === e.target.id;
                     a.classList.toggle("is-current", on);
                     if (on) { a.setAttribute("aria-current", "location"); } else { a.removeAttribute("aria-current"); }
                 });
@@ -627,6 +636,18 @@
                 try { localStorage.setItem("ws-scheme", dark ? "dark" : "light"); } catch (e) { /* private mode */ }
             };
         }
+        // APEX messages show as a toast (website.css): a click closes one, a success message leaves after 6 seconds
+        $$(".apex-page-success, .apex-page-error").forEach(function (box) {
+            if (box.__ws) { return; }
+            box.__ws = true;
+            var close = function () {
+                var a = box.querySelector(".ws-Alert");
+                if (a) { a.classList.add("ws-Alert--leaving"); }
+                setTimeout(function () { box.classList.remove("u-visible"); box.classList.add("u-hidden"); if (a) { a.classList.remove("ws-Alert--leaving"); } }, 300);
+            };
+            box.addEventListener("click", close);
+            if (box.classList.contains("apex-page-success") && box.querySelector(".ws-Alert")) { setTimeout(close, 6000); }
+        });
         var chat = d.querySelector(".ws-Chat");
         if (chat && !chat.__ws) {
             chat.__ws = true;

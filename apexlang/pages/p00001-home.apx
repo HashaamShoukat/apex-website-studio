@@ -49,6 +49,11 @@ page 1 (
                 {"key":"event","alias":"CONFERENCE","name":"Northwind Summit","label":"Conference","text":"Two days of talks and workshops on data, AI and the cloud. 40 speakers, 1,200 attendees. Early tickets on sale now.","look":"ws-Design--techgrid ws-Accent--cyan ws-Font--tech ws-Header--pill"},
                 {"key":"portfolio","alias":"PORTFOLIO","name":"Lina Haddad","label":"Portfolio","text":"Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.","look":"ws-Design--swiss ws-Accent--rose ws-Font--grotesk"},
                 {"key":"saas","alias":"SAAS","name":"Ledgerline","label":"SaaS Product","text":"Send invoices, get paid faster and keep your books ready for VAT. Free for 30 days, no card needed.","look":"ws-Design--saas ws-Accent--violet ws-Font--friendly ws-Header--pill ws-Fx--theme"}];
+            // The multi-page websites: several pages with one shared menu, header and footer.
+            var WS_MULTI = [{"key":"meridian","alias":"MERIDIAN","label":"Company","name":"Meridian","text":"Six pages: home, about, services, insights, careers and contact, with a shared menu and footer.","look":"ws-Design--corporate ws-Accent--indigo ws-Font--tech ws-Header--centered","pages":[{"name":"Home","alias":"MERIDIAN"},{"name":"About","alias":"MERIDIAN-ABOUT"},{"name":"Services","alias":"MERIDIAN-SERVICES"},{"name":"Insights","alias":"MERIDIAN-INSIGHTS"},{"name":"Careers","alias":"MERIDIAN-CAREERS"},{"name":"Contact","alias":"MERIDIAN-CONTACT"}]},
+                {"key":"lume","alias":"LUME","label":"Restaurant","name":"Osteria Lume","text":"Five pages: home, menu, evenings, visit and booking. The home page keeps the story, gallery and reviews.","look":"ws-Design--organic ws-Accent--wine ws-Font--serif ws-Header--transparent","pages":[{"name":"Home","alias":"LUME"},{"name":"Menu","alias":"LUME-MENU"},{"name":"Evenings","alias":"LUME-EVENINGS"},{"name":"Visit","alias":"LUME-VISIT"},{"name":"Book","alias":"LUME-BOOK"}]},
+                {"key":"harbor","alias":"HARBOR","label":"Real Estate","name":"Harbor & Stone","text":"Five pages: home, homes for sale and rent, services, about with the agents, and contact.","look":"ws-Design--luxury ws-Accent--amber ws-Font--luxe ws-Header--transparent","pages":[{"name":"Home","alias":"HARBOR"},{"name":"Homes","alias":"HARBOR-HOMES"},{"name":"Services","alias":"HARBOR-SERVICES"},{"name":"About","alias":"HARBOR-ABOUT"},{"name":"Contact","alias":"HARBOR-CONTACT"}]},
+                {"key":"shifa","alias":"SHIFA","label":"Clinic (Arabic, RTL)","name":"عيادات الشفاء","text":"أربع صفحات: الرئيسية، الخدمات، من نحن مع الأطباء، والحجز مع أوقات العمل والموقع.","look":"ws-Accent--emerald ws-Font--arabic ws-Corners--round ws-Fx--chat ws-Fx--theme","pages":[{"name":"Home","alias":"SHIFA"},{"name":"Services","alias":"SHIFA-SERVICES"},{"name":"About","alias":"SHIFA-ABOUT"},{"name":"Book","alias":"SHIFA-BOOK"}]}];
             ```
         executeWhenPageLoads:
             ```javascript-browser
@@ -71,6 +76,15 @@ page 1 (
                     return '<article class="wss-Card wss-Card--site">' +
                         '<a class="wss-Card-shot" href="' + esc(open) + '" target="_blank" rel="noopener" aria-label="' + esc("Open " + s.name) + '"><img src="' + esc(files + "gallery/site-" + s.key + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
                         '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(s.label) + '</h3><p class="wss-Card-text">' + esc(s.text) + '</p>' +
+                        '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
+                        '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
+                }).join("");
+                document.getElementById("wss-multi").innerHTML = WS_MULTI.map(function (s) {
+                    var open = app + s.alias + ses, custom = designer + "#site=" + encodeURIComponent(s.alias) + "&look=" + encodeURIComponent(s.look);
+                    return '<article class="wss-Card wss-Card--site">' +
+                        '<a class="wss-Card-shot" href="' + esc(open) + '" target="_blank" rel="noopener" aria-label="' + esc("Open " + s.name) + '"><img src="' + esc(files + "gallery/multi-" + s.key + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
+                        '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(s.label) + ' <span class="wss-Count">' + s.pages.length + ' pages</span></h3><p class="wss-Card-text">' + esc(s.text) + '</p>' +
+                        '<div class="wss-Card-pages">' + s.pages.map(function (p) { return '<a href="' + esc(app + p.alias + ses) + '" target="_blank" rel="noopener">' + esc(p.name) + '</a>'; }).join("") + '</div>' +
                         '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
                         '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
                 }).join("");
@@ -113,6 +127,10 @@ page 1 (
             .wss-Card-tags { display: flex; flex-wrap: wrap; gap: .375rem; }
             .wss-Card-tags span { padding: .1rem .5rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .75rem; font-weight: 600; text-transform: capitalize; }
             .wss-Card-actions { display: flex; gap: .5rem; margin-top: .25rem; }
+            .wss-Count { margin-inline-start: .35rem; padding: .05rem .45rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .7rem; font-weight: 700; vertical-align: middle; }
+            .wss-Card-pages { display: flex; flex-wrap: wrap; gap: .25rem .75rem; font-size: .8125rem; }
+            .wss-Card-pages a { color: inherit; text-decoration: underline; text-decoration-color: rgba(234,88,12,.45); text-underline-offset: 3px; }
+            .wss-Card-pages a:hover { color: #9a3412; }
             .wss-Card-actions .t-Button { flex: 1; justify-content: center; }
             @media (prefers-reduced-motion: reduce) { .wss-Card, .wss-Card-shot img { transition: none; } .wss-Card:hover { transform: none; } .wss-Card:hover .wss-Card-shot img { transform: none; } }
             ```
@@ -130,7 +148,7 @@ page 1 (
             htmlCode:
                 ```html
                 <div class="wss-Hero">
-                  <h1>One-page websites for Oracle APEX</h1>
+                  <h1>One-page and multi-page websites for Oracle APEX</h1>
                   <p>A page template, a section template, a menu template and 23 report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps and more. Every list comes from a SQL query. 15 designs, 10 accent colours, light and dark, 7 typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
                   <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
                   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
@@ -139,6 +157,9 @@ page 1 (
                 <h2 class="wss-H2">Starter Websites</h2>
                 <p class="wss-Sub">8 complete websites with their own content, menu and photos. Open one, or customize it in the Designer.</p>
                 <div class="wss-Grid" id="wss-sites"></div>
+                <h2 class="wss-H2">Multi-page Websites</h2>
+                <p class="wss-Sub">4 websites with several pages that share one menu, header and footer. The menu links to pages, and inner pages open with a page title.</p>
+                <div class="wss-Grid" id="wss-multi"></div>
                 <h2 class="wss-H2">Looks</h2>
                 <p class="wss-Sub">27 ready-made looks on the demo website. Each one works on every starter website.</p>
                 <div class="wss-Filter" role="group" aria-label="Filter">

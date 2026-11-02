@@ -1,0 +1,775 @@
+page 50 (
+    name: عيادات الشفاء - Home
+    alias: SHIFA
+    title: عيادات الشفاء - رعاية طبية للعائلة
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Accent--emerald
+            ws-Font--arabic
+            ws-Corners--round
+            ws-Fx--chat
+            ws-Fx--theme
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","ar");document.addEventListener("DOMContentLoaded",function(){document.body.setAttribute("dir","rtl");});</script>
+            <meta name="description" content="عيادات الشفاء في الرياض: طب الأسرة والأطفال والأسنان والمختبر، مع حجز المواعيد عبر الإنترنت أو واتساب.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="عيادات الشفاء - رعاية طبية للعائلة">
+            <meta property="og:description" content="عيادات الشفاء في الرياض: طب الأسرة والأطفال والأسنان والمختبر، مع حجز المواعيد عبر الإنترنت أو واتساب.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/clinic-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/clinic-hero.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: عيادات الشفاء
+        title: عيادات الشفاء
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'رعاية طبية *قريبة* منك ومن عائلتك.' as title,
+                       'عيادات الشفاء - الرياض' as subtitle,
+                       'أطباء استشاريون، مختبر حديث، ومواعيد في نفس اليوم.' as text,
+                       'احجز موعدا' as button_label,
+                       apex_page.get_url(p_page => 'SHIFA-BOOK') as button_link,
+                       'خدماتنا' as button2_label,
+                       apex_page.get_url(p_page => 'SHIFA-SERVICES') as button2_link,
+                       'website-studio/img/clinic-hero.jpg' as image_file,
+                       'طبيب بمعطف أبيض' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'مختبر *دقيق* ونتائج سريعة.' as title,
+                       'المختبر' as subtitle,
+                       'معظم النتائج جاهزة خلال ٢٤ ساعة وتصلك على جوالك.' as text,
+                       'اعرف المزيد' as button_label,
+                       apex_page.get_url(p_page => 'SHIFA-ABOUT') as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       'website-studio/img/clinic-lab.jpg' as image_file,
+                       'مختبر بأجهزة حديثة' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--split
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region numbers (
+        name: بالأرقام
+        title: بالأرقام
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '18' as value,
+                       'طبيبا استشاريا' as label,
+                       null as suffix,
+                       1 as sort_order
+                  from dual
+                union all
+                select '12' as value,
+                       'عاما من الخبرة' as label,
+                       null as suffix,
+                       2 as sort_order
+                  from dual
+                union all
+                select '40000' as value,
+                       'مريض سنويا' as label,
+                       '+' as suffix,
+                       3 as sort_order
+                  from dual
+                union all
+                select '24' as value,
+                       'لنتائج المختبر' as label,
+                       'س' as suffix,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SUFFIX (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region services (
+        name: الخدمات
+        title: خدماتنا
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-user-md' as icon,
+                       'طب الأسرة' as title,
+                       'فحوصات دورية ومتابعة الأمراض المزمنة لكل أفراد العائلة.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-child' as icon,
+                       'طب الأطفال' as title,
+                       'متابعة النمو والتطعيمات بإشراف أطباء متخصصين.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-smile-o' as icon,
+                       'طب الأسنان' as title,
+                       'تنظيف وتقويم وزراعة الأسنان بأحدث التقنيات.' as text,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'fa-flask' as icon,
+                       'المختبر' as title,
+                       'تحاليل شاملة ونتائج سريعة تصلك إلكترونيا.' as text,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'fa-heartbeat' as icon,
+                       'القلب' as title,
+                       'تخطيط القلب والفحص بالموجات فوق الصوتية.' as text,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'fa-medkit' as icon,
+                       'الطوارئ البسيطة' as title,
+                       'استقبال الحالات العاجلة غير الحرجة طوال ساعات العمل.' as text,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: services
+            customAttributes: data-menu="الخدمات"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">الخدمات</p><p class="ws-Lead">كل ما تحتاجه عائلتك في مكان واحد.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-features
+            templateOptions: [
+                #DEFAULT#
+                ws-Features--icons
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region reviews (
+        name: آراء المرضى
+        title: آراء المرضى
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'استقبال رائع ومواعيد دقيقة، والدكتورة نورة شرحت لي كل شيء بهدوء.' as quote,
+                       'أم فيصل' as name,
+                       'مريضة منذ ٢٠١٨' as role,
+                       '5' as rating,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'نتيجة التحليل وصلتني على الجوال في نفس اليوم. خدمة ممتازة.' as quote,
+                       'عبدالله م.' as name,
+                       'مراجع' as role,
+                       '5' as rating,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: reviews
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @shifa-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--drawer
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:SHIFA:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">ش</span>عيادات الشفاء</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:SHIFA:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">ش</span>عيادات الشفاء</a>
+                <p>رعاية طبية للعائلة في شمال الرياض.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'WhatsApp' as label,
+                       'https://wa.me/966500000000' as link,
+                       'fa-whatsapp' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-clinic (
+        name: Footer - العيادة
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'الخدمات' as label,
+                       apex_page.get_url(p_page => 'SHIFA-SERVICES') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'الأطباء' as label,
+                       apex_page.get_url(p_page => 'SHIFA-ABOUT') || '#doctors' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'أوقات العمل' as label,
+                       apex_page.get_url(p_page => 'SHIFA-BOOK') || '#hours' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-clinic
+        }
+        headerAndFooter {
+            headerText: <h3>العيادة</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; عيادات الشفاء. جميع الحقوق محفوظة.</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'الخصوصية' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'الشروط' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

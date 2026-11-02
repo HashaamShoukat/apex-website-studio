@@ -1,0 +1,851 @@
+page 40 (
+    name: Harbor & Stone - Home
+    alias: HARBOR
+    title: Harbor & Stone - Homes for Sale and Rent
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--luxury
+            ws-Accent--amber
+            ws-Font--luxe
+            ws-Header--transparent
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Harbor &amp; Stone is a family-run estate agency: homes for sale and rent, valuations and property management.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Harbor &amp; Stone - Homes for Sale and Rent">
+            <meta property="og:description" content="Harbor &amp; Stone is a family-run estate agency: homes for sale and rent, valuations and property management.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/home-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/home-hero-1.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Harbor & Stone
+        title: Harbor & Stone
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Find a home you will *love* coming back to.' as title,
+                       'Homes for sale and rent' as subtitle,
+                       'Hand-picked houses and apartments, and agents who know every street.' as text,
+                       'Browse homes' as button_label,
+                       apex_page.get_url(p_page => 'HARBOR-HOMES') as button_link,
+                       'Book a valuation' as button2_label,
+                       apex_page.get_url(p_page => 'HARBOR-CONTACT') as button2_link,
+                       'website-studio/img/home-hero-1.jpg' as image_file,
+                       'A modern white house with a pool' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Selling? We will get you *more*.' as title,
+                       'Valuations' as subtitle,
+                       'Our homes sell for 4% above asking on average.' as text,
+                       'Free valuation' as button_label,
+                       apex_page.get_url(p_page => 'HARBOR-CONTACT') as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       'website-studio/img/home-hero-2.jpg' as image_file,
+                       'A modern house at dusk' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--slide
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region homes (
+        name: Homes
+        title: Featured *homes*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Garden house, Al Nakheel' as name,
+                       '4 bedrooms - 3 bathrooms - 410 m2' as text,
+                       'SAR 3,950,000' as price,
+                       'For sale' as category,
+                       'New' as badge,
+                       'website-studio/img/home-1.jpg' as image_file,
+                       'A family house with a garden' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Bright apartment, Olaya' as name,
+                       '2 bedrooms - 2 bathrooms - 140 m2' as text,
+                       'SAR 9,500 / month' as price,
+                       'For rent' as category,
+                       null as badge,
+                       'website-studio/img/home-2.jpg' as image_file,
+                       'A bright living room' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Penthouse with a view' as name,
+                       '3 bedrooms - roof terrace - 220 m2' as text,
+                       'SAR 4,600,000' as price,
+                       'For sale' as category,
+                       null as badge,
+                       'website-studio/img/home-3.jpg' as image_file,
+                       'A living room with plants' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Family villa, Hittin' as name,
+                       '5 bedrooms - kitchen garden - 520 m2' as text,
+                       'SAR 6,200,000' as price,
+                       'New developments' as category,
+                       'Off plan' as badge,
+                       'website-studio/img/home-4.jpg' as image_file,
+                       'A couple cooking in a bright kitchen' as image_alt,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Villa with pool' as name,
+                       '6 bedrooms - pool - 680 m2' as text,
+                       'SAR 28,000 / month' as price,
+                       'For rent' as category,
+                       null as badge,
+                       'website-studio/img/home-5.jpg' as image_file,
+                       'A house with a pool' as image_alt,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Garden villa, Diplomatic Quarter' as name,
+                       '3 bedrooms - plunge pool - 260 m2' as text,
+                       'SAR 2,850,000' as price,
+                       'For sale' as category,
+                       null as badge,
+                       'website-studio/img/home-6.jpg' as image_file,
+                       'A white house with a pool' as image_alt,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--split
+            ]
+        }
+        advanced {
+            htmlDomId: homes
+            customAttributes: data-menu="Homes"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Listings</p><p class="ws-Lead">New this week. Viewings in person or by video call.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-products
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column PRICE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BADGE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region numbers (
+        name: Harbor & Stone in numbers
+        title: Harbor & Stone in numbers
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '860' as value,
+                       'Homes sold' as label,
+                       null as suffix,
+                       null as prefix,
+                       1 as sort_order
+                  from dual
+                union all
+                select '4' as value,
+                       'Above asking, on average' as label,
+                       '%' as suffix,
+                       '+' as prefix,
+                       2 as sort_order
+                  from dual
+                union all
+                select '21' as value,
+                       'Days to sell' as label,
+                       null as suffix,
+                       null as prefix,
+                       3 as sort_order
+                  from dual
+                union all
+                select '35' as value,
+                       'Years in the city' as label,
+                       null as suffix,
+                       null as prefix,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--dark
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+                ws-Stats--center
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SUFFIX (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column PREFIX (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region reviews (
+        name: Reviews
+        title: From our *clients*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Sold in eleven days, above asking. Hessa handled everything while we were abroad.' as quote,
+                       'The Al-Fahad family' as name,
+                       'Sold a villa in Hittin' as role,
+                       '5' as rating,
+                       'website-studio/img/person-2.jpg' as image_file,
+                       'Portrait of a man smiling' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'They found us an apartment that was never even advertised. Honest and quick.' as quote,
+                       'Emma and Tariq' as name,
+                       'Bought in Olaya' as role,
+                       '5' as rating,
+                       'website-studio/img/person-3.jpg' as image_file,
+                       'Portrait of a woman' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: reviews
+            customAttributes: data-menu="Reviews"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @harbor-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--overlay
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:HARBOR:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">H</span>Harbor &amp; Stone</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:HARBOR:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">H</span>Harbor &amp; Stone</a>
+                <p>A family-run estate agency since 1989.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-homes (
+        name: Footer - Homes
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'For sale and rent' as label,
+                       apex_page.get_url(p_page => 'HARBOR-HOMES') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Services' as label,
+                       apex_page.get_url(p_page => 'HARBOR-SERVICES') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Valuations' as label,
+                       apex_page.get_url(p_page => 'HARBOR-CONTACT') as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-homes
+        }
+        headerAndFooter {
+            headerText: <h3>Homes</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Harbor &amp; Stone Real Estate</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

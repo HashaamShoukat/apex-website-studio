@@ -118,6 +118,15 @@ page 3 (
                  start with parent_id is null
                 connect by prior id = parent_id
                  order siblings by seq</pre>
+                <p><strong>A website with several pages.</strong> Give every page the Modern One Page template with the same Template Options, and put the same list in each page's Menu slot (<em>Copy to other Page</em> copies the menu, logo and footer regions). Then:</p>
+                <ul>
+                  <li>Let the list entries go to pages (<em>Target Type: Page in this Application</em>). APEX marks the entry of the page that is open.</li>
+                  <li>A child entry can open a section of another page: URL <code>f?p=&amp;APP_ID.:SERVICES:&amp;APP_SESSION.#faq</code>.</li>
+                  <li>Links in reports (footer columns, buttons, "read more") come from the query: <code>apex_page.get_url(p_page =&gt; 'SERVICES') as link</code>. In Static Content, use <code>f?p=&amp;APP_ID.:SERVICES:&amp;APP_SESSION.</code>; point the logo to the home page.</li>
+                  <li>Inner pages open with a short title band: a Website - Hero region with one row, Layout <em>Full Bleed</em> and Height <em>Compact (page title)</em>.</li>
+                  <li>Put the contact form on one page only and link to it from the others.</li>
+                </ul>
+                <p>The 4 multi-page starters in the Gallery (pages 20 to 53) show all of this.</p>
 
                 <h3>5. Pictures</h3>
                 <p>Every template that shows a picture has the same columns: <code>IMAGE_URL</code>, <code>IMAGE_FILE</code>, <code>IMAGE_ALT</code> (what the picture shows, read aloud by screen readers) and <code>IMAGE_POSITION</code> (the part to keep when it is cropped, like <code>center 30%</code> or <code>top</code>). Pictures load when they scroll into view. A row without a picture shows a soft placeholder (Template Option <em>Placeholder Images</em>), and people show their initials. There are three ways to give a picture:</p>
@@ -211,7 +220,7 @@ page 3 (
 
                 <h3>10. Good to know</h3>
                 <ul>
-                  <li>The demo website (page <code>WEBSITE</code>) and the starter websites (pages 11 to 17) are the best reference. Every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
+                  <li>The demo website (page <code>WEBSITE</code>) the starter websites (pages 11 to 17) and the multi-page websites (pages 20 to 53) are the best reference. Every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
                   <li>Typefaces other than System load from Google Fonts.</li>
                   <li>After a partial page refresh of a section, call <code>wsSite.refresh(element)</code> - the templates already do it for <code>apexafterrefresh</code>.</li>
                   <li>Visitors who prefer reduced motion get no animations; Windows high-contrast mode is respected; the menu, sliders, lightbox and accordions work with the keyboard. The source is in <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code>.</li>

@@ -1,0 +1,739 @@
+page 30 (
+    name: Osteria Lume - Home
+    alias: LUME
+    title: Osteria Lume - Italian Kitchen and Wine Bar
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--organic
+            ws-Accent--wine
+            ws-Font--serif
+            ws-Header--transparent
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Seasonal Italian cooking, wood-fired bread and natural wine in the heart of the old town. Book a table online.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Osteria Lume - Italian Kitchen and Wine Bar">
+            <meta property="og:description" content="Seasonal Italian cooking, wood-fired bread and natural wine in the heart of the old town. Book a table online.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/food-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/food-hero-1.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Osteria Lume
+        title: Osteria Lume
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Slow food, *good* wine, long evenings.' as title,
+                       'Italian kitchen and wine bar' as subtitle,
+                       'Seasonal plates from a small kitchen, open every evening from six.' as text,
+                       'Book a table' as button_label,
+                       apex_page.get_url(p_page => 'LUME-BOOK') as button_link,
+                       'See the menu' as button2_label,
+                       apex_page.get_url(p_page => 'LUME-MENU') as button2_link,
+                       'website-studio/img/food-hero-1.jpg' as image_file,
+                       'A plated dish at a set table' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'A dining room made for *sharing*.' as title,
+                       'Since 2014' as subtitle,
+                       'Forty seats, one long table and a bar for walk-ins.' as text,
+                       'Plan your visit' as button_label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') || '#visit' as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       'website-studio/img/food-hero-2.jpg' as image_file,
+                       'The dining room in the evening' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Everything made *here*, every day.' as title,
+                       'From our kitchen' as subtitle,
+                       'Pasta rolled each morning, bread from our wood oven.' as text,
+                       'Our story' as button_label,
+                       '#story' as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       'website-studio/img/food-hero-3.jpg' as image_file,
+                       'Two cooks laughing in the kitchen' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--full
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region story (
+        name: Our story
+        title: Our story
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <div class="ws-Split">
+                  <div class="ws-Media" data-file="website-studio/img/food-about.jpg" role="img" aria-label="Plates shared across the table"></div>
+                  <div class="ws-Stack">
+                    <p class="ws-Eyebrow">Our story</p>
+                    <h2 class="ws-Title">A small kitchen with a *big* table.</h2>
+                    <p class="ws-Lead">Chef Marco and Hala opened Lume in 2014 with one oven, six tables and recipes from Marco's grandmother in Bologna.</p>
+                    <p class="ws-Muted">We buy from local farms and the morning fish market, so the menu is short and changes every week.</p>
+                    <a class="ws-More" href="f?p=&APP_ID.:LUME-MENU:&APP_SESSION.">See tonight's menu</a>
+                  </div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: story
+            customAttributes: data-menu="Our story"
+        }
+    )
+
+    region gallery (
+        name: Gallery
+        title: Inside *Lume*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'The garden room' as title,
+                       'website-studio/img/room-1.jpg' as image_file,
+                       'A bright dining room with tall windows' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Roasted salmon' as title,
+                       'website-studio/img/dish-1.jpg' as image_file,
+                       'Roasted salmon with summer vegetables' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Friday supper' as title,
+                       'website-studio/img/room-2.jpg' as image_file,
+                       'A scallop starter on a wooden board' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'The dining room' as title,
+                       'website-studio/img/food-hero-2.jpg' as image_file,
+                       'The dining room in the evening' as image_alt,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Wood-fired pizza' as title,
+                       'website-studio/img/dish-3.jpg' as image_file,
+                       'Wood-fired pizza' as image_alt,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Chocolate torta' as title,
+                       'website-studio/img/dish-4.jpg' as image_file,
+                       'A chocolate dessert' as image_alt,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: gallery
+            customAttributes: data-menu="Gallery"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-photos
+            templateOptions: [
+                #DEFAULT#
+                ws-Photos--masonry
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region reviews (
+        name: Guests say
+        title: Guests *say*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'The best pasta in the city, and the staff remember your name.' as quote,
+                       'Nora A.' as name,
+                       'Google review' as role,
+                       '5' as rating,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'We come every anniversary. The salmon is perfect every time.' as quote,
+                       'Faisal and Reem' as name,
+                       'Regulars' as role,
+                       '5' as rating,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Warm room, honest food, fair prices. Book ahead on Fridays.' as quote,
+                       'James P.' as name,
+                       'Tripadvisor' as role,
+                       '4' as rating,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: reviews
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+                ws-Quotes--wall
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @lume-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+                <p>Italian kitchen and wine bar. Open every evening except Monday.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'TikTok' as label,
+                       'https://www.tiktok.com/' as link,
+                       'fa-tiktok' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'WhatsApp' as label,
+                       'https://wa.me/966500000000' as link,
+                       'fa-whatsapp' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-visit (
+        name: Footer - Visit
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Menu' as label,
+                       apex_page.get_url(p_page => 'LUME-MENU') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Opening hours' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Find us' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') || '#visit' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Book a table' as label,
+                       apex_page.get_url(p_page => 'LUME-BOOK') as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-visit
+        }
+        headerAndFooter {
+            headerText: <h3>Visit</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Osteria Lume</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

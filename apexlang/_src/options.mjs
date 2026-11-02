@@ -90,7 +90,7 @@ export const MENU = {
     groups: [
         { id: "wsm-align", name: "Alignment", nul: "Right", options: [["ws-Menu--center", "Center"], ["ws-Menu--left", "Left"]] },
         { id: "wsm-max", name: "Visible Entries", nul: "All", help: "On wide screens, top-level entries after this number go into a More drop-down.",
-          options: [["ws-Menu--max4", "4, then More"], ["ws-Menu--max5", "5, then More"], ["ws-Menu--max6", "6, then More"], ["ws-Menu--max7", "7, then More"]] },
+          options: [["ws-Menu--max3", "3, then More"], ["ws-Menu--max4", "4, then More"], ["ws-Menu--max5", "5, then More"], ["ws-Menu--max6", "6, then More"], ["ws-Menu--max7", "7, then More"]] },
         { id: "wsm-mobile", name: "On Phones", nul: "Drop-down Panel", help: "How the menu opens from the burger button on small screens.",
           options: [["ws-Menu--overlay", "Full-screen Overlay"], ["ws-Menu--drawer", "Side Drawer"]] }
     ],
@@ -115,7 +115,7 @@ export const REPORTS = [
       groups: [{ id: "wsr-hero-layout", name: "Layout", nul: "Slider", help: "Slider and Full Bleed put the text over the image; Split and Centered put it next to or above it.",
                  options: [["ws-Hero--split", "Split"], ["ws-Hero--centered", "Centered"], ["ws-Hero--fullbleed", "Full Bleed"]], nulClass: "ws-Hero--slider" },
                { id: "wsr-hero-height", name: "Height", nul: "Large", help: "The height of the Slider and Full Bleed layouts.",
-                 options: [["ws-Hero--full", "Full Screen"], ["ws-Hero--medium", "Medium"]] },
+                 options: [["ws-Hero--full", "Full Screen"], ["ws-Hero--medium", "Medium"], ["ws-Hero--compact", "Compact (page title)"]] },
                { id: "wsr-hero-overlay", name: "Image Overlay", nul: "Normal", help: "How much the image is darkened behind the text (Slider and Full Bleed).",
                  options: [["ws-Hero--light", "Light"], ["ws-Hero--strong", "Strong"]] },
                { id: "wsr-hero-move", name: "Transition", nul: "Fade", options: [["ws-Hero--slide", "Slide"]] }, AUTO],

@@ -1,0 +1,744 @@
+page 52 (
+    name: عيادات الشفاء - About
+    alias: SHIFA-ABOUT
+    title: من نحن - عيادات الشفاء
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Accent--emerald
+            ws-Font--arabic
+            ws-Corners--round
+            ws-Fx--chat
+            ws-Fx--theme
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","ar");document.addEventListener("DOMContentLoaded",function(){document.body.setAttribute("dir","rtl");});</script>
+            <meta name="description" content="تعرف على عيادات الشفاء وأطبائنا الاستشاريين في شمال الرياض.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="من نحن - عيادات الشفاء">
+            <meta property="og:description" content="تعرف على عيادات الشفاء وأطبائنا الاستشاريين في شمال الرياض.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/clinic-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/clinic-room.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: رعاية إنسانية قبل كل شيء.
+        title: رعاية *إنسانية* قبل كل شيء.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'رعاية *إنسانية* قبل كل شيء.' as title,
+                       'من نحن' as subtitle,
+                       'منذ عام ٢٠١٢ في شمال الرياض.' as text,
+                       'website-studio/img/clinic-room.jpg' as image_file,
+                       'استقبال العيادة' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--compact
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region about (
+        name: من نحن
+        title: من نحن
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'من نحن' as eyebrow,
+                       'رعاية *إنسانية* قبل كل شيء.' as title,
+                       'منذ عام ٢٠١٢ نخدم أحياء شمال الرياض بفريق يضع راحة المريض أولا، ويشرح كل خطوة بوضوح.' as text,
+                       '#doctors' as link,
+                       'تعرف على الأطباء' as link_label,
+                       'website-studio/img/clinic-room.jpg' as image_file,
+                       'استقبال العيادة' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'التقنية' as eyebrow,
+                       'ملفك الطبي معك أينما كنت.' as title,
+                       'احجز موعدك، واطلع على نتائجك ووصفاتك من جوالك في أي وقت.' as text,
+                       null as link,
+                       null as link_label,
+                       'website-studio/img/clinic-lab.jpg' as image_file,
+                       'مختبر بأجهزة حديثة' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: about
+            customAttributes: data-menu="من نحن"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-zigzag
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column EYEBROW (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region doctors (
+        name: الأطباء
+        title: أطباؤنا
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'د. نورة القحطاني' as name,
+                       'استشارية طب الأسرة' as role,
+                       'website-studio/img/doctor-1.jpg' as image_file,
+                       'د. نورة القحطاني' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'د. أحمد السبيعي' as name,
+                       'استشاري طب الأطفال' as role,
+                       'website-studio/img/doctor-2.jpg' as image_file,
+                       'د. أحمد السبيعي' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'د. ريم العتيبي' as name,
+                       'أخصائية طب الأسنان' as role,
+                       'website-studio/img/doctor-3.jpg' as image_file,
+                       'د. ريم العتيبي' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: doctors
+            customAttributes: data-menu="الأطباء"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-team
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region reviews (
+        name: آراء المرضى
+        title: آراء المرضى
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'استقبال رائع ومواعيد دقيقة، والدكتورة نورة شرحت لي كل شيء بهدوء.' as quote,
+                       'أم فيصل' as name,
+                       'مريضة منذ ٢٠١٨' as role,
+                       '5' as rating,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'نتيجة التحليل وصلتني على الجوال في نفس اليوم. خدمة ممتازة.' as quote,
+                       'عبدالله م.' as name,
+                       'مراجع' as role,
+                       '5' as rating,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: reviews
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @shifa-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--drawer
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:SHIFA:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">ش</span>عيادات الشفاء</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:SHIFA:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">ش</span>عيادات الشفاء</a>
+                <p>رعاية طبية للعائلة في شمال الرياض.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'WhatsApp' as label,
+                       'https://wa.me/966500000000' as link,
+                       'fa-whatsapp' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-clinic (
+        name: Footer - العيادة
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'الخدمات' as label,
+                       apex_page.get_url(p_page => 'SHIFA-SERVICES') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'الأطباء' as label,
+                       apex_page.get_url(p_page => 'SHIFA-ABOUT') || '#doctors' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'أوقات العمل' as label,
+                       apex_page.get_url(p_page => 'SHIFA-BOOK') || '#hours' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-clinic
+        }
+        headerAndFooter {
+            headerText: <h3>العيادة</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; عيادات الشفاء. جميع الحقوق محفوظة.</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'الخصوصية' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'الشروط' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

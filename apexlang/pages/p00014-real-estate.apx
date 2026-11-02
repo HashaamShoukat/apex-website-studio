@@ -50,7 +50,7 @@ page 14 (
                        'Book a valuation' as button2_label,
                        '#contact' as button2_link,
                        'website-studio/img/home-hero-1.jpg' as image_file,
-                       'A modern house with large windows' as image_alt,
+                       'A modern white house with a pool' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -62,7 +62,7 @@ page 14 (
                        null as button2_label,
                        null as button2_link,
                        'website-studio/img/home-hero-2.jpg' as image_file,
-                       'A white villa at dusk' as image_alt,
+                       'A modern house at dusk' as image_alt,
                        2 as sort_order
                   from dual
                 order by sort_order
@@ -200,7 +200,7 @@ page 14 (
                        'For sale' as category,
                        null as badge,
                        'website-studio/img/home-3.jpg' as image_file,
-                       'An apartment with a view' as image_alt,
+                       'A living room with plants' as image_alt,
                        3 as sort_order
                   from dual
                 union all
@@ -210,7 +210,7 @@ page 14 (
                        'New developments' as category,
                        'Off plan' as badge,
                        'website-studio/img/home-4.jpg' as image_file,
-                       'A modern kitchen' as image_alt,
+                       'A couple cooking in a bright kitchen' as image_alt,
                        4 as sort_order
                   from dual
                 union all
@@ -224,13 +224,13 @@ page 14 (
                        5 as sort_order
                   from dual
                 union all
-                select 'Townhouse, Diplomatic Quarter' as name,
-                       '3 bedrooms - courtyard - 260 m2' as text,
+                select 'Garden villa, Diplomatic Quarter' as name,
+                       '3 bedrooms - plunge pool - 260 m2' as text,
                        'SAR 2,850,000' as price,
                        'For sale' as category,
                        null as badge,
                        'website-studio/img/home-6.jpg' as image_file,
-                       'A townhouse street' as image_alt,
+                       'A white house with a pool' as image_alt,
                        6 as sort_order
                   from dual
                 order by sort_order
@@ -451,7 +451,7 @@ page 14 (
                        '#contact' as link,
                        'Book a valuation' as link_label,
                        'website-studio/img/home-4.jpg' as image_file,
-                       'A modern kitchen' as image_alt,
+                       'A couple cooking in a bright kitchen' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -461,7 +461,7 @@ page 14 (
                        null as link,
                        null as link_label,
                        'website-studio/img/home-6.jpg' as image_file,
-                       'A townhouse street' as image_alt,
+                       'A white house with a pool' as image_alt,
                        3 as sort_order
                   from dual
                 order by sort_order
@@ -562,7 +562,7 @@ page 14 (
                        'Founder and Director' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-5.jpg' as image_file,
-                       'Portrait of a woman in an office' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -570,7 +570,7 @@ page 14 (
                        'Sales' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-4.jpg' as image_file,
-                       'Portrait of a man with a beard' as image_alt,
+                       'Portrait of a man in a grey sweater' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -678,7 +678,7 @@ page 14 (
                        'Sold a villa in Hittin' as role,
                        '5' as rating,
                        'website-studio/img/person-2.jpg' as image_file,
-                       'Portrait of a man in a shirt' as image_alt,
+                       'Portrait of a man smiling' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -687,7 +687,7 @@ page 14 (
                        'Bought in Olaya' as role,
                        '5' as rating,
                        'website-studio/img/person-3.jpg' as image_file,
-                       'Portrait of a woman with curly hair' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        2 as sort_order
                   from dual
                 order by sort_order

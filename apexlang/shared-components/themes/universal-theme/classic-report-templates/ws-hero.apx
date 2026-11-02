@@ -79,6 +79,15 @@ classicReportTemplate ws-hero (
         }
     )
 
+    templateOption hero-compact (
+        name: Compact (page title)
+        group: @report/wsr-hero-height
+        sequence: 30
+        appearance {
+            cssClasses: ws-Hero--compact
+        }
+    )
+
     templateOption hero-light (
         name: Light
         group: @report/wsr-hero-overlay

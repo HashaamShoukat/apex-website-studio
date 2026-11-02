@@ -50,7 +50,7 @@ page 11 (
                        'Talk to an expert' as button2_label,
                        '#contact' as button2_link,
                        'website-studio/img/company-hero.jpg' as image_file,
-                       'A modern office building' as image_alt,
+                       'Modern office towers' as image_alt,
                        1 as sort_order
                   from dual
                 order by sort_order
@@ -259,7 +259,7 @@ page 11 (
                        '#services' as link,
                        'Our services' as link_label,
                        'website-studio/img/company-plan.jpg' as image_file,
-                       'Planning notes and charts on a desk' as image_alt,
+                       'Planning notes next to a laptop' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -269,7 +269,7 @@ page 11 (
                        null as link,
                        null as link_label,
                        'website-studio/img/company-meeting.jpg' as image_file,
-                       'A meeting around a table' as image_alt,
+                       'A talk in an open office' as image_alt,
                        3 as sort_order
                   from dual
                 order by sort_order
@@ -572,7 +572,7 @@ page 11 (
                        'News' as category,
                        '#' as link,
                        'website-studio/img/news-2.jpg' as image_file,
-                       'A desk with a laptop and coffee' as image_alt,
+                       'An open-plan office' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -687,7 +687,7 @@ page 11 (
                        'Chief Executive' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-2.jpg' as image_file,
-                       'Portrait of a man in a shirt' as image_alt,
+                       'Portrait of a man smiling' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -695,7 +695,7 @@ page 11 (
                        'Head of Engineering' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-5.jpg' as image_file,
-                       'Portrait of a woman in an office' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        2 as sort_order
                   from dual
                 union all
@@ -711,7 +711,7 @@ page 11 (
                        'Head of Sustainability' as role,
                        'https://www.linkedin.com/' as link,
                        'website-studio/img/person-3.jpg' as image_file,
-                       'Portrait of a woman with curly hair' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        4 as sort_order
                   from dual
                 order by sort_order
@@ -804,7 +804,7 @@ page 11 (
                        'Programme Director, Atlas Rail' as role,
                        '5' as rating,
                        'website-studio/img/person-4.jpg' as image_file,
-                       'Portrait of a man with a beard' as image_alt,
+                       'Portrait of a man in a grey sweater' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -1233,7 +1233,7 @@ page 11 (
             templateOptions: [
                 #DEFAULT#
                 ws-Menu--cta
-                ws-Menu--max5
+                ws-Menu--max3
             ]
         }
     )
