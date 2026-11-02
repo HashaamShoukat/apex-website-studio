@@ -22,7 +22,7 @@ list navigation-bar (
 list navigation-menu (
     name: Navigation Menu
 
-    entry home (
+    entry gallery (
         label: Gallery
         icon {
             imageIconCssClasses: fa-th-large
@@ -67,7 +67,7 @@ list navigation-menu (
         }
     )
 
-    entry demo (
+    entry demo-website (
         label: Demo Website
         icon {
             imageIconCssClasses: fa-globe
@@ -78,6 +78,1191 @@ list navigation-menu (
         link {
             target: {
                 page: 10
+            }
+        }
+    )
+
+    entry starter-websites (
+        label: Starter Websites
+        icon {
+            imageIconCssClasses: fa-files-o
+        }
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 11
+            }
+        }
+    )
+
+    entry company (
+        label: Company
+        icon {
+            imageIconCssClasses: fa-building-o
+        }
+        layout {
+            sequence: 10
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 11
+            }
+        }
+    )
+
+    entry restaurant (
+        label: Restaurant
+        icon {
+            imageIconCssClasses: fa-cutlery
+        }
+        layout {
+            sequence: 20
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 12
+            }
+        }
+    )
+
+    entry clinic-arabic-rtl (
+        label: Clinic (Arabic, RTL)
+        icon {
+            imageIconCssClasses: fa-heartbeat
+        }
+        layout {
+            sequence: 30
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 13
+            }
+        }
+    )
+
+    entry real-estate (
+        label: Real Estate
+        icon {
+            imageIconCssClasses: fa-home
+        }
+        layout {
+            sequence: 40
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 14
+            }
+        }
+    )
+
+    entry conference (
+        label: Conference
+        icon {
+            imageIconCssClasses: fa-calendar
+        }
+        layout {
+            sequence: 50
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 15
+            }
+        }
+    )
+
+    entry portfolio (
+        label: Portfolio
+        icon {
+            imageIconCssClasses: fa-user
+        }
+        layout {
+            sequence: 60
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 16
+            }
+        }
+    )
+
+    entry saas-product (
+        label: SaaS Product
+        icon {
+            imageIconCssClasses: fa-rocket
+        }
+        layout {
+            sequence: 70
+            parentEntry: @starter-websites
+        }
+        link {
+            target: {
+                page: 17
+            }
+        }
+    )
+
+)
+
+list halcyon-menu (
+    name: Halcyon - Menu
+
+    entry about (
+        label: About
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #about
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry brand-strategy (
+        label: Brand strategy
+        layout {
+            sequence: 10
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry websites (
+        label: Websites
+        layout {
+            sequence: 20
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry our-process (
+        label: Our process
+        layout {
+            sequence: 30
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #process
+            }
+        }
+    )
+
+    entry pricing (
+        label: Pricing
+        layout {
+            sequence: 40
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #pricing
+            }
+        }
+    )
+
+    entry work (
+        label: Work
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry team (
+        label: Team
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #team
+            }
+        }
+    )
+
+    entry careers (
+        label: Careers
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #careers
+            }
+        }
+    )
+
+    entry journal (
+        label: Journal
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: https://medium.com/
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry start-a-project (
+        label: Start a project
+        layout {
+            sequence: 70
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
+            }
+        }
+    )
+
+)
+
+list company-menu (
+    name: Meridian - Menu
+
+    entry about (
+        label: About
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #about
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry advisory (
+        label: Advisory
+        layout {
+            sequence: 10
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry engineering (
+        label: Engineering
+        layout {
+            sequence: 20
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry operations (
+        label: Operations
+        layout {
+            sequence: 30
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry sustainability (
+        label: Sustainability
+        layout {
+            sequence: 40
+            parentEntry: @services
+        }
+        link {
+            target: {
+                type: url
+                url: #about
+            }
+        }
+    )
+
+    entry insights (
+        label: Insights
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #news
+            }
+        }
+    )
+
+    entry team (
+        label: Team
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #team
+            }
+        }
+    )
+
+    entry careers (
+        label: Careers
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #careers
+            }
+        }
+    )
+
+    entry client-portal (
+        label: Client portal
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/portal
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry contact-us (
+        label: Contact us
+        layout {
+            sequence: 70
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
+            }
+        }
+    )
+
+)
+
+list restaurant-menu (
+    name: Osteria Lume - Menu
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```
+            with menu_entries as (
+                select 1 as id, null as parent_id, 'Menu' as label, '#menu' as target, null as link_target, 10 as seq from dual
+                union all
+                select 2 as id, 1 as parent_id, 'Starters' as label, '#menu' as target, null as link_target, 10 as seq from dual
+                union all
+                select 3 as id, 1 as parent_id, 'Mains' as label, '#menu' as target, null as link_target, 20 as seq from dual
+                union all
+                select 4 as id, 1 as parent_id, 'Desserts' as label, '#menu' as target, null as link_target, 30 as seq from dual
+                union all
+                select 5 as id, null as parent_id, 'Our story' as label, '#story' as target, null as link_target, 20 as seq from dual
+                union all
+                select 6 as id, null as parent_id, 'Gallery' as label, '#gallery' as target, null as link_target, 30 as seq from dual
+                union all
+                select 7 as id, null as parent_id, 'Evenings' as label, '#evenings' as target, null as link_target, 40 as seq from dual
+                union all
+                select 8 as id, null as parent_id, 'Visit' as label, '#visit' as target, null as link_target, 50 as seq from dual
+                union all
+                select 9 as id, null as parent_id, 'Order online' as label, 'https://example.com/order' as target, '_blank' as link_target, 60 as seq from dual
+                union all
+                select 10 as id, null as parent_id, 'Book a table' as label, '#contact' as target, null as link_target, 70 as seq from dual
+            )
+            select level,
+                   label,
+                   target,
+                   null as is_current,
+                   null as image,
+                   null as image_attribute,
+                   null as image_alt,
+                   null as attribute1,
+                   link_target as attribute2
+              from menu_entries
+             start with parent_id is null
+            connect by prior id = parent_id
+             order siblings by seq
+            ```
+    }
+)
+
+list clinic-menu (
+    name: عيادات الشفاء - Menu
+
+    entry entry (
+        label: من نحن
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #about
+            }
+        }
+    )
+
+    entry entry-2 (
+        label: الخدمات
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry entry-3 (
+        label: طب الأسرة
+        layout {
+            sequence: 10
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry entry-4 (
+        label: طب الأطفال
+        layout {
+            sequence: 20
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry entry-5 (
+        label: طب الأسنان
+        layout {
+            sequence: 30
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry entry-6 (
+        label: المختبر
+        layout {
+            sequence: 40
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry entry-7 (
+        label: الأطباء
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #doctors
+            }
+        }
+    )
+
+    entry entry-8 (
+        label: أوقات العمل
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #hours
+            }
+        }
+    )
+
+    entry entry-9 (
+        label: الأسئلة
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #faq
+            }
+        }
+    )
+
+    entry entry-10 (
+        label: نتائج التحاليل
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/results
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry entry-11 (
+        label: احجز موعدا
+        layout {
+            sequence: 70
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
+            }
+        }
+    )
+
+)
+
+list realestate-menu (
+    name: Harbor & Stone - Menu
+
+    entry homes (
+        label: Homes
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #homes
+            }
+        }
+    )
+
+    entry for-sale (
+        label: For sale
+        layout {
+            sequence: 10
+            parentEntry: @homes
+        }
+        link {
+            target: {
+                type: url
+                url: #homes
+            }
+        }
+    )
+
+    entry for-rent (
+        label: For rent
+        layout {
+            sequence: 20
+            parentEntry: @homes
+        }
+        link {
+            target: {
+                type: url
+                url: #homes
+            }
+        }
+    )
+
+    entry new-developments (
+        label: New developments
+        layout {
+            sequence: 30
+            parentEntry: @homes
+        }
+        link {
+            target: {
+                type: url
+                url: #homes
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry agents (
+        label: Agents
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #agents
+            }
+        }
+    )
+
+    entry reviews (
+        label: Reviews
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #reviews
+            }
+        }
+    )
+
+    entry visit (
+        label: Visit
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #visit
+            }
+        }
+    )
+
+    entry mortgage-calculator (
+        label: Mortgage calculator
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/mortgage
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry book-a-valuation (
+        label: Book a valuation
+        layout {
+            sequence: 70
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
+            }
+        }
+    )
+
+)
+
+list event-menu (
+    name: Northwind Summit - Menu
+
+    entry programme (
+        label: Programme
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #agenda
+            }
+        }
+    )
+
+    entry day-1-9-march (
+        label: Day 1 - 9 March
+        layout {
+            sequence: 10
+            parentEntry: @programme
+        }
+        link {
+            target: {
+                type: url
+                url: #agenda
+            }
+        }
+    )
+
+    entry day-2-10-march (
+        label: Day 2 - 10 March
+        layout {
+            sequence: 20
+            parentEntry: @programme
+        }
+        link {
+            target: {
+                type: url
+                url: #agenda
+            }
+        }
+    )
+
+    entry workshops (
+        label: Workshops
+        layout {
+            sequence: 30
+            parentEntry: @programme
+        }
+        link {
+            target: {
+                type: url
+                url: #agenda
+            }
+        }
+    )
+
+    entry speakers (
+        label: Speakers
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #speakers
+            }
+        }
+    )
+
+    entry tickets (
+        label: Tickets
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #tickets
+            }
+        }
+    )
+
+    entry venue (
+        label: Venue
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #venue
+            }
+        }
+    )
+
+    entry sponsors (
+        label: Sponsors
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #sponsors
+            }
+        }
+    )
+
+    entry e-2026-talks (
+        label: 2026 talks
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: https://www.youtube.com/
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry get-tickets (
+        label: Get tickets
+        layout {
+            sequence: 70
+        }
+        link {
+            target: {
+                type: url
+                url: #tickets
+            }
+        }
+    )
+
+)
+
+list portfolio-menu (
+    name: Lina Haddad - Menu
+
+    entry work (
+        label: Work
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry branding (
+        label: Branding
+        layout {
+            sequence: 10
+            parentEntry: @work
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry web (
+        label: Web
+        layout {
+            sequence: 20
+            parentEntry: @work
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry product (
+        label: Product
+        layout {
+            sequence: 30
+            parentEntry: @work
+        }
+        link {
+            target: {
+                type: url
+                url: #work
+            }
+        }
+    )
+
+    entry about (
+        label: About
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #about
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #services
+            }
+        }
+    )
+
+    entry experience (
+        label: Experience
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #experience
+            }
+        }
+    )
+
+    entry dribbble (
+        label: Dribbble
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: https://dribbble.com/
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry hire-me (
+        label: Hire me
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
+            }
+        }
+    )
+
+)
+
+list saas-menu (
+    name: Ledgerline - Menu
+
+    entry features (
+        label: Features
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: #features
+            }
+        }
+    )
+
+    entry customers (
+        label: Customers
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                type: url
+                url: #customers
+            }
+        }
+    )
+
+    entry compare (
+        label: Compare
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: #compare
+            }
+        }
+    )
+
+    entry pricing (
+        label: Pricing
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: #pricing
+            }
+        }
+    )
+
+    entry resources (
+        label: Resources
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                type: url
+                url: #
+            }
+        }
+    )
+
+    entry help-centre (
+        label: Help centre
+        layout {
+            sequence: 10
+            parentEntry: @resources
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/help
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry questions (
+        label: Questions
+        layout {
+            sequence: 20
+            parentEntry: @resources
+        }
+        link {
+            target: {
+                type: url
+                url: #faq
+            }
+        }
+    )
+
+    entry status (
+        label: Status
+        layout {
+            sequence: 30
+            parentEntry: @resources
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/status
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry start-free (
+        label: Start free
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                type: url
+                url: #contact
             }
         }
     )

@@ -1,0 +1,1687 @@
+page 17 (
+    name: Starter - SaaS
+    alias: SAAS
+    title: Ledgerline - Invoicing and Bookkeeping for Small Businesses
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--saas
+            ws-Accent--violet
+            ws-Font--friendly
+            ws-Header--pill
+            ws-Fx--theme
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Send invoices, get paid faster and keep your books ready for VAT. Free for 30 days, no card needed.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Ledgerline - Invoicing and Bookkeeping for Small Businesses">
+            <meta property="og:description" content="Send invoices, get paid faster and keep your books ready for VAT. Free for 30 days, no card needed.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/saas-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/saas-hero.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Ledgerline
+        title: Ledgerline
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Invoices out. Money *in*. Books done.' as title,
+                       'For small businesses' as subtitle,
+                       'Ledgerline sends your invoices, chases late payers and keeps your books ready for VAT.' as text,
+                       'Start free for 30 days' as button_label,
+                       '#contact' as button_link,
+                       'See pricing' as button2_label,
+                       '#pricing' as button2_link,
+                       'website-studio/img/saas-hero.jpg' as image_file,
+                       'A finance dashboard on a laptop' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--split
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region logos (
+        name: Used by 12,000 businesses
+        title: Used by 12,000 businesses
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Kestrel' as name,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Fieldnote' as name,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Tidewater' as name,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Monogram' as name,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Northpeak' as name,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Vantage' as name,
+                       6 as sort_order
+                  from dual
+                union all
+                select 'Orbital' as name,
+                       7 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--center
+            ]
+            cssClasses: ws-Sec--small
+        }
+        advanced {
+            htmlDomId: logos
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-logos
+            templateOptions: [
+                #DEFAULT#
+                ws-Speed--slow
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 20
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region features (
+        name: Features
+        title: Everything you need, *nothing* you don't
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-file-text-o' as icon,
+                       'Invoices in a minute' as title,
+                       'Branded, VAT-ready invoices with a pay-now link.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-bell-o' as icon,
+                       'Polite reminders' as title,
+                       'Late payers get friendly reminders, so you don''t have to.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-university' as icon,
+                       'Bank sync' as title,
+                       'Payments match their invoices automatically.' as text,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'fa-pie-chart' as icon,
+                       'Clear reports' as title,
+                       'Cash flow, profit and VAT at a glance.' as text,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'fa-users' as icon,
+                       'Invite your accountant' as title,
+                       'Free access for your accountant, with an audit trail.' as text,
+                       5 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: features
+            customAttributes: data-menu="Features"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-features
+            templateOptions: [
+                #DEFAULT#
+                ws-Features--bento
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region how (
+        name: How it works
+        title: How it works
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Get paid' as eyebrow,
+                       'Send an invoice from your *phone*.' as title,
+                       'Customers pay by card, Apple Pay or bank transfer. You see it the moment they do.' as text,
+                       'website-studio/img/saas-1.jpg' as image_file,
+                       'A person reviewing invoices on a tablet' as image_alt,
+                       null as link,
+                       null as link_label,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Stay ready' as eyebrow,
+                       'Books that are always *up to date*.' as title,
+                       'Every payment and expense lands in the right place, so VAT returns take minutes.' as text,
+                       'website-studio/img/saas-2.jpg' as image_file,
+                       'A small business owner at a laptop' as image_alt,
+                       '#features' as link,
+                       'All features' as link_label,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: how
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-zigzag
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column EYEBROW (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region numbers (
+        name: Results
+        title: Results
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '12000' as value,
+                       '+' as suffix,
+                       'Businesses' as label,
+                       1 as sort_order
+                  from dual
+                union all
+                select '9' as value,
+                       null as suffix,
+                       'Days faster to get paid' as label,
+                       2 as sort_order
+                  from dual
+                union all
+                select '4' as value,
+                       'h' as suffix,
+                       'Saved every month' as label,
+                       3 as sort_order
+                  from dual
+                union all
+                select '4.8' as value,
+                       null as suffix,
+                       'App Store rating' as label,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 60
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+                ws-Stats--center
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUFFIX (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region customers (
+        name: Customers
+        title: Loved by *owners*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'I used to spend Sunday nights on invoices. Now it takes ten minutes on Monday.' as quote,
+                       'Noura Al-Saud' as name,
+                       'Owner, Bloom Florist' as role,
+                       '5' as rating,
+                       'website-studio/img/person-1.jpg' as image_file,
+                       'Portrait of a woman smiling' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Our customers pay a week earlier since we switched. That changed our cash flow.' as quote,
+                       'Chris Evans' as name,
+                       'Director, Kestrel Coffee' as role,
+                       '5' as rating,
+                       'website-studio/img/person-4.jpg' as image_file,
+                       'Portrait of a man with a beard' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'My accountant loves it, which says a lot.' as quote,
+                       'Hamad Q.' as name,
+                       'Freelance architect' as role,
+                       '5' as rating,
+                       'website-studio/img/person-6.jpg' as image_file,
+                       'Portrait of a man in a suit' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 70
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: customers
+            customAttributes: data-menu="Customers"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+                ws-Quotes--wall
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region compare (
+        name: Compare
+        title: Why *Ledgerline*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select null as feature,
+                       'Ledgerline' as col1,
+                       'Spreadsheets' as col2,
+                       'Big accounting suites' as col3,
+                       'Y' as is_header,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'VAT-ready invoices' as feature,
+                       'Y' as col1,
+                       'N' as col2,
+                       'Y' as col3,
+                       null as is_header,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Automatic reminders' as feature,
+                       'Y' as col1,
+                       'N' as col2,
+                       'Y' as col3,
+                       null as is_header,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Set up in 10 minutes' as feature,
+                       'Y' as col1,
+                       'Y' as col2,
+                       'N' as col3,
+                       null as is_header,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Arabic and English' as feature,
+                       'Y' as col1,
+                       'Y' as col2,
+                       'N' as col3,
+                       null as is_header,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Price per month' as feature,
+                       'From SAR 29' as col1,
+                       'Free' as col2,
+                       'SAR 250+' as col3,
+                       null as is_header,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+                ws-Width--narrow
+            ]
+        }
+        advanced {
+            htmlDomId: compare
+            customAttributes: data-menu="Compare"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-compare
+            templateOptions: [
+                #DEFAULT#
+                ws-Compare--hl1
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column FEATURE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column COL1 (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column COL2 (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column COL3 (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IS_HEADER (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region pricing (
+        name: Pricing
+        title: Simple *pricing*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Starter' as name,
+                       'SAR 29' as price,
+                       'per month' as period,
+                       'For freelancers.' as description,
+                       '20 invoices a month|Card payments|1 user' as features,
+                       'Start free' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Business' as name,
+                       'SAR 79' as price,
+                       'per month' as period,
+                       'For growing teams.' as description,
+                       'Unlimited invoices|Bank sync|Reminders|5 users' as features,
+                       'Start free' as button_label,
+                       '#contact' as button_link,
+                       'Y' as is_featured,
+                       'Most popular' as badge,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Plus' as name,
+                       'SAR 149' as price,
+                       'per month' as period,
+                       'For more than one company.' as description,
+                       'Everything in Business|Multi-company|Priority support|Unlimited users' as features,
+                       'Talk to sales' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 90
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: pricing
+            customAttributes: data-menu="Pricing"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-pricing
+            templateOptions: [
+                #DEFAULT#
+                ws-Plans--lift
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column PRICE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column PERIOD (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column DESCRIPTION (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column FEATURES (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IS_FEATURED (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column BADGE (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region faq (
+        name: Questions
+        title: Questions
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Do I need a card to try it?' as question,
+                       'No. The trial is free for 30 days and asks for no payment details.' as answer,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Is Ledgerline approved for e-invoicing?' as question,
+                       'Yes. Invoices meet the ZATCA e-invoicing requirements, phase 2.' as answer,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Can I export my data?' as question,
+                       'Any time, as Excel or CSV. Your data is yours.' as answer,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 100
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: faq
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-faq
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUESTION (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ANSWER (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region contact (
+        name: Start free
+        title: Start your free *trial*
+        type: staticContent
+        layout {
+            sequence: 110
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--gradient
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            htmlDomId: contact
+            customAttributes: data-menu="Start free"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">Leave your details and we will set up your account today.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-envelope-o' as icon,
+                       'Sales' as label,
+                       'sales@example.com' as value,
+                       'mailto:sales@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-life-ring' as icon,
+                       'Support' as label,
+                       'help@example.com' as value,
+                       'mailto:help@example.com' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @saas-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">L</span>Ledgerline</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">L</span>Ledgerline</a>
+                <p>Invoicing and bookkeeping for small businesses.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'GitHub' as label,
+                       'https://github.com/' as link,
+                       'fa-github' as icon,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-product (
+        name: Footer - Product
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Features' as label,
+                       '#features' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Pricing' as label,
+                       '#pricing' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Compare' as label,
+                       '#compare' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-product
+        }
+        headerAndFooter {
+            headerText: <h3>Product</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-help (
+        name: Footer - Help
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Help centre' as label,
+                       'https://example.com/help' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Status' as label,
+                       'https://example.com/status' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Contact' as label,
+                       '#contact' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-help
+        }
+        headerAndFooter {
+            headerText: <h3>Help</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Ledgerline</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    pageItem P17_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P17_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P17_COMPANY (
+        type: textField
+        label {
+            label: Business name
+            alignment: left
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P17_WEBSITE (
+        type: textField
+        label {
+            label: Leave this field empty
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+            columnCssClasses: ws-Honeypot
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            customAttributes: tabindex="-1" autocomplete="off"
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Start free trial
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- P17_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
+                if :P17_WEBSITE is null then
+                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- apex_mail.send(p_to   => 'hello@example.com',
+                    --                p_from => 'noreply@example.com',
+                    --                p_subj => 'Website message from ' || :P17_NAME,
+                    --                p_body => null || chr(10) || chr(10) || :P17_NAME || ', ' || :P17_EMAIL || ', ' || :P17_COMPANY);
+                    -- apex_mail.push_queue;
+                    null;
+                end if;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Welcome aboard. Check your email to finish setting up your account.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 17
+            }
+        }
+    )
+
+)

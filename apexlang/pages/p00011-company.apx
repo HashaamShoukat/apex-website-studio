@@ -1,0 +1,1794 @@
+page 11 (
+    name: Starter - Company
+    alias: COMPANY
+    title: Meridian Partners - Engineering and Advisory
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--corporate
+            ws-Accent--indigo
+            ws-Font--tech
+            ws-Header--centered
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Meridian Partners plans, builds and runs infrastructure for cities, utilities and industry across the Gulf and Europe.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Meridian Partners - Engineering and Advisory">
+            <meta property="og:description" content="Meridian Partners plans, builds and runs infrastructure for cities, utilities and industry across the Gulf and Europe.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/company-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/company-hero.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Meridian
+        title: Meridian
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Infrastructure that *lasts* a generation.' as title,
+                       'Engineering and advisory since 1998' as subtitle,
+                       'We plan, build and run the roads, grids and water networks that cities depend on.' as text,
+                       'Our services' as button_label,
+                       '#services' as button_link,
+                       'Talk to an expert' as button2_label,
+                       '#contact' as button2_link,
+                       'website-studio/img/company-hero.jpg' as image_file,
+                       'A modern office building' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--split
+                ws-Hero--medium
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region clients (
+        name: Trusted by
+        title: Trusted by
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Gulf Water' as name,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Atlas Rail' as name,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Northgrid' as name,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'City of Lumen' as name,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Harborline' as name,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Petra Energy' as name,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--center
+            ]
+            cssClasses: ws-Sec--small
+        }
+        advanced {
+            htmlDomId: clients
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-logos
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 20
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region about (
+        name: About
+        title: Who we are
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'About us' as eyebrow,
+                       'Four hundred engineers, *one* standard.' as title,
+                       'From offices in Riyadh, Dubai and Rotterdam we work with public and private clients on projects that must still work in fifty years.' as text,
+                       '#team' as link,
+                       'Meet the leadership' as link_label,
+                       'website-studio/img/company-team.jpg' as image_file,
+                       'Colleagues working on laptops' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'How we work' as eyebrow,
+                       'Plan first, build once.' as title,
+                       'Every project starts with a digital model of the asset, so cost, risk and carbon are clear before the first contract is signed.' as text,
+                       '#services' as link,
+                       'Our services' as link_label,
+                       'website-studio/img/company-plan.jpg' as image_file,
+                       'Planning notes and charts on a desk' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Sustainability' as eyebrow,
+                       'Net zero on our own sites by *2030*.' as title,
+                       'We publish our emissions every year and design every project to the lowest carbon option the client can afford.' as text,
+                       null as link,
+                       null as link_label,
+                       'website-studio/img/company-meeting.jpg' as image_file,
+                       'A meeting around a table' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: about
+            customAttributes: data-menu="About"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-zigzag
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column EYEBROW (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region numbers (
+        name: Meridian in numbers
+        title: Meridian in numbers
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '26' as value,
+                       'Years in business' as label,
+                       null as suffix,
+                       1 as sort_order
+                  from dual
+                union all
+                select '410' as value,
+                       'Engineers and advisers' as label,
+                       null as suffix,
+                       2 as sort_order
+                  from dual
+                union all
+                select '1200' as value,
+                       'Projects delivered' as label,
+                       '+' as suffix,
+                       3 as sort_order
+                  from dual
+                union all
+                select '14' as value,
+                       'Countries' as label,
+                       null as suffix,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--dark
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+                ws-Stats--center
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SUFFIX (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region services (
+        name: Services
+        title: What we *do*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-line-chart' as icon,
+                       'Advisory' as title,
+                       'Feasibility studies, financing and procurement strategies for large public projects.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-cogs' as icon,
+                       'Engineering' as title,
+                       'Civil, structural and electrical design, with digital models shared with every contractor.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-wrench' as icon,
+                       'Operations' as title,
+                       'Asset management and maintenance plans that keep networks running and costs predictable.' as text,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'fa-leaf' as icon,
+                       'Sustainability' as title,
+                       'Carbon accounting, climate risk and renewable integration for every stage of a project.' as text,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 60
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+        }
+        advanced {
+            htmlDomId: services
+            customAttributes: data-menu="Services"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Services</p><p class="ws-Lead">Three practices that work as one team from the first study to the last inspection.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-features
+            templateOptions: [
+                #DEFAULT#
+                ws-Features--rows
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region news (
+        name: Insights
+        title: Latest *insights*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'What digital twins changed on the Atlas Rail extension' as title,
+                       'Two years in, the model has saved four months of site work. Here is what we learned.' as text,
+                       '12 Oct 2026' as post_date,
+                       'Case study' as category,
+                       '#' as link,
+                       'website-studio/img/news-1.jpg' as image_file,
+                       'Charts on a laptop' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Meridian opens a Rotterdam office' as title,
+                       'Forty engineers join to lead our water and port work in Northern Europe.' as text,
+                       '28 Sep 2026' as post_date,
+                       'News' as category,
+                       '#' as link,
+                       'website-studio/img/news-2.jpg' as image_file,
+                       'A desk with a laptop and coffee' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Five questions to ask before a feasibility study' as title,
+                       'A short guide for project owners from our advisory practice.' as text,
+                       '3 Sep 2026' as post_date,
+                       'Guide' as category,
+                       '#' as link,
+                       'website-studio/img/news-3.jpg' as image_file,
+                       'A presentation in a meeting room' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 70
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--split
+            ]
+        }
+        advanced {
+            htmlDomId: news
+            customAttributes: data-menu="Insights"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Insights</p><p class="ws-Lead">News and thinking from our engineers.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-news
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column POST_DATE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region team (
+        name: Team
+        title: Leadership
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Omar Al-Harbi' as name,
+                       'Chief Executive' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-2.jpg' as image_file,
+                       'Portrait of a man in a shirt' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Sara Lindqvist' as name,
+                       'Head of Engineering' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-5.jpg' as image_file,
+                       'Portrait of a woman in an office' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Daniel Okoro' as name,
+                       'Head of Advisory' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-6.jpg' as image_file,
+                       'Portrait of a man in a suit' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Maya Chen' as name,
+                       'Head of Sustainability' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-3.jpg' as image_file,
+                       'Portrait of a woman with curly hair' as image_alt,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: team
+            customAttributes: data-menu="Team"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Team</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-team
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region clients-say (
+        name: What clients say
+        title: What clients *say*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Meridian found savings in the design that paid for their whole contract. Calm, precise and always on time.' as quote,
+                       'Khalid Mansour' as name,
+                       'Programme Director, Atlas Rail' as role,
+                       '5' as rating,
+                       'website-studio/img/person-4.jpg' as image_file,
+                       'Portrait of a man with a beard' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'The best engineering partner we have had in twenty years of building water networks.' as quote,
+                       'Laila Haddad' as name,
+                       'CEO, Gulf Water' as role,
+                       '5' as rating,
+                       'website-studio/img/person-1.jpg' as image_file,
+                       'Portrait of a woman smiling' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 90
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: clients-say
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+                ws-Quotes--spotlight
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region careers (
+        name: Careers
+        title: Build a *career* that matters
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Senior Structural Engineer' as title,
+                       'Engineering' as team,
+                       'Riyadh' as location,
+                       'Full-time' as type,
+                       'Lead structural design for transport projects.' as description,
+                       'mailto:careers@example.com' as apply_link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Infrastructure Economist' as title,
+                       'Advisory' as team,
+                       'Dubai' as location,
+                       'Full-time' as type,
+                       'Build the business cases behind major public projects.' as description,
+                       'mailto:careers@example.com' as apply_link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Graduate Engineer' as title,
+                       'Engineering' as team,
+                       'Rotterdam' as location,
+                       'Graduate' as type,
+                       'A two-year programme across our three practices.' as description,
+                       'mailto:careers@example.com' as apply_link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 100
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+        }
+        advanced {
+            htmlDomId: careers
+            customAttributes: data-menu="Careers"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Careers</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-jobs
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEAM (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LOCATION (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column TYPE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column DESCRIPTION (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column APPLY_LINK (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region faq (
+        name: Questions
+        title: Questions
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Which regions do you work in?' as question,
+                       'Saudi Arabia, the UAE, the wider Gulf and Northern Europe, with partners elsewhere.' as answer,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Do you work on private projects?' as question,
+                       'Yes. About a third of our work is for private developers and industrial clients.' as answer,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'How do you price a project?' as question,
+                       'Fixed fees for studies and design, and agreed rates for long-term operations support.' as answer,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Can you join a project already under way?' as question,
+                       'Often. We review the design and the programme first and tell you honestly where we can help.' as answer,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 110
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: faq
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-faq
+            templateOptions: [
+                #DEFAULT#
+                ws-Faqs--columns
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUESTION (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ANSWER (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region contact (
+        name: Contact
+        title: Talk to an *expert*
+        type: staticContent
+        layout {
+            sequence: 120
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            htmlDomId: contact
+            customAttributes: data-menu="Contact"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Contact</p><p class="ws-Lead">Tell us about your project and the right team will call you back.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-envelope-o' as icon,
+                       'Email' as label,
+                       'info@example.com' as value,
+                       'mailto:info@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-phone' as icon,
+                       'Phone' as label,
+                       '+966 11 000 4100' as value,
+                       'tel:+966110004100' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-map-marker' as icon,
+                       'Head office' as label,
+                       'King Fahd Road, Riyadh' as value,
+                       null as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @company-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--max5
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">M</span>Meridian</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">M</span>Meridian</a>
+                <p>Engineering and advisory for infrastructure that lasts.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-company (
+        name: Footer - Company
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'About' as label,
+                       '#about' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Insights' as label,
+                       '#news' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Careers' as label,
+                       '#careers' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-company
+        }
+        headerAndFooter {
+            headerText: <h3>Company</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-services (
+        name: Footer - Services
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Advisory' as label,
+                       '#services' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Engineering' as label,
+                       '#services' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Operations' as label,
+                       '#services' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-services
+        }
+        headerAndFooter {
+            headerText: <h3>Services</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Meridian Partners. All rights reserved.</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    pageItem P11_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P11_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P11_COMPANY (
+        type: textField
+        label {
+            label: Organisation
+            alignment: left
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P11_MESSAGE (
+        type: textarea
+        label {
+            label: Message
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P11_WEBSITE (
+        type: textField
+        label {
+            label: Leave this field empty
+            alignment: left
+        }
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+            columnCssClasses: ws-Honeypot
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            customAttributes: tabindex="-1" autocomplete="off"
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Send message
+        layout {
+            sequence: 60
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- P11_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
+                if :P11_WEBSITE is null then
+                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- apex_mail.send(p_to   => 'hello@example.com',
+                    --                p_from => 'noreply@example.com',
+                    --                p_subj => 'Website message from ' || :P11_NAME,
+                    --                p_body => :P11_MESSAGE || chr(10) || chr(10) || :P11_NAME || ', ' || :P11_EMAIL || ', ' || :P11_COMPANY);
+                    -- apex_mail.push_queue;
+                    null;
+                end if;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Thanks for your message. We will reply within one working day.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 11
+            }
+        }
+    )
+
+)

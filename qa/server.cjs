@@ -2,7 +2,9 @@
 // f?p=APP:PAGE:SESSION URLs mapped to the harness pages. node qa/server.cjs [port]
 const http = require("http"), fs = require("fs"), path = require("path");
 const ROOT = path.join(__dirname, "www"), STATIC = path.join(__dirname, "../apexlang/shared-components/static-files"), port = +process.argv[2] || 8652;
-const PAGES = { WEBSITE: "site.html", "10": "site.html", DESIGNER: "designer.html", "2": "designer.html", HOME: "gallery.html", "1": "gallery.html", "HOW-TO-USE": "how.html", "3": "how.html" };
+const PAGES = { WEBSITE: "site.html", "10": "site.html", COMPANY: "company.html", "11": "company.html", RESTAURANT: "restaurant.html", "12": "restaurant.html",
+  CLINIC: "clinic.html", "13": "clinic.html", "REAL-ESTATE": "real-estate.html", "14": "real-estate.html", CONFERENCE: "conference.html", "15": "conference.html",
+  PORTFOLIO: "portfolio.html", "16": "portfolio.html", SAAS: "saas.html", "17": "saas.html", DESIGNER: "designer.html", "2": "designer.html", HOME: "gallery.html", "1": "gallery.html", "HOW-TO-USE": "how.html", "3": "how.html" };
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".woff": "font/woff", ".gif": "image/gif", ".ttf": "font/ttf" };
 http.createServer((req, res) => {
   const u = new URL(req.url, "http://x");

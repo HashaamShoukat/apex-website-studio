@@ -17,6 +17,11 @@
     };
     var TEXT = { menu: "Menu", top: "Back to top", all: "All", prev: "Previous", next: "Next", slide: "Slide", apply: "Apply for this role",
                  more: "More", close: "Close", play: "Play", dark: "Dark mode", map: "Map" };
+    // built-in Arabic texts for pages in Arabic (text messages, when they exist, still win)
+    if (/^ar\b/i.test(d.documentElement.lang || "")) {
+        TEXT = { menu: "القائمة", top: "العودة للأعلى", all: "الكل", prev: "السابق", next: "التالي", slide: "شريحة", apply: "تقدم لهذه الوظيفة",
+                 more: "المزيد", close: "إغلاق", play: "تشغيل", dark: "الوضع الداكن", map: "الخريطة" };
+    }
 
     function $$(sel, root) { return Array.prototype.slice.call((root || d).querySelectorAll(sel)); }
     function val(s) { s = s == null ? "" : String(s).trim(); return PH.test(s) || /#[A-Z][A-Z0-9_]*#/.test(s) ? "" : s; }

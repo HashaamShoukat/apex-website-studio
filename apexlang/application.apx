@@ -56,4 +56,10 @@ app WEBSITE-STUDIO (
         }
     )
 
+    substitution WHATSAPP_NUMBER (
+        value {
+            staticValue: 966500000000
+        }
+    )
+
 )
