@@ -47,10 +47,19 @@ listTemplate website-menu (
         }
     )
 
+    templateOption menu-max3 (
+        name: 3, then More
+        group: @list/wsm-max
+        sequence: 10
+        appearance {
+            cssClasses: ws-Menu--max3
+        }
+    )
+
     templateOption menu-max4 (
         name: 4, then More
         group: @list/wsm-max
-        sequence: 10
+        sequence: 20
         appearance {
             cssClasses: ws-Menu--max4
         }
@@ -59,7 +68,7 @@ listTemplate website-menu (
     templateOption menu-max5 (
         name: 5, then More
         group: @list/wsm-max
-        sequence: 20
+        sequence: 30
         appearance {
             cssClasses: ws-Menu--max5
         }
@@ -68,7 +77,7 @@ listTemplate website-menu (
     templateOption menu-max6 (
         name: 6, then More
         group: @list/wsm-max
-        sequence: 30
+        sequence: 40
         appearance {
             cssClasses: ws-Menu--max6
         }
@@ -77,7 +86,7 @@ listTemplate website-menu (
     templateOption menu-max7 (
         name: 7, then More
         group: @list/wsm-max
-        sequence: 40
+        sequence: 50
         appearance {
             cssClasses: ws-Menu--max7
         }

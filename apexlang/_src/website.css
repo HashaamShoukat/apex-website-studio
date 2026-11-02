@@ -277,7 +277,8 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
 .ws-Header .t-Button--hot { --a-button-background-color: var(--ws-btn-bg); --a-button-text-color: var(--ws-btn-fg); --a-button-hover-background-color: var(--ws-btn-bg);
   --a-button-hover-text-color: var(--ws-btn-fg); border-radius: var(--ws-rb); }
 /* header styles */
-.ws-Header--centered .ws-Header-in { display: grid; grid-template-columns: 1fr auto 1fr; }
+/* the menu column never gets narrower than the menu (it would run under the logo); the logo stays centered while it fits */
+.ws-Header--centered .ws-Header-in { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(0, 1fr); }
 .ws-Header--centered .ws-Nav { margin: 0; order: -1; }
 .ws-Header--centered .ws-Header-end { justify-content: flex-end; }
 .ws-Header--pill .ws-Header { background: transparent; border: 0 !important; box-shadow: none !important; -webkit-backdrop-filter: none; backdrop-filter: none; padding-top: .9rem; }
@@ -335,6 +336,8 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
   .ws-MenuOpt--drawer.ws-Nav-open .ws-Nav { visibility: visible; opacity: 1; transition: opacity .25s ease, visibility 0s; }
   .ws-MenuOpt--drawer.ws-Nav-open .ws-Burger { position: relative; z-index: 3; }
   .ws-MenuOpt--drawer.ws-Nav-open::after { content: ""; position: fixed; inset: 0; z-index: 99; background: rgba(0, 0, 0, .4); }
+  /* a backdrop-filter makes the header the box of its fixed children: without this the overlay and drawer are cut to the header's height */
+  :is(.ws-MenuOpt--overlay, .ws-MenuOpt--drawer).ws-Nav-open :is(.ws-Header, .ws-Header-in) { -webkit-backdrop-filter: none; backdrop-filter: none; }
   .ws-Nav-open { overflow: hidden; }
 }
 @keyframes ws-drop { from { opacity: 0; transform: translateY(-8px); } }
@@ -483,6 +486,11 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
 .ws-Hero--full:is(.ws-Hero--slider, .ws-Hero--fullbleed) { min-height: 100vh; min-height: 100svh; }
 .ws-Hero--medium:is(.ws-Hero--slider, .ws-Hero--fullbleed) { min-height: clamp(26rem, 62vh, 40rem); }
 .ws-Hero--medium .ws-Slide-body { padding-block: clamp(5rem, 9vw, 7rem) clamp(6rem, 10vw, 8rem); }
+/* Compact: a page title band for the inner pages of a multi-page website */
+.ws-Hero--compact:is(.ws-Hero--slider, .ws-Hero--fullbleed) { min-height: clamp(19rem, 46vh, 27rem); }
+.ws-Hero--compact:is(.ws-Hero--slider, .ws-Hero--fullbleed) .ws-Slide-body { align-self: end; gap: 1rem; padding-block: calc(var(--ws-header-h) + 3rem) clamp(2.5rem, 5vw, 3.5rem); }
+.ws-Hero--compact .ws-Display { max-width: 22ch; font-size: clamp(2.3rem, 1.4rem + 3.4vw, 4rem); }
+.ws-Hero--compact.ws-Hero--split .ws-Slide-media { aspect-ratio: 16 / 10; }
 /* Image Overlay */
 .ws-Hero--light .ws-Slide-media::after { opacity: .6; }
 .ws-Hero--strong .ws-Slide-media::after { background: linear-gradient(90deg, rgba(6, 6, 8, .9), rgba(6, 6, 8, .7) 55%, rgba(6, 6, 8, .5)), linear-gradient(0deg, rgba(6, 6, 8, .6), transparent 50%) !important; }
@@ -968,6 +976,10 @@ a.ws-Post:hover { transform: translateY(-4px); box-shadow: var(--ws-shadow-hover
 .ws-Alert { display: flex; gap: .75rem; align-items: center; color: var(--ws-text); }
 .ws-Alert::before { content: "\2713"; flex: none; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--ws-a); color: var(--ws-on); font-weight: 800; font-size: .85rem; }
 .ws-Alert--warning::before { content: "!"; background: #e67e22; color: #fff; }
+/* APEX's message boxes sit at the top of main, under a sticky or transparent header: show them as a toast below the header instead */
+.ws-Main > :is(.apex-page-success, .apex-page-error) { position: fixed; inset: calc(var(--ws-header-h) + 1.5rem) var(--ws-gutter) auto; z-index: 101; pointer-events: none; }
+.ws-Main > :is(.apex-page-success, .apex-page-error) .ws-Alert { max-width: 40rem; margin: 0 auto; pointer-events: auto; cursor: pointer; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .45); }
+.ws-Alert--leaving { opacity: 0; transform: translateY(-.5rem); transition: opacity .3s ease, transform .3s ease; }
 
 /* ======================= v2: design details ======================= */
 /* Corporate */

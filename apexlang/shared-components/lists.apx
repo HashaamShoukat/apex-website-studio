@@ -209,6 +209,85 @@ list navigation-menu (
         }
     )
 
+    entry multi-page-websites (
+        label: Multi-page Websites
+        icon {
+            imageIconCssClasses: fa-clone
+        }
+        layout {
+            sequence: 60
+        }
+        link {
+            target: {
+                page: 20
+            }
+        }
+    )
+
+    entry company-2 (
+        label: Company
+        icon {
+            imageIconCssClasses: fa-building-o
+        }
+        layout {
+            sequence: 10
+            parentEntry: @multi-page-websites
+        }
+        link {
+            target: {
+                page: 20
+            }
+        }
+    )
+
+    entry restaurant-2 (
+        label: Restaurant
+        icon {
+            imageIconCssClasses: fa-cutlery
+        }
+        layout {
+            sequence: 20
+            parentEntry: @multi-page-websites
+        }
+        link {
+            target: {
+                page: 30
+            }
+        }
+    )
+
+    entry real-estate-2 (
+        label: Real Estate
+        icon {
+            imageIconCssClasses: fa-home
+        }
+        layout {
+            sequence: 30
+            parentEntry: @multi-page-websites
+        }
+        link {
+            target: {
+                page: 40
+            }
+        }
+    )
+
+    entry clinic-arabic-rtl-2 (
+        label: Clinic (Arabic, RTL)
+        icon {
+            imageIconCssClasses: fa-heartbeat
+        }
+        layout {
+            sequence: 40
+            parentEntry: @multi-page-websites
+        }
+        link {
+            target: {
+                page: 50
+            }
+        }
+    )
+
 )
 
 list halcyon-menu (
@@ -1263,6 +1342,386 @@ list saas-menu (
             target: {
                 type: url
                 url: #contact
+            }
+        }
+    )
+
+)
+
+list meridian-menu (
+    name: Meridian - Site Menu
+
+    entry about (
+        label: About
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 21
+            }
+        }
+    )
+
+    entry who-we-are (
+        label: Who we are
+        layout {
+            sequence: 10
+            parentEntry: @about
+        }
+        link {
+            target: {
+                page: 21
+            }
+        }
+    )
+
+    entry leadership (
+        label: Leadership
+        layout {
+            sequence: 20
+            parentEntry: @about
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:MERIDIAN-ABOUT:&APP_SESSION.#team
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 22
+            }
+        }
+    )
+
+    entry insights (
+        label: Insights
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 23
+            }
+        }
+    )
+
+    entry careers (
+        label: Careers
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 24
+            }
+        }
+    )
+
+    entry contact-us (
+        label: Contact us
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 25
+            }
+        }
+    )
+
+)
+
+list lume-menu (
+    name: Osteria Lume - Site Menu
+
+    entry our-story (
+        label: Our story
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:LUME:&APP_SESSION.#story
+            }
+        }
+    )
+
+    entry menu (
+        label: Menu
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 31
+            }
+        }
+    )
+
+    entry evenings (
+        label: Evenings
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 32
+            }
+        }
+    )
+
+    entry visit (
+        label: Visit
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 33
+            }
+        }
+    )
+
+    entry opening-hours (
+        label: Opening hours
+        layout {
+            sequence: 10
+            parentEntry: @visit
+        }
+        link {
+            target: {
+                page: 33
+            }
+        }
+    )
+
+    entry find-us (
+        label: Find us
+        layout {
+            sequence: 20
+            parentEntry: @visit
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:LUME-VISIT:&APP_SESSION.#visit
+            }
+        }
+    )
+
+    entry book-a-table (
+        label: Book a table
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 34
+            }
+        }
+    )
+
+)
+
+list harbor-menu (
+    name: Harbor & Stone - Site Menu
+
+    entry homes (
+        label: Homes
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 41
+            }
+        }
+    )
+
+    entry services (
+        label: Services
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 42
+            }
+        }
+    )
+
+    entry about-us (
+        label: About us
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 43
+            }
+        }
+    )
+
+    entry our-agents (
+        label: Our agents
+        layout {
+            sequence: 10
+            parentEntry: @about-us
+        }
+        link {
+            target: {
+                page: 43
+            }
+        }
+    )
+
+    entry client-reviews (
+        label: Client reviews
+        layout {
+            sequence: 20
+            parentEntry: @about-us
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:HARBOR-ABOUT:&APP_SESSION.#reviews
+            }
+        }
+    )
+
+    entry mortgage-calculator (
+        label: Mortgage calculator
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/mortgage
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry book-a-valuation (
+        label: Book a valuation
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 44
+            }
+        }
+    )
+
+)
+
+list shifa-menu (
+    name: عيادات الشفاء - Site Menu
+
+    entry entry (
+        label: الخدمات
+        layout {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 51
+            }
+        }
+    )
+
+    entry entry-2 (
+        label: من نحن
+        layout {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 52
+            }
+        }
+    )
+
+    entry entry-3 (
+        label: عن العيادة
+        layout {
+            sequence: 10
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                page: 52
+            }
+        }
+    )
+
+    entry entry-4 (
+        label: الأطباء
+        layout {
+            sequence: 20
+            parentEntry: @entry-2
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:SHIFA-ABOUT:&APP_SESSION.#doctors
+            }
+        }
+    )
+
+    entry entry-5 (
+        label: أوقات العمل
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                type: url
+                url: f?p=&APP_ID.:SHIFA-BOOK:&APP_SESSION.#hours
+            }
+        }
+    )
+
+    entry entry-6 (
+        label: نتائج التحاليل
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                type: url
+                url: https://example.com/results
+            }
+            linkAttributes: rel="noopener"
+        }
+        userDefinedAttributes {
+            2: _blank
+        }
+    )
+
+    entry entry-7 (
+        label: احجز موعدا
+        layout {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 53
             }
         }
     )

@@ -1,0 +1,665 @@
+page 43 (
+    name: Harbor & Stone - About
+    alias: HARBOR-ABOUT
+    title: About us - Harbor & Stone
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--luxury
+            ws-Accent--amber
+            ws-Font--luxe
+            ws-Header--transparent
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="A family-run estate agency since 1989: meet our agents and read what clients say.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="About us - Harbor &amp; Stone">
+            <meta property="og:description" content="A family-run estate agency since 1989: meet our agents and read what clients say.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/home-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/home-hero-2.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: A family agency since 1989.
+        title: A family agency since *1989*.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'A family agency since *1989*.' as title,
+                       'About us' as subtitle,
+                       'Agents who know every street.' as text,
+                       'website-studio/img/home-hero-2.jpg' as image_file,
+                       'A modern house at dusk' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--compact
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region agents (
+        name: Agents
+        title: Your *agents*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Hessa Al-Rashid' as name,
+                       'Founder and Director' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-5.jpg' as image_file,
+                       'Portrait of a woman' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Yousef Karim' as name,
+                       'Sales' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-4.jpg' as image_file,
+                       'Portrait of a man in a grey sweater' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Clara Martins' as name,
+                       'Lettings' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-1.jpg' as image_file,
+                       'Portrait of a woman smiling' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Majed Saleh' as name,
+                       'Property management' as role,
+                       'https://www.linkedin.com/' as link,
+                       'website-studio/img/person-6.jpg' as image_file,
+                       'Portrait of a man in a suit' as image_alt,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: agents
+            customAttributes: data-menu="Agents"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-team
+            templateOptions: [
+                #DEFAULT#
+                ws-Team--round
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region reviews (
+        name: Reviews
+        title: From our *clients*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Sold in eleven days, above asking. Hessa handled everything while we were abroad.' as quote,
+                       'The Al-Fahad family' as name,
+                       'Sold a villa in Hittin' as role,
+                       '5' as rating,
+                       'website-studio/img/person-2.jpg' as image_file,
+                       'Portrait of a man smiling' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'They found us an apartment that was never even advertised. Honest and quick.' as quote,
+                       'Emma and Tariq' as name,
+                       'Bought in Olaya' as role,
+                       '5' as rating,
+                       'website-studio/img/person-3.jpg' as image_file,
+                       'Portrait of a woman' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: reviews
+            customAttributes: data-menu="Reviews"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @harbor-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--overlay
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:HARBOR:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">H</span>Harbor &amp; Stone</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:HARBOR:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">H</span>Harbor &amp; Stone</a>
+                <p>A family-run estate agency since 1989.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-homes (
+        name: Footer - Homes
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'For sale and rent' as label,
+                       apex_page.get_url(p_page => 'HARBOR-HOMES') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Services' as label,
+                       apex_page.get_url(p_page => 'HARBOR-SERVICES') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Valuations' as label,
+                       apex_page.get_url(p_page => 'HARBOR-CONTACT') as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-homes
+        }
+        headerAndFooter {
+            headerText: <h3>Homes</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Harbor &amp; Stone Real Estate</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

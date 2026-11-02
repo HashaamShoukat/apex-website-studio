@@ -405,21 +405,21 @@ page 15 (
                 select 'Rana Aziz' as name,
                        'Chief Data Officer, Atlas Bank' as role,
                        'website-studio/img/person-5.jpg' as image_file,
-                       'Portrait of a woman in an office' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        1 as sort_order
                   from dual
                 union all
                 select 'Tom Becker' as name,
                        'Principal Engineer, Orbital' as role,
                        'website-studio/img/person-4.jpg' as image_file,
-                       'Portrait of a man with a beard' as image_alt,
+                       'Portrait of a man in a grey sweater' as image_alt,
                        2 as sort_order
                   from dual
                 union all
                 select 'Lina Park' as name,
                        'AI Lead, Fieldnote' as role,
                        'website-studio/img/person-3.jpg' as image_file,
-                       'Portrait of a woman with curly hair' as image_alt,
+                       'Portrait of a woman' as image_alt,
                        3 as sort_order
                   from dual
                 union all
@@ -440,7 +440,7 @@ page 15 (
                 select 'Marco Rossi' as name,
                        'Data Quality Lead, Kestrel' as role,
                        'website-studio/img/person-2.jpg' as image_file,
-                       'Portrait of a man in a shirt' as image_alt,
+                       'Portrait of a man smiling' as image_alt,
                        6 as sort_order
                   from dual
                 order by sort_order

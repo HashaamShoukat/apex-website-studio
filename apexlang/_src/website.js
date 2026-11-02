@@ -497,6 +497,16 @@
     /* ---------- the header menu ----------
        1. a Website - Menu list in the Menu slot (static or SQL list; parent entries get a drop-down)
        2. otherwise built from the Modern Section regions with Show in Menu */
+    // the section a menu link goes to on this page: "#id", or this page's own URL with "#id" (the menu of a multi-page
+    // website); APEX marks a link to the open page as current, but such a link is current only while its section is on screen
+    function sectionOf(a) {
+        var h = a.getAttribute("href") || "", i = h.indexOf("#");
+        if (i < 0 || !/^#[\w-]+$/.test(h.slice(i))) { return null; }
+        if (i === 0) { return h.slice(1); }
+        var u, here = location, page = function (x) { return (new URLSearchParams(x.search).get("p") || "").split(":").slice(0, 2).join(":"); };
+        try { u = new URL(h, here.href); } catch (e) { return null; }
+        return u.origin === here.origin && u.pathname === here.pathname && page(u) === page(here) ? h.slice(i + 1) : null;
+    }
     var menuDone = false;
     function menu() {
         var nav = d.getElementById("ws-nav"), burger = d.querySelector(".ws-Burger");
@@ -527,15 +537,14 @@
         menuDone = true;
         // anchors on this page are "current" while their section is on screen, not because APEX marked the page
         $$("a", list).forEach(function (a) {
-            var h = a.getAttribute("href") || "";
-            if (h.charAt(0) === "#" || /^[^#]*#[\w-]+$/.test(h) && h.split("#")[0] === location.pathname + location.search) { a.closest("li").classList.remove("is-current"); a.removeAttribute("aria-current"); }
+            if (sectionOf(a)) { a.closest("li").classList.remove("is-current"); a.removeAttribute("aria-current"); }
         });
         // Last Entry as Button
         var tops = $$(":scope > li", list);
         if (list.classList.contains("ws-Menu--cta") && tops.length) { tops[tops.length - 1].classList.add("ws-Menu-cta"); }
         // Visible Entries: the rest go into More on wide screens (the phone menu shows them in the More accordion)
         var mx = /ws-Menu--max(\d)/.exec(list.className), plain = tops.filter(function (li) { return !li.classList.contains("ws-Menu-cta"); });
-        if (mx && plain.length > +mx[1] + 1) {
+        if (mx && plain.length > +mx[1]) {
             var more = d.createElement("li"), sub = d.createElement("ul");
             more.className = "ws-Menu-item ws-Menu-item--parent ws-Menu-more";
             more.innerHTML = '<a class="ws-Menu-link" href="#"></a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh"></span></button>';
@@ -592,13 +601,13 @@
         });
         // the current section while scrolling
         if (!("IntersectionObserver" in W)) { return; }
-        var links = $$("a[href^='#']", list).filter(function (a) { return a.getAttribute("href").length > 1; }), secs = [];
-        links.forEach(function (a) { var s = d.getElementById(a.getAttribute("href").slice(1)); if (s && secs.indexOf(s) < 0) { secs.push(s); } });
+        var links = $$("a[href]", list).filter(function (a) { return sectionOf(a); }), secs = [];
+        links.forEach(function (a) { var s = d.getElementById(sectionOf(a)); if (s && secs.indexOf(s) < 0) { secs.push(s); } });
         var io = new IntersectionObserver(function (es) {
             es.forEach(function (e) {
                 if (!e.isIntersecting) { return; }
                 links.forEach(function (a) {
-                    var on = a.getAttribute("href") === "#" + e.target.id;
+                    var on = sectionOf(a) === e.target.id;
                     a.classList.toggle("is-current", on);
                     if (on) { a.setAttribute("aria-current", "location"); } else { a.removeAttribute("aria-current"); }
                 });
@@ -627,6 +636,18 @@
                 try { localStorage.setItem("ws-scheme", dark ? "dark" : "light"); } catch (e) { /* private mode */ }
             };
         }
+        // APEX messages show as a toast (website.css): a click closes one, a success message leaves after 6 seconds
+        $$(".apex-page-success, .apex-page-error").forEach(function (box) {
+            if (box.__ws) { return; }
+            box.__ws = true;
+            var close = function () {
+                var a = box.querySelector(".ws-Alert");
+                if (a) { a.classList.add("ws-Alert--leaving"); }
+                setTimeout(function () { box.classList.remove("u-visible"); box.classList.add("u-hidden"); if (a) { a.classList.remove("ws-Alert--leaving"); } }, 300);
+            };
+            box.addEventListener("click", close);
+            if (box.classList.contains("apex-page-success") && box.querySelector(".ws-Alert")) { setTimeout(close, 6000); }
+        });
         var chat = d.querySelector(".ws-Chat");
         if (chat && !chat.__ws) {
             chat.__ws = true;

@@ -37,12 +37,16 @@ const PHOTO_404 = /\/static\/website-studio\/img\/|Failed to load resource: the 
       }).slice(0, 3).map(el => el.tagName + "." + String(el.className).split(" ").slice(0, 2).join("."));
       const html = [".ws-Header", ".ws-Main", ".ws-Footer"].map(s => (document.querySelector(s) || {}).innerHTML || "").join("");
       const media = [...document.querySelectorAll("[data-img], [data-file]")];
-      return { hs: document.documentElement.scrollWidth > W + 1, parts, out, ph: (html.match(/#[A-Z][A-Z_0-9]+#/g) || []).slice(0, 3),
+      // on wide screens the logo and the menu entries must not overlap (a crowded centered header)
+      const brand = [...document.querySelectorAll(".ws-Header-in .ws-Brand")].find(e => e.getClientRects().length), br = brand && brand.getBoundingClientRect();
+      const overlap = W >= 901 && br ? [...document.querySelectorAll("#ws-nav .ws-Menu > li")].filter(li => { const r = li.getBoundingClientRect(); return r.width && r.left < br.right - 1 && r.right > br.left + 1 && r.top < br.bottom && r.bottom > br.top; }).length : 0;
+      return { hs: document.documentElement.scrollWidth > W + 1, parts, out, overlap, ph: (html.match(/#[A-Z][A-Z_0-9]+#/g) || []).slice(0, 3),
         nav: document.querySelectorAll("#ws-nav .ws-Menu > li").length, unresolved: media.filter(e => !e.classList.contains("has-img") && !e.classList.contains("ws-Ph") && !e.hasAttribute("data-initials") && e.getClientRects().length).length,
         slides: document.querySelectorAll(".ws-Hero .ws-Slide").length };
     });
     const bad = [];
     if (m.hs) { bad.push("H-SCROLL"); } if (m.parts.length) { bad.push("WIDE " + m.parts.join(",")); } if (m.out.length) { bad.push("OUT " + m.out.join(",")); }
+    if (m.overlap) { bad.push("LOGO-UNDER-MENU"); }
     if (m.ph.length) { bad.push("PLACEHOLDERS " + m.ph.join(",")); } if (!m.nav) { bad.push("NO-MENU"); } if (m.unresolved) { bad.push("IMAGES-UNRESOLVED " + m.unresolved); }
     await pg.evaluate(() => scrollTo(0, 0)); await pg.waitForTimeout(250);
     // the menu: a drop-down on wide screens, the phone menu with an accordion on small ones; Escape closes

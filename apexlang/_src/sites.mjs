@@ -80,7 +80,7 @@ const meridian = {
     description: "Meridian Partners plans, builds and runs infrastructure for cities, utilities and industry across the Gulf and Europe.",
     look: "ws-Design--corporate ws-Accent--indigo ws-Font--tech ws-Header--centered", preset: "corporate",
     menu: {
-        options: ["ws-Menu--cta", "ws-Menu--max5"],
+        options: ["ws-Menu--cta", "ws-Menu--max3"],
         entries: [
             { l: "About", h: "#about" },
             { l: "Services", h: "#services", c: [
@@ -169,18 +169,18 @@ const lume = {
         { id: "story", menu: "Our story", title: "Our story", html: "story", sec: ["ws-Sec--menu", "ws-Head--hidden"] },
         { id: "menu", menu: "Menu", report: "ws-products", title: "The *menu*", sec: ["ws-Sec--menu", "ws-Tone--soft", "ws-Head--center"],
           header: '<p class="ws-Eyebrow">Tonight</p><p class="ws-Lead">The menu changes with the market. Ask us about allergies: most dishes can be adapted.</p>', rows: [
-            { NAME: "Burrata and roasted peppers", TEXT: "Basil oil, sourdough from our oven", PRICE: "SAR 58", CATEGORY: "Starters", ...im("dish-2") },
-            { NAME: "Grilled sea bream", TEXT: "Lemon, capers, charred greens", PRICE: "SAR 124", CATEGORY: "Mains", BADGE: "Chef's choice", ...im("dish-1") },
+            { NAME: "Garden bowl", TEXT: "Grilled halloumi, soft egg, sweetcorn, greens", PRICE: "SAR 58", CATEGORY: "Starters", ...im("dish-2") },
+            { NAME: "Roasted salmon", TEXT: "Summer vegetables, lemon and herb dressing", PRICE: "SAR 124", CATEGORY: "Mains", BADGE: "Chef's choice", ...im("dish-1") },
             { NAME: "Margherita from the wood oven", TEXT: "San Marzano tomato, fior di latte", PRICE: "SAR 72", CATEGORY: "Mains", ...im("dish-3") },
-            { NAME: "Tagliatelle al pomodoro", TEXT: "Fresh egg pasta, slow tomato, basil", PRICE: "SAR 84", CATEGORY: "Mains", ...im("dish-5") },
+            { NAME: "Spaghetti with prawns", TEXT: "Cherry tomatoes, chilli, parsley", PRICE: "SAR 84", CATEGORY: "Mains", ...im("dish-5") },
             { NAME: "Dark chocolate torta", TEXT: "Olive oil, sea salt, cream", PRICE: "SAR 42", CATEGORY: "Desserts", ...im("dish-4") },
-            { NAME: "Espresso and cornetto", TEXT: "Until noon at the bar", PRICE: "SAR 26", CATEGORY: "Desserts", ...im("dish-6") }] },
+            { NAME: "Espresso or cappuccino", TEXT: "Until noon at the bar", PRICE: "SAR 26", CATEGORY: "Desserts", ...im("dish-6") }] },
         { id: "gallery", menu: "Gallery", report: "ws-photos", title: "Inside *Lume*", sec: ["ws-Sec--menu", "ws-Head--center"], rep: ["ws-Photos--masonry"], rows: [
-            { TITLE: "The bar", ...im("room-1") }, { TITLE: "Grilled sea bream", ...im("dish-1") }, { TITLE: "Friday supper", ...im("room-2") },
+            { TITLE: "The garden room", ...im("room-1") }, { TITLE: "Roasted salmon", ...im("dish-1") }, { TITLE: "Friday supper", ...im("room-2") },
             { TITLE: "The dining room", ...im("food-hero-2") }, { TITLE: "Wood-fired pizza", ...im("dish-3") }, { TITLE: "Chocolate torta", ...im("dish-4") }] },
         { id: "reviews", report: "ws-testimonials", title: "Guests *say*", sec: ["ws-Tone--soft", "ws-Head--center"], rep: ["ws-Quotes--wall"], rows: [
             { QUOTE: "The best pasta in the city, and the staff remember your name.", NAME: "Nora A.", ROLE: "Google review", RATING: "5" },
-            { QUOTE: "We come every anniversary. The sea bream is perfect every time.", NAME: "Faisal and Reem", ROLE: "Regulars", RATING: "5" },
+            { QUOTE: "We come every anniversary. The salmon is perfect every time.", NAME: "Faisal and Reem", ROLE: "Regulars", RATING: "5" },
             { QUOTE: "Warm room, honest food, fair prices. Book ahead on Fridays.", NAME: "James P.", ROLE: "Tripadvisor", RATING: "4" }] },
         { id: "evenings", menu: "Evenings", report: "ws-events", title: "Special *evenings*", sec: ["ws-Sec--menu"], rep: ["ws-Events--cards"], rows: [
             { EVENT_DATE: "14 Nov", EVENT_TIME: "19:00", TITLE: "Truffle supper", TEXT: "Five courses with white truffle from Alba.", LOCATION: "Long table", LINK: "#contact", LINK_LABEL: "Reserve" },
@@ -244,7 +244,7 @@ const shifa = {
     },
     sections: [
         { id: "hero", slot: "hero", report: "ws-hero", title: "عيادات الشفاء", sec: HERO, rep: ["ws-Hero--split"], rows: [
-            { TITLE: "رعاية طبية *قريبة* منك ومن عائلتك.", SUBTITLE: "عيادات الشفاء - الرياض", TEXT: "أطباء استشاريون، مختبر حديث، ومواعيد في نفس اليوم.", BUTTON_LABEL: "احجز موعدا", BUTTON_LINK: "#contact", BUTTON2_LABEL: "خدماتنا", BUTTON2_LINK: "#services", ...im("clinic-hero", "طبيب يتحدث مع مريض") },
+            { TITLE: "رعاية طبية *قريبة* منك ومن عائلتك.", SUBTITLE: "عيادات الشفاء - الرياض", TEXT: "أطباء استشاريون، مختبر حديث، ومواعيد في نفس اليوم.", BUTTON_LABEL: "احجز موعدا", BUTTON_LINK: "#contact", BUTTON2_LABEL: "خدماتنا", BUTTON2_LINK: "#services", ...im("clinic-hero", "طبيب بمعطف أبيض") },
             { TITLE: "مختبر *دقيق* ونتائج سريعة.", SUBTITLE: "المختبر", TEXT: "معظم النتائج جاهزة خلال ٢٤ ساعة وتصلك على جوالك.", BUTTON_LABEL: "اعرف المزيد", BUTTON_LINK: "#about", ...im("clinic-lab", "مختبر بأجهزة حديثة") }] },
         { id: "numbers", report: "ws-stats", title: "بالأرقام", sec: ["ws-Tone--soft", "ws-Pad--tight", "ws-Head--hidden"], rows: [
             { VALUE: "18", LABEL: "طبيبا استشاريا" }, { VALUE: "12", LABEL: "عاما من الخبرة" }, { VALUE: "40000", SUFFIX: "+", LABEL: "مريض سنويا" }, { VALUE: "24", SUFFIX: "س", LABEL: "لنتائج المختبر" }] },
@@ -257,7 +257,7 @@ const shifa = {
             { ICON: "fa-heartbeat", TITLE: "القلب", TEXT: "تخطيط القلب والفحص بالموجات فوق الصوتية." },
             { ICON: "fa-medkit", TITLE: "الطوارئ البسيطة", TEXT: "استقبال الحالات العاجلة غير الحرجة طوال ساعات العمل." }] },
         { id: "about", menu: "من نحن", report: "ws-zigzag", title: "من نحن", sec: ["ws-Sec--menu", "ws-Tone--soft", "ws-Head--hidden"], rows: [
-            { EYEBROW: "من نحن", TITLE: "رعاية *إنسانية* قبل كل شيء.", TEXT: "منذ عام ٢٠١٢ نخدم أحياء شمال الرياض بفريق يضع راحة المريض أولا، ويشرح كل خطوة بوضوح.", LINK: "#doctors", LINK_LABEL: "تعرف على الأطباء", ...im("clinic-room", "غرفة كشف مضيئة") },
+            { EYEBROW: "من نحن", TITLE: "رعاية *إنسانية* قبل كل شيء.", TEXT: "منذ عام ٢٠١٢ نخدم أحياء شمال الرياض بفريق يضع راحة المريض أولا، ويشرح كل خطوة بوضوح.", LINK: "#doctors", LINK_LABEL: "تعرف على الأطباء", ...im("clinic-room", "استقبال العيادة") },
             { EYEBROW: "التقنية", TITLE: "ملفك الطبي معك أينما كنت.", TEXT: "احجز موعدك، واطلع على نتائجك ووصفاتك من جوالك في أي وقت.", ...im("clinic-lab", "مختبر بأجهزة حديثة") }] },
         { id: "doctors", menu: "الأطباء", report: "ws-team", title: "أطباؤنا", sec: ["ws-Sec--menu", "ws-Head--center"], rows: [
             { NAME: "د. نورة القحطاني", ROLE: "استشارية طب الأسرة", ...im("doctor-1", "د. نورة القحطاني") },
@@ -319,7 +319,7 @@ const harbor = {
             { NAME: "Penthouse with a view", TEXT: "3 bedrooms - roof terrace - 220 m2", PRICE: "SAR 4,600,000", CATEGORY: "For sale", ...im("home-3") },
             { NAME: "Family villa, Hittin", TEXT: "5 bedrooms - kitchen garden - 520 m2", PRICE: "SAR 6,200,000", CATEGORY: "New developments", BADGE: "Off plan", ...im("home-4") },
             { NAME: "Villa with pool", TEXT: "6 bedrooms - pool - 680 m2", PRICE: "SAR 28,000 / month", CATEGORY: "For rent", ...im("home-5") },
-            { NAME: "Townhouse, Diplomatic Quarter", TEXT: "3 bedrooms - courtyard - 260 m2", PRICE: "SAR 2,850,000", CATEGORY: "For sale", ...im("home-6") }] },
+            { NAME: "Garden villa, Diplomatic Quarter", TEXT: "3 bedrooms - plunge pool - 260 m2", PRICE: "SAR 2,850,000", CATEGORY: "For sale", ...im("home-6") }] },
         { id: "numbers", report: "ws-stats", title: "Harbor & Stone in numbers", sec: ["ws-Tone--dark", "ws-Pad--tight", "ws-Head--hidden"], rep: ["ws-Stats--center"], rows: [
             { VALUE: "860", LABEL: "Homes sold" }, { VALUE: "4", SUFFIX: "%", PREFIX: "+", LABEL: "Above asking, on average" }, { VALUE: "21", LABEL: "Days to sell" }, { VALUE: "35", LABEL: "Years in the city" }] },
         { id: "services", menu: "Services", report: "ws-zigzag", title: "How we help", sec: ["ws-Sec--menu", "ws-Head--hidden"], rows: [
@@ -537,3 +537,5 @@ const ledger = {
 };
 
 export const SITES = [halcyon, meridian, lume, shifa, harbor, summit, lina, ledger];
+// the multi-page websites (multisites.mjs) are built from these
+export { meridian, lume, shifa, harbor, HERO };

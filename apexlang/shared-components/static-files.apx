@@ -6,6 +6,10 @@ file "gallery/bold.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/corporate-ocean.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/corporate.jpg" (
     mimeType: image/jpeg
 )
@@ -34,6 +38,14 @@ file "gallery/luxe-night.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/luxury-noir.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/luxury.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/midnight.jpg" (
     mimeType: image/jpeg
 )
@@ -42,11 +54,83 @@ file "gallery/minimal.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/multi-harbor.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/multi-lume.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/multi-meridian.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/multi-shifa.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/ocean.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/organic.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/playful-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/playful.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/poster.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/retro.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/saas-dark.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/saas.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-clinic.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-company.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-event.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-halcyon.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-portfolio.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-realestate.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-restaurant.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/site-saas.jpg" (
     mimeType: image/jpeg
 )
 
@@ -60,6 +144,246 @@ file "gallery/soft.jpg" (
 
 file "gallery/studio.jpg" (
     mimeType: image/jpeg
+)
+
+file "gallery/swiss.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/techgrid.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/designer-sites.js" (
+    mimeType: text/javascript
+)
+
+file "website-studio/img/clinic-hero.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/clinic-lab.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/clinic-room.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/company-hero.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/company-meeting.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/company-plan.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/company-team.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-4.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-5.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/dish-6.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/doctor-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/doctor-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/doctor-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/event-hero-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/event-hero-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/event-venue.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/food-about.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/food-hero-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/food-hero-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/food-hero-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-4.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-5.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-6.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-hero-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/home-hero-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/news-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/news-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/news-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-4.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-5.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/person-6.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/portfolio-hero.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/room-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/room-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/saas-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/saas-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/saas-hero.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/studio-about.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/studio-hero-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/studio-hero-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/studio-hero-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-1.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-2.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-3.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-4.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-5.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/img/work-6.jpg" (
+    mimeType: image/jpeg
+)
+
+file "website-studio/nav-menu-fix.js" (
+    mimeType: text/javascript
 )
 
 file "website-studio/website.css" (

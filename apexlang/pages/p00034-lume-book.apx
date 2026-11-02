@@ -1,0 +1,752 @@
+page 34 (
+    name: Osteria Lume - Book
+    alias: LUME-BOOK
+    title: Book a table - Osteria Lume
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--organic
+            ws-Accent--wine
+            ws-Font--serif
+            ws-Header--transparent
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Book a table at Osteria Lume. We confirm by phone within the hour.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Book a table - Osteria Lume">
+            <meta property="og:description" content="Book a table at Osteria Lume. We confirm by phone within the hour.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/food-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/food-hero-1.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Book a table.
+        title: Book a *table*.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Book a *table*.' as title,
+                       'Reservations' as subtitle,
+                       'For six or more guests, or for the long table, please call us.' as text,
+                       'website-studio/img/food-hero-1.jpg' as image_file,
+                       'A plated dish at a set table' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--compact
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region contact (
+        name: Book
+        title: Book a *table*
+        type: staticContent
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--hidden
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            htmlDomId: contact
+            customAttributes: data-menu="Book"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">For six or more guests, or for the long table, please call us.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-phone' as icon,
+                       'Reservations' as label,
+                       '+966 11 000 7788' as value,
+                       'tel:+966110007788' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-envelope-o' as icon,
+                       'Email' as label,
+                       'ciao@example.com' as value,
+                       'mailto:ciao@example.com' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-map-marker' as icon,
+                       'Address' as label,
+                       '12 Olive Street, Old Town' as value,
+                       null as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @lume-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:LUME:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">L</span>Osteria Lume</a>
+                <p>Italian kitchen and wine bar. Open every evening except Monday.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'TikTok' as label,
+                       'https://www.tiktok.com/' as link,
+                       'fa-tiktok' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'WhatsApp' as label,
+                       'https://wa.me/966500000000' as link,
+                       'fa-whatsapp' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-visit (
+        name: Footer - Visit
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Menu' as label,
+                       apex_page.get_url(p_page => 'LUME-MENU') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Opening hours' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Find us' as label,
+                       apex_page.get_url(p_page => 'LUME-VISIT') || '#visit' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Book a table' as label,
+                       apex_page.get_url(p_page => 'LUME-BOOK') as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-visit
+        }
+        headerAndFooter {
+            headerText: <h3>Visit</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Osteria Lume</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    pageItem P34_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P34_PHONE (
+        type: textField
+        label {
+            label: Phone
+            alignment: left
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P34_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P34_MESSAGE (
+        type: textarea
+        label {
+            label: Date, time and number of guests
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P34_WEBSITE (
+        type: textField
+        label {
+            label: Leave this field empty
+            alignment: left
+        }
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+            columnCssClasses: ws-Honeypot
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            customAttributes: tabindex="-1" autocomplete="off"
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Request a table
+        layout {
+            sequence: 60
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- P34_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
+                if :P34_WEBSITE is null then
+                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- apex_mail.send(p_to   => 'hello@example.com',
+                    --                p_from => 'noreply@example.com',
+                    --                p_subj => 'Website message from ' || :P34_NAME,
+                    --                p_body => :P34_MESSAGE || chr(10) || chr(10) || :P34_NAME || ', ' || :P34_EMAIL || ', ' || :P34_PHONE);
+                    -- apex_mail.push_queue;
+                    null;
+                end if;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Thank you. We will confirm your table by phone within the hour.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 34
+            }
+        }
+    )
+
+)

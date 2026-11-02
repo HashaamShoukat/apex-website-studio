@@ -1,18 +1,33 @@
 # Website Studio for Oracle APEX
 
-[![APEX 26.1+](https://img.shields.io/badge/Oracle%20APEX-26.1%2B-blue)](https://apex.oracle.com) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+**Build real websites in Oracle APEX, with one page or many. They come from SQL queries and need no plug-ins and no JavaScript of your own.**
 
-One-page websites built in Oracle APEX. Website Studio gives you a page template, a section template, a menu template and **23 report templates**. They cover:
-
-- a hero slider, services, numbers that count up, team, testimonials, clients, pricing, timeline and process
-- careers, FAQ, portfolio, links and contact details
-- news, products and menus, a photo gallery with a lightbox, image-and-text rows, events, opening hours, comparison tables, videos and maps
-
-**Every list comes from a SQL query.** You get 15 designs, 10 accent colours, light and dark, and 7 typefaces (one of them Arabic). Pages work right to left. **8 starter websites** are ready to copy. Every look is a template option, so there is nothing to code.
+[![APEX 26.1+](https://img.shields.io/badge/Oracle%20APEX-26.1%2B-blue)](https://apex.oracle.com) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) ![Templates only](https://img.shields.io/badge/plug--ins-none-lightgrey) ![Right to left](https://img.shields.io/badge/RTL-Arabic-teal)
 
 ![Demo website](docs/images/website.png)
 
-Website Studio is a small APEX application. It has:
+Website Studio is a set of APEX templates and a small application to try them in. A page template, a section template, a menu template and **23 report templates** turn ordinary regions and SQL queries into a modern public website. Visitors never see that it is an APEX app.
+
+## Highlights
+
+- **12 starter websites:** 8 one-page and 4 multi-page. They cover a design studio, a company, a restaurant, an Arabic clinic, real estate, a conference, a portfolio and a SaaS product, with photos and content ready to copy.
+- **23 section types:** hero sliders, services, numbers, team, testimonials, pricing, news, products and food menus, photo galleries with a lightbox, events, opening hours, comparison tables, videos, maps and contact forms.
+- **27 looks:** 15 designs, 10 accent colours, light and dark, and 7 web typefaces including Arabic. Every look is a template option.
+- **A live Designer:** preview any option on a phone, tablet or desktop, then copy the options as APEXlang and the queries as SQL.
+- **Every list is a SQL query:** replace the demo `select ... from dual` with your own tables.
+- **A real menu:** static or SQL lists with drop-downs and a More entry. On phones it opens as a drop-down, a full-screen overlay or a side drawer.
+- **Ready for the web:** phone-first layouts, lazy-loaded images, meta and Open Graph tags, a contact form with a spam trap, a WhatsApp button, and a light/dark toggle.
+- **Right to left:** the layout mirrors itself, and the built-in texts are in Arabic.
+
+## Quick start
+
+1. Download [`website-studio.sql`](website-studio.sql) and import it in **App Builder > Import** (APEX 26.1 or later). It creates no database objects, and every page is public.
+2. Run the application. In the **Gallery**, open a starter website or a look, then select **Customize** to change it in the **Designer**.
+3. Copy the templates into your own application and build your pages. See [Use it in your application](#use-it-in-your-application).
+
+![On a phone](docs/images/phones.png)
+
+## What is in the application
 
 - a **Gallery** of starter websites and ready-made looks
 - a **Designer** that previews every option live on phone, tablet and desktop and gives you the options as APEXlang
@@ -40,6 +55,22 @@ Website Studio is a small APEX application. It has:
 | 17 | `SAAS` | Ledgerline | Bento features, comparison table, pricing, light/dark toggle |
 
 Each website has a menu with child entries, an external link and a button, plus a contact form with spam protection. It also has meta and Open Graph tags and a preloaded hero photo.
+
+### Multi-page websites
+
+The same content spread over several pages, with one menu, header and footer:
+
+| Pages | Home alias | Website | Pages |
+|---|---|---|---|
+| 20 - 25 | `MERIDIAN` | Meridian, an engineering company | Home, About, Services, Insights, Careers, Contact |
+| 30 - 34 | `LUME` | Osteria Lume, a restaurant | Home, Menu, Evenings, Visit, Book |
+| 40 - 44 | `HARBOR` | Harbor & Stone, real estate | Home, Homes, Services, About, Contact |
+| 50 - 53 | `SHIFA` | Al Shifa clinics, **in Arabic, right to left** | Home, Services, About, Book |
+
+- **Menu:** the menu entries go to pages, so APEX marks the entry of the open page. A child entry can open a section of another page (`f?p=&APP_ID.:MERIDIAN-ABOUT:&APP_SESSION.#team`).
+- **Links:** links in reports come from `apex_page.get_url(p_page => 'MERIDIAN-SERVICES')`, so they carry the session.
+- **Inner pages:** each one opens with a short title band, a hero with Height *Compact (page title)*.
+- **Contact form:** it is on the contact page only.
 
 ![Gallery](docs/images/gallery.png)
 
@@ -70,7 +101,7 @@ Every design takes 10 **accent colours** (or your theme colour) and **light / da
 - **Menu**: alignment, how many entries before **More**, and the phone menu (drop-down, full-screen overlay or side drawer). The last entry can show as a button.
 - **Sections**: background, spacing, heading position and width.
 - **Report layouts**:
-  - Hero: slider, split, centred or full bleed; large, full-screen or medium height; normal, light or strong overlay; fade or slide; slow zoom. It can show a background video.
+  - Hero: slider, split, centred or full bleed; large, full-screen, medium or compact (a page title band) height; normal, light or strong overlay; fade or slide; slow zoom. It can show a background video.
   - Services: cards, rows, bento or icons. Testimonials: carousel, wall or spotlight. Team: portraits, round photos or a list.
   - Portfolio: grid, editorial or large. Logos: marquee, grid or row.
   - News: cards, featured or list. Products: cards, menu or compact. Photos: grid, masonry or a strip.
@@ -79,44 +110,30 @@ Every design takes 10 **accent colours** (or your theme colour) and **light / da
 
 ![Looks](docs/images/looks.png)
 
-<details><summary>On a phone</summary>
-
-![Phones](docs/images/phones.png)
-</details>
-
 ## Install
 
 Website Studio is an APEX 26.1 application in [APEXlang](apexlang/). There are no database objects.
 
-1. Import it with SQLcl 26.1: `apex import -input apexlang` (in this repository's root), or
-2. once a release export is published, download `website-studio.sql` and use **App Builder > Import** with any application ID.
+- **App Builder:** import [`website-studio.sql`](website-studio.sql) with **App Builder > Import**, under any application ID.
+- **SQLcl 26.1:** run `apex import -input apexlang` in this repository's root.
 
 Run it. Every page is public.
 
-**Photos.** The starter websites expect their photos in Static Application Files under `website-studio/img/`. To download them, run this on a computer with internet access:
+**Photos.** The starter websites' photos are Static Application Files under `website-studio/img/` (56 free [Unsplash](https://unsplash.com/license) photos, 5.3 MB; every source is in [docs/CREDITS.md](docs/CREDITS.md)). To change one, edit its id in `apexlang/_src/photos.mjs` and download them again:
 
 ```bash
-node tools/fetch-photos.mjs
+node tools/fetch-photos.mjs --force
 ```
 
-It uses free [Unsplash](https://unsplash.com/license) photos, crops and compresses them on the Unsplash CDN within a 5 MB budget, and records every source in [docs/CREDITS.md](docs/CREDITS.md). Then run `cd apexlang && node _src/build.mjs` and import again. Without the photos, the websites show their placeholder images.
+The script crops and compresses the photos on the Unsplash CDN within a 6 MB budget and rewrites the credits. Then run `cd apexlang && node _src/build.mjs` and import again. A photo that is missing shows as a placeholder image.
 
 The templates, option groups and pages are built from [`apexlang/_src`](apexlang/_src). Never edit the generated `.apx` files; change the sources and run:
 
 ```bash
 cd apexlang
-```
-
-```bash
-node _src/build.mjs
-```
-
-```bash
-node _src/pages.mjs
-```
-
-```bash
-node _src/studio-pages.mjs
+node _src/build.mjs          # templates, option groups, website.css/js, static-files.apx
+node _src/pages.mjs          # the website pages (10 to 53) and the menu lists
+node _src/studio-pages.mjs   # Gallery, Designer and How to Use
 ```
 
 - `_src/build.mjs` builds the templates and static files.
@@ -203,6 +220,13 @@ Pictures load as they scroll into view. A picture stored in a BLOB column works 
 
 `*word*` in a title highlights the word.
 
+7. **More than one page.** Give every page Modern One Page with the same Template Options, and put the same menu list, logo and footer regions on each one (**Copy to other Page**).
+   - Let the list entries go to pages.
+   - Get report links from `apex_page.get_url`, and point the logo to the home page.
+   - Start the inner pages with a one-row hero: Layout *Full Bleed*, Height *Compact (page title)*.
+
+   The multi-page starters show all of this.
+
 ## Right to left, search engines, speed
 
 - **Arabic and RTL.** The CSS uses logical properties, so a right-to-left page mirrors the menu, sliders, arrows, drawer and floating buttons. The Arabic clinic starter sets `dir="rtl"` from its HTML Header. JavaScript texts are built in for Arabic. For other languages, create the text messages `WEBSITE_STUDIO.MENU`, `.BACK_TO_TOP`, `.ALL`, `.PREVIOUS`, `.NEXT`, `.SLIDE`, `.APPLY`, `.MORE`, `.CLOSE`, `.PLAY`, `.DARK_MODE` and `.MAP`.
@@ -216,7 +240,7 @@ Pictures load as they scroll into view. A picture stored in a BLOB column works 
 - A column the query does not return is simply left out, so every column is optional.
 - Visitors who prefer reduced motion get no animations. Windows high-contrast mode is respected. The menu, slider, lightbox and accordions work with the keyboard.
 - Transparent over Hero needs the Slider or Full Bleed hero. With any other first section, it behaves like Classic.
-- Things to check on a live APEX instance are listed in [LIVE_CHECKS.md](LIVE_CHECKS.md).
+- [LIVE_CHECKS.md](LIVE_CHECKS.md) lists what was checked on a live APEX 26.1 instance, and what that check fixed.
 
 ## Support
 

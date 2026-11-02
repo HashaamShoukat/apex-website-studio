@@ -1,0 +1,648 @@
+page 23 (
+    name: Meridian - Insights
+    alias: MERIDIAN-INSIGHTS
+    title: Insights - Meridian Partners
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--corporate
+            ws-Accent--indigo
+            ws-Font--tech
+            ws-Header--centered
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="News, case studies and guides from the engineers of Meridian Partners.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Insights - Meridian Partners">
+            <meta property="og:description" content="News, case studies and guides from the engineers of Meridian Partners.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/company-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/news-1.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Latest insights.
+        title: Latest *insights*.
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Latest *insights*.' as title,
+                       'Insights' as subtitle,
+                       'News and thinking from our engineers.' as text,
+                       'website-studio/img/news-1.jpg' as image_file,
+                       'Charts on a laptop' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--fullbleed
+                ws-Hero--compact
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region news (
+        name: Insights
+        title: Latest *insights*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'What digital twins changed on the Atlas Rail extension' as title,
+                       'Two years in, the model has saved four months of site work. Here is what we learned.' as text,
+                       '12 Oct 2026' as post_date,
+                       'Case study' as category,
+                       '#' as link,
+                       'website-studio/img/news-1.jpg' as image_file,
+                       'Charts on a laptop' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Meridian opens a Rotterdam office' as title,
+                       'Forty engineers join to lead our water and port work in Northern Europe.' as text,
+                       '28 Sep 2026' as post_date,
+                       'News' as category,
+                       '#' as link,
+                       'website-studio/img/news-2.jpg' as image_file,
+                       'An open-plan office' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Five questions to ask before a feasibility study' as title,
+                       'A short guide for project owners from our advisory practice.' as text,
+                       '3 Sep 2026' as post_date,
+                       'Guide' as category,
+                       '#' as link,
+                       'website-studio/img/news-3.jpg' as image_file,
+                       'A presentation in a meeting room' as image_alt,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: news
+            customAttributes: data-menu="Insights"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Insights</p><p class="ws-Lead">News and thinking from our engineers.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-news
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column POST_DATE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @meridian-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="f?p=&APP_ID.:MERIDIAN:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">M</span>Meridian</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="f?p=&APP_ID.:MERIDIAN:&APP_SESSION."><span class="ws-Logo-mark" aria-hidden="true">M</span>Meridian</a>
+                <p>Engineering and advisory for infrastructure that lasts.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-company (
+        name: Footer - Company
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'About' as label,
+                       apex_page.get_url(p_page => 'MERIDIAN-ABOUT') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Insights' as label,
+                       apex_page.get_url(p_page => 'MERIDIAN-INSIGHTS') as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Careers' as label,
+                       apex_page.get_url(p_page => 'MERIDIAN-CAREERS') as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-company
+        }
+        headerAndFooter {
+            headerText: <h3>Company</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-services (
+        name: Footer - Services
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Our services' as label,
+                       apex_page.get_url(p_page => 'MERIDIAN-SERVICES') as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Questions' as label,
+                       apex_page.get_url(p_page => 'MERIDIAN-SERVICES') || '#faq' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Client portal' as label,
+                       'https://example.com/portal' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-services
+        }
+        headerAndFooter {
+            headerText: <h3>Services</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Meridian Partners. All rights reserved.</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Privacy' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+)

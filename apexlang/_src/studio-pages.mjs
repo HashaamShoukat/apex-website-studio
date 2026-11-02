@@ -3,6 +3,9 @@ import fs from "node:fs";
 import { PRESETS, PAGE_DEFAULTS } from "./presets.mjs";
 import { DESIGNS, FONTS, REPORTS, PAGE, MENU } from "./options.mjs";
 import { SITES } from "./sites.mjs";
+import { MULTI } from "./multisites.mjs";
+// the Designer can preview the one-page websites and the home page of each multi-page website
+const DESIGNER_SITES = [...SITES, ...MULTI.map(m => ({ ...m.pages[0], label: m.label + " - multi-page" }))];
 import { sql } from "./demo.mjs";
 const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const ind = (s, n) => s.split("\n").map(l => (l ? " ".repeat(n) + l : l)).join("\n");
@@ -46,7 +49,8 @@ const crumb = name => `    region breadcrumb (
             templateOptions: #DEFAULT#
         }
     )`;
-const js = (fn, onload) => `    javaScript {${fn ? `
+const js = (fn, onload, fileUrls) => `    javaScript {${fileUrls ? `
+        fileUrls: ${fileUrls}` : ""}${fn ? `
         functionAndGlobalVariableDeclaration:
             \`\`\`javascript-browser
 ${ind(fn, 12)}
@@ -86,7 +90,10 @@ const write = (file, s) => fs.writeFileSync(ROOT + "pages/" + file, s);
 const galleryFn = `// Ready-made looks of the Website Studio templates; thumbnails are app files gallery/<id>.jpg (made from the demo website).
 var WS_PRESETS = ${JSON.stringify(PRESETS.map(p => ({ id: p.id, name: p.name, tags: p.tags, page: p.page, r: p.r, hash: p.hash })), null, 0).replace(/\},\{/g, "},\n    {")};
 // The starter websites: one page each, with their own content, menu and look.
-var WS_SITES = ${JSON.stringify(SITES.map(st => ({ key: st.key, alias: st.alias, name: st.brand.replace(/&amp;/g, "&"), label: st.label, text: st.description, look: st.look })), null, 0).replace(/\},\{/g, "},\n    {")};`;
+var WS_SITES = ${JSON.stringify(SITES.map(st => ({ key: st.key, alias: st.alias, name: st.brand.replace(/&amp;/g, "&"), label: st.label, text: st.description, look: st.look })), null, 0).replace(/\},\{/g, "},\n    {")};
+// The multi-page websites: several pages with one shared menu, header and footer.
+var WS_MULTI = ${JSON.stringify(MULTI.map(m => ({ key: m.key, alias: m.home, label: m.label, name: m.brand.replace(/&amp;/g, "&"), text: m.text, look: m.look,
+    pages: m.pages.map(p => ({ name: p.pageName, alias: p.alias })) })), null, 0).replace(/\},\{"key"/g, "},\n    {\"key\"")};`;
 const galleryLoad = `(function ($) {
     var box = document.getElementById("wss-gallery"), files = box.getAttribute("data-files"),
         site = box.getAttribute("data-site"), designer = box.getAttribute("data-designer"), app = box.getAttribute("data-app"), ses = box.getAttribute("data-session");
@@ -106,6 +113,15 @@ const galleryLoad = `(function ($) {
         return '<article class="wss-Card wss-Card--site">' +
             '<a class="wss-Card-shot" href="' + esc(open) + '" target="_blank" rel="noopener" aria-label="' + esc("Open " + s.name) + '"><img src="' + esc(files + "gallery/site-" + s.key + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
             '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(s.label) + '</h3><p class="wss-Card-text">' + esc(s.text) + '</p>' +
+            '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
+            '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
+    }).join("");
+    document.getElementById("wss-multi").innerHTML = WS_MULTI.map(function (s) {
+        var open = app + s.alias + ses, custom = designer + "#site=" + encodeURIComponent(s.alias) + "&look=" + encodeURIComponent(s.look);
+        return '<article class="wss-Card wss-Card--site">' +
+            '<a class="wss-Card-shot" href="' + esc(open) + '" target="_blank" rel="noopener" aria-label="' + esc("Open " + s.name) + '"><img src="' + esc(files + "gallery/multi-" + s.key + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
+            '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(s.label) + ' <span class="wss-Count">' + s.pages.length + ' pages</span></h3><p class="wss-Card-text">' + esc(s.text) + '</p>' +
+            '<div class="wss-Card-pages">' + s.pages.map(function (p) { return '<a href="' + esc(app + p.alias + ses) + '" target="_blank" rel="noopener">' + esc(p.name) + '</a>'; }).join("") + '</div>' +
             '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
             '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
     }).join("");
@@ -143,13 +159,17 @@ const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3v
 .wss-Card-tags { display: flex; flex-wrap: wrap; gap: .375rem; }
 .wss-Card-tags span { padding: .1rem .5rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .75rem; font-weight: 600; text-transform: capitalize; }
 .wss-Card-actions { display: flex; gap: .5rem; margin-top: .25rem; }
+.wss-Count { margin-inline-start: .35rem; padding: .05rem .45rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .7rem; font-weight: 700; vertical-align: middle; }
+.wss-Card-pages { display: flex; flex-wrap: wrap; gap: .25rem .75rem; font-size: .8125rem; }
+.wss-Card-pages a { color: inherit; text-decoration: underline; text-decoration-color: rgba(234,88,12,.45); text-underline-offset: 3px; }
+.wss-Card-pages a:hover { color: #9a3412; }
 .wss-Card-actions .t-Button { flex: 1; justify-content: center; }
 @media (prefers-reduced-motion: reduce) { .wss-Card, .wss-Card-shot img { transition: none; } .wss-Card:hover { transform: none; } .wss-Card:hover .wss-Card-shot img { transform: none; } }`;
 const TAGS = [...new Set(PRESETS.flatMap(p => p.tags.split(" ")))];
 const TAG_NAME = { light: "Light", dark: "Dark", clean: "Clean", editorial: "Editorial", bold: "Bold", glass: "Glass", soft: "Soft UI", midnight: "Midnight", minimal: "Minimal",
     corporate: "Corporate", saas: "SaaS", luxury: "Elegant", playful: "Playful", organic: "Organic", techgrid: "Tech Grid", swiss: "Swiss", retro: "Retro" };
 const galleryHero = `<div class="wss-Hero">
-  <h1>One-page websites for Oracle APEX</h1>
+  <h1>One-page and multi-page websites for Oracle APEX</h1>
   <p>A page template, a section template, a menu template and ${REPORTS.length} report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps and more. Every list comes from a SQL query. ${DESIGNS.length} designs, 10 accent colours, light and dark, ${FONTS.length - 1} typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
   <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
@@ -158,6 +178,9 @@ const galleryHero = `<div class="wss-Hero">
 <h2 class="wss-H2">Starter Websites</h2>
 <p class="wss-Sub">${SITES.length} complete websites with their own content, menu and photos. Open one, or customize it in the Designer.</p>
 <div class="wss-Grid" id="wss-sites"></div>
+<h2 class="wss-H2">Multi-page Websites</h2>
+<p class="wss-Sub">${MULTI.length} websites with several pages that share one menu, header and footer. The menu links to pages, and inner pages open with a page title.</p>
+<div class="wss-Grid" id="wss-multi"></div>
 <h2 class="wss-H2">Looks</h2>
 <p class="wss-Sub">${PRESETS.length} ready-made looks on the demo website. Each one works on every starter website.</p>
 <div class="wss-Filter" role="group" aria-label="Filter">
@@ -197,10 +220,13 @@ const lov = n => String(n).replace(/[,;]/g, "");
 const PRESET_OF = Object.fromEntries(REPORTS.map(r => [r.id, r.preset || []]));
 const TPL_NAME = Object.fromEntries([...REPORTS, MENU].map(r => [r.id, r.name]));
 // per site: the page options of its look, and the SQL of every section that shows pictures (for the SQL panel)
-const SITE_DATA = Object.fromEntries(SITES.map(st => [st.alias, {
+const SITE_DATA = Object.fromEntries(DESIGNER_SITES.map(st => [st.alias, {
     look: st.look, name: st.label, page: st.page,
     sql: st.sections.filter(x => x.rows && x.rows.some(r => "IMAGE_FILE" in r || "IMAGE_URL" in r)).map(x => ({ id: x.id, name: (x.menu || x.title).replace(/\*/g, "") + " (" + TPL_NAME[x.report] + ")", sql: sql(x.rows) }))
 }]));
+// too big for the page's JavaScript (32 KB per property): a static file the Designer loads first (run build.mjs once after adding it)
+fs.writeFileSync(ROOT + "shared-components/static-files/website-studio/designer-sites.js",
+    "// Website Studio Designer: the look and the picture SQL of every starter website (generated by apexlang/_src/studio-pages.mjs)\nwindow.WSD_SITES = " + JSON.stringify(SITE_DATA) + ";\n");
 const designerLoad = `// Designer: every choice is a template option (a CSS class) of Modern One Page or of a Website report or list template.
 // The preview iframe shows a real website page; the classes travel in its URL hash (#ws=<page classes>&r=@<template>:<classes>,...).
 (function ($) {
@@ -210,7 +236,7 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     // [item, label, template, [[option, value]...]]
     var SECTIONS = ${JSON.stringify(SECTIONS)};
     var PRESET = ${JSON.stringify(PRESET_OF)}, TPL_NAME = ${JSON.stringify(TPL_NAME)};
-    var SITES = ${JSON.stringify(SITE_DATA)};
+    var SITES = window.WSD_SITES;   // static file website-studio/designer-sites.js
     var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null;
     function esc(s) { return apex.util.escapeHTML(String(s)); }
     function siteUrl() { return app + ($v("P2_SITE") || "WEBSITE") + ses; }
@@ -425,7 +451,7 @@ const radio = (name, label, seq, values, def) => `    pageItem ${name} (
             storage: request
         }
     )`;
-const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer"), js(null, designerLoad), cssBlock(designerCss), pageSec, "", crumb("Designer"), "",
+const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer"), js(null, designerLoad, "#APP_FILES#website-studio/designer-sites.js"), cssBlock(designerCss), pageSec, "", crumb("Designer"), "",
 `    region options (
         name: Template Options
         type: staticContent
@@ -501,7 +527,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
             ]
         }
     )`, "",
-    sel("P2_SITE", "Website", 1, SITES.map(st => `${lov(st.label)};${st.alias}`).join(","), false, "WEBSITE"), "",
+    sel("P2_SITE", "Website", 1, DESIGNER_SITES.map(st => `${lov(st.label)};${st.alias}`).join(","), false, "WEBSITE"), "",
     ...PAGE_SELECTS.map((x, i) => sel(x.item, x.group, (i + 1) * 5 + 1, x.options.map(([c, n]) => `${lov(n)};${c}`).join(","), x.nul, "") + "\n"),
     ...PAGE_SWITCHES.map((x, i) => sw(x.item, x.label, 100 + i, PAGE.defaults.includes(x.css) ? "Y" : "N", i % 2 === 0) + "\n"),
     ...SECTIONS.map(([item, label, , o], i) => sel(item, label, (i + 1) * 10, o.map(([n, c]) => `${lov(n)};${c}`).join(","), "As on the page", "", "sections") + "\n"),
@@ -637,6 +663,15 @@ const howHtml = `<div class="wss-Doc">
  start with parent_id is null
 connect by prior id = parent_id
  order siblings by seq</pre>
+<p><strong>A website with several pages.</strong> Give every page the Modern One Page template with the same Template Options, and put the same list in each page's Menu slot (<em>Copy to other Page</em> copies the menu, logo and footer regions). Then:</p>
+<ul>
+  <li>Let the list entries go to pages (<em>Target Type: Page in this Application</em>). APEX marks the entry of the page that is open.</li>
+  <li>A child entry can open a section of another page: URL <code>f?p=&amp;APP_ID.:SERVICES:&amp;APP_SESSION.#faq</code>.</li>
+  <li>Links in reports (footer columns, buttons, "read more") come from the query: <code>apex_page.get_url(p_page =&gt; 'SERVICES') as link</code>. In Static Content, use <code>f?p=&amp;APP_ID.:SERVICES:&amp;APP_SESSION.</code>; point the logo to the home page.</li>
+  <li>Inner pages open with a short title band: a Website - Hero region with one row, Layout <em>Full Bleed</em> and Height <em>Compact (page title)</em>.</li>
+  <li>Put the contact form on one page only and link to it from the others.</li>
+</ul>
+<p>The ${MULTI.length} multi-page starters in the Gallery (pages ${MULTI[0].pages[0].page} to ${MULTI[MULTI.length - 1].pages[MULTI[MULTI.length - 1].pages.length - 1].page}) show all of this.</p>
 
 <h3>5. Pictures</h3>
 <p>Every template that shows a picture has the same columns: <code>IMAGE_URL</code>, <code>IMAGE_FILE</code>, <code>IMAGE_ALT</code> (what the picture shows, read aloud by screen readers) and <code>IMAGE_POSITION</code> (the part to keep when it is cropped, like <code>center 30%</code> or <code>top</code>). Pictures load when they scroll into view. A row without a picture shows a soft placeholder (Template Option <em>Placeholder Images</em>), and people show their initials. There are three ways to give a picture:</p>
@@ -699,7 +734,7 @@ ${reportRows}
 
 <h3>10. Good to know</h3>
 <ul>
-  <li>The demo website (page <code>WEBSITE</code>) and the starter websites (pages 11 to 17) are the best reference. Every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
+  <li>The demo website (page <code>WEBSITE</code>) the starter websites (pages 11 to 17) and the multi-page websites (pages 20 to 53) are the best reference. Every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
   <li>Typefaces other than System load from Google Fonts.</li>
   <li>After a partial page refresh of a section, call <code>wsSite.refresh(element)</code> - the templates already do it for <code>apexafterrefresh</code>.</li>
   <li>Visitors who prefer reduced motion get no animations; Windows high-contrast mode is respected; the menu, sliders, lightbox and accordions work with the keyboard. The source is in <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code>.</li>

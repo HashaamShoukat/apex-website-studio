@@ -51,7 +51,7 @@ page 17 (
                        'See pricing' as button2_label,
                        '#pricing' as button2_link,
                        'website-studio/img/saas-hero.jpg' as image_file,
-                       'A finance dashboard on a laptop' as image_alt,
+                       'An analytics dashboard on a screen' as image_alt,
                        1 as sort_order
                   from dual
                 order by sort_order
@@ -352,7 +352,7 @@ page 17 (
                        'Send an invoice from your *phone*.' as title,
                        'Customers pay by card, Apple Pay or bank transfer. You see it the moment they do.' as text,
                        'website-studio/img/saas-1.jpg' as image_file,
-                       'A person reviewing invoices on a tablet' as image_alt,
+                       'Paperwork with a calculator and a phone' as image_alt,
                        null as link,
                        null as link_label,
                        1 as sort_order
@@ -362,7 +362,7 @@ page 17 (
                        'Books that are always *up to date*.' as title,
                        'Every payment and expense lands in the right place, so VAT returns take minutes.' as text,
                        'website-studio/img/saas-2.jpg' as image_file,
-                       'A small business owner at a laptop' as image_alt,
+                       'A shop owner taking a payment on a tablet' as image_alt,
                        '#features' as link,
                        'All features' as link_label,
                        2 as sort_order
@@ -567,7 +567,7 @@ page 17 (
                        'Director, Kestrel Coffee' as role,
                        '5' as rating,
                        'website-studio/img/person-4.jpg' as image_file,
-                       'Portrait of a man with a beard' as image_alt,
+                       'Portrait of a man in a grey sweater' as image_alt,
                        2 as sort_order
                   from dual
                 union all

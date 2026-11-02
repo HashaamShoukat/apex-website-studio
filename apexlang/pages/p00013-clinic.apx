@@ -52,7 +52,7 @@ page 13 (
                        'خدماتنا' as button2_label,
                        '#services' as button2_link,
                        'website-studio/img/clinic-hero.jpg' as image_file,
-                       'طبيب يتحدث مع مريض' as image_alt,
+                       'طبيب بمعطف أبيض' as image_alt,
                        1 as sort_order
                   from dual
                 union all
@@ -383,7 +383,7 @@ page 13 (
                        '#doctors' as link,
                        'تعرف على الأطباء' as link_label,
                        'website-studio/img/clinic-room.jpg' as image_file,
-                       'غرفة كشف مضيئة' as image_alt,
+                       'استقبال العيادة' as image_alt,
                        1 as sort_order
                   from dual
                 union all
