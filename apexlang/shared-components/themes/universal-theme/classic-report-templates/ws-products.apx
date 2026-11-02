@@ -1,0 +1,61 @@
+classicReportTemplate ws-products (
+    name: Website - Products
+    templateClass: custom1
+    type: namedColumn
+    templateOptions {
+        preset: ws-Filter
+    }
+    reportTemplate {
+        top: <div class="ws-R ws-Products #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <article class="ws-Card ws-Product" data-tag="#CATEGORY#">
+              <div class="ws-Product-img ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#NAME#"></div>
+              <span class="ws-Badge" data-opt="text">#BADGE#</span>
+              <div class="ws-Product-b"><h3><a href="#LINK#">#NAME#</a></h3><span class="ws-Product-dots" aria-hidden="true"></span><b class="ws-Product-p" data-opt="text">#PRICE#</b><p data-opt="text">#TEXT#</p></div>
+            </article>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Products (Website Studio). Products, or the dishes of a menu, with a price. Filter Buttons groups them by CATEGORY. Columns (all optional): NAME, TEXT, PRICE, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, CATEGORY, BADGE, LINK.
+    }
+
+    templateOption products-menu (
+        name: Menu List
+        group: @report/wsr-products-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Products--menu
+        }
+    )
+
+    templateOption products-compact (
+        name: Compact
+        group: @report/wsr-products-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Products--compact
+        }
+    )
+
+    templateOption filter (
+        name: Filter Buttons
+        sequence: 10
+        appearance {
+            cssClasses: ws-Filter
+        }
+        help {
+            helpText: Buttons above the list that show one category at a time.
+        }
+    )
+)

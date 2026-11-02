@@ -1,0 +1,58 @@
+classicReportTemplate ws-compare (
+    name: Website - Comparison
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Compare #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <div class="ws-Cmp-row" data-head="#IS_HEADER#" role="row"><span class="ws-Cmp-f" role="rowheader">#FEATURE#</span><span class="ws-Cmp-c" role="cell">#COL1#</span><span class="ws-Cmp-c" role="cell">#COL2#</span><span class="ws-Cmp-c" role="cell">#COL3#</span><span class="ws-Cmp-c" role="cell">#COL4#</span></div>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Comparison (Website Studio). A comparison table: one row per feature, one column per plan (COL1 to COL4). The row with IS_HEADER = Y holds the plan names. Y and N become a tick and a dash. Columns (all optional): FEATURE, COL1, COL2, COL3, COL4, IS_HEADER.
+    }
+
+    templateOption compare-hl1 (
+        name: Column 1
+        group: @report/wsr-compare-hl
+        sequence: 10
+        appearance {
+            cssClasses: ws-Compare--hl1
+        }
+    )
+
+    templateOption compare-hl2 (
+        name: Column 2
+        group: @report/wsr-compare-hl
+        sequence: 20
+        appearance {
+            cssClasses: ws-Compare--hl2
+        }
+    )
+
+    templateOption compare-hl3 (
+        name: Column 3
+        group: @report/wsr-compare-hl
+        sequence: 30
+        appearance {
+            cssClasses: ws-Compare--hl3
+        }
+    )
+
+    templateOption compare-hl4 (
+        name: Column 4
+        group: @report/wsr-compare-hl
+        sequence: 40
+        appearance {
+            cssClasses: ws-Compare--hl4
+        }
+    )
+)

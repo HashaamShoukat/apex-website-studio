@@ -1,0 +1,40 @@
+classicReportTemplate ws-photos (
+    name: Website - Photo Gallery
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Photos #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <figure class="ws-Photo"><button type="button" class="ws-Photo-btn" aria-label="#TITLE#"><div class="ws-Photo-img ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#TITLE#"></div></button><figcaption data-opt="text">#CAPTION#</figcaption></figure>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Photo Gallery (Website Studio). Photos that open full size in a lightbox (arrow keys, swipe, Escape closes). Columns (all optional): IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, TITLE, CAPTION.
+    }
+
+    templateOption photos-masonry (
+        name: Masonry
+        group: @report/wsr-photos-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Photos--masonry
+        }
+    )
+
+    templateOption photos-strip (
+        name: Scrolling Strip
+        group: @report/wsr-photos-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Photos--strip
+        }
+    )
+)

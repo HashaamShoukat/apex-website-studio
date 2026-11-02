@@ -8,7 +8,7 @@
 // Field limits checked: option names 30 bytes, report row templates and region template 4000, page template parts 32767.
 import fs from "node:fs";
 import path from "node:path";
-import { PAGE, SECTION, REPORTS } from "./options.mjs";
+import { PAGE, SECTION, REPORTS, MENU } from "./options.mjs";
 import { brandCss } from "./brands.mjs";
 
 const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -59,7 +59,9 @@ function groups(type, gs) {
 
 // ---------- static files ----------
 fs.mkdirSync(FILES + "website-studio", { recursive: true });
-const css = read("website.css") + brandCss(), js = read("website.js");
+// website.css is shipped minified (comments and indentation removed); the readable source stays in _src
+const minCss = c => c.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, " ").replace(/\s*([{};])\s*/g, "$1").replace(/;}/g, "}").replace(/}/g, "}\n").trim();
+const css = "/* Website Studio " + new Date().getFullYear() + " - source: github.com/HashaamShoukat/apex-website-studio apexlang/_src/website.css (MIT) */\n" + minCss(read("website.css") + brandCss()), js = read("website.js");
 fs.writeFileSync(FILES + "website-studio/website.css", css);
 fs.writeFileSync(FILES + "website-studio/website.js", js);
 LIMITS.push(`website.css ${bytes(css)} (static file)`, `website.js ${bytes(js)} (static file)`);
@@ -67,7 +69,7 @@ LIMITS.push(`website.css ${bytes(css)} (static file)`, `website.js ${bytes(js)} 
 // ---------- Modern One Page ----------
 // applies a look passed in the URL (#ws=...) before the page is drawn, so the Designer preview does not flash;
 // ws-Loading keeps the sections hidden until website.js has set them up (website.css shows them after 4s anyway)
-const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(!m)return;b.className=b.className.split(/\\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/)).join(" ")})(document.body,location.hash);</script>`;
+const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(m){b.className=b.className.split(/\\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/)).join(" ")}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>`;
 const header = `<!DOCTYPE html>
 <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID!ATTR. app-&APP_ALIAS!ATTR." lang="&BROWSER_LANGUAGE!ATTR." #TEXT_DIRECTION#>
 <head>
@@ -83,7 +85,7 @@ const header = `<!DOCTYPE html>
   #HEAD#
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 </head>
-<body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+<body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody" data-ws-files="#APP_FILES#">
 ${early}
 <noscript>&APP_TEXT$APEX_PAGE_NOSCRIPT.</noscript>
 <a href="#main" class="ws-Skip">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
@@ -94,7 +96,8 @@ ${early}
     <div class="ws-Brand-slot">#REGION_POSITION_07#</div>
     <a class="ws-Brand ws-Brand-default" href="#HOME_LINK#">#LOGO#</a>
     <nav class="ws-Nav" id="ws-nav" aria-label="&APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL!ATTR."></nav>
-    <div class="ws-Header-end">#AFTER_NAVIGATION_BAR#<button type="button" class="ws-Burger" aria-expanded="false" aria-controls="ws-nav" aria-label="Menu"><span></span><span></span><span></span></button></div>
+    <div class="ws-Menu-slot">#REGION_POSITION_08#</div>
+    <div class="ws-Header-end">#AFTER_NAVIGATION_BAR#<button type="button" class="ws-ThemeBtn" aria-pressed="false" aria-label="Dark mode"><span aria-hidden="true"></span></button><button type="button" class="ws-Burger" aria-expanded="false" aria-controls="ws-nav" aria-label="Menu"><span></span><span></span><span></span></button></div>
   </div>
 </header>`;
 const body = `<main id="main" class="ws-Main">
@@ -109,6 +112,7 @@ const body = `<main id="main" class="ws-Main">
   </div>
 </footer>
 <button type="button" class="ws-ToTop" aria-label="Back to top"><span aria-hidden="true">&#8593;</span></button>
+<a class="ws-Chat" href="https://wa.me/&WHATSAPP_NUMBER." data-number="&WHATSAPP_NUMBER." target="_blank" rel="noopener" aria-label="WhatsApp"><span class="fa fa-whatsapp" aria-hidden="true"></span></a>
 <div class="ws-Dialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>`;
 const footer = `#FORM_CLOSE#
 #DEVELOPER_TOOLBAR#
@@ -189,9 +193,9 @@ ${block("footer", "html", footer, 8)}
             \`\`\`
     }
     comments {
-        comments: Modern One Page (Website Studio) - a one-page website. The header menu is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
+        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
     }
-${options(PAGE, "page")}${slot("hero", "Hero", "REGION_POSITION_01")}${slot("logo", "Logo", "REGION_POSITION_07", { newRow: false })}${slot("headerButtons", "Header Buttons", "AFTER_NAVIGATION_BAR", { items: true, buttons: true, newRow: false })}${slot("body", "Body", "BODY", { items: true, buttons: true, grid: true })}${slot("footer", "Footer", "REGION_POSITION_05")}${slot("footerBottom", "Footer Bottom", "REGION_POSITION_06", { buttons: true })}${slot("inlineDialogs", "Inline Dialogs", "REGION_POSITION_04")}
+${options(PAGE, "page")}${slot("hero", "Hero", "REGION_POSITION_01")}${slot("logo", "Logo", "REGION_POSITION_07", { newRow: false })}${slot("menu", "Menu", "REGION_POSITION_08", { newRow: false })}${slot("headerButtons", "Header Buttons", "AFTER_NAVIGATION_BAR", { items: true, buttons: true, newRow: false })}${slot("body", "Body", "BODY", { items: true, buttons: true, grid: true })}${slot("footer", "Footer", "REGION_POSITION_05")}${slot("footerBottom", "Footer Bottom", "REGION_POSITION_06", { buttons: true })}${slot("inlineDialogs", "Inline Dialogs", "REGION_POSITION_04")}
 )
 `;
 fs.mkdirSync(THEME + "page-templates", { recursive: true });
@@ -309,6 +313,45 @@ ${options(r, "report")})
 `;
     fs.writeFileSync(THEME + "classic-report-templates/" + r.id + ".apx", tpl);
 }
+
+// ---------- Website - Menu (list template) ----------
+groups("list", MENU.groups);
+const li = (cur, sub) => `<li class="ws-Menu-item${sub ? " ws-Menu-item--parent" : ""}${cur ? " is-current" : ""} #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#"${cur ? ' aria-current="page"' : ""} #LINK_ATTR#>#TEXT_ESC_SC#</a>` +
+    (sub ? `<button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh">#TEXT_ESC_SC#</span></button>` : "</li>");
+const listTpl = `listTemplate ${MENU.id} (
+    name: ${MENU.name}
+    templateClass: pullDownMenu
+    list {
+        beforeEntries: ${field("menu before", '<ul class="ws-R ws-Menu #COMPONENT_CSS_CLASSES#" data-ws-menu>', 4000)}
+        afterEntries: </ul>
+    }
+    entry {
+        current: ${li(true, false)}
+        currentWithSublist: ${li(true, true)}
+        noncurrent: ${li(false, false)}
+        noncurrentWithSublist: ${li(false, true)}
+    }
+    sublist {
+        beforeEntries: <ul class="ws-Menu-sub">
+        afterEntries: </ul></li>
+    }
+    sublistEntry {
+        current: ${li(true, false)}
+        currentWithSublist: ${li(true, true)}
+        noncurrent: ${li(false, false)}
+        noncurrentWithSublist: ${li(false, true)}
+    }
+    attributeDescriptions {
+        a01: CSS classes of the entry (ws-Menu-cta shows it as a button)
+        a02: Link target (_blank opens a new tab)
+    }
+    comments {
+        comments: Website - Menu (Website Studio) - the header menu of Modern One Page. Use it in a List region in the Menu slot (region template Blank with Attributes). Static or SQL lists; parent entries become drop-downs on wide screens and an accordion in the phone menu. Styles are in website-studio/website.css.
+    }
+${options(MENU, "list")})
+`;
+fs.mkdirSync(THEME + "list-templates", { recursive: true });
+fs.writeFileSync(THEME + "list-templates/" + MENU.id + ".apx", listTpl);
 
 // ---------- option groups ----------
 const groupsApx = groupDefs.map((g, i) => `templateOptionGroup ${g.id} (

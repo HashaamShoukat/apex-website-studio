@@ -148,7 +148,7 @@ regionTemplate modern-section (
             cssClasses: ws-Sec--menu
         }
         help {
-            helpText: Adds the section to the header menu, labelled with the region title. The section's Static ID is the link anchor.
+            helpText: Without a Website - Menu list in the Menu slot, the header menu is built from the sections with this option: the label is data-menu="..." (Custom Attributes) or the region title, the link the Static ID.
         }
     )
 

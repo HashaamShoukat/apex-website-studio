@@ -25,7 +25,7 @@ classicReportTemplate ws-steps (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Process (Website Studio). How you work, numbered in the order of the query. Columns (all optional): TITLE, TEXT, DURATION.
+        comments: Website - Process (Website Studio). How you work, numbered in the order of the rows. Columns (all optional): TITLE, TEXT, DURATION.
     }
 
     templateOption steps-cards (

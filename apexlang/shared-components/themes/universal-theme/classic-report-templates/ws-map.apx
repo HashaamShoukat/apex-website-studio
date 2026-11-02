@@ -1,0 +1,37 @@
+classicReportTemplate ws-map (
+    name: Website - Map
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Maps #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <div class="ws-Map">
+              <div class="ws-Map-frame" data-map="#MAP_URL#" data-title="#TITLE#"></div>
+              <div class="ws-Map-b"><h3 data-opt="text">#TITLE#</h3><p class="ws-Map-a" data-opt="text">#ADDRESS#</p><p class="ws-Muted" data-opt="text">#TEXT#</p><a class="ws-Btn ws-Btn--ghost" href="#LINK#">#LINK_LABEL#</a></div>
+            </div>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Map (Website Studio). A map from an embed URL (Google Maps or OpenStreetMap) next to the address. The map loads when it scrolls into view. Columns (all optional): MAP_URL, TITLE, ADDRESS, TEXT, LINK, LINK_LABEL.
+    }
+
+    templateOption maps-full (
+        name: Full-width Map
+        group: @report/wsr-map-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Maps--full
+        }
+    )
+)

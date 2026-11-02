@@ -18,7 +18,7 @@ templateOptionGroup ws-accent (
         nullText: Theme Color
     }
     help {
-        helpText: Buttons, highlights, icons and the built-in artwork. Theme Color uses your theme style's primary colour.
+        helpText: Buttons, highlights and icons. Theme Color uses your theme style's primary colour (some designs bring their own colour instead).
     }
 )
 
@@ -30,7 +30,7 @@ templateOptionGroup ws-scheme (
         nullText: Light
     }
     help {
-        helpText: Midnight is always dark. Sections set to Dark or Accent keep their own colours.
+        helpText: Midnight and Tech Grid are always dark. Sections set to Dark or Accent keep their own colours.
     }
 )
 
@@ -42,7 +42,7 @@ templateOptionGroup ws-font (
         nullText: System
     }
     help {
-        helpText: Headline and text fonts. Every choice except System loads its fonts from Google Fonts.
+        helpText: Headline and text fonts. Every choice except System loads its fonts from Google Fonts. Arabic suits right-to-left websites.
     }
 )
 
@@ -82,6 +82,18 @@ templateOptionGroup ws-footer (
     sequence: 70
     settings {
         nullText: Dark
+    }
+)
+
+templateOptionGroup ws-ph (
+    templateType: page
+    name: Placeholder Images
+    sequence: 80
+    settings {
+        nullText: Soft Gradient
+    }
+    help {
+        helpText: What a row without an image shows (IMAGE_URL and IMAGE_FILE empty). People always show their initials.
     }
 )
 
@@ -133,7 +145,7 @@ templateOptionGroup ws-width (
 templateOptionGroup wsr-hero-layout (
     templateType: report
     name: Layout
-    sequence: 130
+    sequence: 140
     settings {
         nullText: Slider
     }
@@ -142,10 +154,43 @@ templateOptionGroup wsr-hero-layout (
     }
 )
 
+templateOptionGroup wsr-hero-height (
+    templateType: report
+    name: Height
+    sequence: 150
+    settings {
+        nullText: Large
+    }
+    help {
+        helpText: The height of the Slider and Full Bleed layouts.
+    }
+)
+
+templateOptionGroup wsr-hero-overlay (
+    templateType: report
+    name: Image Overlay
+    sequence: 160
+    settings {
+        nullText: Normal
+    }
+    help {
+        helpText: How much the image is darkened behind the text (Slider and Full Bleed).
+    }
+)
+
+templateOptionGroup wsr-hero-move (
+    templateType: report
+    name: Transition
+    sequence: 170
+    settings {
+        nullText: Fade
+    }
+)
+
 templateOptionGroup wsr-autoplay (
     templateType: report
     name: Autoplay
-    sequence: 140
+    sequence: 180
     settings {
         nullText: 6 Seconds
     }
@@ -154,7 +199,7 @@ templateOptionGroup wsr-autoplay (
 templateOptionGroup wsr-stats-layout (
     templateType: report
     name: Layout
-    sequence: 150
+    sequence: 190
     settings {
         nullText: Row
     }
@@ -163,7 +208,7 @@ templateOptionGroup wsr-stats-layout (
 templateOptionGroup wsr-features-layout (
     templateType: report
     name: Layout
-    sequence: 160
+    sequence: 200
     settings {
         nullText: Cards
     }
@@ -172,7 +217,7 @@ templateOptionGroup wsr-features-layout (
 templateOptionGroup wsr-columns (
     templateType: report
     name: Columns
-    sequence: 170
+    sequence: 210
     settings {
         nullText: 3
     }
@@ -181,7 +226,7 @@ templateOptionGroup wsr-columns (
 templateOptionGroup wsr-team-layout (
     templateType: report
     name: Layout
-    sequence: 180
+    sequence: 220
     settings {
         nullText: Portrait Cards
     }
@@ -190,7 +235,7 @@ templateOptionGroup wsr-team-layout (
 templateOptionGroup wsr-quotes-layout (
     templateType: report
     name: Layout
-    sequence: 190
+    sequence: 230
     settings {
         nullText: Carousel
     }
@@ -199,16 +244,25 @@ templateOptionGroup wsr-quotes-layout (
 templateOptionGroup wsr-logos-layout (
     templateType: report
     name: Layout
-    sequence: 200
+    sequence: 240
     settings {
         nullText: Scrolling Marquee
+    }
+)
+
+templateOptionGroup wsr-logos-speed (
+    templateType: report
+    name: Marquee Speed
+    sequence: 250
+    settings {
+        nullText: Normal
     }
 )
 
 templateOptionGroup wsr-plans-style (
     templateType: report
     name: Featured Plan
-    sequence: 210
+    sequence: 260
     settings {
         nullText: Dark
     }
@@ -217,7 +271,7 @@ templateOptionGroup wsr-plans-style (
 templateOptionGroup wsr-timeline-layout (
     templateType: report
     name: Layout
-    sequence: 220
+    sequence: 270
     settings {
         nullText: Alternating
     }
@@ -226,7 +280,7 @@ templateOptionGroup wsr-timeline-layout (
 templateOptionGroup wsr-steps-layout (
     templateType: report
     name: Layout
-    sequence: 230
+    sequence: 280
     settings {
         nullText: Connected
     }
@@ -235,7 +289,7 @@ templateOptionGroup wsr-steps-layout (
 templateOptionGroup wsr-faq-layout (
     templateType: report
     name: Layout
-    sequence: 240
+    sequence: 290
     settings {
         nullText: List
     }
@@ -244,7 +298,7 @@ templateOptionGroup wsr-faq-layout (
 templateOptionGroup wsr-jobs-layout (
     templateType: report
     name: Layout
-    sequence: 250
+    sequence: 300
     settings {
         nullText: List
     }
@@ -253,7 +307,7 @@ templateOptionGroup wsr-jobs-layout (
 templateOptionGroup wsr-works-layout (
     templateType: report
     name: Layout
-    sequence: 260
+    sequence: 310
     settings {
         nullText: Grid
     }
@@ -262,7 +316,7 @@ templateOptionGroup wsr-works-layout (
 templateOptionGroup wsr-links-layout (
     templateType: report
     name: Layout
-    sequence: 270
+    sequence: 320
     settings {
         nullText: Round Icons
     }
@@ -271,8 +325,122 @@ templateOptionGroup wsr-links-layout (
 templateOptionGroup wsr-infos-layout (
     templateType: report
     name: Layout
-    sequence: 280
+    sequence: 330
     settings {
         nullText: List
+    }
+)
+
+templateOptionGroup wsr-news-layout (
+    templateType: report
+    name: Layout
+    sequence: 340
+    settings {
+        nullText: Cards
+    }
+)
+
+templateOptionGroup wsr-products-layout (
+    templateType: report
+    name: Layout
+    sequence: 350
+    settings {
+        nullText: Cards
+    }
+)
+
+templateOptionGroup wsr-photos-layout (
+    templateType: report
+    name: Layout
+    sequence: 360
+    settings {
+        nullText: Grid
+    }
+)
+
+templateOptionGroup wsr-zigzag-start (
+    templateType: report
+    name: First Row
+    sequence: 370
+    settings {
+        nullText: Image First
+    }
+)
+
+templateOptionGroup wsr-events-layout (
+    templateType: report
+    name: Layout
+    sequence: 380
+    settings {
+        nullText: Agenda
+    }
+)
+
+templateOptionGroup wsr-hours-layout (
+    templateType: report
+    name: Layout
+    sequence: 390
+    settings {
+        nullText: Table
+    }
+)
+
+templateOptionGroup wsr-compare-hl (
+    templateType: report
+    name: Highlight Column
+    sequence: 400
+    settings {
+        nullText: None
+    }
+)
+
+templateOptionGroup wsr-video-layout (
+    templateType: report
+    name: Layout
+    sequence: 410
+    settings {
+        nullText: Large
+    }
+)
+
+templateOptionGroup wsr-map-layout (
+    templateType: report
+    name: Layout
+    sequence: 420
+    settings {
+        nullText: Map and Address
+    }
+)
+
+templateOptionGroup wsm-align (
+    templateType: list
+    name: Alignment
+    sequence: 430
+    settings {
+        nullText: Right
+    }
+)
+
+templateOptionGroup wsm-max (
+    templateType: list
+    name: Visible Entries
+    sequence: 440
+    settings {
+        nullText: All
+    }
+    help {
+        helpText: On wide screens, top-level entries after this number go into a More drop-down.
+    }
+)
+
+templateOptionGroup wsm-mobile (
+    templateType: list
+    name: On Phones
+    sequence: 450
+    settings {
+        nullText: Drop-down Panel
+    }
+    help {
+        helpText: How the menu opens from the burger button on small screens.
     }
 )

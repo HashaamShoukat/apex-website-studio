@@ -11,7 +11,7 @@ classicReportTemplate ws-team (
             ```html
             <article class="ws-Person">
               <div class="ws-Person-top">
-                <div class="ws-Person-photo ws-Media" data-img="#IMAGE_URL#" data-initials="#NAME#" role="img" aria-label="#NAME#"></div>
+                <div class="ws-Person-photo ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#NAME#" data-initials="#NAME#"></div>
                 <a class="ws-Person-link" href="#LINK#" data-opt="href" aria-label="#NAME#"><span class="fa #LINK_ICON#" data-icon="fa-linkedin" aria-hidden="true"></span></a>
               </div>
               <h3>#NAME#</h3>
@@ -28,7 +28,7 @@ classicReportTemplate ws-team (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Team (Website Studio). People with a photo (or their initials), role and a profile link. LINK_ICON defaults to fa-linkedin. Columns (all optional): NAME, ROLE, IMAGE_URL, BIO, LINK, LINK_ICON.
+        comments: Website - Team (Website Studio). People with a photo (or their initials), role and a profile link. LINK_ICON defaults to fa-linkedin. Columns (all optional): NAME, ROLE, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, BIO, LINK, LINK_ICON.
     }
 
     templateOption team-round (

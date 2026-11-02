@@ -12,7 +12,7 @@ classicReportTemplate ws-testimonials (
             <figure class="ws-Quote">
               <span class="ws-Stars" data-r="#RATING#" aria-hidden="true"></span>
               <blockquote>#QUOTE#</blockquote>
-              <figcaption><span class="ws-Avatar ws-Media" data-img="#IMAGE_URL#" data-initials="#NAME#"></span><span><b>#NAME#</b><small>#ROLE#</small></span></figcaption>
+              <figcaption><div class="ws-Avatar ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#NAME#" data-initials="#NAME#"></div><span><b>#NAME#</b><small>#ROLE#</small></span></figcaption>
             </figure>
             ```
     }
@@ -24,7 +24,7 @@ classicReportTemplate ws-testimonials (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - Testimonials (Website Studio). What customers say. RATING is 0 to 5 stars (empty hides the stars). Columns (all optional): QUOTE, NAME, ROLE, IMAGE_URL, RATING.
+        comments: Website - Testimonials (Website Studio). What customers say. RATING is 0 to 5 stars (empty hides the stars). Columns (all optional): QUOTE, NAME, ROLE, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, RATING.
     }
 
     templateOption quotes-wall (
