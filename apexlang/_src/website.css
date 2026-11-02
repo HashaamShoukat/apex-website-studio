@@ -325,9 +325,14 @@ html:has(.ws-Page) { scroll-behavior: smooth; scroll-padding-top: calc(var(--ws-
   .ws-MenuOpt--overlay .ws-Menu > .ws-Menu-item > .ws-Menu-link { font-size: 1.8rem; }
   /* On Phones: Side Drawer */
   .ws-MenuOpt--drawer .ws-Nav { position: fixed; inset: 0 0 0 auto; z-index: 2; width: min(22rem, 86vw); max-height: none; display: block; padding: 5rem 1.5rem 2rem;
-    border-inline-start: 1px solid var(--ws-line); box-shadow: -30px 0 60px -30px rgba(0, 0, 0, .5); transform: translateX(105%); transition: transform .35s ease; animation: none; }
-  [dir="rtl"] .ws-MenuOpt--drawer .ws-Nav { inset: 0 auto 0 0; transform: translateX(-105%); }
-  .ws-MenuOpt--drawer.ws-Nav-open .ws-Nav { transform: none; }
+    border-inline-start: 1px solid var(--ws-line); box-shadow: -30px 0 60px -30px rgba(0, 0, 0, .5);
+    /* closed, it stays in place and fades out (parked outside the screen, it would widen the page); the entries slide in */
+    visibility: hidden; opacity: 0; transition: opacity .25s ease, visibility 0s .25s; animation: none; }
+  .ws-MenuOpt--drawer .ws-Nav .ws-Menu { transform: translateX(1.5rem); transition: transform .35s ease; }
+  [dir="rtl"] .ws-MenuOpt--drawer .ws-Nav { inset: 0 auto 0 0; box-shadow: 30px 0 60px -30px rgba(0, 0, 0, .5); }
+  [dir="rtl"] .ws-MenuOpt--drawer .ws-Nav .ws-Menu { transform: translateX(-1.5rem); }
+  .ws-MenuOpt--drawer.ws-Nav-open .ws-Nav .ws-Menu { transform: none; }
+  .ws-MenuOpt--drawer.ws-Nav-open .ws-Nav { visibility: visible; opacity: 1; transition: opacity .25s ease, visibility 0s; }
   .ws-MenuOpt--drawer.ws-Nav-open .ws-Burger { position: relative; z-index: 3; }
   .ws-MenuOpt--drawer.ws-Nav-open::after { content: ""; position: fixed; inset: 0; z-index: 99; background: rgba(0, 0, 0, .4); }
   .ws-Nav-open { overflow: hidden; }

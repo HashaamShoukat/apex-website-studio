@@ -172,7 +172,7 @@ function htmlHeader(s) {
     const hero = (s.sections.find(x => x.id === "hero") || { rows: [] }).rows[0] || {};
     const og = photoFile(s.ogImage);
     return [
-        s.rtl ? `<script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","${s.lang}");</script>` : "",
+        s.rtl ? `<script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","${s.lang}");document.addEventListener("DOMContentLoaded",function(){document.body.setAttribute("dir","rtl");});</script>` : "",
         `<meta name="description" content="${attr(s.description)}">`,
         `<meta property="og:type" content="website">`,
         `<meta property="og:title" content="${attr(s.title)}">`,
