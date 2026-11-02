@@ -19,7 +19,7 @@ page 13 (
     htmlHeader {
         htmlHeader:
             ```html
-            <script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","ar");</script>
+            <script>document.documentElement.setAttribute("dir","rtl");document.documentElement.setAttribute("lang","ar");document.addEventListener("DOMContentLoaded",function(){document.body.setAttribute("dir","rtl");});</script>
             <meta name="description" content="عيادات الشفاء في الرياض: طب الأسرة والأطفال والأسنان والمختبر، مع حجز المواعيد عبر الإنترنت أو واتساب.">
             <meta property="og:type" content="website">
             <meta property="og:title" content="عيادات الشفاء - رعاية طبية للعائلة">
