@@ -1,0 +1,1053 @@
+page 16 (
+    name: Starter - Portfolio
+    alias: PORTFOLIO
+    title: Lina Haddad - Product Designer
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--swiss
+            ws-Accent--rose
+            ws-Font--grotesk
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Lina Haddad - Product Designer">
+            <meta property="og:description" content="Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/portfolio-hero.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/portfolio-hero.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Lina Haddad
+        title: Lina Haddad
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'I design products people *enjoy* using.' as title,
+                       'Product and brand designer - Jeddah' as subtitle,
+                       'Ten years of apps, identities and websites for startups and banks.' as text,
+                       'Selected work' as button_label,
+                       '#work' as button_link,
+                       'Hire me' as button2_label,
+                       '#contact' as button2_link,
+                       'website-studio/img/portfolio-hero.jpg' as image_file,
+                       'A designer''s desk with sketches' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--split
+                ws-Hero--medium
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region work (
+        name: Work
+        title: Selected *work*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Kestrel Coffee' as title,
+                       'Branding' as category,
+                       'Identity and packaging - 2025' as meta,
+                       'website-studio/img/work-4.jpg' as image_file,
+                       'Coffee packaging' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Lumen Bank app' as title,
+                       'Product' as category,
+                       'Mobile banking - 2025' as meta,
+                       'website-studio/img/work-3.jpg' as image_file,
+                       'A mobile app on a phone' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Orbital website' as title,
+                       'Web' as category,
+                       'Marketing site - 2024' as meta,
+                       'website-studio/img/work-2.jpg' as image_file,
+                       'A website design on a laptop' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Northgrid dashboard' as title,
+                       'Product' as category,
+                       'Data product - 2024' as meta,
+                       'website-studio/img/work-5.jpg' as image_file,
+                       'A product dashboard on a large screen' as image_alt,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Vantage Hotels' as title,
+                       'Branding' as category,
+                       'Identity - 2023' as meta,
+                       'website-studio/img/work-6.jpg' as image_file,
+                       'A hotel lobby with the new signage' as image_alt,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Fieldnote' as title,
+                       'Web' as category,
+                       'Website and brand - 2023' as meta,
+                       'website-studio/img/work-1.jpg' as image_file,
+                       'Brand identity on business cards and paper' as image_alt,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--split
+            ]
+        }
+        advanced {
+            htmlDomId: work
+            customAttributes: data-menu="Work"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-gallery
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+                ws-Works--editorial
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column META (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region about (
+        name: About
+        title: About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <div class="ws-Split">
+                  <div class="ws-Media" data-file="website-studio/img/person-3.jpg" role="img" aria-label="Lina Haddad"></div>
+                  <div class="ws-Stack">
+                    <p class="ws-Eyebrow">About</p>
+                    <h2 class="ws-Title">Hi, I am *Lina*.</h2>
+                    <p class="ws-Lead">I help teams turn complicated ideas into simple products. I studied architecture, which is why I still start every project with a pencil.</p>
+                    <ul class="ws-Checks"><li>Ten years in product and brand design</li><li>Arabic and English interfaces</li><li>Works directly with your developers</li></ul>
+                  </div>
+                </div>
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: about
+            customAttributes: data-menu="About"
+        }
+    )
+
+    region services (
+        name: Services
+        title: How I can *help*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-mobile' as icon,
+                       'Product design' as title,
+                       'Research, flows and polished interfaces for web and mobile apps.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-magic' as icon,
+                       'Brand identity' as title,
+                       'Logos, colour and type systems with clear guidelines.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-desktop' as icon,
+                       'Websites' as title,
+                       'Design and build of fast marketing sites in Webflow or Oracle APEX.' as text,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+            ]
+        }
+        advanced {
+            htmlDomId: services
+            customAttributes: data-menu="Services"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-features
+            templateOptions: [
+                #DEFAULT#
+                ws-Features--rows
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region experience (
+        name: Experience
+        title: Experience
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '2022 - now' as year,
+                       'Independent designer' as title,
+                       'Product and brand work for clients in the Gulf and Europe.' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select '2018 - 2022' as year,
+                       'Lead Product Designer, Lumen Bank' as title,
+                       'Led the redesign of the mobile app used by two million customers.' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select '2015 - 2018' as year,
+                       'Designer, Halcyon Studio' as title,
+                       'Brand identities and websites for startups.' as text,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 60
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+            ]
+        }
+        advanced {
+            htmlDomId: experience
+            customAttributes: data-menu="Experience"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-timeline
+            templateOptions: [
+                #DEFAULT#
+                ws-Timeline--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column YEAR (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region clients-say (
+        name: Kind words
+        title: Kind *words*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Lina turned a messy brief into an app our customers love. Ratings went from 3.1 to 4.7.' as quote,
+                       'Daniel Brook' as name,
+                       'Head of Digital, Lumen Bank' as role,
+                       '5' as rating,
+                       'website-studio/img/person-2.jpg' as image_file,
+                       'Portrait of a man in a shirt' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Thoughtful, fast and a joy to work with.' as quote,
+                       'Priya Nair' as name,
+                       'Founder, Fieldnote' as role,
+                       '5' as rating,
+                       'website-studio/img/person-3.jpg' as image_file,
+                       'Portrait of a woman with curly hair' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 70
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: clients-say
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-testimonials
+            templateOptions: [
+                #DEFAULT#
+                ws-Quotes--spotlight
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUOTE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column NAME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column RATING (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region contact (
+        name: Contact
+        title: Let's *talk*
+        type: staticContent
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            htmlDomId: contact
+            customAttributes: data-menu="Contact"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">Available for new projects from January.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-envelope-o' as icon,
+                       'Email' as label,
+                       'lina@example.com' as value,
+                       'mailto:lina@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-map-marker' as icon,
+                       'Based in' as label,
+                       'Jeddah, working worldwide' as value,
+                       null as link,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @portfolio-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--left
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">LH</span>Lina Haddad</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">LH</span>Lina Haddad</a>
+                <p>Product and brand designer.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Dribbble' as label,
+                       'https://dribbble.com/' as link,
+                       'fa-dribbble' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Behance' as label,
+                       'https://www.behance.net/' as link,
+                       'fa-behance' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Instagram' as label,
+                       'https://www.instagram.com/' as link,
+                       'fa-instagram' as icon,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Lina Haddad</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    pageItem P16_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P16_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P16_MESSAGE (
+        type: textarea
+        label {
+            label: Tell me about your project
+            alignment: left
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P16_WEBSITE (
+        type: textField
+        label {
+            label: Leave this field empty
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+            columnCssClasses: ws-Honeypot
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            customAttributes: tabindex="-1" autocomplete="off"
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Send message
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- P16_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
+                if :P16_WEBSITE is null then
+                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- apex_mail.send(p_to   => 'hello@example.com',
+                    --                p_from => 'noreply@example.com',
+                    --                p_subj => 'Website message from ' || :P16_NAME,
+                    --                p_body => :P16_MESSAGE || chr(10) || chr(10) || :P16_NAME || ', ' || :P16_EMAIL || ', ' || null);
+                    -- apex_mail.push_queue;
+                    null;
+                end if;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Thanks for your message. We will reply within one working day.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 16
+            }
+        }
+    )
+
+)

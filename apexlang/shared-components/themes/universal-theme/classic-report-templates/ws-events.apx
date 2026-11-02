@@ -35,4 +35,15 @@ classicReportTemplate ws-events (
             cssClasses: ws-Events--cards
         }
     )
+
+    templateOption filter (
+        name: Filter Buttons
+        sequence: 10
+        appearance {
+            cssClasses: ws-Filter
+        }
+        help {
+            helpText: Buttons above the list that show one category at a time.
+        }
+    )
 )

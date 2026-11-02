@@ -267,6 +267,7 @@ export const REPORTS = [
     { id: "ws-events", name: "Website - Events", base: "ws-Events", tag: "div",
       cols: ["EVENT_DATE", "EVENT_TIME", "TITLE", "TEXT", "LOCATION", "SPEAKER", "LINK", "LINK_LABEL", "CATEGORY"], help: "An agenda or events list. EVENT_DATE and EVENT_TIME are shown as they come from the query.",
       groups: [{ id: "wsr-events-layout", name: "Layout", nul: "Agenda", options: [["ws-Events--cards", "Cards"]] }],
+      singles: [FILTER],
       row: `<article class="ws-Event" data-tag="#CATEGORY#">
   <div class="ws-Event-when"><b data-opt="text">#EVENT_TIME#</b><span data-opt="text">#EVENT_DATE#</span></div>
   <div class="ws-Event-b"><h3>#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p><p class="ws-Event-meta"><span data-opt="text"><span class="fa fa-user-o" aria-hidden="true"></span>#SPEAKER#</span><span data-opt="text"><span class="fa fa-map-marker" aria-hidden="true"></span>#LOCATION#</span></p></div>

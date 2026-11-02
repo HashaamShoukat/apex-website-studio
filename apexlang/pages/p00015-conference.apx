@@ -1,0 +1,1730 @@
+page 15 (
+    name: Starter - Event
+    alias: CONFERENCE
+    title: Northwind Data Summit 2027 - 9 and 10 March, Riyadh
+    appearance {
+        pageTemplate: @modern-one-page
+        templateOptions: [
+            #DEFAULT#
+            ws-Design--techgrid
+            ws-Accent--cyan
+            ws-Font--tech
+            ws-Header--pill
+        ]
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    htmlHeader {
+        htmlHeader:
+            ```html
+            <meta name="description" content="Two days of talks and workshops on data, AI and the cloud. 40 speakers, 1,200 attendees. Early tickets on sale now.">
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Northwind Data Summit 2027 - 9 and 10 March, Riyadh">
+            <meta property="og:description" content="Two days of talks and workshops on data, AI and the cloud. 40 speakers, 1,200 attendees. Early tickets on sale now.">
+            <meta property="og:image" content="#APP_FILES#website-studio/img/event-hero-1.jpg">
+            <meta name="twitter:card" content="summary_large_image">
+            <link rel="preload" as="image" href="#APP_FILES#website-studio/img/event-hero-1.jpg" fetchpriority="high">
+            ```
+    }
+    security {
+        authentication: public
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+
+    region hero (
+        name: Northwind Data Summit
+        title: Northwind Data Summit
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Where data people *meet*.' as title,
+                       '9 - 10 March 2027 - Riyadh' as subtitle,
+                       'Two days, 40 speakers and 1,200 engineers, analysts and leaders.' as text,
+                       'Get tickets' as button_label,
+                       '#tickets' as button_link,
+                       'See the programme' as button2_label,
+                       '#agenda' as button2_link,
+                       'website-studio/img/event-hero-1.jpg' as image_file,
+                       'A speaker on stage in front of an audience' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Workshops you can *use* on Monday.' as title,
+                       'Hands-on' as subtitle,
+                       'Twelve half-day workshops, limited to 30 seats each.' as text,
+                       'View workshops' as button_label,
+                       '#agenda' as button_link,
+                       null as button2_label,
+                       null as button2_link,
+                       'website-studio/img/event-hero-2.jpg' as image_file,
+                       'A conference audience' as image_alt,
+                       2 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: hero
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: hero
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-hero
+            templateOptions: [
+                #DEFAULT#
+                ws-Hero--zoom
+                ws-Hero--centered
+                ws-Hero--strong
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TITLE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SUBTITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON2_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON2_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region numbers (
+        name: The summit in numbers
+        title: The summit in numbers
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '40' as value,
+                       'Speakers' as label,
+                       1 as sort_order
+                  from dual
+                union all
+                select '1200' as value,
+                       'Attendees' as label,
+                       2 as sort_order
+                  from dual
+                union all
+                select '12' as value,
+                       'Workshops' as label,
+                       3 as sort_order
+                  from dual
+                union all
+                select '2' as value,
+                       'Days' as label,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: numbers
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-stats
+            templateOptions: [
+                #DEFAULT#
+                ws-Stats--cards
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VALUE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region agenda (
+        name: Programme
+        title: The *programme*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '9 Mar' as event_date,
+                       '09:30' as event_time,
+                       'Opening keynote: the next ten years of data' as title,
+                       'Rana Aziz' as speaker,
+                       'Main hall' as location,
+                       'Day 1' as category,
+                       1 as sort_order
+                  from dual
+                union all
+                select '9 Mar' as event_date,
+                       '11:00' as event_time,
+                       'Lakehouse or warehouse? Lessons from three migrations' as title,
+                       'Tom Becker' as speaker,
+                       'Hall B' as location,
+                       'Day 1' as category,
+                       2 as sort_order
+                  from dual
+                union all
+                select '9 Mar' as event_date,
+                       '14:00' as event_time,
+                       'Workshop: building a RAG app on your own data' as title,
+                       'Lina Park' as speaker,
+                       'Lab 1' as location,
+                       'Workshops' as category,
+                       3 as sort_order
+                  from dual
+                union all
+                select '10 Mar' as event_date,
+                       '09:30' as event_time,
+                       'Keynote: responsible AI in government' as title,
+                       'Dr. Faisal Al-Mutairi' as speaker,
+                       'Main hall' as location,
+                       'Day 2' as category,
+                       4 as sort_order
+                  from dual
+                union all
+                select '10 Mar' as event_date,
+                       '11:30' as event_time,
+                       'Real-time analytics at national scale' as title,
+                       'Aisha Rahman' as speaker,
+                       'Hall B' as location,
+                       'Day 2' as category,
+                       5 as sort_order
+                  from dual
+                union all
+                select '10 Mar' as event_date,
+                       '14:00' as event_time,
+                       'Workshop: data quality you can measure' as title,
+                       'Marco Rossi' as speaker,
+                       'Lab 2' as location,
+                       'Workshops' as category,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--split
+            ]
+        }
+        advanced {
+            htmlDomId: agenda
+            customAttributes: data-menu="Programme"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Eyebrow">Agenda</p><p class="ws-Lead">Doors open at 8:30 both days. All talks are in English with Arabic subtitles.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-events
+            templateOptions: [
+                #DEFAULT#
+                ws-Filter
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column EVENT_DATE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column EVENT_TIME (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SPEAKER (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LOCATION (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column CATEGORY (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region speakers (
+        name: Speakers
+        title: Speakers
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Rana Aziz' as name,
+                       'Chief Data Officer, Atlas Bank' as role,
+                       'website-studio/img/person-5.jpg' as image_file,
+                       'Portrait of a woman in an office' as image_alt,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Tom Becker' as name,
+                       'Principal Engineer, Orbital' as role,
+                       'website-studio/img/person-4.jpg' as image_file,
+                       'Portrait of a man with a beard' as image_alt,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Lina Park' as name,
+                       'AI Lead, Fieldnote' as role,
+                       'website-studio/img/person-3.jpg' as image_file,
+                       'Portrait of a woman with curly hair' as image_alt,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Faisal Al-Mutairi' as name,
+                       'Director of AI, Digital Government' as role,
+                       'website-studio/img/person-6.jpg' as image_file,
+                       'Portrait of a man in a suit' as image_alt,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Aisha Rahman' as name,
+                       'VP Analytics, Northgrid' as role,
+                       'website-studio/img/person-1.jpg' as image_file,
+                       'Portrait of a woman smiling' as image_alt,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Marco Rossi' as name,
+                       'Data Quality Lead, Kestrel' as role,
+                       'website-studio/img/person-2.jpg' as image_file,
+                       'Portrait of a man in a shirt' as image_alt,
+                       6 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: speakers
+            customAttributes: data-menu="Speakers"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-team
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ROLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region video (
+        name: Highlights from 2026
+        title: Highlights from *2026*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'https://www.youtube.com/watch?v=aqz-KE-bpKQ' as video_url,
+                       'Northwind Data Summit 2026 in three minutes' as title,
+                       'website-studio/img/event-hero-2.jpg' as image_file,
+                       'A conference audience' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 60
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+                ws-Width--narrow
+            ]
+        }
+        advanced {
+            htmlDomId: video
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-video
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column VIDEO_URL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region tickets (
+        name: Tickets
+        title: Tickets
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Student' as name,
+                       'SAR 250' as price,
+                       '2 days' as period,
+                       'With a valid student card.' as description,
+                       'All talks|Lunch both days|Recordings' as features,
+                       'Buy' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Conference' as name,
+                       'SAR 1,450' as price,
+                       '2 days' as period,
+                       'Everything most people need.' as description,
+                       'All talks|One workshop|Lunch and dinner|Recordings' as features,
+                       'Buy' as button_label,
+                       '#contact' as button_link,
+                       'Y' as is_featured,
+                       'Early price' as badge,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'All access' as name,
+                       'SAR 2,900' as price,
+                       '2 days' as period,
+                       'For teams who want it all.' as description,
+                       'All talks|Every workshop|Speaker dinner|Front-row seats' as features,
+                       'Buy' as button_label,
+                       '#contact' as button_link,
+                       'N' as is_featured,
+                       null as badge,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 70
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: tickets
+            customAttributes: data-menu="Tickets"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">Early prices until 31 December. Group discounts for five or more.</p>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-pricing
+            templateOptions: [
+                #DEFAULT#
+                ws-Plans--lift
+                ws-Plans--accent
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column PRICE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column PERIOD (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column DESCRIPTION (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column FEATURES (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column IS_FEATURED (
+            layout {
+                sequence: 80
+            }
+        )
+
+        column BADGE (
+            layout {
+                sequence: 90
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 100
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region venue (
+        name: Venue
+        title: The venue
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Venue' as eyebrow,
+                       'Riyadh Front *Exhibition* Centre' as title,
+                       'Ten minutes from the airport, with hotels and a metro station next door. Prayer rooms, a family room and step-free access throughout.' as text,
+                       '#map' as link,
+                       'Map and directions' as link_label,
+                       'website-studio/img/event-venue.jpg' as image_file,
+                       'The conference hall' as image_alt,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: venue
+            customAttributes: data-menu="Venue"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-zigzag
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column EYEBROW (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column IMAGE_FILE (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column IMAGE_ALT (
+            layout {
+                sequence: 70
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 80
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region map (
+        name: Getting there
+        title: Getting there
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'https://www.openstreetmap.org/export/embed.html?bbox=46.70%2C24.83%2C46.76%2C24.87&layer=mapnik' as map_url,
+                       'Riyadh Front Exhibition Centre' as title,
+                       'Airport Road, Riyadh' as address,
+                       'https://www.openstreetmap.org/' as link,
+                       'Directions' as link_label,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 90
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: map
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-map
+            templateOptions: [
+                #DEFAULT#
+                ws-Maps--full
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column MAP_URL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ADDRESS (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column LINK_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 60
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region sponsors (
+        name: Sponsors
+        title: Sponsors
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Atlas Bank' as name,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Orbital' as name,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Northgrid' as name,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Fieldnote' as name,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Kestrel' as name,
+                       5 as sort_order
+                  from dual
+                union all
+                select 'Lumen' as name,
+                       6 as sort_order
+                  from dual
+                union all
+                select 'Harborline' as name,
+                       7 as sort_order
+                  from dual
+                union all
+                select 'Petra' as name,
+                       8 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 100
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: sponsors
+            customAttributes: data-menu="Sponsors"
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-logos
+            templateOptions: [
+                #DEFAULT#
+                ws-Logos--grid
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column NAME (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 20
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region faq (
+        name: Questions
+        title: Questions
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Can I get a refund?' as question,
+                       'Tickets can be transferred to a colleague at any time, and refunded until 1 February.' as answer,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Will talks be recorded?' as question,
+                       'Yes. Every ticket includes the recordings, available a week after the summit.' as answer,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Is there a dress code?' as question,
+                       'No. Come as you are.' as answer,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 110
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: faq
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-faq
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column QUESTION (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ANSWER (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region contact (
+        name: Contact
+        title: Questions about *tickets*?
+        type: staticContent
+        layout {
+            sequence: 120
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Sec--menu
+                ws-Tone--soft
+            ]
+            cssClasses: ws-Contact
+        }
+        advanced {
+            htmlDomId: contact
+            customAttributes: data-menu="Contact"
+        }
+        headerAndFooter {
+            headerText: <p class="ws-Lead">Group bookings, invoices and speaker enquiries.</p>
+        }
+    )
+
+    region contact-details (
+        name: Contact Details
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'fa-envelope-o' as icon,
+                       'Email' as label,
+                       'summit@example.com' as value,
+                       'mailto:summit@example.com' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'fa-calendar' as icon,
+                       'Dates' as label,
+                       '9 - 10 March 2027' as value,
+                       null as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'fa-map-marker' as icon,
+                       'Venue' as label,
+                       'Riyadh Front Exhibition Centre' as value,
+                       null as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @contact
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: contact-details
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-contact
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column ICON (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LABEL (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 50
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region site-menu (
+        name: Menu
+        type: list
+        source {
+            list: @event-menu
+        }
+        layout {
+            sequence: 10
+            slot: menu
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: site-menu
+        }
+        componentAppearance {
+            listTemplate: @website-menu
+            templateOptions: [
+                #DEFAULT#
+                ws-Menu--cta
+                ws-Menu--center
+            ]
+        }
+    )
+
+    region logo (
+        name: Logo
+        type: staticContent
+        source {
+            htmlCode: <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">N</span>Northwind Summit</a>
+        }
+        layout {
+            sequence: 10
+            slot: logo
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: logo
+        }
+    )
+
+    region footer-about (
+        name: Footer - About
+        type: staticContent
+        source {
+            htmlCode:
+                ```
+                <a class="ws-Brand" href="#top"><span class="ws-Logo-mark" aria-hidden="true">N</span>Northwind Summit</a>
+                <p>9 - 10 March 2027, Riyadh.</p>
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: footer-about
+        }
+    )
+
+    region social (
+        name: Social Media
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'LinkedIn' as label,
+                       'https://www.linkedin.com/' as link,
+                       'fa-linkedin' as icon,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'X' as label,
+                       'https://x.com/' as link,
+                       'fa-x-twitter' as icon,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'YouTube' as label,
+                       'https://www.youtube.com/' as link,
+                       'fa-youtube-play' as icon,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 10
+            parentRegion: @footer-about
+            slot: subRegions
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: social
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region f-summit (
+        name: Footer - Summit
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Programme' as label,
+                       '#agenda' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Speakers' as label,
+                       '#speakers' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Tickets' as label,
+                       '#tickets' as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Become a sponsor' as label,
+                       '#contact' as link,
+                       4 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footer
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: f-summit
+        }
+        headerAndFooter {
+            headerText: <h3>Summit</h3>
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--list
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    region copyright (
+        name: Copyright
+        type: staticContent
+        source {
+            htmlCode: <span>&copy; Northwind Events</span>
+        }
+        layout {
+            sequence: 10
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: copyright
+        }
+    )
+
+    region legal (
+        name: Legal Links
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Code of conduct' as label,
+                       '#' as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Privacy' as label,
+                       '#' as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Terms' as label,
+                       '#' as link,
+                       3 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: footerBottom
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: legal
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-links
+            templateOptions: [
+                #DEFAULT#
+                ws-Links--inline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
+    pageItem P15_NAME (
+        type: textField
+        label {
+            label: Name
+            alignment: left
+        }
+        layout {
+            sequence: 10
+            region: @contact
+            slot: regionBody
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P15_EMAIL (
+        type: textField
+        label {
+            label: Email
+            alignment: left
+        }
+        settings {
+            subtype: email
+        }
+        layout {
+            sequence: 20
+            region: @contact
+            slot: regionBody
+            startNewRow: false
+            columnSpan: 6
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P15_PHONE (
+        type: textField
+        label {
+            label: Phone
+            alignment: left
+        }
+        layout {
+            sequence: 30
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P15_MESSAGE (
+        type: textarea
+        label {
+            label: Message
+            alignment: left
+        }
+        layout {
+            sequence: 40
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P15_WEBSITE (
+        type: textField
+        label {
+            label: Leave this field empty
+            alignment: left
+        }
+        layout {
+            sequence: 50
+            region: @contact
+            slot: regionBody
+            columnSpan: 12
+            columnCssClasses: ws-Honeypot
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            customAttributes: tabindex="-1" autocomplete="off"
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    button send (
+        buttonName: SEND
+        label: Send message
+        layout {
+            sequence: 60
+            region: @contact
+            slot: regionBody
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: submitPage
+        }
+    )
+
+    process send-message (
+        name: Send Message
+        type: executeCode
+        source {
+            location: localDatabase
+            language: plsql
+            plsqlCode:
+                ```
+                -- P15_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
+                if :P15_WEBSITE is null then
+                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- apex_mail.send(p_to   => 'hello@example.com',
+                    --                p_from => 'noreply@example.com',
+                    --                p_subj => 'Website message from ' || :P15_NAME,
+                    --                p_body => :P15_MESSAGE || chr(10) || chr(10) || :P15_NAME || ', ' || :P15_EMAIL || ', ' || :P15_PHONE);
+                    -- apex_mail.push_queue;
+                    null;
+                end if;
+                ```
+        }
+        execution {
+            sequence: 10
+            point: processing
+        }
+        successMessage {
+            successMessage: Thanks for your message. We will reply within one working day.
+        }
+        serverSideCondition {
+            whenButtonPressed: @send
+        }
+    )
+
+    branch back-to-website (
+        name: Back to the Website
+        execution {
+            sequence: 10
+            point: afterProcessing
+        }
+        behavior {
+            type: pageOrUrl
+            target: {
+                page: 15
+            }
+        }
+    )
+
+)
