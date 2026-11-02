@@ -1,0 +1,114 @@
+listTemplate website-menu (
+    name: Website - Menu
+    templateClass: pullDownMenu
+    list {
+        beforeEntries: <ul class="ws-R ws-Menu #COMPONENT_CSS_CLASSES#" data-ws-menu>
+        afterEntries: </ul>
+    }
+    entry {
+        current: <li class="ws-Menu-item is-current #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" aria-current="page" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        currentWithSublist: <li class="ws-Menu-item ws-Menu-item--parent is-current #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" aria-current="page" #LINK_ATTR#>#TEXT_ESC_SC#</a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh">#TEXT_ESC_SC#</span></button>
+        noncurrent: <li class="ws-Menu-item #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        noncurrentWithSublist: <li class="ws-Menu-item ws-Menu-item--parent #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" #LINK_ATTR#>#TEXT_ESC_SC#</a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh">#TEXT_ESC_SC#</span></button>
+    }
+    sublist {
+        beforeEntries: <ul class="ws-Menu-sub">
+        afterEntries: </ul></li>
+    }
+    sublistEntry {
+        current: <li class="ws-Menu-item is-current #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" aria-current="page" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        currentWithSublist: <li class="ws-Menu-item ws-Menu-item--parent is-current #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" aria-current="page" #LINK_ATTR#>#TEXT_ESC_SC#</a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh">#TEXT_ESC_SC#</span></button>
+        noncurrent: <li class="ws-Menu-item #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" #LINK_ATTR#>#TEXT_ESC_SC#</a></li>
+        noncurrentWithSublist: <li class="ws-Menu-item ws-Menu-item--parent #A01#"><a class="ws-Menu-link" href="#LINK#" target="#A02#" #LINK_ATTR#>#TEXT_ESC_SC#</a><button type="button" class="ws-Menu-toggle" aria-expanded="false"><span class="u-vh">#TEXT_ESC_SC#</span></button>
+    }
+    attributeDescriptions {
+        a01: CSS classes of the entry (ws-Menu-cta shows it as a button)
+        a02: Link target (_blank opens a new tab)
+    }
+    comments {
+        comments: Website - Menu (Website Studio) - the header menu of Modern One Page. Use it in a List region in the Menu slot (region template Blank with Attributes). Static or SQL lists; parent entries become drop-downs on wide screens and an accordion in the phone menu. Styles are in website-studio/website.css.
+    }
+
+    templateOption menu-center (
+        name: Center
+        group: @list/wsm-align
+        sequence: 10
+        appearance {
+            cssClasses: ws-Menu--center
+        }
+    )
+
+    templateOption menu-left (
+        name: Left
+        group: @list/wsm-align
+        sequence: 20
+        appearance {
+            cssClasses: ws-Menu--left
+        }
+    )
+
+    templateOption menu-max4 (
+        name: 4, then More
+        group: @list/wsm-max
+        sequence: 10
+        appearance {
+            cssClasses: ws-Menu--max4
+        }
+    )
+
+    templateOption menu-max5 (
+        name: 5, then More
+        group: @list/wsm-max
+        sequence: 20
+        appearance {
+            cssClasses: ws-Menu--max5
+        }
+    )
+
+    templateOption menu-max6 (
+        name: 6, then More
+        group: @list/wsm-max
+        sequence: 30
+        appearance {
+            cssClasses: ws-Menu--max6
+        }
+    )
+
+    templateOption menu-max7 (
+        name: 7, then More
+        group: @list/wsm-max
+        sequence: 40
+        appearance {
+            cssClasses: ws-Menu--max7
+        }
+    )
+
+    templateOption menu-overlay (
+        name: Full-screen Overlay
+        group: @list/wsm-mobile
+        sequence: 10
+        appearance {
+            cssClasses: ws-Menu--overlay
+        }
+    )
+
+    templateOption menu-drawer (
+        name: Side Drawer
+        group: @list/wsm-mobile
+        sequence: 20
+        appearance {
+            cssClasses: ws-Menu--drawer
+        }
+    )
+
+    templateOption menu-cta (
+        name: Last Entry as Button
+        sequence: 10
+        appearance {
+            cssClasses: ws-Menu--cta
+        }
+        help {
+            helpText: Shows the last top-level entry as a button (or give any entry the CSS class ws-Menu-cta in user attribute 1).
+        }
+    )
+)
