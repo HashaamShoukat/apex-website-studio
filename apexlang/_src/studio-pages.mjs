@@ -1,7 +1,9 @@
 // Writes the Gallery (1), Designer (2) and How to Use (3) pages: node _src/studio-pages.mjs
 import fs from "node:fs";
 import { PRESETS, PAGE_DEFAULTS } from "./presets.mjs";
-import { DESIGNS, ACCENTS, FONTS, REPORTS } from "./options.mjs";
+import { DESIGNS, FONTS, REPORTS, PAGE, MENU } from "./options.mjs";
+import { SITES } from "./sites.mjs";
+import { sql } from "./demo.mjs";
 const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const ind = (s, n) => s.split("\n").map(l => (l ? " ".repeat(n) + l : l)).join("\n");
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -82,10 +84,12 @@ const write = (file, s) => fs.writeFileSync(ROOT + "pages/" + file, s);
 
 // ---------- 1 Gallery ----------
 const galleryFn = `// Ready-made looks of the Website Studio templates; thumbnails are app files gallery/<id>.jpg (made from the demo website).
-var WS_PRESETS = ${JSON.stringify(PRESETS.map(p => ({ id: p.id, name: p.name, tags: p.tags, page: p.page, r: p.r, hash: p.hash })), null, 0).replace(/\},\{/g, "},\n    {")};`;
+var WS_PRESETS = ${JSON.stringify(PRESETS.map(p => ({ id: p.id, name: p.name, tags: p.tags, page: p.page, r: p.r, hash: p.hash })), null, 0).replace(/\},\{/g, "},\n    {")};
+// The starter websites: one page each, with their own content, menu and look.
+var WS_SITES = ${JSON.stringify(SITES.map(st => ({ key: st.key, alias: st.alias, name: st.brand.replace(/&amp;/g, "&"), label: st.label, text: st.description, look: st.look })), null, 0).replace(/\},\{/g, "},\n    {")};`;
 const galleryLoad = `(function ($) {
     var box = document.getElementById("wss-gallery"), files = box.getAttribute("data-files"),
-        site = box.getAttribute("data-site"), designer = box.getAttribute("data-designer");
+        site = box.getAttribute("data-site"), designer = box.getAttribute("data-designer"), app = box.getAttribute("data-app"), ses = box.getAttribute("data-session");
     function esc(s) { return apex.util.escapeHTML(String(s)); }
     function regions(p) { return Object.keys(p.r).map(function (k) { return k + ":" + p.r[k].join("+"); }).join(","); }
     function look(p) { return "#look=" + encodeURIComponent(p.page) + (regions(p) ? "&r=" + encodeURIComponent(regions(p)) : ""); }
@@ -97,11 +101,19 @@ const galleryLoad = `(function ($) {
             '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" href="' + esc(designer + look(p)) + '"><span class="t-Button-label">Customize</span></a>' +
             '<a class="t-Button t-Button--small" target="_blank" rel="noopener" href="' + esc(site + p.hash) + '"><span class="t-Button-label">Full Screen</span></a></div></div></article>';
     }).join("");
+    document.getElementById("wss-sites").innerHTML = WS_SITES.map(function (s) {
+        var open = app + s.alias + ses, custom = designer + "#site=" + encodeURIComponent(s.alias) + "&look=" + encodeURIComponent(s.look);
+        return '<article class="wss-Card wss-Card--site">' +
+            '<a class="wss-Card-shot" href="' + esc(open) + '" target="_blank" rel="noopener" aria-label="' + esc("Open " + s.name) + '"><img src="' + esc(files + "gallery/site-" + s.key + ".jpg") + '" alt="" loading="lazy" width="640" height="400"></a>' +
+            '<div class="wss-Card-body"><h3 class="wss-Card-title">' + esc(s.label) + '</h3><p class="wss-Card-text">' + esc(s.text) + '</p>' +
+            '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
+            '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
+    }).join("");
     $(document).on("click", ".wss-Filter button", function () {
         var f = this.getAttribute("data-f");
         $(".wss-Filter button").attr("aria-pressed", "false");
         this.setAttribute("aria-pressed", "true");
-        $(".wss-Card").each(function () { this.hidden = !!f && (" " + this.getAttribute("data-tags") + " ").indexOf(" " + f + " ") < 0; });
+        $("#wss-gallery .wss-Card").each(function () { this.hidden = !!f && (" " + this.getAttribute("data-tags") + " ").indexOf(" " + f + " ") < 0; });
     });
 })(apex.jQuery);`;
 const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem); border-radius: 18px; color: #ffffff;
@@ -125,86 +137,111 @@ const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3v
 .wss-Card:hover .wss-Card-shot img { transform: scale(1.03); }
 .wss-Card-body { display: flex; flex-direction: column; gap: .5rem; padding: .875rem 1rem 1rem; }
 .wss-Card-title { margin: 0; font-size: 1rem; font-weight: 700; }
+.wss-Card-text { margin: 0; font-size: .8125rem; line-height: 1.5; opacity: .8; }
+.wss-H2 { margin: 2rem 0 .25rem; font-size: 1.25rem; font-weight: 700; }
+.wss-Sub { margin: 0 0 1rem; opacity: .8; }
 .wss-Card-tags { display: flex; flex-wrap: wrap; gap: .375rem; }
 .wss-Card-tags span { padding: .1rem .5rem; border-radius: 999px; background: rgba(234,88,12,.1); color: #9a3412; font-size: .75rem; font-weight: 600; text-transform: capitalize; }
 .wss-Card-actions { display: flex; gap: .5rem; margin-top: .25rem; }
 .wss-Card-actions .t-Button { flex: 1; justify-content: center; }
 @media (prefers-reduced-motion: reduce) { .wss-Card, .wss-Card-shot img { transition: none; } .wss-Card:hover { transform: none; } .wss-Card:hover .wss-Card-shot img { transform: none; } }`;
+const TAGS = [...new Set(PRESETS.flatMap(p => p.tags.split(" ")))];
+const TAG_NAME = { light: "Light", dark: "Dark", clean: "Clean", editorial: "Editorial", bold: "Bold", glass: "Glass", soft: "Soft UI", midnight: "Midnight", minimal: "Minimal",
+    corporate: "Corporate", saas: "SaaS", luxury: "Elegant", playful: "Playful", organic: "Organic", techgrid: "Tech Grid", swiss: "Swiss", retro: "Retro" };
 const galleryHero = `<div class="wss-Hero">
   <h1>One-page websites for Oracle APEX</h1>
-  <p>A page template, a section template and ${REPORTS.length} report templates for heroes and sliders, services, numbers that count up, team, testimonials, clients, pricing, timeline, careers, FAQ, portfolio, contact details and social links - every list comes from a SQL query. ${DESIGNS.length} designs, 10 accent colours, light and dark, ${FONTS.length - 1} typefaces. Every look is a template option. Pick one, fine-tune it in the Designer, copy the templates into your app.</p>
+  <p>A page template, a section template, a menu template and ${REPORTS.length} report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps and more. Every list comes from a SQL query. ${DESIGNS.length} designs, 10 accent colours, light and dark, ${FONTS.length - 1} typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
   <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:HOW-TO-USE:&APP_SESSION."><span class="t-Button-label">How to use it</span></a>
 </div>
+<h2 class="wss-H2">Starter Websites</h2>
+<p class="wss-Sub">${SITES.length} complete websites with their own content, menu and photos. Open one, or customize it in the Designer.</p>
+<div class="wss-Grid" id="wss-sites"></div>
+<h2 class="wss-H2">Looks</h2>
+<p class="wss-Sub">${PRESETS.length} ready-made looks on the demo website. Each one works on every starter website.</p>
 <div class="wss-Filter" role="group" aria-label="Filter">
   <button type="button" data-f="" aria-pressed="true">All</button>
-  <button type="button" data-f="light" aria-pressed="false">Light</button>
-  <button type="button" data-f="dark" aria-pressed="false">Dark</button>
-  <button type="button" data-f="editorial" aria-pressed="false">Editorial</button>
-  <button type="button" data-f="bold" aria-pressed="false">Bold</button>
-  <button type="button" data-f="glass" aria-pressed="false">Glass</button>
-  <button type="button" data-f="soft" aria-pressed="false">Soft UI</button>
+${TAGS.map(t => `  <button type="button" data-f="${t}" aria-pressed="false">${TAG_NAME[t] || t}</button>`).join("\n")}
 </div>`;
 const gallery = [pageHead(1, "Gallery", "HOME", "Website Studio - Gallery"), js(galleryFn, galleryLoad), cssBlock(galleryCss), pageSec, "",
     staticRegion("hero", "Website Studio", 10, galleryHero), "",
-    staticRegion("gallery", "Gallery", 20, `<div class="wss-Grid" id="wss-gallery" data-files="#APP_FILES#" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION." data-designer="f?p=&APP_ID.:DESIGNER:&APP_SESSION."></div>`),
+    staticRegion("gallery", "Gallery", 20, `<div class="wss-Grid" id="wss-gallery" data-files="#APP_FILES#" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION." data-designer="f?p=&APP_ID.:DESIGNER:&APP_SESSION." data-app="f?p=&APP_ID.:" data-session=":&APP_SESSION."></div>`),
     "", ")", ""].join("\n");
 write("p00001-home.apx", gallery);
 
 // ---------- 2 Designer ----------
-// section layouts the Designer offers: [item, label, static id on the demo page, report template, [option label, class]...] - the first is the default
-const SECTIONS = [
-    ["P2_HERO", "Hero", "hero", "ws-hero", [["Slider", "ws-Hero--slider"], ["Split", "ws-Hero--split"], ["Centered", "ws-Hero--centered"], ["Full Bleed", "ws-Hero--fullbleed"]]],
-    ["P2_LOGOS", "Clients", "clients", "ws-logos", [["Scrolling Marquee", "ws-Logos--marquee"], ["Grid", "ws-Logos--grid"], ["Row", "ws-Logos--row"]]],
-    ["P2_SERVICES", "Services", "services", "ws-features", [["Cards", "ws-Features--cards"], ["Rows", "ws-Features--rows"], ["Bento", "ws-Features--bento"], ["Icons Only", "ws-Features--icons"]]],
-    ["P2_WORK", "Portfolio", "work", "ws-gallery", [["Grid", "ws-Works--grid"], ["Editorial", "ws-Works--editorial"], ["Large", "ws-Works--large"]]],
-    ["P2_PROCESS", "Process", "process", "ws-steps", [["Connected", "ws-Steps--line"], ["Cards", "ws-Steps--cards"]]],
-    ["P2_QUOTES", "Testimonials", "clients-say", "ws-testimonials", [["Carousel", "ws-Quotes--carousel"], ["Wall", "ws-Quotes--wall"], ["Spotlight", "ws-Quotes--spotlight"]]],
-    ["P2_TEAM", "Team", "team", "ws-team", [["Portrait Cards", "ws-Team--cards"], ["Round Photos", "ws-Team--round"], ["Compact List", "ws-Team--list"]]],
-    ["P2_HISTORY", "Timeline", "history", "ws-timeline", [["Alternating", "ws-Timeline--alternate"], ["List", "ws-Timeline--list"]]]
+// Page options: the option groups and switches of Modern One Page. Section options: one select per option group of a
+// report or list template; they act on every region with that template (#ws=...&r=@ws-hero:...), so they work on every site.
+const PAGE_SELECTS = PAGE.groups.map(g => ({ item: "P2_" + g.id.replace(/^ws-/, "").toUpperCase(), group: g.name, nul: g.nul, options: g.options }));
+const PAGE_SWITCHES = PAGE.singles.map(([css, label]) => ({ item: "P2_" + css.replace(/^ws-Fx--/, "").toUpperCase(), css, label }));
+const tplOf = id => id === MENU.id ? MENU : REPORTS.find(r => r.id === id);
+// [template, label, [group ids and single classes]]
+const SECTION_SPEC = [
+    ["ws-hero", "Hero", ["wsr-hero-layout", "wsr-hero-height", "wsr-hero-overlay", "wsr-hero-move", "ws-Hero--zoom", "wsr-autoplay"]],
+    [MENU.id, "Menu", ["wsm-align", "wsm-max", "wsm-mobile", "ws-Menu--cta"]],
+    ["ws-features", "Services", ["wsr-features-layout"]], ["ws-testimonials", "Testimonials", ["wsr-quotes-layout"]],
+    ["ws-team", "Team", ["wsr-team-layout"]], ["ws-gallery", "Portfolio", ["wsr-works-layout"]],
+    ["ws-logos", "Logos", ["wsr-logos-layout", "wsr-logos-speed"]], ["ws-steps", "Process", ["wsr-steps-layout"]], ["ws-timeline", "Timeline", ["wsr-timeline-layout"]],
+    ["ws-news", "News", ["wsr-news-layout"]], ["ws-products", "Products", ["wsr-products-layout"]], ["ws-photos", "Photo Gallery", ["wsr-photos-layout"]],
+    ["ws-events", "Events", ["wsr-events-layout"]], ["ws-hours", "Opening Hours", ["wsr-hours-layout"]]
 ];
+// [item, label, template, [[option label, value]...]] - value: a class, !<group> (the group's empty choice) or -<class> (a switch off)
+const SECTIONS = SECTION_SPEC.flatMap(([tpl, label, parts]) => parts.map(part => {
+    const t = tplOf(tpl), g = (t.groups || []).find(x => x.id === part), single = (t.singles || []).find(x => x[0] === part);
+    const item = ("P2_" + tpl.replace(/^ws-|^website-/, "") + "_" + (g ? g.id.split("-").pop() : part.replace(/^ws-\w+--/, ""))).toUpperCase().replace(/-/g, "_");
+    if (g) { return [item, label + " - " + g.name, tpl, [[g.nul, g.nulClass || "!" + g.id], ...g.options.map(([c, n]) => [n, c])]]; }
+    return [item, label + " - " + single[1], tpl, [["On", single[0]], ["Off", "-" + single[0]]]];
+}));
+const lov = n => String(n).replace(/[,;]/g, "");
 const PRESET_OF = Object.fromEntries(REPORTS.map(r => [r.id, r.preset || []]));
-const ACC = ACCENTS.map(([id, n]) => `${n};ws-Accent--${id}`).join(",");
-const designerLoad = `// Designer: every choice is a template option (a CSS class) of Modern One Page or of a Website report template.
-// The preview iframe shows the real demo website; the classes travel in its URL hash (#ws=<page classes>&r=<static id>:<classes>,...).
+const TPL_NAME = Object.fromEntries([...REPORTS, MENU].map(r => [r.id, r.name]));
+// per site: the page options of its look, and the SQL of every section that shows pictures (for the SQL panel)
+const SITE_DATA = Object.fromEntries(SITES.map(st => [st.alias, {
+    look: st.look, name: st.label, page: st.page,
+    sql: st.sections.filter(x => x.rows && x.rows.some(r => "IMAGE_FILE" in r || "IMAGE_URL" in r)).map(x => ({ id: x.id, name: (x.menu || x.title).replace(/\*/g, "") + " (" + TPL_NAME[x.report] + ")", sql: sql(x.rows) }))
+}]));
+const designerLoad = `// Designer: every choice is a template option (a CSS class) of Modern One Page or of a Website report or list template.
+// The preview iframe shows a real website page; the classes travel in its URL hash (#ws=<page classes>&r=@<template>:<classes>,...).
 (function ($) {
     var DEF = "${PAGE_DEFAULTS}".split(" ");
-    var SELECTS = [
-        { item: "P2_DESIGN", group: "Design" }, { item: "P2_ACCENT", group: "Accent Color" }, { item: "P2_SCHEME", group: "Color Scheme" },
-        { item: "P2_FONT", group: "Typeface" }, { item: "P2_HEADER", group: "Header" }, { item: "P2_CORNERS", group: "Corners" },
-        { item: "P2_SPACE", group: "Section Spacing" }, { item: "P2_FOOTER", group: "Footer" }
-    ];
-    var SWITCHES = [
-        { item: "P2_STICKY", css: "ws-Fx--sticky", label: "Sticky Header" }, { item: "P2_REVEAL", css: "ws-Fx--reveal", label: "Reveal on Scroll" },
-        { item: "P2_COUNT", css: "ws-Fx--count", label: "Count Up Numbers" }, { item: "P2_TOP", css: "ws-Fx--top", label: "Back to Top Button" },
-        { item: "P2_PROGRESS", css: "ws-Fx--progress", label: "Scroll Progress Bar" }
-    ];
-    // [item, label, static id, report template, [[option, class]...]] - the first option is the template's default
+    var SELECTS = ${JSON.stringify(PAGE_SELECTS.map(x => ({ item: x.item, group: x.group })))};
+    var SWITCHES = ${JSON.stringify(PAGE_SWITCHES)};
+    // [item, label, template, [[option, value]...]]
     var SECTIONS = ${JSON.stringify(SECTIONS)};
-    var PRESET = ${JSON.stringify(PRESET_OF)};
-    var frame = document.getElementById("wsd-frame"), site = frame.getAttribute("data-site"), lastRegions = null;
+    var PRESET = ${JSON.stringify(PRESET_OF)}, TPL_NAME = ${JSON.stringify(TPL_NAME)};
+    var SITES = ${JSON.stringify(SITE_DATA)};
+    var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null;
     function esc(s) { return apex.util.escapeHTML(String(s)); }
+    function siteUrl() { return app + ($v("P2_SITE") || "WEBSITE") + ses; }
 
-    // a look passed from the Gallery: #look=<page classes>&r=<static id>:<classes>,...
-    (function fromHash() {
-        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
-        if (g("look") === null) { return; }
-        var cls = g("look").split(/[\\s+]+/), rs = {};
-        (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\\s+]+/); } });
+    // page options of a look: every select and switch follows the list of classes
+    function setPage(cls) {
         SELECTS.forEach(function (s) {
             var hit = $("#" + s.item + " option").filter(function () { return this.value && cls.indexOf(this.value) >= 0; }).first();
             apex.item(s.item).setValue(hit.length ? hit.val() : "", null, true);
         });
         SWITCHES.forEach(function (s) { apex.item(s.item).setValue(DEF.indexOf(s.css) >= 0 || cls.indexOf(s.css) >= 0 ? "Y" : "N", null, true); });
+    }
+    function setSections(rs) {
         SECTIONS.forEach(function (s) {
-            var mine = rs[s[2]] || [], hit = s[4].filter(function (o) { return mine.indexOf(o[1]) >= 0; })[0];
-            apex.item(s[0]).setValue(hit ? hit[1] : s[4][0][1], null, true);
+            var mine = rs["@" + s[2]] || [], hit = s[3].filter(function (o) { return mine.indexOf(o[1]) >= 0; })[0];
+            apex.item(s[0]).setValue(hit ? hit[1] : "", null, true);
         });
+    }
+    // from the Gallery: #site=<page alias>&look=<page classes>&r=@<template>:<classes>,...
+    (function fromHash() {
+        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+        if (g("site") && SITES[g("site")]) { apex.item("P2_SITE").setValue(g("site"), null, true); }
+        var look = g("look"), rs = {};
+        (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\\s+]+/); } });
+        setPage((look !== null ? look : SITES[$v("P2_SITE") || "WEBSITE"].look).split(/[\\s+]+/));
+        setSections(rs);
     })();
+    $("#P2_SITE").on("change", function () { setPage(SITES[$v("P2_SITE")].look.split(/\\s+/)); setSections({}); sqlPanel(); render(); });
 
     function chosen() {
-        var page = [], rows = [], extra = [], allDefaults = true, regions = [], changed = [];
+        var page = [], rows = [], extra = [], allDefaults = true, tpl = {}, changed = [];
         SELECTS.forEach(function (s) {
             var v = $v(s.item), text = $("#" + s.item + " option:selected").text();
             if (v) { page.push(v); extra.push(v); }
@@ -218,40 +255,51 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
             rows.push({ group: s.label, option: on ? "On" : "Off", isDefault: on === isDef });
         });
         SECTIONS.forEach(function (s) {
-            var v = $v(s[0]) || s[4][0][1], isDef = v === s[4][0][1];
-            regions.push(s[2] + ":" + v);
-            rows.push({ group: s[1], option: $("#" + s[0] + " option:selected").text(), isDefault: isDef, section: true });
-            if (!isDef) { changed.push({ id: s[2], label: s[1], tpl: s[3], cls: v }); }
+            var v = $v(s[0]);
+            if (!v) { return; }
+            (tpl[s[2]] = tpl[s[2]] || []).push(v);
+            changed.push({ tpl: s[2], label: s[1], option: $("#" + s[0] + " option:selected").text(), cls: v });
         });
-        return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, regions: regions.join(","), changed: changed };
+        return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, tpl: tpl, changed: changed,
+                 regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(",") };
     }
     function arr(list, n) {
         var pad = new Array(n + 1).join(" ");
         return list.length === 1 ? " " + list[0] + "\\n" : " [\\n" + list.map(function (x) { return pad + "    " + x + "\\n"; }).join("") + pad + "]\\n";
     }
     function relevance() {
-        var hero = $v("P2_HERO"), transparent = $v("P2_HEADER") === "ws-Header--transparent", photo = /slider|fullbleed/.test(hero);
-        $("#P2_HEADER_CONTAINER").toggleClass("wsd-Off", transparent && !photo).attr("data-why", transparent && !photo ? "Transparent needs the Slider or Full Bleed hero; with this hero it shows as Classic" : null);
-        $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", $v("P2_DESIGN") === "ws-Design--midnight").attr("data-why", $v("P2_DESIGN") === "ws-Design--midnight" ? "Midnight is always dark" : null);
+        var dark = /midnight|techgrid/.test($v("P2_DESIGN"));
+        $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "Midnight and Tech Grid are always dark" : null);
     }
     function render() {
-        var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + "&r=" + encodeURIComponent(c.regions);
+        var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : ""), src = siteUrl();
         relevance();
-        // section layouts need a fresh page; page options follow the hash without a reload
-        if (c.regions !== lastRegions || !frame.getAttribute("src")) { frame.setAttribute("src", site + hash); }
-        else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", site + hash); } }
-        lastRegions = c.regions;
-        $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.filter(function (r) { return !r.section; }).map(function (r) {
+        // section options and another site need a fresh page; page options follow the hash without a reload
+        if (src + c.regions !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
+        else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", src + hash); } }
+        lastSrc = src + c.regions;
+        $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.map(function (r) {
             return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
-        }).join("") + '</dl><p class="wsd-H">Sections</p><dl class="wsd-List">' + c.rows.filter(function (r) { return r.section; }).map(function (r) {
-            return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
-        }).join("") + "</dl>");
+        }).join("") + "</dl>" + (c.changed.length ? '<p class="wsd-H">Sections</p><dl class="wsd-List">' + c.changed.map(function (r) {
+            return "<dt>" + esc(r.label) + "</dt><dd>" + esc(r.option) + "</dd>";
+        }).join("") + "</dl>" : ""));
         var code = "appearance {\\n    pageTemplate: @modern-one-page\\n    templateOptions:" + arr(c.snippet, 4) + "}";
-        c.changed.forEach(function (s) {
-            code += "\\n\\n// region " + s.id + " (" + s.label + ")\\ncomponentAppearance {\\n    templateType: theme\\n    template: @" + s.tpl + "\\n    templateOptions:" + arr(["#DEFAULT#"].concat(PRESET[s.tpl] || [], [s.cls]), 4) + "}";
+        Object.keys(c.tpl).forEach(function (t) {
+            var on = (PRESET[t] || []).concat(c.tpl[t].filter(function (x) { return /^ws-/.test(x); })), off = c.tpl[t].filter(function (x) { return x.charAt(0) === "-"; }).map(function (x) { return x.slice(1); });
+            on = on.filter(function (x, i) { return off.indexOf(x) < 0 && on.indexOf(x) === i; });
+            code += "\\n\\n// every region with " + TPL_NAME[t] + "\\ncomponentAppearance {\\n" + (t === "website-menu" ? "    listTemplate: @website-menu\\n" : "    templateType: theme\\n    template: @" + t + "\\n") +
+                "    templateOptions:" + arr(["#DEFAULT#"].concat(on), 4) + "}";
         });
         $("#wsd-code").text(code);
     }
+    // the SQL of the sections with pictures on the chosen site
+    function sqlPanel() {
+        var list = SITES[$v("P2_SITE") || "WEBSITE"].sql, sel = $("#wsd-sqlpick");
+        sel.html(list.map(function (x, i) { return '<option value="' + i + '">' + esc(x.name) + "</option>"; }).join(""));
+        showSql();
+    }
+    function showSql() { var x = SITES[$v("P2_SITE") || "WEBSITE"].sql[+$("#wsd-sqlpick").val() || 0]; $("#wsd-sql").text(x ? x.sql : ""); }
+    $(document).on("change", "#wsd-sqlpick", showSql);
 
     $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).join(",")).on("change", render);
     // Desktop: the page is laid out at 1280px and scaled down to fit the preview
@@ -265,10 +313,11 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     $("#P2_DEVICE").on("change", fit);
     $(window).on("resize apexwindowresized", fit);
     fit();
-    $(document).on("click", ".js-wsd-copy", function () {
-        navigator.clipboard.writeText($("#wsd-code").text()).then(function () { apex.message.showPageSuccess("Copied."); });
-    });
+    function copy(text) { navigator.clipboard.writeText(text).then(function () { apex.message.showPageSuccess("Copied."); }); }
+    $(document).on("click", ".js-wsd-copy", function () { copy($("#wsd-code").text()); });
+    $(document).on("click", ".js-wsd-copysql", function () { copy($("#wsd-sql").text()); });
     $(document).on("click", ".js-wsd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
+    sqlPanel();
     render();
 })(apex.jQuery);`;
 const designerCss = `.wsd-Stage { position: relative; display: flex; justify-content: center; align-items: center; height: min(80vh, 780px); min-height: 520px; overflow: hidden; border-radius: 12px;
@@ -285,7 +334,8 @@ const designerCss = `.wsd-Stage { position: relative; display: flex; justify-con
 .wsd-List dd.is-default::after { content: " (default)"; font-weight: 400; opacity: .7; }
 .wsd-Code { margin: 0 0 1rem; padding: .875rem 1rem; overflow-x: auto; border-radius: 8px; background: #1f2329; color: #e6edf3; font-size: .8125rem; line-height: 1.5; white-space: pre-wrap; }
 .wsd-Where { margin: 0 0 .75rem; padding: .625rem .875rem; border-radius: 8px; background: rgba(234,88,12,.08); font-size: .8125rem; line-height: 1.5; }
-.wsd-H { margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
+.wsd-H { display: block; margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
+.wsd-Pick { width: 100%; max-width: 32rem; margin-bottom: .75rem; }
 .wsd-Off { opacity: .6; }
 .wsd-Off[data-why]::after { content: attr(data-why); display: block; padding: 0 .75rem .25rem; font-size: .75rem; font-style: italic; }
 @media (max-width: 640px) { .wsd-Stage { height: 72vh; min-height: 460px; } }`;
@@ -390,7 +440,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
         }
     )`, "",
 `    region sections (
-        name: Section Layouts
+        name: Section Options
         type: staticContent
         layout {
             sequence: 5
@@ -409,7 +459,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
         name: Live Preview
         type: staticContent
         source {
-            htmlCode: <div class="wsd-Stage" id="wsd-stage" data-device="DESKTOP"><iframe id="wsd-frame" title="Website preview" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION."></iframe></div>
+            htmlCode: <div class="wsd-Stage" id="wsd-stage" data-device="DESKTOP"><iframe id="wsd-frame" title="Website preview" data-app="f?p=&APP_ID.:" data-session=":&APP_SESSION."></iframe></div>
         }
         layout {
             sequence: 30
@@ -431,7 +481,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
         source {
             htmlCode:
                 \`\`\`html
-                <p class="wsd-Where">Page Designer: select your one page, <strong>Appearance &gt; Page Template</strong> = <strong>Modern One Page</strong>, then tick the <strong>Template Options</strong> listed below. For a section, select its Classic Report region, <strong>Attributes &gt; Appearance</strong>, and set the Template Options of its Website report template. Or paste the APEXlang into the page file.</p>
+                <p class="wsd-Where">Page Designer: select your one page, <strong>Appearance &gt; Page Template</strong> = <strong>Modern One Page</strong>, then tick the <strong>Template Options</strong> listed below. Section Options act on every region with that template: select the region, <strong>Attributes &gt; Appearance &gt; Template Options</strong> (for the menu: the List region's Template Options). Or paste the APEXlang into the page file.</p>
                 <div id="wsd-summary"></div>
                 <p class="wsd-H">APEXlang (page file)</p>
                 <pre class="wsd-Code" id="wsd-code"></pre>
@@ -451,20 +501,36 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
             ]
         }
     )`, "",
-    sel("P2_DESIGN", "Design", 5, DESIGNS.slice(1).map(([id, n]) => `${n};ws-Design--${id}`).join(","), "Clean", ""), "",
-    sel("P2_ACCENT", "Accent Color", 10, ACC, "Theme Color", "ws-Accent--tangerine"), "",
-    sel("P2_SCHEME", "Color Scheme", 20, "Dark;ws-Scheme--dark,Follow Device Setting;ws-Scheme--auto", "Light", ""), "",
-    sel("P2_FONT", "Typeface", 30, FONTS.slice(1).map(([id, n]) => `${n};ws-Font--${id}`).join(","), "System", "ws-Font--grotesk"), "",
-    sel("P2_HEADER", "Header", 40, "Centered Logo;ws-Header--centered,Floating Pill;ws-Header--pill,Transparent over Hero;ws-Header--transparent", "Classic", ""), "",
-    sel("P2_CORNERS", "Corners", 50, "Square;ws-Corners--square,Soft;ws-Corners--soft,Extra Round;ws-Corners--round", "Rounded", ""), "",
-    sel("P2_SPACE", "Section Spacing", 60, "Compact;ws-Space--compact,Airy;ws-Space--airy", "Comfortable", ""), "",
-    sel("P2_FOOTER", "Footer", 70, "Light;ws-Footer--light,Accent Color;ws-Footer--accent", "Dark", ""), "",
-    sw("P2_STICKY", "Sticky Header", 80, "Y", true), "",
-    sw("P2_REVEAL", "Reveal on Scroll", 81, "Y", false), "",
-    sw("P2_COUNT", "Count Up Numbers", 82, "Y", true), "",
-    sw("P2_TOP", "Back to Top Button", 83, "Y", false), "",
-    sw("P2_PROGRESS", "Scroll Progress Bar", 84, "N", true), "",
-    ...SECTIONS.map(([item, label, , , o], i) => sel(item, label, (i + 1) * 10, o.map(([n, c]) => `${n};${c}`).join(","), false, o[0][1], "sections") + "\n"),
+    sel("P2_SITE", "Website", 1, SITES.map(st => `${lov(st.label)};${st.alias}`).join(","), false, "WEBSITE"), "",
+    ...PAGE_SELECTS.map((x, i) => sel(x.item, x.group, (i + 1) * 5 + 1, x.options.map(([c, n]) => `${lov(n)};${c}`).join(","), x.nul, "") + "\n"),
+    ...PAGE_SWITCHES.map((x, i) => sw(x.item, x.label, 100 + i, PAGE.defaults.includes(x.css) ? "Y" : "N", i % 2 === 0) + "\n"),
+    ...SECTIONS.map(([item, label, , o], i) => sel(item, label, (i + 1) * 10, o.map(([n, c]) => `${lov(n)};${c}`).join(","), "As on the page", "", "sections") + "\n"),
+`    region sql (
+        name: Section SQL
+        type: staticContent
+        source {
+            htmlCode:
+                \`\`\`html
+                <p class="wsd-Where">The query of a section with pictures on this website. Copy it into a Classic Report region, then swap <code>from dual</code> for your own table. IMAGE_FILE is a file in Static Application Files; IMAGE_URL takes any image URL instead (see How to Use for BLOB columns).</p>
+                <label class="wsd-H" for="wsd-sqlpick">Section</label>
+                <select id="wsd-sqlpick" class="selectlist apex-item-select wsd-Pick"></select>
+                <pre class="wsd-Code" id="wsd-sql"></pre>
+                <button type="button" class="t-Button t-Button--small t-Button--iconLeft js-wsd-copysql"><span class="t-Icon fa fa-copy" aria-hidden="true"></span><span class="t-Button-label">Copy SQL</span></button>
+                \`\`\`
+        }
+        layout {
+            sequence: 10
+            parentRegion: @preview
+            slot: subRegions
+        }
+        appearance {
+            template: @/content-block
+            templateOptions: [
+                #DEFAULT#
+                t-ContentBlock--h3
+            ]
+        }
+    )`, "",
     radio("P2_DEVICE", "Preview On", 10, "Desktop;DESKTOP,Tablet;TABLET,Phone;PHONE", "DESKTOP"), "",
 `    button open-full (
         buttonName: OPEN_FULL
@@ -502,7 +568,29 @@ const howCss = `.wss-Doc { max-width: 62rem; line-height: 1.7; }
 .wss-Doc th { font-weight: 700; opacity: .8; }
 .wss-Doc td:first-child { font-weight: 600; white-space: nowrap; }`;
 const reportRows = REPORTS.map(r => `  <tr><td>${esc(r.name)}</td><td>${esc(r.help)}</td><td>${r.cols.map(c => `<code>${c}</code>`).join(" ")}</td></tr>`).join("\n");
+const T = REPORTS.map(r => r.name.replace("Website - ", "")).join(", ");
+const heroSql = `select 'We design brands people *remember*.' as title,
+       'Brand and digital studio' as subtitle,
+       'Strategy, identity and websites.' as text,
+       'website-studio/img/studio-hero-1.jpg' as image_file,
+       'Designers around a table' as image_alt,
+       'center 40%' as image_position,
+       'See our work' as button_label,
+       '#work' as button_link,
+       1 as sort_order
+  from dual`;
 const howHtml = `<div class="wss-Doc">
+<h3>Build a website in 10 minutes</h3>
+<ol>
+  <li><strong>Pick a starting point.</strong> In the Gallery, open the starter website closest to yours (company, restaurant, clinic, real estate, event, portfolio, SaaS) and press <em>Customize</em>.</li>
+  <li><strong>Choose the look.</strong> In the Designer, change Design, Accent Color, Typeface and Header until it feels right. Press <em>Copy APEXlang</em>, or note the options listed under <em>Your Choice</em>.</li>
+  <li><strong>Copy the page.</strong> In Website Studio, <strong>Page Designer &gt; Create &gt; Page as Copy</strong> of that starter page (into your own application after step 2 of the next section), give it a name, and set the Template Options you chose.</li>
+  <li><strong>Change the words.</strong> Every section is a region: change titles in Page Designer, and the rows in each region's SQL query (or point the query at your own table).</li>
+  <li><strong>Add your photos.</strong> Upload them to <strong>Shared Components &gt; Static Application Files</strong> and put the file names in <code>IMAGE_FILE</code> (see <em>Pictures</em> below).</li>
+  <li><strong>Set the menu.</strong> Edit the list under <strong>Shared Components &gt; Lists</strong> (for example <em>Company - Menu</em>): its entries are the header menu.</li>
+  <li><strong>Make the form yours.</strong> Change the process <em>Send Message</em> to email or store the message (the code is in its comments).</li>
+</ol>
+
 <h3>1. Get Website Studio into your workspace</h3>
 <ol>
   <li>Download <code>website-studio.sql</code> from <a href="https://github.com/HashaamShoukat/apex-website-studio" target="_blank" rel="noopener">GitHub</a> (or import the APEXlang source with SQLcl: <code>apex import -input apexlang</code>).</li>
@@ -513,53 +601,108 @@ const howHtml = `<div class="wss-Doc">
 <p>In <em>your</em> application: <strong>Shared Components &gt; Templates &gt; Create &gt; As a Copy of an Existing Template</strong>, copy from <strong>Website Studio</strong> (tick <em>Subscribe</em> for later updates):</p>
 <table>
   <tr><th>Type</th><th>Template</th><th>Use it for</th></tr>
-  <tr><td>Page</td><td>Modern One Page</td><td>The website page: header with a menu built from the sections, hero, sections, footer.</td></tr>
+  <tr><td>Page</td><td>Modern One Page</td><td>The website page: header, menu, hero, sections, footer.</td></tr>
   <tr><td>Region</td><td>Modern Section</td><td>Every band of the page. The region title is the heading, the Static ID the menu anchor.</td></tr>
-  <tr><td>Report</td><td>Website - Hero, Numbers, Services, Team, Testimonials, Logos, Pricing, Timeline, Process, FAQ, Careers, Portfolio, Links, Contact Details</td><td>Classic Report templates: each turns the rows of a SQL query into a section.</td></tr>
+  <tr><td>List</td><td>Website - Menu</td><td>The header menu, with drop-downs for child entries.</td></tr>
+  <tr><td>Report</td><td>Website - ${T}</td><td>Classic Report templates: each turns the rows of a SQL query into a section.</td></tr>
 </table>
-<p>The templates load their CSS and JavaScript from two static files, which the copy does not bring along. Upload <code>website-studio/website.css</code> and <code>website-studio/website.js</code> to <strong>Shared Components &gt; Static Application Files</strong> in your application, in a directory named <code>website-studio</code>. Download them from Website Studio's own Static Application Files, or from <code>apexlang/shared-components/static-files/website-studio</code> on GitHub.</p>
+<p>The templates load their CSS and JavaScript from static files, which the copy does not bring along. Upload <code>website-studio/website.css</code> and <code>website-studio/website.js</code> to <strong>Shared Components &gt; Static Application Files</strong> in your application, in a directory named <code>website-studio</code>. Download them from Website Studio's own Static Application Files, or from <code>apexlang/shared-components/static-files/website-studio</code> on GitHub.</p>
 
 <h3>3. Build the page</h3>
 <ol>
   <li>Create a blank page and set <strong>Appearance &gt; Page Template</strong> to <strong>Modern One Page</strong>. Make it public if visitors should not sign in. Pick the Template Options you built in the Designer.</li>
   <li><strong>Hero</strong>: a Classic Report in the <em>Hero</em> slot. Region template <strong>Modern Section</strong> with Spacing <em>None</em>, Width <em>Full Width</em>, Heading <em>Hidden</em>; report template <strong>Website - Hero</strong>. One row per slide.</li>
-  <li><strong>Sections</strong>: regions in the <em>Body</em> slot with the <strong>Modern Section</strong> template. Give each a <strong>Static ID</strong> (it becomes <code>#services</code> in the menu) and keep <em>Show in Menu</em> on for the ones you want in the header. The menu label is the region title, or <code>data-menu="Services"</code> in <em>Advanced &gt; Custom Attributes</em> for a shorter one.</li>
-  <li><strong>Lists of things</strong>: make the region a <strong>Classic Report</strong>, write the SQL with the column names below, and set <strong>Attributes &gt; Appearance &gt; Template</strong> to the matching Website report template. Set <em>Number of Rows</em> high enough (the demo uses 100) and pagination to <em>No Pagination</em>. APEX does not keep the order of the query, so to control the order add a column such as SORT_ORDER and set its <em>Sorting &gt; Default Sequence</em> to 1 (the templates do not show it).</li>
+  <li><strong>Sections</strong>: regions in the <em>Body</em> slot with the <strong>Modern Section</strong> template. Give each a <strong>Static ID</strong> (it becomes <code>#services</code> in the menu).</li>
+  <li><strong>Lists of things</strong>: make the region a <strong>Classic Report</strong>, write the SQL with the column names below, and set <strong>Attributes &gt; Appearance &gt; Template</strong> to the matching Website report template. Set <em>Number of Rows</em> high enough (the starters use 100) and pagination to <em>No Pagination</em>. APEX does not keep the order of the query, so add a column such as <code>SORT_ORDER</code> and set its <em>Sorting &gt; Default Sequence</em> to 1 (the templates do not show it).</li>
   <li><strong>Free text</strong> (about, vision, call to action): a Static Content region with the helper classes below.</li>
-  <li><strong>Contact form</strong>: page items and a button in a Modern Section region with the CSS class <code>ws-Contact</code>, and a process that stores or emails the message. Put a <em>Website - Contact Details</em> report in its Sub Regions for the address, phone and email.</li>
-  <li><strong>Footer</strong>: regions with the <em>Blank with Attributes</em> template in the <em>Footer</em> slot (one per column - a <em>Website - Links</em> report with layout List makes a link column) and <em>Footer Bottom</em> for the copyright line.</li>
-  <li><strong>Logo</strong>: a Static Content region in the <em>Logo</em> slot (or the application logo), and a button in <em>Header Buttons</em> for a call to action.</li>
+  <li><strong>Contact form</strong>: page items and a button in a Modern Section region with the CSS class <code>ws-Contact</code>, and a process that stores or emails the message. Put a <em>Website - Contact Details</em> report in its Sub Regions.</li>
+  <li><strong>Footer</strong>: regions with the <em>Blank with Attributes</em> template in the <em>Footer</em> slot (a <em>Website - Links</em> report with layout List makes a link column) and <em>Footer Bottom</em> for the copyright line.</li>
+  <li><strong>Logo</strong>: a Static Content region in the <em>Logo</em> slot (or the application logo).</li>
 </ol>
-<pre>select title, subtitle, text, image_url,
-       'See our work' as button_label, '#work' as button_link
-  from my_slides
- order by display_order</pre>
 
-<h3>4. The report templates and their columns</h3>
-<p>Every column is optional: a column the query does not return is simply left out. <code>IMAGE_URL</code> takes any URL (<code>#APP_FILES#photo.jpg</code>, a BLOB download URL, an external image); without it the templates draw artwork in the accent colours, or the person's initials. <code>ICON</code> takes a Font APEX class such as <code>fa-lightbulb-o</code>; brand icons (<code>fa-instagram</code>, <code>fa-linkedin</code>, <code>fa-x-twitter</code>, <code>fa-youtube-play</code>, <code>fa-facebook</code>, <code>fa-github</code>, <code>fa-tiktok</code>, <code>fa-whatsapp</code> ...) are drawn by Website Studio, because Font APEX has none.</p>
+<h3>4. The menu</h3>
+<p>Create a <strong>List</strong> (<strong>Shared Components &gt; Lists</strong>), then a <strong>List</strong> region in the page's <strong>Menu</strong> slot with region template <em>Blank with Attributes</em> and list template <strong>Website - Menu</strong>.</p>
+<ul>
+  <li>Entries with a URL like <code>#services</code> scroll to that section and light up while it is on screen. Entries can also go to other pages or other websites.</li>
+  <li>Child entries (<em>Parent List Entry</em>) open as a drop-down on wide screens (hover, click or the keyboard; Escape closes) and as an accordion on phones.</li>
+  <li><em>User Defined Attribute 1</em>: extra CSS classes (<code>ws-Menu-cta</code> makes a button). <em>Attribute 2</em>: link target (<code>_blank</code> for a new tab). For a new tab add <code>rel="noopener"</code> in <em>Link Attributes</em>.</li>
+  <li>Template Options: <em>Alignment</em>, <em>Visible Entries</em> (the rest go into More), <em>On Phones</em> (drop-down, full-screen overlay or side drawer) and <em>Last Entry as Button</em>.</li>
+  <li>No list region? The menu is built from the Modern Section regions with <em>Show in Menu</em>.</li>
+</ul>
+<p>A list can also come from a table (<strong>List Source = SQL Query</strong>). The restaurant starter does this:</p>
+<pre>select level, label, target,
+       null as is_current, null as image, null as image_attribute, null as image_alt,
+       null as attribute1, link_target as attribute2
+  from my_menu
+ start with parent_id is null
+connect by prior id = parent_id
+ order siblings by seq</pre>
+
+<h3>5. Pictures</h3>
+<p>Every template that shows a picture has the same columns: <code>IMAGE_URL</code>, <code>IMAGE_FILE</code>, <code>IMAGE_ALT</code> (what the picture shows, read aloud by screen readers) and <code>IMAGE_POSITION</code> (the part to keep when it is cropped, like <code>center 30%</code> or <code>top</code>). Pictures load when they scroll into view. A row without a picture shows a soft placeholder (Template Option <em>Placeholder Images</em>), and people show their initials. There are three ways to give a picture:</p>
+<p><strong>a. A URL</strong> - any https address:</p>
+<pre>select 'https://images.example.com/team/sara.jpg' as image_url,
+       'Sara in the studio' as image_alt, name, role
+  from team_members</pre>
+<p><strong>b. A Static Application File</strong> - upload it to <strong>Shared Components &gt; Static Application Files</strong>, then give its name in <code>IMAGE_FILE</code>. The starter websites use <code>website-studio/img/...</code>:</p>
+<pre>${heroSql}</pre>
+<p><strong>c. A BLOB column</strong> - keep the photo in your own table. Create an <strong>Application Item</strong> <code>IMG_ID</code> (Session State Protection: <em>Unrestricted</em>) and an <strong>Application Process</strong> <code>GET_IMAGE</code> (Point: <em>Ajax Callback</em>, no authentication needed for public pages):</p>
+<pre>declare
+    l_photo blob;
+    l_mime  varchar2(255);
+begin
+    select photo, mime_type into l_photo, l_mime
+      from team_members
+     where id = :IMG_ID;
+    sys.owa_util.mime_header(l_mime, false);
+    sys.htp.p('Cache-Control: max-age=86400');
+    sys.owa_util.http_header_close;
+    sys.wpg_docload.download_file(l_photo);
+    apex_application.stop_apex_engine;
+end;</pre>
+<p>Then return its URL in <code>IMAGE_URL</code>:</p>
+<pre>select name, role,
+       'f?p=' || :APP_ID || ':0:' || :APP_SESSION || ':APPLICATION_PROCESS=GET_IMAGE:::IMG_ID:' || id as image_url
+  from team_members</pre>
+<p>The hero also takes <code>VIDEO_URL</code>: an <code>.mp4</code> or <code>.webm</code> file plays silently behind the slide. The <em>Video</em> template takes YouTube and Vimeo links and loads the player only when the visitor presses play.</p>
+
+<h3>6. The report templates and their columns</h3>
+<p>Every column is optional: a column the query does not return is simply left out. <code>ICON</code> takes a Font APEX class such as <code>fa-lightbulb-o</code>; brand icons (<code>fa-instagram</code>, <code>fa-linkedin</code>, <code>fa-x-twitter</code>, <code>fa-youtube-play</code>, <code>fa-facebook</code>, <code>fa-github</code>, <code>fa-tiktok</code>, <code>fa-whatsapp</code> ...) are drawn by Website Studio, because Font APEX has none.</p>
 <table>
   <tr><th>Template</th><th>What it is</th><th>Columns</th></tr>
 ${reportRows}
 </table>
 
-<h3>5. Helper classes for Static Content</h3>
+<h3>7. Helper classes for Static Content</h3>
 <table>
   <tr><th>Class</th><th>What it does</th></tr>
   <tr><td><code>ws-Eyebrow</code>, <code>ws-Lead</code></td><td>At the start of a Modern Section's <em>Header</em> text: a small label above the heading and an intro below it.</td></tr>
   <tr><td><code>*word*</code> in a title</td><td>Highlights the word in the accent colour (italic with the serif typefaces).</td></tr>
-  <tr><td><code>ws-Split</code>, <code>ws-Split--reverse</code></td><td>Two columns, for example <code>&lt;div class="ws-Media" data-img="#APP_FILES#studio.jpg"&gt;&lt;/div&gt;</code> next to a <code>ws-Stack</code> of text.</td></tr>
+  <tr><td><code>ws-Split</code>, <code>ws-Split--reverse</code></td><td>Two columns, for example <code>&lt;div class="ws-Media" data-file="website-studio/img/studio.jpg" role="img" aria-label="Our studio"&gt;&lt;/div&gt;</code> next to a <code>ws-Stack</code> of text.</td></tr>
   <tr><td><code>ws-Title</code>, <code>ws-Display</code>, <code>ws-Statement</code></td><td>Section heading, hero-size heading, a large statement.</td></tr>
   <tr><td><code>ws-Btn</code>, <code>ws-Btn--ghost</code>, <code>ws-More</code>, <code>ws-Actions</code></td><td>Buttons, a text link with an arrow, a row of buttons.</td></tr>
   <tr><td><code>ws-Checks</code>, <code>ws-Pillars</code>, <code>ws-Center</code></td><td>A list with check marks, a row of short columns, centred content.</td></tr>
 </table>
 
-<h3>6. Good to know</h3>
+<h3>8. Arabic and right to left</h3>
+<p>The templates use logical CSS, so a page in a right-to-left language mirrors itself: menu, sliders, arrows, drawers and the WhatsApp button. Run the application in Arabic (<strong>Globalization &gt; Application Primary Language</strong>, or a translated application) and APEX sets <code>dir="rtl"</code>; the Arabic clinic starter sets it from its <em>HTML Header</em> instead, so it works in an English application too. Pick the Typeface <em>Arabic</em> (IBM Plex Sans Arabic). Texts such as "Menu" and "Back to top" are built in for Arabic; for other languages create the text messages <code>WEBSITE_STUDIO.MENU</code>, <code>.BACK_TO_TOP</code>, <code>.ALL</code>, <code>.PREVIOUS</code>, <code>.NEXT</code>, <code>.SLIDE</code>, <code>.APPLY</code>, <code>.MORE</code>, <code>.CLOSE</code>, <code>.PLAY</code>, <code>.DARK_MODE</code> and <code>.MAP</code>.</p>
+
+<h3>9. WhatsApp, light and dark, search engines, spam</h3>
 <ul>
-  <li>The demo website (page <code>WEBSITE</code>) is the best reference: every section is in it, and every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
-  <li>Texts can be translated with the text messages <code>WEBSITE_STUDIO.MENU</code>, <code>.BACK_TO_TOP</code>, <code>.ALL</code>, <code>.PREVIOUS</code>, <code>.NEXT</code>, <code>.SLIDE</code> and <code>.APPLY</code>.</li>
-  <li>Typefaces other than System load from Google Fonts. Transparent over Hero needs the Slider or Full Bleed hero; with any other first section it behaves like Classic.</li>
+  <li><strong>WhatsApp Button</strong> (page Template Option): a floating button that opens a chat. The number is the substitution string <code>WHATSAPP_NUMBER</code> in <strong>Shared Components &gt; Application Definition</strong>, in international format, digits only (<code>966500000000</code>). Without digits the button hides itself.</li>
+  <li><strong>Light/Dark Toggle</strong>: a button in the header; the visitor's choice is remembered in the browser.</li>
+  <li><strong>Search engines</strong>: put a short description and Open Graph tags in the page's <strong>HTML Header</strong> - every starter does: <code>&lt;meta name="description" content="..."&gt;</code>, <code>og:title</code>, <code>og:description</code>, <code>og:image</code>. For <code>og:image</code> use a full https address when you can: link previews in WhatsApp and LinkedIn need it. Give the page a clear <strong>Title</strong>, use <code>IMAGE_ALT</code>, and turn on <strong>Friendly URLs</strong> in the application's definition.</li>
+  <li><strong>Speed</strong>: pictures load as they scroll into view; the starters preload the first hero picture with <code>&lt;link rel="preload" as="image" href="&#35;APP_FILES&#35;website-studio/img/..."&gt;</code> in the HTML Header. Keep photos under about 300 KB (1600 px wide for heroes, 800 px for cards).</li>
+  <li><strong>Spam</strong>: the starters add a hidden field (<code>P11_WEBSITE</code>, CSS class <code>ws-Honeypot</code> on its column). People never see it; robots fill it in, and the process then sends nothing.</li>
+  <li><strong>Sending the message</strong>: the process <em>Send Message</em> has an <code>apex_mail.send</code> example in its comments. Email needs the instance's mail settings (ask your APEX administrator).</li>
+</ul>
+
+<h3>10. Good to know</h3>
+<ul>
+  <li>The demo website (page <code>WEBSITE</code>) and the starter websites (pages 11 to 17) are the best reference. Every query is a plain <code>select ... from dual</code> you can replace with your own tables.</li>
+  <li>Typefaces other than System load from Google Fonts.</li>
   <li>After a partial page refresh of a section, call <code>wsSite.refresh(element)</code> - the templates already do it for <code>apexafterrefresh</code>.</li>
-  <li>Visitors who prefer reduced motion get no animations; Windows high-contrast mode is respected. The source is in <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code>.</li>
+  <li>Visitors who prefer reduced motion get no animations; Windows high-contrast mode is respected; the menu, sliders, lightbox and accordions work with the keyboard. The source is in <code>apexlang/_src</code> on GitHub - edit there and run <code>node _src/build.mjs</code>.</li>
 </ul>
 </div>`;
 // APEX would substitute #APP_FILES# in the guide's examples: write it as an entity
