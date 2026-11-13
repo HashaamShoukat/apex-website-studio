@@ -8,6 +8,8 @@
 
 Website Studio is a set of APEX templates and a small application to try them in. A page template, a section template, a menu template and **28 report templates** turn ordinary regions and SQL queries into a modern public website. Visitors never see that it is an APEX app.
 
+**[Live demo](https://oracleapex.com/ords/r/hashaam-admin/website-studio/home)** - browse the gallery, open the starter websites and try every option in the Designer (no sign-in needed).
+
 ## Highlights
 
 - **12 starter websites:** 8 one-page and 4 multi-page. They cover a design studio, a company, a restaurant, an Arabic clinic, real estate, a conference, a portfolio and a SaaS product, with photos and content ready to copy.
