@@ -199,6 +199,7 @@ export function sitePage(s) {
         }
     }
     parts.push(menuRegion(s));
+    if (s.html.announce) { parts.push(staticRegion({ id: "announcement", name: "Announcement", slot: "announcement", seq: 10, html: s.html.announce, template: "@/blank-with-attributes" })); }
     parts.push(staticRegion({ id: "logo", name: "Logo", slot: "logo", seq: 10, html: s.html.logo, template: "@/blank-with-attributes" }));
     parts.push(staticRegion({ id: "footer-about", name: "Footer - About", slot: "footer", seq: 10, html: s.html.footerAbout, template: "@/blank-with-attributes" }));
     parts.push(reportRegion({ id: "social", name: "Social Media", slot: "subRegions", seq: 10, parent: "footer-about", rows: s.social, template: "ws-links", regionTemplate: "@/blank-with-attributes" }));
@@ -245,7 +246,9 @@ ${items.join("\n\n")}
                 \`\`\`
                 -- P${P}_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
                 if :P${P}_WEBSITE is null then
-                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- The starter only says thank you: NOTHING IS SENT OR STORED until you add your own code here.
+                    -- When you do, remove the "(Demo: ...)" note from this process's Success Message.
+                    -- To receive the message by email, use for example:
                     -- apex_mail.send(p_to   => 'hello@example.com',
                     --                p_from => 'noreply@example.com',
                     --                p_subj => 'Website message from ' || ${v("NAME")},
@@ -260,7 +263,7 @@ ${items.join("\n\n")}
             point: processing
         }
         successMessage {
-            successMessage: ${s.form.success}
+            successMessage: ${s.form.success} ${s.rtl ? "(نسخة تجريبية: لم تُرسل الرسالة بعد.)" : "(Demo: nothing was sent or stored yet.)"}
         }
         serverSideCondition {
             whenButtonPressed: @send

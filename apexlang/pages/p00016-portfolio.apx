@@ -9,6 +9,7 @@ page 16 (
             ws-Design--swiss
             ws-Accent--rose
             ws-Font--grotesk
+            ws-Fx--autohide
         ]
     }
     navigation {
@@ -152,6 +153,84 @@ page 16 (
         )
     )
 
+    region keywords (
+        name: What I do
+        title: What I do
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Product design' as text,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Brand identity' as text,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Websites' as text,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Design systems' as text,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Arabic and English' as text,
+                       5 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: keywords
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-ticker
+            templateOptions: [
+                #DEFAULT#
+                ws-Ticker--outline
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TEXT (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 20
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
     region work (
         name: Work
         title: Selected *work*
@@ -212,7 +291,7 @@ page 16 (
                 ```
         }
         layout {
-            sequence: 30
+            sequence: 40
             slot: body
         }
         appearance {
@@ -302,7 +381,7 @@ page 16 (
                 ```
         }
         layout {
-            sequence: 40
+            sequence: 50
             slot: body
         }
         appearance {
@@ -349,7 +428,7 @@ page 16 (
                 ```
         }
         layout {
-            sequence: 50
+            sequence: 60
             slot: body
         }
         appearance {
@@ -436,7 +515,7 @@ page 16 (
                 ```
         }
         layout {
-            sequence: 60
+            sequence: 70
             slot: body
         }
         appearance {
@@ -494,6 +573,93 @@ page 16 (
         )
     )
 
+    region skills (
+        name: Tools and skills
+        title: Tools and *skills*
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Product design' as label,
+                       '95' as value,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Brand identity' as label,
+                       '90' as value,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Prototyping' as label,
+                       '85' as value,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'User research' as label,
+                       '80' as value,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Front-end' as label,
+                       '60' as value,
+                       5 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 80
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Head--center
+            ]
+        }
+        advanced {
+            htmlDomId: skills
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-skills
+            templateOptions: [
+                #DEFAULT#
+                ws-Skills--rings
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column LABEL (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column VALUE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 30
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
     region clients-say (
         name: Kind words
         title: Kind *words*
@@ -524,7 +690,7 @@ page 16 (
                 ```
         }
         layout {
-            sequence: 70
+            sequence: 90
             slot: body
         }
         appearance {
@@ -603,7 +769,7 @@ page 16 (
         title: Let's *talk*
         type: staticContent
         layout {
-            sequence: 80
+            sequence: 100
             slot: body
         }
         appearance {
@@ -1014,7 +1180,9 @@ page 16 (
                 ```
                 -- P16_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
                 if :P16_WEBSITE is null then
-                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- The starter only says thank you: NOTHING IS SENT OR STORED until you add your own code here.
+                    -- When you do, remove the "(Demo: ...)" note from this process's Success Message.
+                    -- To receive the message by email, use for example:
                     -- apex_mail.send(p_to   => 'hello@example.com',
                     --                p_from => 'noreply@example.com',
                     --                p_subj => 'Website message from ' || :P16_NAME,
@@ -1029,7 +1197,7 @@ page 16 (
             point: processing
         }
         successMessage {
-            successMessage: Thanks for your message. We will reply within one working day.
+            successMessage: Thanks for your message. We will reply within one working day. (Demo: nothing was sent or stored yet.)
         }
         serverSideCondition {
             whenButtonPressed: @send

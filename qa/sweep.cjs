@@ -111,5 +111,6 @@ const PHOTO_404 = /\/static\/website-studio\/img\/|Failed to load resource: the 
     await sp.screenshot({ path: path.join(__dirname, "out", `sweep-${w}.png`), fullPage: true }); await sp.close();
   }
   await b.close();
+  if (problems.length) { process.exitCode = 1; }
   console.log(problems.length ? problems.join("\n") : "no problems", `\nruns: ${runs} (websites: ${sites.length}, looks: ${PRESETS.length}, screens: ${SCREENS.length}, plus right to left)`);
 })();

@@ -1,0 +1,56 @@
+classicReportTemplate ws-countdown (
+    name: Website - Countdown
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Countdown #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <div class="ws-Cd" data-to="#TARGET_DATE#" data-done="#DONE_TEXT#">
+              <div class="ws-Cd-b"><h3 class="ws-Banner-t" data-opt="text">#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p></div>
+              <div class="ws-Cd-clock"></div>
+              <a class="ws-Btn" href="#BUTTON_LINK#">#BUTTON_LABEL#</a>
+            </div>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Countdown (Website Studio). Days, hours, minutes and seconds until TARGET_DATE, a date and time with its time zone such as 2027-03-09T08:30:00+03:00. DONE_TEXT replaces the clock when the time has come. Columns (all optional): TARGET_DATE, TITLE, TEXT, DONE_TEXT, BUTTON_LABEL, BUTTON_LINK.
+    }
+
+    templateOption countdown-center (
+        name: Centered
+        group: @report/wsr-countdown-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Countdown--center
+        }
+    )
+
+    templateOption countdown-plain (
+        name: Plain
+        group: @report/wsr-countdown-style
+        sequence: 10
+        appearance {
+            cssClasses: ws-Countdown--plain
+        }
+    )
+
+    templateOption countdown-tiles (
+        name: Dark Tiles
+        group: @report/wsr-countdown-style
+        sequence: 20
+        appearance {
+            cssClasses: ws-Countdown--tiles
+        }
+    )
+)

@@ -1,0 +1,46 @@
+classicReportTemplate ws-tabs (
+    name: Website - Tabs
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Tabs #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template:
+            ```html
+            <div class="ws-Tab" data-label="#LABEL#" data-tab-icon="#ICON#">
+              <div class="ws-Tab-b"><h3 class="ws-Zig-t">#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p><a class="ws-More" href="#LINK#">#LINK_LABEL#</a></div>
+              <div class="ws-Tab-img ws-Media" data-img="#IMAGE_URL#" data-file="#IMAGE_FILE#" data-pos="#IMAGE_POSITION#" data-alt="#IMAGE_ALT#" role="img" aria-label="#TITLE#"></div>
+            </div>
+            ```
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Tabs (Website Studio). One row is one tab: LABEL (and ICON) on the button, a title, text and picture in the panel. Arrow keys move between the tabs. Columns (all optional): LABEL, ICON, TITLE, TEXT, IMAGE_URL, IMAGE_FILE, IMAGE_ALT, IMAGE_POSITION, LINK, LINK_LABEL.
+    }
+
+    templateOption tabs-pills (
+        name: Pills
+        group: @report/wsr-tabs-style
+        sequence: 10
+        appearance {
+            cssClasses: ws-Tabs--pills
+        }
+    )
+
+    templateOption tabs-side (
+        name: Tabs at the Side
+        group: @report/wsr-tabs-style
+        sequence: 20
+        appearance {
+            cssClasses: ws-Tabs--side
+        }
+    )
+)

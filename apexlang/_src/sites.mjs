@@ -129,6 +129,9 @@ const meridian = {
             { QUESTION: "Do you work on private projects?", ANSWER: "Yes. About a third of our work is for private developers and industrial clients." },
             { QUESTION: "How do you price a project?", ANSWER: "Fixed fees for studies and design, and agreed rates for long-term operations support." },
             { QUESTION: "Can you join a project already under way?", ANSWER: "Often. We review the design and the programme first and tell you honestly where we can help." }] },
+        { id: "start", report: "ws-banner", title: "Start a project", sec: ["ws-Head--hidden", "ws-Pad--tight"], rep: ["ws-Banners--image"], rows: [
+            { EYEBROW: "Next step", TITLE: "Planning a project for *2027*?", TEXT: "Send us the brief. A partner replies within two working days.", BUTTON_LABEL: "Talk to an expert", BUTTON_LINK: "#contact",
+              BUTTON2_LABEL: "Our services", BUTTON2_LINK: "#services", ...im("company-meeting") }] },
         { id: "contact", menu: "Contact", title: "Talk to an *expert*", form: true, sec: ["ws-Sec--menu"], css: "ws-Contact",
           header: '<p class="ws-Eyebrow">Contact</p><p class="ws-Lead">Tell us about your project and the right team will call you back.</p>' }
     ],
@@ -166,6 +169,9 @@ const lume = {
             { TITLE: "Slow food, *good* wine, long evenings.", SUBTITLE: "Italian kitchen and wine bar", TEXT: "Seasonal plates from a small kitchen, open every evening from six.", BUTTON_LABEL: "Book a table", BUTTON_LINK: "#contact", BUTTON2_LABEL: "See the menu", BUTTON2_LINK: "#menu", ...im("food-hero-1") },
             { TITLE: "A dining room made for *sharing*.", SUBTITLE: "Since 2014", TEXT: "Forty seats, one long table and a bar for walk-ins.", BUTTON_LABEL: "Plan your visit", BUTTON_LINK: "#visit", ...im("food-hero-2") },
             { TITLE: "Everything made *here*, every day.", SUBTITLE: "From our kitchen", TEXT: "Pasta rolled each morning, bread from our wood oven.", BUTTON_LABEL: "Our story", BUTTON_LINK: "#story", ...im("food-hero-3") }] },
+        { id: "today", report: "ws-ticker", title: "Today at Lume", sec: ["ws-Pad--none", "ws-Width--full", "ws-Head--hidden"], rep: ["ws-Speed--slow"], rows: [
+            { TEXT: "Pasta rolled every morning", ICON: "fa-cutlery" }, { TEXT: "Bread from our wood oven" }, { TEXT: "Open every evening from six" },
+            { TEXT: "Family lunch on Sundays" }, { TEXT: "Book the long table for twelve", LINK: "#contact" }] },
         { id: "story", menu: "Our story", title: "Our story", html: "story", sec: ["ws-Sec--menu", "ws-Head--hidden"] },
         { id: "menu", menu: "Menu", report: "ws-products", title: "The *menu*", sec: ["ws-Sec--menu", "ws-Tone--soft", "ws-Head--center"],
           header: '<p class="ws-Eyebrow">Tonight</p><p class="ws-Lead">The menu changes with the market. Ask us about allergies: most dishes can be adapted.</p>', rows: [
@@ -204,6 +210,7 @@ const lume = {
     footerCols: [{ id: "f-visit", title: "Visit", rows: [{ LABEL: "Menu", LINK: "#menu" }, { LABEL: "Opening hours", LINK: "#hours" }, { LABEL: "Find us", LINK: "#visit" }, { LABEL: "Gift cards", LINK: "#contact" }] }],
     legal: LEGAL,
     html: {
+        announce: '<p>Friday family lunch is back, from 13:00. <a href="#contact">Book a table</a></p>',
         logo: logo("Osteria Lume", "L"), footerAbout: footAbout("Osteria Lume", "L", "Italian kitchen and wine bar. Open every evening except Monday."), copyright: "<span>&copy; Osteria Lume</span>",
         story: `<div class="ws-Split">
   ${media("food-about")}
@@ -272,6 +279,8 @@ const shifa = {
             { QUESTION: "هل تقبلون التأمين الطبي؟", ANSWER: "نعم، نتعامل مع معظم شركات التأمين في المملكة. اتصل بنا للتأكد من شبكتك." },
             { QUESTION: "هل يمكنني الحجز عبر واتساب؟", ANSWER: "نعم، اضغط على زر واتساب أسفل الصفحة وسيرد عليك فريق الاستقبال." },
             { QUESTION: "هل توجد مواقف للسيارات؟", ANSWER: "نعم، مواقف مجانية خلف المبنى." }] },
+        { id: "book-now", report: "ws-banner", title: "احجز موعدك", sec: ["ws-Tone--soft", "ws-Head--hidden", "ws-Pad--tight"], rep: ["ws-Banners--center"], rows: [
+            { TITLE: "صحتك تبدأ بموعد *واحد*", TEXT: "فريقنا يرد خلال ساعة في أوقات العمل.", BUTTON_LABEL: "احجز الآن", BUTTON_LINK: "#contact" }] },
         { id: "map", report: "ws-map", title: "موقعنا", sec: ["ws-Head--center"], rows: [
             { MAP_URL: "https://www.openstreetmap.org/export/embed.html?bbox=46.62%2C24.77%2C46.66%2C24.80&layer=mapnik", TITLE: "عيادات الشفاء", ADDRESS: "طريق الملك عبدالعزيز، حي الياسمين، الرياض", TEXT: "بجوار مسجد الياسمين.", LINK: "https://www.openstreetmap.org/", LINK_LABEL: "الاتجاهات" }] },
         { id: "contact", menu: "احجز", title: "احجز *موعدك*", form: true, sec: ["ws-Sec--menu"], css: "ws-Contact",
@@ -368,6 +377,9 @@ const summit = {
         { id: "hero", slot: "hero", report: "ws-hero", title: "Northwind Data Summit", sec: HERO, rep: ["ws-Hero--centered", "ws-Hero--strong"], rows: [
             { TITLE: "Where data people *meet*.", SUBTITLE: "9 - 10 March 2027 - Riyadh", TEXT: "Two days, 40 speakers and 1,200 engineers, analysts and leaders.", BUTTON_LABEL: "Get tickets", BUTTON_LINK: "#tickets", BUTTON2_LABEL: "See the programme", BUTTON2_LINK: "#agenda", ...im("event-hero-1") },
             { TITLE: "Workshops you can *use* on Monday.", SUBTITLE: "Hands-on", TEXT: "Twelve half-day workshops, limited to 30 seats each.", BUTTON_LABEL: "View workshops", BUTTON_LINK: "#agenda", ...im("event-hero-2") }] },
+        { id: "countdown", report: "ws-countdown", title: "Countdown", sec: ["ws-Pad--tight", "ws-Head--hidden"], rows: [
+            { TARGET_DATE: "2027-03-09T08:30:00+03:00", TITLE: "Doors open in", TEXT: "9 March 2027, 8:30 in the morning, Riyadh time.", DONE_TEXT: "The summit has started. Welcome!",
+              BUTTON_LABEL: "Get tickets", BUTTON_LINK: "#tickets" }] },
         { id: "numbers", report: "ws-stats", title: "The summit in numbers", sec: ["ws-Pad--tight", "ws-Head--hidden"], rep: ["ws-Stats--cards"], rows: [
             { VALUE: "40", LABEL: "Speakers" }, { VALUE: "1200", LABEL: "Attendees" }, { VALUE: "12", LABEL: "Workshops" }, { VALUE: "2", LABEL: "Days" }] },
         { id: "agenda", menu: "Programme", report: "ws-events", title: "The *programme*", sec: ["ws-Sec--menu", "ws-Head--split"], rep: ["ws-Filter"],
@@ -409,7 +421,7 @@ const summit = {
     social: socials("linkedin", "x", "youtube"),
     footerCols: [{ id: "f-summit", title: "Summit", rows: [{ LABEL: "Programme", LINK: "#agenda" }, { LABEL: "Speakers", LINK: "#speakers" }, { LABEL: "Tickets", LINK: "#tickets" }, { LABEL: "Become a sponsor", LINK: "#contact" }] }],
     legal: [{ LABEL: "Code of conduct", LINK: "#" }, ...LEGAL],
-    html: { logo: logo("Northwind Summit", "N"), footerAbout: footAbout("Northwind Summit", "N", "9 - 10 March 2027, Riyadh."), copyright: "<span>&copy; Northwind Events</span>" },
+    html: { announce: '<p>Early prices end on 31 December. <a href="#tickets">Get tickets</a></p>', logo: logo("Northwind Summit", "N"), footerAbout: footAbout("Northwind Summit", "N", "9 - 10 March 2027, Riyadh."), copyright: "<span>&copy; Northwind Events</span>" },
     form: FORM_EN, ogImage: "event-hero-1"
 };
 
@@ -418,7 +430,7 @@ const lina = {
     key: "portfolio", page: 16, alias: "PORTFOLIO", name: "Starter - Portfolio", label: "Portfolio", brand: "Lina Haddad", icon: "fa-user",
     title: "Lina Haddad - Product Designer",
     description: "Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.",
-    look: "ws-Design--swiss ws-Accent--rose ws-Font--grotesk", preset: "portfolio",
+    look: "ws-Design--swiss ws-Accent--rose ws-Font--grotesk ws-Fx--autohide", preset: "portfolio",
     menu: {
         options: ["ws-Menu--cta", "ws-Menu--left"],
         entries: [
@@ -431,6 +443,8 @@ const lina = {
     sections: [
         { id: "hero", slot: "hero", report: "ws-hero", title: "Lina Haddad", sec: HERO, rep: ["ws-Hero--split", "ws-Hero--medium"], rows: [
             { TITLE: "I design products people *enjoy* using.", SUBTITLE: "Product and brand designer - Jeddah", TEXT: "Ten years of apps, identities and websites for startups and banks.", BUTTON_LABEL: "Selected work", BUTTON_LINK: "#work", BUTTON2_LABEL: "Hire me", BUTTON2_LINK: "#contact", ...im("portfolio-hero") }] },
+        { id: "keywords", report: "ws-ticker", title: "What I do", sec: ["ws-Pad--none", "ws-Width--full", "ws-Head--hidden"], rep: ["ws-Ticker--outline"],
+          rows: ["Product design", "Brand identity", "Websites", "Design systems", "Arabic and English"].map(t => ({ TEXT: t })) },
         { id: "work", menu: "Work", report: "ws-gallery", title: "Selected *work*", sec: ["ws-Sec--menu", "ws-Head--split"], rep: ["ws-Works--editorial"], rows: [
             { TITLE: "Kestrel Coffee", CATEGORY: "Branding", META: "Identity and packaging - 2025", ...im("work-4") }, { TITLE: "Lumen Bank app", CATEGORY: "Product", META: "Mobile banking - 2025", ...im("work-3") },
             { TITLE: "Orbital website", CATEGORY: "Web", META: "Marketing site - 2024", ...im("work-2") }, { TITLE: "Northgrid dashboard", CATEGORY: "Product", META: "Data product - 2024", ...im("work-5") },
@@ -444,6 +458,9 @@ const lina = {
             { YEAR: "2022 - now", TITLE: "Independent designer", TEXT: "Product and brand work for clients in the Gulf and Europe." },
             { YEAR: "2018 - 2022", TITLE: "Lead Product Designer, Lumen Bank", TEXT: "Led the redesign of the mobile app used by two million customers." },
             { YEAR: "2015 - 2018", TITLE: "Designer, Halcyon Studio", TEXT: "Brand identities and websites for startups." }] },
+        { id: "skills", report: "ws-skills", title: "Tools and *skills*", sec: ["ws-Head--center"], rep: ["ws-Skills--rings"], rows: [
+            { LABEL: "Product design", VALUE: "95" }, { LABEL: "Brand identity", VALUE: "90" }, { LABEL: "Prototyping", VALUE: "85" },
+            { LABEL: "User research", VALUE: "80" }, { LABEL: "Front-end", VALUE: "60" }] },
         { id: "clients-say", report: "ws-testimonials", title: "Kind *words*", sec: ["ws-Head--center"], rep: ["ws-Quotes--spotlight"], rows: [
             { QUOTE: "Lina turned a messy brief into an app our customers love. Ratings went from 3.1 to 4.7.", NAME: "Daniel Brook", ROLE: "Head of Digital, Lumen Bank", RATING: "5", ...im("person-2") },
             { QUOTE: "Thoughtful, fast and a joy to work with.", NAME: "Priya Nair", ROLE: "Founder, Fieldnote", RATING: "5", ...im("person-3") }] },
@@ -496,6 +513,10 @@ const ledger = {
             { ICON: "fa-university", TITLE: "Bank sync", TEXT: "Payments match their invoices automatically." },
             { ICON: "fa-pie-chart", TITLE: "Clear reports", TEXT: "Cash flow, profit and VAT at a glance." },
             { ICON: "fa-users", TITLE: "Invite your accountant", TEXT: "Free access for your accountant, with an audit trail." }] },
+        { id: "tour", report: "ws-tabs", title: "One place for the *whole* job", sec: ["ws-Head--center"], rep: ["ws-Tabs--pills"], rows: [
+            { LABEL: "Invoices", ICON: "fa-file-text-o", TITLE: "Send an invoice in a *minute*.", TEXT: "Pick a customer, add the lines, press send. The invoice carries your logo, your VAT number and a pay-now link.", LINK: "#pricing", LINK_LABEL: "See pricing", ...im("saas-1") },
+            { LABEL: "Payments", ICON: "fa-credit-card", TITLE: "Get paid a week *sooner*.", TEXT: "Customers pay by card, Apple Pay or bank transfer. Late payers get a polite reminder without you lifting a finger.", ...im("saas-2") },
+            { LABEL: "Reports", ICON: "fa-pie-chart", TITLE: "Know your numbers *today*.", TEXT: "Cash flow, profit and VAT on one screen, ready to share with your accountant.", LINK: "#features", LINK_LABEL: "All features", ...im("saas-hero") }] },
         { id: "how", report: "ws-zigzag", title: "How it works", sec: ["ws-Tone--soft", "ws-Head--hidden"], rows: [
             { EYEBROW: "Get paid", TITLE: "Send an invoice from your *phone*.", TEXT: "Customers pay by card, Apple Pay or bank transfer. You see it the moment they do.", ...im("saas-1") },
             { EYEBROW: "Stay ready", TITLE: "Books that are always *up to date*.", TEXT: "Every payment and expense lands in the right place, so VAT returns take minutes.", LINK: "#features", LINK_LABEL: "All features", ...im("saas-2") }] },
@@ -516,11 +537,14 @@ const ledger = {
             { NAME: "Starter", PRICE: "SAR 29", PERIOD: "per month", DESCRIPTION: "For freelancers.", FEATURES: "20 invoices a month|Card payments|1 user", BUTTON_LABEL: "Start free", BUTTON_LINK: "#contact", IS_FEATURED: "N" },
             { NAME: "Business", PRICE: "SAR 79", PERIOD: "per month", DESCRIPTION: "For growing teams.", FEATURES: "Unlimited invoices|Bank sync|Reminders|5 users", BUTTON_LABEL: "Start free", BUTTON_LINK: "#contact", IS_FEATURED: "Y", BADGE: "Most popular" },
             { NAME: "Plus", PRICE: "SAR 149", PERIOD: "per month", DESCRIPTION: "For more than one company.", FEATURES: "Everything in Business|Multi-company|Priority support|Unlimited users", BUTTON_LABEL: "Talk to sales", BUTTON_LINK: "#contact", IS_FEATURED: "N" }] },
-        { id: "faq", report: "ws-faq", title: "Questions", sec: ["ws-Head--center"], rows: [
+        { id: "faq", report: "ws-faq", title: "Questions", sec: ["ws-Head--center"], rep: ["ws-Faqs--search"], rows: [
+            { QUESTION: "How long does it take to set up?", ANSWER: "About ten minutes. Add your logo and VAT number, connect your bank, and send your first invoice." },
+            { QUESTION: "Can my accountant use it too?", ANSWER: "Yes. Accountants get free access with their own login and an audit trail of every change." },
+            { QUESTION: "Which payment methods do my customers get?", ANSWER: "Cards, Apple Pay, mada and bank transfer. Card fees are shown before you turn them on." },
             { QUESTION: "Do I need a card to try it?", ANSWER: "No. The trial is free for 30 days and asks for no payment details." },
             { QUESTION: "Is Ledgerline approved for e-invoicing?", ANSWER: "Yes. Invoices meet the ZATCA e-invoicing requirements, phase 2." },
             { QUESTION: "Can I export my data?", ANSWER: "Any time, as Excel or CSV. Your data is yours." }] },
-        { id: "contact", menu: "Start free", title: "Start your free *trial*", form: true, sec: ["ws-Sec--menu", "ws-Tone--gradient"], css: "ws-Contact",
+        { id: "contact", menu: "Start free", title: "Start your free *trial*", form: true, sec: ["ws-Sec--menu", "ws-Tone--gradient", "ws-Edge--curve"], css: "ws-Contact",
           header: '<p class="ws-Lead">Leave your details and we will set up your account today.</p>' }
     ],
     contact: [

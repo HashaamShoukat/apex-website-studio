@@ -1,3 +1,15 @@
+file "gallery/aurora-rose.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/aurora.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/blueprint.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/bold-dark.jpg" (
     mimeType: image/jpeg
 )
@@ -6,11 +18,31 @@ file "gallery/bold.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/clay-teal.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/clay.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/coral.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/corporate-ocean.jpg" (
     mimeType: image/jpeg
 )
 
 file "gallery/corporate.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/deco-noir.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/deco.jpg" (
     mimeType: image/jpeg
 )
 
@@ -46,6 +78,14 @@ file "gallery/luxury.jpg" (
     mimeType: image/jpeg
 )
 
+file "gallery/majlis-night.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/majlis.jpg" (
+    mimeType: image/jpeg
+)
+
 file "gallery/midnight.jpg" (
     mimeType: image/jpeg
 )
@@ -67,6 +107,10 @@ file "gallery/multi-meridian.jpg" (
 )
 
 file "gallery/multi-shifa.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/navy.jpg" (
     mimeType: image/jpeg
 )
 
@@ -131,6 +175,10 @@ file "gallery/site-restaurant.jpg" (
 )
 
 file "gallery/site-saas.jpg" (
+    mimeType: image/jpeg
+)
+
+file "gallery/sketch.jpg" (
     mimeType: image/jpeg
 )
 

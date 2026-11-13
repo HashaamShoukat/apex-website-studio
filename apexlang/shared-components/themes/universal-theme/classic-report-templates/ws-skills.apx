@@ -1,0 +1,40 @@
+classicReportTemplate ws-skills (
+    name: Website - Skills
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Skills #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <div class="ws-Skill" data-v="#VALUE#"><div class="ws-Skill-h"><b>#LABEL#</b><span class="ws-Skill-t">#TEXT#</span></div><div class="ws-Skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Skills (Website Studio). Skills, goals or survey results as bars that fill up when they scroll into view. VALUE is 0 to 100; TEXT is shown at the end of the bar (VALUE% without it). Columns (all optional): LABEL, VALUE, TEXT.
+    }
+
+    templateOption skills-columns (
+        name: Two Columns
+        group: @report/wsr-skills-layout
+        sequence: 10
+        appearance {
+            cssClasses: ws-Skills--columns
+        }
+    )
+
+    templateOption skills-rings (
+        name: Rings
+        group: @report/wsr-skills-layout
+        sequence: 20
+        appearance {
+            cssClasses: ws-Skills--rings
+        }
+    )
+)

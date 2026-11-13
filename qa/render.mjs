@@ -118,7 +118,7 @@ export function renderSite({ site = SITES[0], pageClasses } = {}) {
         .replace("#FORM_OPEN#", '<form action="#" method="post" name="wwv_flow" id="wwvFlowForm" novalidate><input type="hidden" name="p_flow_id" value="100" id="pFlowId"><input type="hidden" name="p_flow_step_id" value="' + PAGE_ID + '" id="pFlowStepId"><input type="hidden" name="p_instance" value="1" id="pInstance">')
         .replace("#FORM_CLOSE#", "</form>").replace("#HOME_LINK#", "#").replace("#LOGO#", '<span class="apex-logo-text">Website Studio</span>')
         .replace("#REGION_POSITION_07#", slot("logo")).replace("#REGION_POSITION_08#", slot("menu")).replace("#AFTER_NAVIGATION_BAR#", buttons.filter(b => b.props["layout.slot"] === "headerButtons").map(buttonHtml).join(""))
-        .replace("#REGION_POSITION_01#", slot("hero")).replace("#BODY#", bodySlot).replace("#REGION_POSITION_05#", slot("footer")).replace("#REGION_POSITION_06#", slot("footerBottom"))
+        .replace("#REGION_POSITION_01#", slot("hero")).replace("#REGION_POSITION_02#", slot("announcement")).replace("#BODY#", bodySlot).replace("#REGION_POSITION_05#", slot("footer")).replace("#REGION_POSITION_06#", slot("footerBottom"))
         .replace(/#SUCCESS_MESSAGE#|#NOTIFICATION_MESSAGE#|#GLOBAL_NOTIFICATION#|#REGION_POSITION_04#|#DEVELOPER_TOOLBAR#|#GENERATED_CSS#|#APPLICATION_JAVASCRIPT#|#PAGE_JAVASCRIPT#/g, "")
         .replace("#APEX_JAVASCRIPT#", `<script>var apex_img_dir = "/i/", htmldb_Img_Dir = apex_img_dir;var apex = { env: { APP_ID: "100", APP_PAGE_ID: "${PAGE_ID}", APP_SESSION: "1", APP_USER: "nobody", APEX_FILES: "/i/", APEX_VERSION: "26.1.0" } };</script>
 <script src="/i/libraries/apex/minified/desktop_all.min.js"></script>`)

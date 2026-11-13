@@ -30,7 +30,7 @@ templateOptionGroup ws-scheme (
         nullText: Light
     }
     help {
-        helpText: Midnight and Tech Grid are always dark. Sections set to Dark or Accent keep their own colours.
+        helpText: Midnight, Tech Grid, Aurora and Blueprint are always dark. Sections set to Dark or Accent keep their own colours.
     }
 )
 
@@ -42,7 +42,7 @@ templateOptionGroup ws-font (
         nullText: System
     }
     help {
-        helpText: Headline and text fonts. Every choice except System loads its fonts from Google Fonts. Arabic suits right-to-left websites.
+        helpText: Headline and text fonts. Every choice except System loads its fonts from Google Fonts. The Arabic typefaces suit right-to-left websites.
     }
 )
 
@@ -97,6 +97,18 @@ templateOptionGroup ws-ph (
     }
 )
 
+templateOptionGroup ws-revstyle (
+    templateType: page
+    name: Reveal Style
+    sequence: 90
+    settings {
+        nullText: Rise
+    }
+    help {
+        helpText: How sections come into view with Reveal on Scroll.
+    }
+)
+
 templateOptionGroup ws-tone (
     templateType: region
     name: Background
@@ -142,10 +154,22 @@ templateOptionGroup ws-width (
     }
 )
 
+templateOptionGroup ws-edge (
+    templateType: region
+    name: Top Edge
+    sequence: 50
+    settings {
+        nullText: Straight
+    }
+    help {
+        helpText: The shape of the section's top edge, drawn over the section before it. Use it on a section with a Background.
+    }
+)
+
 templateOptionGroup wsr-hero-layout (
     templateType: report
     name: Layout
-    sequence: 140
+    sequence: 160
     settings {
         nullText: Slider
     }
@@ -157,7 +181,7 @@ templateOptionGroup wsr-hero-layout (
 templateOptionGroup wsr-hero-height (
     templateType: report
     name: Height
-    sequence: 150
+    sequence: 170
     settings {
         nullText: Large
     }
@@ -169,7 +193,7 @@ templateOptionGroup wsr-hero-height (
 templateOptionGroup wsr-hero-overlay (
     templateType: report
     name: Image Overlay
-    sequence: 160
+    sequence: 180
     settings {
         nullText: Normal
     }
@@ -181,7 +205,7 @@ templateOptionGroup wsr-hero-overlay (
 templateOptionGroup wsr-hero-move (
     templateType: report
     name: Transition
-    sequence: 170
+    sequence: 190
     settings {
         nullText: Fade
     }
@@ -190,7 +214,7 @@ templateOptionGroup wsr-hero-move (
 templateOptionGroup wsr-autoplay (
     templateType: report
     name: Autoplay
-    sequence: 180
+    sequence: 200
     settings {
         nullText: 6 Seconds
     }
@@ -199,7 +223,7 @@ templateOptionGroup wsr-autoplay (
 templateOptionGroup wsr-stats-layout (
     templateType: report
     name: Layout
-    sequence: 190
+    sequence: 210
     settings {
         nullText: Row
     }
@@ -208,7 +232,7 @@ templateOptionGroup wsr-stats-layout (
 templateOptionGroup wsr-features-layout (
     templateType: report
     name: Layout
-    sequence: 200
+    sequence: 220
     settings {
         nullText: Cards
     }
@@ -217,7 +241,7 @@ templateOptionGroup wsr-features-layout (
 templateOptionGroup wsr-columns (
     templateType: report
     name: Columns
-    sequence: 210
+    sequence: 230
     settings {
         nullText: 3
     }
@@ -226,7 +250,7 @@ templateOptionGroup wsr-columns (
 templateOptionGroup wsr-team-layout (
     templateType: report
     name: Layout
-    sequence: 220
+    sequence: 240
     settings {
         nullText: Portrait Cards
     }
@@ -235,7 +259,7 @@ templateOptionGroup wsr-team-layout (
 templateOptionGroup wsr-quotes-layout (
     templateType: report
     name: Layout
-    sequence: 230
+    sequence: 250
     settings {
         nullText: Carousel
     }
@@ -244,7 +268,7 @@ templateOptionGroup wsr-quotes-layout (
 templateOptionGroup wsr-logos-layout (
     templateType: report
     name: Layout
-    sequence: 240
+    sequence: 260
     settings {
         nullText: Scrolling Marquee
     }
@@ -253,7 +277,7 @@ templateOptionGroup wsr-logos-layout (
 templateOptionGroup wsr-logos-speed (
     templateType: report
     name: Marquee Speed
-    sequence: 250
+    sequence: 270
     settings {
         nullText: Normal
     }
@@ -262,7 +286,7 @@ templateOptionGroup wsr-logos-speed (
 templateOptionGroup wsr-plans-style (
     templateType: report
     name: Featured Plan
-    sequence: 260
+    sequence: 280
     settings {
         nullText: Dark
     }
@@ -271,7 +295,7 @@ templateOptionGroup wsr-plans-style (
 templateOptionGroup wsr-timeline-layout (
     templateType: report
     name: Layout
-    sequence: 270
+    sequence: 290
     settings {
         nullText: Alternating
     }
@@ -280,7 +304,7 @@ templateOptionGroup wsr-timeline-layout (
 templateOptionGroup wsr-steps-layout (
     templateType: report
     name: Layout
-    sequence: 280
+    sequence: 300
     settings {
         nullText: Connected
     }
@@ -289,7 +313,7 @@ templateOptionGroup wsr-steps-layout (
 templateOptionGroup wsr-faq-layout (
     templateType: report
     name: Layout
-    sequence: 290
+    sequence: 310
     settings {
         nullText: List
     }
@@ -298,7 +322,7 @@ templateOptionGroup wsr-faq-layout (
 templateOptionGroup wsr-jobs-layout (
     templateType: report
     name: Layout
-    sequence: 300
+    sequence: 320
     settings {
         nullText: List
     }
@@ -307,7 +331,7 @@ templateOptionGroup wsr-jobs-layout (
 templateOptionGroup wsr-works-layout (
     templateType: report
     name: Layout
-    sequence: 310
+    sequence: 330
     settings {
         nullText: Grid
     }
@@ -316,7 +340,7 @@ templateOptionGroup wsr-works-layout (
 templateOptionGroup wsr-links-layout (
     templateType: report
     name: Layout
-    sequence: 320
+    sequence: 340
     settings {
         nullText: Round Icons
     }
@@ -325,7 +349,7 @@ templateOptionGroup wsr-links-layout (
 templateOptionGroup wsr-infos-layout (
     templateType: report
     name: Layout
-    sequence: 330
+    sequence: 350
     settings {
         nullText: List
     }
@@ -334,7 +358,7 @@ templateOptionGroup wsr-infos-layout (
 templateOptionGroup wsr-news-layout (
     templateType: report
     name: Layout
-    sequence: 340
+    sequence: 360
     settings {
         nullText: Cards
     }
@@ -343,7 +367,7 @@ templateOptionGroup wsr-news-layout (
 templateOptionGroup wsr-products-layout (
     templateType: report
     name: Layout
-    sequence: 350
+    sequence: 370
     settings {
         nullText: Cards
     }
@@ -352,7 +376,7 @@ templateOptionGroup wsr-products-layout (
 templateOptionGroup wsr-photos-layout (
     templateType: report
     name: Layout
-    sequence: 360
+    sequence: 380
     settings {
         nullText: Grid
     }
@@ -361,7 +385,7 @@ templateOptionGroup wsr-photos-layout (
 templateOptionGroup wsr-zigzag-start (
     templateType: report
     name: First Row
-    sequence: 370
+    sequence: 390
     settings {
         nullText: Image First
     }
@@ -370,7 +394,7 @@ templateOptionGroup wsr-zigzag-start (
 templateOptionGroup wsr-events-layout (
     templateType: report
     name: Layout
-    sequence: 380
+    sequence: 400
     settings {
         nullText: Agenda
     }
@@ -379,7 +403,7 @@ templateOptionGroup wsr-events-layout (
 templateOptionGroup wsr-hours-layout (
     templateType: report
     name: Layout
-    sequence: 390
+    sequence: 410
     settings {
         nullText: Table
     }
@@ -388,7 +412,7 @@ templateOptionGroup wsr-hours-layout (
 templateOptionGroup wsr-compare-hl (
     templateType: report
     name: Highlight Column
-    sequence: 400
+    sequence: 420
     settings {
         nullText: None
     }
@@ -397,7 +421,7 @@ templateOptionGroup wsr-compare-hl (
 templateOptionGroup wsr-video-layout (
     templateType: report
     name: Layout
-    sequence: 410
+    sequence: 430
     settings {
         nullText: Large
     }
@@ -406,16 +430,88 @@ templateOptionGroup wsr-video-layout (
 templateOptionGroup wsr-map-layout (
     templateType: report
     name: Layout
-    sequence: 420
+    sequence: 440
     settings {
         nullText: Map and Address
+    }
+)
+
+templateOptionGroup wsr-banner-style (
+    templateType: report
+    name: Style
+    sequence: 450
+    settings {
+        nullText: Accent Color
+    }
+)
+
+templateOptionGroup wsr-banner-layout (
+    templateType: report
+    name: Layout
+    sequence: 460
+    settings {
+        nullText: Text and Buttons
+    }
+)
+
+templateOptionGroup wsr-tabs-style (
+    templateType: report
+    name: Style
+    sequence: 470
+    settings {
+        nullText: Underline
+    }
+)
+
+templateOptionGroup wsr-countdown-layout (
+    templateType: report
+    name: Layout
+    sequence: 480
+    settings {
+        nullText: Row
+    }
+)
+
+templateOptionGroup wsr-countdown-style (
+    templateType: report
+    name: Numbers
+    sequence: 490
+    settings {
+        nullText: Boxes
+    }
+)
+
+templateOptionGroup wsr-skills-layout (
+    templateType: report
+    name: Layout
+    sequence: 500
+    settings {
+        nullText: Bars
+    }
+)
+
+templateOptionGroup wsr-ticker-style (
+    templateType: report
+    name: Style
+    sequence: 510
+    settings {
+        nullText: Accent Color
+    }
+)
+
+templateOptionGroup wsr-ticker-speed (
+    templateType: report
+    name: Speed
+    sequence: 520
+    settings {
+        nullText: Normal
     }
 )
 
 templateOptionGroup wsm-align (
     templateType: list
     name: Alignment
-    sequence: 430
+    sequence: 530
     settings {
         nullText: Right
     }
@@ -424,7 +520,7 @@ templateOptionGroup wsm-align (
 templateOptionGroup wsm-max (
     templateType: list
     name: Visible Entries
-    sequence: 440
+    sequence: 540
     settings {
         nullText: All
     }
@@ -436,7 +532,7 @@ templateOptionGroup wsm-max (
 templateOptionGroup wsm-mobile (
     templateType: list
     name: On Phones
-    sequence: 450
+    sequence: 550
     settings {
         nullText: Drop-down Panel
     }

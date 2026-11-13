@@ -39,7 +39,19 @@ page 1 (
                 {"id":"glass-dark","name":"Glass - Dark","tags":"dark glass","page":"ws-Design--glass ws-Scheme--dark ws-Accent--rose ws-Font--tech ws-Header--pill","r":{"@ws-hero":["ws-Hero--fullbleed"],"@ws-features":["ws-Features--bento"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--glass%20ws-Scheme--dark%20ws-Accent--rose%20ws-Font--tech%20ws-Header--pill&r=%40ws-hero%3Aws-Hero--fullbleed%2C%40ws-features%3Aws-Features--bento"},
                 {"id":"saas-dark","name":"SaaS - Dark","tags":"dark saas","page":"ws-Design--saas ws-Scheme--dark ws-Accent--indigo ws-Font--tech ws-Header--pill","r":{"@ws-hero":["ws-Hero--centered"],"@ws-features":["ws-Features--icons"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--saas%20ws-Scheme--dark%20ws-Accent--indigo%20ws-Font--tech%20ws-Header--pill&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-features%3Aws-Features--icons"},
                 {"id":"corporate-ocean","name":"Corporate - Ocean","tags":"light corporate","page":"ws-Design--corporate ws-Accent--ocean ws-Font--serif ws-Header--centered","r":{"@ws-hero":["ws-Hero--fullbleed","ws-Hero--medium"],"@ws-team":["ws-Team--list"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--corporate%20ws-Accent--ocean%20ws-Font--serif%20ws-Header--centered&r=%40ws-hero%3Aws-Hero--fullbleed%2Bws-Hero--medium%2C%40ws-team%3Aws-Team--list"},
-                {"id":"playful-dark","name":"Playful - Dark","tags":"dark playful","page":"ws-Design--playful ws-Scheme--dark ws-Accent--amber ws-Font--friendly ws-Corners--round","r":{"@ws-hero":["ws-Hero--centered"],"@ws-testimonials":["ws-Quotes--wall"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--playful%20ws-Scheme--dark%20ws-Accent--amber%20ws-Font--friendly%20ws-Corners--round&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-testimonials%3Aws-Quotes--wall"}];
+                {"id":"playful-dark","name":"Playful - Dark","tags":"dark playful","page":"ws-Design--playful ws-Scheme--dark ws-Accent--amber ws-Font--friendly ws-Corners--round","r":{"@ws-hero":["ws-Hero--centered"],"@ws-testimonials":["ws-Quotes--wall"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--playful%20ws-Scheme--dark%20ws-Accent--amber%20ws-Font--friendly%20ws-Corners--round&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-testimonials%3Aws-Quotes--wall"},
+                {"id":"aurora","name":"Aurora","tags":"dark aurora","page":"ws-Design--aurora ws-Font--space ws-Header--pill ws-Reveal--blur","r":{"@ws-hero":["ws-Hero--centered"],"@ws-features":["ws-Features--bento"],"@ws-testimonials":["ws-Quotes--wall"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--aurora%20ws-Font--space%20ws-Header--pill%20ws-Reveal--blur&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-features%3Aws-Features--bento%2C%40ws-testimonials%3Aws-Quotes--wall"},
+                {"id":"aurora-rose","name":"Aurora - Rose","tags":"dark aurora","page":"ws-Design--aurora ws-Accent--rose ws-Font--friendly ws-Header--transparent","r":{"@ws-hero":["ws-Hero--fullbleed"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--aurora%20ws-Accent--rose%20ws-Font--friendly%20ws-Header--transparent&r=%40ws-hero%3Aws-Hero--fullbleed"},
+                {"id":"clay","name":"Clay","tags":"light clay","page":"ws-Design--clay ws-Font--friendly ws-Header--pill ws-Reveal--zoom","r":{"@ws-hero":["ws-Hero--split"],"@ws-team":["ws-Team--round"],"@ws-steps":["ws-Steps--cards"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--clay%20ws-Font--friendly%20ws-Header--pill%20ws-Reveal--zoom&r=%40ws-hero%3Aws-Hero--split%2C%40ws-team%3Aws-Team--round%2C%40ws-steps%3Aws-Steps--cards"},
+                {"id":"clay-teal","name":"Clay - Teal","tags":"light clay","page":"ws-Design--clay ws-Accent--teal ws-Font--friendly","r":{"@ws-hero":["ws-Hero--centered"],"@ws-features":["ws-Features--bento"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--clay%20ws-Accent--teal%20ws-Font--friendly&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-features%3Aws-Features--bento"},
+                {"id":"blueprint","name":"Blueprint","tags":"dark blueprint","page":"ws-Design--blueprint ws-Font--space ws-Corners--square","r":{"@ws-hero":["ws-Hero--split"],"@ws-features":["ws-Features--rows"],"@ws-logos":["ws-Logos--grid"],"@ws-timeline":["ws-Timeline--list"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--blueprint%20ws-Font--space%20ws-Corners--square&r=%40ws-hero%3Aws-Hero--split%2C%40ws-features%3Aws-Features--rows%2C%40ws-logos%3Aws-Logos--grid%2C%40ws-timeline%3Aws-Timeline--list"},
+                {"id":"sketch","name":"Hand-drawn","tags":"light sketch","page":"ws-Design--sketch ws-Font--hand ws-Ph--pattern","r":{"@ws-hero":["ws-Hero--split"],"@ws-testimonials":["ws-Quotes--wall"],"@ws-steps":["ws-Steps--cards"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--sketch%20ws-Font--hand%20ws-Ph--pattern&r=%40ws-hero%3Aws-Hero--split%2C%40ws-testimonials%3Aws-Quotes--wall%2C%40ws-steps%3Aws-Steps--cards"},
+                {"id":"deco","name":"Art Deco","tags":"light deco","page":"ws-Design--deco ws-Header--centered ws-Ph--plain","r":{"@ws-hero":["ws-Hero--centered"],"@ws-testimonials":["ws-Quotes--spotlight"],"@ws-features":["ws-Features--icons"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--deco%20ws-Header--centered%20ws-Ph--plain&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-testimonials%3Aws-Quotes--spotlight%2C%40ws-features%3Aws-Features--icons"},
+                {"id":"deco-noir","name":"Art Deco - Noir","tags":"dark deco","page":"ws-Design--deco ws-Scheme--dark ws-Accent--gold ws-Font--classic ws-Header--transparent","r":{"@ws-hero":["ws-Hero--fullbleed","ws-Hero--strong"],"@ws-gallery":["ws-Works--large"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--deco%20ws-Scheme--dark%20ws-Accent--gold%20ws-Font--classic%20ws-Header--transparent&r=%40ws-hero%3Aws-Hero--fullbleed%2Bws-Hero--strong%2C%40ws-gallery%3Aws-Works--large"},
+                {"id":"majlis","name":"Majlis","tags":"light majlis","page":"ws-Design--majlis ws-Font--classic ws-Footer--accent","r":{"@ws-hero":["ws-Hero--split"],"@ws-testimonials":["ws-Quotes--spotlight"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--majlis%20ws-Font--classic%20ws-Footer--accent&r=%40ws-hero%3Aws-Hero--split%2C%40ws-testimonials%3Aws-Quotes--spotlight"},
+                {"id":"majlis-night","name":"Majlis - Night","tags":"dark majlis","page":"ws-Design--majlis ws-Scheme--dark ws-Accent--gold ws-Font--serif","r":{"@ws-hero":["ws-Hero--centered"],"@ws-features":["ws-Features--icons"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Design--majlis%20ws-Scheme--dark%20ws-Accent--gold%20ws-Font--serif&r=%40ws-hero%3Aws-Hero--centered%2C%40ws-features%3Aws-Features--icons"},
+                {"id":"navy","name":"Navy","tags":"light clean","page":"ws-Accent--navy ws-Font--classic ws-Corners--soft ws-Header--centered","r":{"@ws-hero":["ws-Hero--split"],"@ws-features":["ws-Features--rows"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--navy%20ws-Font--classic%20ws-Corners--soft%20ws-Header--centered&r=%40ws-hero%3Aws-Hero--split%2C%40ws-features%3Aws-Features--rows"},
+                {"id":"coral","name":"Coral","tags":"light clean","page":"ws-Accent--coral ws-Font--space ws-Corners--round ws-Reveal--slide","r":{"@ws-testimonials":["ws-Quotes--wall"]},"hash":"#ws=ws-Fx--sticky%20ws-Fx--reveal%20ws-Fx--count%20ws-Fx--top%20ws-Accent--coral%20ws-Font--space%20ws-Corners--round%20ws-Reveal--slide&r=%40ws-testimonials%3Aws-Quotes--wall"}];
             // The starter websites: one page each, with their own content, menu and look.
             var WS_SITES = [{"key":"halcyon","alias":"WEBSITE","name":"Halcyon","label":"Design Studio","text":"Halcyon is a brand and digital design studio in Lisbon and Porto: strategy, identity, websites and product design.","look":"ws-Accent--tangerine ws-Font--grotesk"},
                 {"key":"company","alias":"COMPANY","name":"Meridian","label":"Company","text":"Meridian Partners plans, builds and runs infrastructure for cities, utilities and industry across the Gulf and Europe.","look":"ws-Design--corporate ws-Accent--indigo ws-Font--tech ws-Header--centered"},
@@ -47,7 +59,7 @@ page 1 (
                 {"key":"clinic","alias":"CLINIC","name":"عيادات الشفاء","label":"Clinic (Arabic, RTL)","text":"عيادات الشفاء في الرياض: طب الأسرة والأطفال والأسنان والمختبر، مع حجز المواعيد عبر الإنترنت أو واتساب.","look":"ws-Accent--emerald ws-Font--arabic ws-Corners--round ws-Fx--chat ws-Fx--theme"},
                 {"key":"realestate","alias":"REAL-ESTATE","name":"Harbor & Stone","label":"Real Estate","text":"Harbor & Stone is a family-run estate agency: homes for sale and rent, valuations and property management.","look":"ws-Design--luxury ws-Accent--amber ws-Font--luxe ws-Header--transparent"},
                 {"key":"event","alias":"CONFERENCE","name":"Northwind Summit","label":"Conference","text":"Two days of talks and workshops on data, AI and the cloud. 40 speakers, 1,200 attendees. Early tickets on sale now.","look":"ws-Design--techgrid ws-Accent--cyan ws-Font--tech ws-Header--pill"},
-                {"key":"portfolio","alias":"PORTFOLIO","name":"Lina Haddad","label":"Portfolio","text":"Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.","look":"ws-Design--swiss ws-Accent--rose ws-Font--grotesk"},
+                {"key":"portfolio","alias":"PORTFOLIO","name":"Lina Haddad","label":"Portfolio","text":"Lina Haddad is an independent product and brand designer in Jeddah. Selected work, services and contact.","look":"ws-Design--swiss ws-Accent--rose ws-Font--grotesk ws-Fx--autohide"},
                 {"key":"saas","alias":"SAAS","name":"Ledgerline","label":"SaaS Product","text":"Send invoices, get paid faster and keep your books ready for VAT. Free for 30 days, no card needed.","look":"ws-Design--saas ws-Accent--violet ws-Font--friendly ws-Header--pill ws-Fx--theme"}];
             // The multi-page websites: several pages with one shared menu, header and footer.
             var WS_MULTI = [{"key":"meridian","alias":"MERIDIAN","label":"Company","name":"Meridian","text":"Six pages: home, about, services, insights, careers and contact, with a shared menu and footer.","look":"ws-Design--corporate ws-Accent--indigo ws-Font--tech ws-Header--centered","pages":[{"name":"Home","alias":"MERIDIAN"},{"name":"About","alias":"MERIDIAN-ABOUT"},{"name":"Services","alias":"MERIDIAN-SERVICES"},{"name":"Insights","alias":"MERIDIAN-INSIGHTS"},{"name":"Careers","alias":"MERIDIAN-CAREERS"},{"name":"Contact","alias":"MERIDIAN-CONTACT"}]},
@@ -88,12 +100,23 @@ page 1 (
                         '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
                         '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
                 }).join("");
+                // the tag buttons and the search field work together
+                function filter() {
+                    var f = $(".wss-Filter button[aria-pressed=true]").attr("data-f") || "", q = ($("#wss-q").val() || "").toLowerCase().trim(), n = 0;
+                    $("#wss-gallery .wss-Card").each(function () {
+                        var tags = " " + this.getAttribute("data-tags") + " ", name = $(this).find(".wss-Card-title").text().toLowerCase();
+                        this.hidden = (!!f && tags.indexOf(" " + f + " ") < 0) || (!!q && name.indexOf(q) < 0 && tags.indexOf(q) < 0);
+                        if (!this.hidden) { n++; }
+                    });
+                    $("#wss-none").prop("hidden", n > 0);
+                }
                 $(document).on("click", ".wss-Filter button", function () {
-                    var f = this.getAttribute("data-f");
                     $(".wss-Filter button").attr("aria-pressed", "false");
                     this.setAttribute("aria-pressed", "true");
-                    $("#wss-gallery .wss-Card").each(function () { this.hidden = !!f && (" " + this.getAttribute("data-tags") + " ").indexOf(" " + f + " ") < 0; });
+                    filter();
                 });
+                $(document).on("input", "#wss-q", filter);
+                $(document).on("keydown", "#wss-q", function (e) { if (e.key === "Enter") { e.preventDefault(); } });
             })(apex.jQuery);
             ```
     }
@@ -111,6 +134,9 @@ page 1 (
             .wss-Filter button { padding: .375rem .95rem; border-radius: 999px; border: 1px solid var(--ut-component-border-color, #d0d5dd); background: var(--ut-component-background-color, #fff); color: inherit; font: inherit; font-size: .875rem; cursor: pointer; }
             .wss-Filter button[aria-pressed="true"] { background: #7c2d12; border-color: #7c2d12; color: #ffffff; }
             .wss-Filter button:focus-visible { outline: 2px solid #ea580c; outline-offset: 2px; }
+            .wss-Search { flex: 1 1 12rem; max-width: 18rem; min-height: 2.1rem; padding: .3rem .9rem; border-radius: 999px; border: 1px solid var(--ut-component-border-color, #d0d5dd); background: var(--ut-component-background-color, #fff); color: inherit; font: inherit; font-size: .875rem; }
+            .wss-Search:focus-visible { outline: 2px solid #ea580c; outline-offset: 2px; }
+            .wss-None { margin: 1rem 0; opacity: .8; }
             .wss-Grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1.25rem; }
             .wss-Card { display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; border: 1px solid var(--ut-component-border-color, #e4e7ec); background: var(--ut-component-background-color, #fff);
                         box-shadow: 0 1px 2px rgba(16,24,40,.05); transition: box-shadow .2s ease, transform .2s ease; }
@@ -149,7 +175,7 @@ page 1 (
                 ```html
                 <div class="wss-Hero">
                   <h1>One-page and multi-page websites for Oracle APEX</h1>
-                  <p>A page template, a section template, a menu template and 23 report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps and more. Every list comes from a SQL query. 15 designs, 10 accent colours, light and dark, 7 typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
+                  <p>A page template, a section template, a menu template and 28 report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps, tabs, countdowns, banners and more. Every list comes from a SQL query. 21 designs, 15 accent colours, light and dark, 12 typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
                   <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
                   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
                   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:HOW-TO-USE:&APP_SESSION."><span class="t-Button-label">How to use it</span></a>
@@ -161,7 +187,7 @@ page 1 (
                 <p class="wss-Sub">4 websites with several pages that share one menu, header and footer. The menu links to pages, and inner pages open with a page title.</p>
                 <div class="wss-Grid" id="wss-multi"></div>
                 <h2 class="wss-H2">Looks</h2>
-                <p class="wss-Sub">27 ready-made looks on the demo website. Each one works on every starter website.</p>
+                <p class="wss-Sub">39 ready-made looks on the demo website. Each one works on every starter website.</p>
                 <div class="wss-Filter" role="group" aria-label="Filter">
                   <button type="button" data-f="" aria-pressed="true">All</button>
                   <button type="button" data-f="light" aria-pressed="false">Light</button>
@@ -181,7 +207,15 @@ page 1 (
                   <button type="button" data-f="techgrid" aria-pressed="false">Tech Grid</button>
                   <button type="button" data-f="swiss" aria-pressed="false">Swiss</button>
                   <button type="button" data-f="retro" aria-pressed="false">Retro</button>
+                  <button type="button" data-f="aurora" aria-pressed="false">Aurora</button>
+                  <button type="button" data-f="clay" aria-pressed="false">Clay</button>
+                  <button type="button" data-f="blueprint" aria-pressed="false">Blueprint</button>
+                  <button type="button" data-f="sketch" aria-pressed="false">Hand-drawn</button>
+                  <button type="button" data-f="deco" aria-pressed="false">Art Deco</button>
+                  <button type="button" data-f="majlis" aria-pressed="false">Majlis</button>
+                  <input type="search" id="wss-q" class="wss-Search" placeholder="Search looks" aria-label="Search looks" autocomplete="off">
                 </div>
+                <p class="wss-None" id="wss-none" role="status" hidden>No look matches. Try another word or press All.</p>
                 ```
         }
         layout {

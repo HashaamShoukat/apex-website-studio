@@ -13,20 +13,28 @@
         tech: "family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600",
         poster: "family=Anton&family=Archivo:wght@400;500;600;700",
         friendly: "family=Outfit:wght@400;500;600;700",
-        arabic: "family=IBM+Plex+Sans+Arabic:wght@400;500;600;700"
+        arabic: "family=IBM+Plex+Sans+Arabic:wght@400;500;600;700",
+        cairo: "family=Cairo:wght@400;500;600;700;800",
+        kufi: "family=Reem+Kufi:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600",
+        classic: "family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;500;600",
+        space: "family=Space+Grotesk:wght@400;500;600;700",
+        hand: "family=Caveat:wght@600;700&family=Nunito:wght@400;600;700"
     };
     var TEXT = { menu: "Menu", top: "Back to top", all: "All", prev: "Previous", next: "Next", slide: "Slide", apply: "Apply for this role",
-                 more: "More", close: "Close", play: "Play", dark: "Dark mode", map: "Map" };
+                 more: "More", close: "Close", play: "Play", dark: "Dark mode", map: "Map", pause: "Pause slides", resume: "Play slides", search: "Search",
+                 none: "Nothing found", yes: "Yes", no: "No", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds", photo: "Photo" };
     // built-in Arabic texts for pages in Arabic (text messages, when they exist, still win)
     if (/^ar\b/i.test(d.documentElement.lang || "")) {
         TEXT = { menu: "القائمة", top: "العودة للأعلى", all: "الكل", prev: "السابق", next: "التالي", slide: "شريحة", apply: "تقدم لهذه الوظيفة",
-                 more: "المزيد", close: "إغلاق", play: "تشغيل", dark: "الوضع الداكن", map: "الخريطة" };
+                 more: "المزيد", close: "إغلاق", play: "تشغيل", dark: "الوضع الداكن", map: "الخريطة", pause: "إيقاف الشرائح", resume: "تشغيل الشرائح", search: "بحث",
+                 none: "لا توجد نتائج", yes: "نعم", no: "لا", days: "أيام", hours: "ساعات", minutes: "دقائق", seconds: "ثوانٍ", photo: "صورة" };
     }
 
     function $$(sel, root) { return Array.prototype.slice.call((root || d).querySelectorAll(sel)); }
     function val(s) { s = s == null ? "" : String(s).trim(); return PH.test(s) || /#[A-Z][A-Z0-9_]*#/.test(s) ? "" : s; }
     function msg(key) {
-        // optional translations: text messages WEBSITE_STUDIO.MENU, .BACK_TO_TOP, .ALL, .PREVIOUS, .NEXT, .SLIDE, .APPLY, .MORE, .CLOSE, .PLAY, .DARK_MODE, .MAP
+        // optional translations: text messages WEBSITE_STUDIO.MENU, .BACK_TO_TOP, .ALL, .PREVIOUS, .NEXT, .SLIDE, .APPLY, .MORE, .CLOSE, .PLAY, .DARK_MODE, .MAP,
+        // .PAUSE, .RESUME, .SEARCH, .NONE, .YES, .NO, .DAYS, .HOURS, .MINUTES, .SECONDS, .PHOTO
         var keys = { top: "BACK_TO_TOP", dark: "DARK_MODE", prev: "PREVIOUS" };
         try { var k = "WEBSITE_STUDIO." + (keys[key] || key.toUpperCase()), m = W.apex && apex.lang && apex.lang.getMessage(k); if (m && m !== k) { return m; } } catch (e) { /* no apex.lang */ }
         return TEXT[key];
@@ -34,16 +42,20 @@
 
     /* ---------- look from the URL (Designer preview): #ws=<page classes>&r=<target>:<classes>,...
        A target is a static id (one section or report) or @<report template> (every report of that template, e.g. @ws-hero). ---------- */
-    var PAGE_FAMILY = /^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/;
-    var SEC_FAMILY = /^ws-(Tone|Pad|Head|Width)--/;
+    var PAGE_FAMILY = /^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph|Reveal)--/;
+    var SEC_FAMILY = /^ws-(Tone|Pad|Head|Width|Edge)--/;
     var BASE = { "ws-hero": "ws-Hero", "ws-stats": "ws-Stats", "ws-features": "ws-Features", "ws-team": "ws-Team", "ws-testimonials": "ws-Quotes", "ws-logos": "ws-Logos",
                  "ws-pricing": "ws-Plans", "ws-timeline": "ws-Timeline", "ws-steps": "ws-Steps", "ws-faq": "ws-Faqs", "ws-jobs": "ws-Jobs", "ws-gallery": "ws-Works",
                  "ws-links": "ws-Links", "ws-contact": "ws-Infos", "ws-news": "ws-News", "ws-products": "ws-Products", "ws-photos": "ws-Photos", "ws-zigzag": "ws-Zigzag",
-                 "ws-events": "ws-Events", "ws-hours": "ws-Hours", "ws-compare": "ws-Compare", "ws-video": "ws-Videos", "ws-map": "ws-Maps", "website-menu": "ws-Menu" };
+                 "ws-events": "ws-Events", "ws-hours": "ws-Hours", "ws-compare": "ws-Compare", "ws-video": "ws-Videos", "ws-map": "ws-Maps", "ws-banner": "ws-Banners",
+                 "ws-tabs": "ws-Tabs", "ws-countdown": "ws-Countdown", "ws-skills": "ws-Skills", "ws-ticker": "ws-Ticker", "website-menu": "ws-Menu" };
     function hashLook() {
-        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
-        return { page: g("ws"), regions: g("r") };
+        // a damaged link (a lone "%") must not stop the page: such a value counts as not given
+        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); try { return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; } };
+        return { page: g("ws"), regions: g("r"), dir: g("dir") };
     }
+    // only names that can be template options (letters, digits, - and _) are taken from the URL
+    function safe(c) { return /^[!-]?[A-Za-z][\w-]*$/.test(c); }
     // the option groups of the report and list templates: { group id: [classes] } (filled in by _src/build.mjs)
     var GROUPS = {};
     // c: a class (it replaces the other classes of its option group), -class (removes it) or !group-id (clears the group)
@@ -56,14 +68,21 @@
         else if (SEC_FAMILY.test(c)) { var f = c.replace(/--.*$/, "--"); el.className.split(/\s+/).forEach(function (x) { if (x.indexOf(f) === 0) { el.classList.remove(x); } }); }
         el.classList.add(c);
     }
+    var dir0;
     function applyLook(look) {
+        // dir=rtl or dir=ltr: the Designer shows any website right to left (or an Arabic one left to right)
+        if (!dir0) { dir0 = [d.documentElement.getAttribute("dir"), b.getAttribute("dir")]; }
+        [d.documentElement, b].forEach(function (el, k) {
+            var v = look.dir === "rtl" || look.dir === "ltr" ? look.dir : dir0[k];
+            if (v) { el.setAttribute("dir", v); } else { el.removeAttribute("dir"); }
+        });
         if (look.page !== null) {
             b.className.split(/\s+/).forEach(function (c) { if (PAGE_FAMILY.test(c)) { b.classList.remove(c); } });
-            look.page.split(/[\s+,]+/).forEach(function (c) { if (c) { b.classList.add(c); } });
+            look.page.split(/[\s+,]+/).forEach(function (c) { if (c && safe(c) && PAGE_FAMILY.test(c)) { b.classList.add(c); } });
         }
         if (look.regions) {
             look.regions.split(",").forEach(function (part) {
-                var i = part.indexOf(":"), id = part.slice(0, i), cls = part.slice(i + 1).split(/[\s+]+/).filter(Boolean);
+                var i = part.indexOf(":"), id = part.slice(0, i), cls = part.slice(i + 1).split(/[\s+]+/).filter(safe);
                 if (id.charAt(0) === "@") {
                     // every report of one template
                     var base = BASE[id.slice(1)];
@@ -119,8 +138,10 @@
         });
         // the default layout of a report: its class when no layout option is chosen
         $$("[data-ws-null]", root.matches && root.matches("[data-ws-null]") ? root.parentNode : root).forEach(function (r) {
-            var base = (r.getAttribute("data-ws-base-class") || "") + "--";
-            if (!r.className.split(/\s+/).some(function (c) { return c.indexOf(base) === 0 && !/--(zoom|full|medium|light|strong|slide)$/.test(c); })) { r.classList.add(r.getAttribute("data-ws-null")); }
+            // the default applies when no option of its own group is chosen (the other options of the template do not count)
+            var nul = r.getAttribute("data-ws-null"), fam = null;
+            Object.keys(GROUPS).some(function (k) { if (GROUPS[k][0] === nul) { fam = GROUPS[k]; return true; } return false; });
+            if (!fam || !fam.some(function (c) { return r.classList.contains(c); })) { r.classList.add(nul); }
         });
     }
 
@@ -199,16 +220,18 @@
     function video(el) {
         var v = val(el.getAttribute("data-video"));
         if (!v || reduce || !/\.(mp4|webm|m4v)(\?|#|$)/i.test(v)) { return; }
+        v = webUrl(v);
+        if (!v) { return; }
         var vid = d.createElement("video");
         vid.className = "ws-Bg-video"; vid.muted = true; vid.loop = true; vid.autoplay = true; vid.playsInline = true; vid.setAttribute("playsinline", ""); vid.setAttribute("aria-hidden", "true");
-        vid.src = v.replace(/^#APP_FILES#/, appFiles());
+        vid.src = v;
         el.appendChild(vid);
         var p = vid.play && vid.play(); if (p && p.catch) { p.catch(function () { /* autoplay refused: the image stays */ }); }
     }
 
     /* ---------- emphasis: *word* in titles becomes <em> ---------- */
     function emphasis(root) {
-        $$(".ws-Title, .ws-Display, .ws-Statement, .ws-Quote blockquote, .ws-Zig-t", root).forEach(function (el) {
+        $$(".ws-Title, .ws-Display, .ws-Statement, .ws-Quote blockquote, .ws-Zig-t, .ws-Banner-t", root).forEach(function (el) {
             if (el.children.length || el.textContent.indexOf("*") < 0) { return; }
             var t = el.textContent, out = "", re = /\*([^*]+)\*/g, last = 0, m, esc = function (s) { var x = d.createElement("span"); x.textContent = s; return x.innerHTML; };
             while ((m = re.exec(t))) { out += esc(t.slice(last, m.index)) + "<em>" + esc(m[1]) + "</em>"; last = re.lastIndex; }
@@ -295,18 +318,24 @@
             rep.parentNode.insertBefore(bar, rep);
         });
     }
+    // Logos (Scrolling Marquee) and Ticker: the entries run in an endless band. The band is the entries repeated until
+    // they are wider than the screen, twice, and it moves by half its width.
     function marquee(root) {
-        $$(".ws-Logos--marquee", root).forEach(function (rep) {
+        $$(".ws-Logos--marquee, .ws-Ticker", root).forEach(function (rep) {
             if (rep.__wsM || reduce) { return; }
             rep.__wsM = true;
-            var items = Array.prototype.slice.call(rep.children), track = d.createElement("div");
-            if (items.length < 3) { rep.classList.remove("ws-Logos--marquee"); return; }
+            var items = Array.prototype.slice.call(rep.children), track = d.createElement("div"), logos = rep.classList.contains("ws-Logos");
+            if (!items.length || (logos && items.length < 3)) { rep.classList.remove("ws-Logos--marquee"); return; }
             track.className = "ws-Track";
             items.forEach(function (i) { track.appendChild(i); });
-            items.forEach(function (i) { var c = i.cloneNode(true); c.setAttribute("aria-hidden", "true"); c.setAttribute("tabindex", "-1"); track.appendChild(c); });
-            var per = rep.classList.contains("ws-Speed--slow") ? 8 : rep.classList.contains("ws-Speed--fast") ? 2.6 : 4.5;
-            track.style.setProperty("--ws-speed", Math.max(14, items.length * per) + "s");
             rep.appendChild(track);
+            var copy = function (i) { var c = i.cloneNode(true); c.setAttribute("aria-hidden", "true"); c.setAttribute("tabindex", "-1"); track.appendChild(c); return c; };
+            var half = items.slice(), one = track.scrollWidth, room = rep.clientWidth || W.innerWidth, n = one > 0 ? Math.min(logos ? 3 : 8, Math.ceil(room / one)) : 1;
+            for (var k = 1; k < n; k++) { items.forEach(function (i) { half.push(copy(i)); }); }
+            half.forEach(copy);
+            var per = rep.classList.contains("ws-Speed--slow") ? 8 : rep.classList.contains("ws-Speed--fast") ? 2.6 : 4.5;
+            track.style.setProperty("--ws-speed", Math.max(14, half.length * per) + "s");
+            rep.classList.add("is-marquee");
         });
     }
     // Opening Hours: today's row (DAY_NUMBER 1 = Monday ... 7 = Sunday, or the day name)
@@ -332,8 +361,11 @@
                     var t = val(c.textContent);
                     if (t) { used[i] = true; }
                     if (!r.classList.contains("is-head")) {
-                        if (/^(y|yes|true)$/i.test(t)) { c.innerHTML = '<span class="ws-Yes" role="img" aria-label="Yes"></span>'; }
-                        else if (/^(n|no|false|-)$/i.test(t)) { c.innerHTML = '<span class="ws-No" role="img" aria-label="No"></span>'; }
+                        var yes = /^(y|yes|true)$/i.test(t);
+                        if (yes || /^(n|no|false|-)$/i.test(t)) {
+                            var mark = d.createElement("span"); mark.className = yes ? "ws-Yes" : "ws-No"; mark.setAttribute("role", "img"); mark.setAttribute("aria-label", msg(yes ? "yes" : "no"));
+                            c.textContent = ""; c.appendChild(mark);
+                        }
                     }
                 });
             });
@@ -344,10 +376,15 @@
             if (head && head !== rep.firstElementChild) { rep.insertBefore(head, rep.firstElementChild); }
         });
     }
+    // a URL from a query that goes into a frame or a player: web addresses and files of this site only (never javascript: or data:)
+    function webUrl(u) {
+        u = String(u || "").trim().replace(/^#APP_FILES#/, appFiles());
+        return /^(https?:)?\/\//i.test(u) || (!/^[a-z][a-z0-9+.-]*:/i.test(u) && u) ? u : "";
+    }
     // Video: a cover with a play button; YouTube / Vimeo / a file only load when pressed
     function videos(root) {
         $$(".ws-Video", root).forEach(function (fig) {
-            var url = val(fig.getAttribute("data-video")), btn = fig.querySelector(".ws-Video-play");
+            var url = webUrl(val(fig.getAttribute("data-video"))), btn = fig.querySelector(".ws-Video-play");
             if (!btn || fig.__wsV) { return; }
             fig.__wsV = true;
             if (!url) { btn.disabled = true; return; }
@@ -359,7 +396,7 @@
                     el.src = yt ? "https://www.youtube-nocookie.com/embed/" + yt[1] + "?autoplay=1&rel=0" : "https://player.vimeo.com/video/" + vm[1] + "?autoplay=1";
                     el.allow = "autoplay; fullscreen; picture-in-picture"; el.setAttribute("allowfullscreen", ""); el.title = btn.getAttribute("aria-label");
                 } else {
-                    el = d.createElement("video"); el.src = url.replace(/^#APP_FILES#/, appFiles()); el.controls = true; el.autoplay = true; el.playsInline = true;
+                    el = d.createElement("video"); el.src = url; el.controls = true; el.autoplay = true; el.playsInline = true;
                 }
                 el.className = "ws-Video-frame";
                 btn.replaceWith(el);
@@ -370,7 +407,7 @@
     // Map: the embed loads when it comes near the screen
     function maps(root) {
         $$(".ws-Map-frame", root).forEach(function (fr) {
-            var url = val(fr.getAttribute("data-map"));
+            var url = webUrl(val(fr.getAttribute("data-map")));
             if (fr.__wsMap) { return; }
             fr.__wsMap = true;
             if (!url) { fr.classList.add("ws-Ph", "ws-Ph--n2"); return; }
@@ -394,13 +431,16 @@
     function openBox(list, i, opener) {
         if (!box) {
             box = d.createElement("div");
-            box.className = "ws-Lightbox"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
-            box.innerHTML = '<figure class="ws-Lightbox-fig"><img alt=""><figcaption></figcaption></figure>' +
+            box.className = "ws-Lightbox"; box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("tabindex", "-1");
+            box.innerHTML = '<span class="ws-Lightbox-count" aria-live="polite"></span><figure class="ws-Lightbox-fig"><img alt=""><figcaption></figcaption></figure>' +
                 '<button type="button" class="ws-Lightbox-close"><span aria-hidden="true">&times;</span></button>' +
                 '<button type="button" class="ws-Arrow ws-Lightbox-prev"><span aria-hidden="true">&#8592;</span></button><button type="button" class="ws-Arrow ws-Lightbox-next"><span aria-hidden="true">&#8594;</span></button>';
             b.appendChild(box);
         }
-        var img = box.querySelector("img"), cap = box.querySelector("figcaption"), cur = Math.max(0, i), x0 = null;
+        var img = box.querySelector("img"), cap = box.querySelector("figcaption"), count = box.querySelector(".ws-Lightbox-count"), cur = Math.max(0, i), x0 = null;
+        var many = list.length > 1, sec = opener && opener.closest(".ws-Sec"), title = sec && sec.querySelector(".ws-Title");
+        box.setAttribute("aria-label", (title && val(title.textContent)) || msg("photo"));
+        box.querySelector(".ws-Lightbox-prev").hidden = box.querySelector(".ws-Lightbox-next").hidden = !many;
         box.querySelector(".ws-Lightbox-close").setAttribute("aria-label", msg("close"));
         box.querySelector(".ws-Lightbox-prev").setAttribute("aria-label", msg("prev"));
         box.querySelector(".ws-Lightbox-next").setAttribute("aria-label", msg("next"));
@@ -411,12 +451,25 @@
             if (!img.getAttribute("src")) { img.removeAttribute("src"); }
             cap.textContent = ((fig.querySelector("figcaption") || {}).textContent || "").trim();
             box.classList.toggle("is-empty", !img.getAttribute("src"));
+            count.textContent = many ? (cur + 1) + " / " + list.length : "";
         }
         function go(k) { cur = (k + list.length) % list.length; show(); }
-        function close() { box.hidden = true; d.removeEventListener("keydown", key); b.classList.remove("ws-Locked"); if (opener) { opener.focus(); } }
+        // while the lightbox is open the rest of the page cannot be reached: it is inert, and Tab stays on the lightbox buttons
+        var rest = Array.prototype.filter.call(b.children, function (el) { return el !== box && !el.inert && el.tagName !== "SCRIPT"; });
+        rest.forEach(function (el) { el.inert = true; });
+        function close() {
+            box.hidden = true; d.removeEventListener("keydown", key, true); b.classList.remove("ws-Locked");
+            rest.forEach(function (el) { el.inert = false; });
+            if (opener && opener.isConnected) { opener.focus(); }
+        }
         function key(e) {
-            if (e.key === "Escape") { close(); }
+            if (e.key === "Escape") { e.preventDefault(); close(); }
             else if (e.key === "ArrowRight") { go(cur + (rtl() ? -1 : 1)); } else if (e.key === "ArrowLeft") { go(cur + (rtl() ? 1 : -1)); }
+            else if (e.key === "Tab") {
+                var stops = $$("button", box).filter(function (x) { return !x.hidden; }), at = stops.indexOf(d.activeElement);
+                e.preventDefault();
+                stops[(at + (e.shiftKey ? -1 : 1) + stops.length) % stops.length].focus();
+            }
         }
         box.querySelector(".ws-Lightbox-close").onclick = close;
         box.querySelector(".ws-Lightbox-prev").onclick = function () { go(cur - 1); };
@@ -425,9 +478,120 @@
         box.ontouchstart = function (e) { x0 = e.touches[0].clientX; };
         box.ontouchend = function (e) { if (x0 === null) { return; } var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(cur + ((dx < 0) !== rtl() ? 1 : -1)); } x0 = null; };
         box.hidden = false; b.classList.add("ws-Locked");
-        d.addEventListener("keydown", key);
+        d.addEventListener("keydown", key, true);
         show();
         box.querySelector(".ws-Lightbox-close").focus();
+    }
+
+    // Tabs: one row is one tab. The buttons are built from LABEL (or TITLE); arrow keys move between them.
+    var uid = 0;
+    function tabs(root) {
+        $$(".ws-Tabs", root).forEach(function (rep) {
+            var panels = $$(":scope > .ws-Tab", rep);
+            if (rep.__wsT || !panels.length) { return; }
+            rep.__wsT = true;
+            var bar = d.createElement("div"), btns = [], id = "ws-tabs-" + (++uid);
+            bar.className = "ws-Tabs-bar"; bar.setAttribute("role", "tablist");
+            if (!panels.some(function (p) { var m = p.querySelector(".ws-Media"); return m && (m.__wsSrc || m.classList.contains("has-img")); })) { rep.classList.add("ws-Tabs--text"); }
+            var show = function (k, focus) {
+                panels.forEach(function (p, n) { p.hidden = n !== k; btns[n].setAttribute("aria-selected", n === k ? "true" : "false"); btns[n].tabIndex = n === k ? 0 : -1; });
+                $$(".ws-Media.is-loading", panels[k]).forEach(function (el) { if (lazy) { lazy.unobserve(el); } load(el); });
+                if (focus) { btns[k].focus(); }
+            };
+            panels.forEach(function (p, k) {
+                var bt = d.createElement("button"), icon = val(p.getAttribute("data-tab-icon")), h = p.querySelector(".ws-Zig-t");
+                bt.type = "button"; bt.className = "ws-Tabs-btn"; bt.id = id + "-t" + k; bt.setAttribute("role", "tab"); bt.setAttribute("aria-controls", id + "-p" + k);
+                if (icon && /^[\w -]+$/.test(icon)) { var ic = d.createElement("span"); ic.className = "fa " + icon; ic.setAttribute("aria-hidden", "true"); bt.appendChild(ic); }
+                bt.appendChild(d.createTextNode(val(p.getAttribute("data-label")) || (h ? h.textContent.replace(/\*/g, "") : "") || String(k + 1)));
+                bt.addEventListener("click", function () { show(k); });
+                p.id = id + "-p" + k; p.setAttribute("role", "tabpanel"); p.setAttribute("aria-labelledby", bt.id); p.tabIndex = 0;
+                btns.push(bt); bar.appendChild(bt);
+            });
+            bar.addEventListener("keydown", function (e) {
+                var at = btns.indexOf(d.activeElement), step = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+                if (at < 0) { return; }
+                if (e.key === "Home") { e.preventDefault(); show(0, true); } else if (e.key === "End") { e.preventDefault(); show(btns.length - 1, true); }
+                else if (step) { e.preventDefault(); if (rtl() && /Left|Right/.test(e.key)) { step = -step; } show((at + step + btns.length) % btns.length, true); }
+            });
+            rep.insertBefore(bar, rep.firstChild);
+            rep.classList.add("is-tabs");
+            show(0);
+        });
+    }
+    // Countdown: TARGET_DATE is a date and time such as 2027-03-09T08:30:00+03:00 (to_char(d, 'YYYY-MM-DD"T"HH24:MI:SS') || '+03:00')
+    function countdown(root) {
+        $$(".ws-Cd", root).forEach(function (cd) {
+            var clock = cd.querySelector(".ws-Cd-clock"), raw = val(cd.getAttribute("data-to")), to = Date.parse(raw.replace(/^(\d{4}-\d\d-\d\d) (\d)/, "$1T$2"));
+            if (cd.__wsCd || !clock) { return; }
+            cd.__wsCd = true;
+            if (isNaN(to)) { clock.parentNode.removeChild(clock); return; }
+            var cells = ["days", "hours", "minutes", "seconds"].map(function (k) {
+                var c = d.createElement("div"), n = d.createElement("b"), l = d.createElement("span");
+                c.className = "ws-Cd-cell"; l.textContent = msg(k); c.appendChild(n); c.appendChild(l); clock.appendChild(c);
+                return n;
+            });
+            var two = function (n) { return (n < 10 ? "0" : "") + n; }, timer = null;
+            var tick = function () {
+                var left = Math.max(0, Math.floor((to - Date.now()) / 1000)), parts = [Math.floor(left / 86400), Math.floor(left % 86400 / 3600), Math.floor(left % 3600 / 60), left % 60];
+                if (!cd.isConnected) { clearInterval(timer); return; }
+                cells.forEach(function (n, k) { var t = k ? two(parts[k]) : String(parts[k]); if (n.textContent !== t) { n.textContent = t; } });
+                clock.setAttribute("aria-label", parts[0] + " " + msg("days") + ", " + parts[1] + " " + msg("hours") + ", " + parts[2] + " " + msg("minutes"));
+                if (left === 0) {
+                    clearInterval(timer);
+                    var done = val(cd.getAttribute("data-done"));
+                    cd.classList.add("is-done");
+                    if (done) { clock.textContent = done; clock.classList.add("ws-Cd-done"); clock.removeAttribute("aria-label"); }
+                }
+            };
+            clock.setAttribute("role", "timer");
+            timer = setInterval(tick, 1000);
+            tick();
+        });
+    }
+    // Skills: a bar (or ring) filled to VALUE percent when it comes into view
+    function skills(root) {
+        $$(".ws-Skill", root).forEach(function (sk) {
+            if (sk.__wsSk) { return; }
+            sk.__wsSk = true;
+            var v = Math.max(0, Math.min(100, parseFloat(val(sk.getAttribute("data-v"))) || 0)), bar = sk.querySelector(".ws-Skill-bar"), t = sk.querySelector(".ws-Skill-t");
+            sk.style.setProperty("--ws-v", v);
+            if (bar) { bar.setAttribute("aria-valuenow", v); var lb = sk.querySelector("b"); if (lb) { bar.setAttribute("aria-label", lb.textContent.trim()); } }
+            if (t && !val(t.textContent)) { t.textContent = v + "%"; }
+            if (reduce || !("IntersectionObserver" in W)) { sk.classList.add("is-in"); return; }
+            var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); sk.classList.add("is-in"); } }, { threshold: .3 });
+            io.observe(sk);
+        });
+    }
+    // FAQ: the Search Box option, and the questions as structured data for search engines
+    function faqs(root) {
+        $$(".ws-Faqs", root).forEach(function (rep) {
+            var items = $$(".ws-Faq", rep);
+            if (rep.__wsQ || !items.length) { return; }
+            rep.__wsQ = true;
+            try {
+                var ld = d.createElement("script");
+                ld.type = "application/ld+json";
+                ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map(function (f) {
+                    var q = f.querySelector("summary"), a = f.querySelector(".ws-Faq-a");
+                    return { "@type": "Question", name: (q ? q.textContent : "").trim(), acceptedAnswer: { "@type": "Answer", text: (a ? a.textContent : "").trim() } };
+                }) });
+                rep.appendChild(ld);
+            } catch (e) { /* no JSON */ }
+            if (!rep.classList.contains("ws-Faqs--search")) { return; }
+            var wrap = d.createElement("div"), input = d.createElement("input"), none = d.createElement("p");
+            wrap.className = "ws-Search"; input.type = "search"; input.className = "ws-Search-in"; input.placeholder = msg("search"); input.setAttribute("aria-label", msg("search")); input.autocomplete = "off";
+            none.className = "ws-Search-none ws-Muted"; none.textContent = msg("none"); none.hidden = true; none.setAttribute("role", "status");
+            wrap.appendChild(input);
+            input.addEventListener("input", function () {
+                var words = input.value.toLowerCase().split(/\s+/).filter(Boolean), hits = 0;
+                items.forEach(function (f) { var t = f.textContent.toLowerCase(), on = words.every(function (w) { return t.indexOf(w) >= 0; }); f.hidden = !on; if (on) { hits++; } });
+                none.hidden = hits > 0;
+            });
+            // the Enter key must not submit the page
+            input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); } });
+            rep.parentNode.insertBefore(wrap, rep);
+            rep.parentNode.insertBefore(none, rep.nextSibling);
+        });
     }
 
     /* ---------- slider: Hero (rows = slides) and Testimonials carousel ---------- */
@@ -455,9 +619,17 @@
             a.addEventListener("click", function () { go(i + (dir === "prev" ? -1 : 1)); });
             return a;
         };
+        // a pause button: the slides stay still until the visitor presses play again
+        var stopped = false, hover = false, inside = false, pause = d.createElement("button");
+        pause.type = "button"; pause.className = "ws-Arrow ws-Pause"; pause.innerHTML = '<span aria-hidden="true"></span>';
+        var label = function () { pause.setAttribute("aria-label", msg(stopped ? "resume" : "pause")); pause.classList.toggle("is-stopped", stopped); };
+        // pressing play starts the slides at once, also while the pointer or the focus is still on the button
+        pause.addEventListener("click", function () { stopped = !stopped; if (!stopped) { hover = inside = false; } label(); sync(); });
+        label();
         if (rep.classList.contains("ws-Hero")) { ctl.appendChild(count); }
         if (rep.classList.contains("ws-Quotes")) { ctl.appendChild(arrow("prev")); ctl.appendChild(dotBox); ctl.appendChild(arrow("next")); }
         else { ctl.appendChild(dotBox); ctl.appendChild(arrow("prev")); ctl.appendChild(arrow("next")); }
+        if (ms) { ctl.appendChild(pause); }
         rep.appendChild(ctl);
         rep.style.setProperty("--ws-ms", ms + "ms");
         function show(back) {
@@ -471,27 +643,42 @@
             // a slide's picture loads just before the slide shows
             [i, (i + 1) % slides.length].forEach(function (k) { $$(".ws-Media.is-loading", slides[k]).forEach(function (el) { if (lazy) { lazy.unobserve(el); } load(el); }); });
         }
-        function start() {
-            clearInterval(timer);
-            if (!ms) { return; }
-            rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run");
-            timer = setInterval(function () { go(i + 1, true); }, ms);
+        function restart() { rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run"); }
+        // the slides move on their own only while nobody is using them: not paused, no pointer over them, no keyboard focus inside
+        function sync() {
+            clearInterval(timer); timer = null;
+            var run = ms && !stopped && !hover && !inside;
+            rep.classList.toggle("ws-Paused", !!ms && !run);
+            if (!run) { return; }
+            restart();
+            timer = setInterval(function () {
+                // the report was replaced by a partial page refresh: stop
+                if (!rep.isConnected) { clearInterval(timer); return; }
+                go(i + 1, true);
+            }, ms);
         }
         function go(k, auto) {
             var back = k < i;
             i = (k + slides.length) % slides.length; show(back);
-            if (!auto) { start(); } else { rep.classList.remove("ws-Run"); void rep.offsetWidth; rep.classList.add("ws-Run"); }
+            if (auto) { restart(); } else { sync(); }
         }
-        rep.addEventListener("mouseenter", function () { if (ms) { clearInterval(timer); rep.classList.add("ws-Paused"); } });
-        rep.addEventListener("mouseleave", function () { if (ms) { rep.classList.remove("ws-Paused"); start(); } });
-        rep.addEventListener("focusin", function () { if (ms) { clearInterval(timer); rep.classList.add("ws-Paused"); } });
+        rep.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { hover = true; sync(); } });
+        rep.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { hover = false; sync(); } });
+        rep.addEventListener("focusin", function () { inside = true; sync(); });
+        rep.addEventListener("focusout", function (e) { if (!rep.contains(e.relatedTarget)) { inside = false; sync(); } });
         rep.addEventListener("keydown", function (e) {
             if (e.key === "ArrowLeft") { go(i + (rtl() ? 1 : -1)); } else if (e.key === "ArrowRight") { go(i + (rtl() ? -1 : 1)); }
         });
-        var x0 = null;
-        rep.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-        rep.addEventListener("touchend", function (e) { if (x0 === null) { return; } var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { go(i + ((dx < 0) !== rtl() ? 1 : -1)); } x0 = null; });
-        show(); start();
+        // a sideways swipe changes the slide; scrolling the page up or down does not
+        var x0 = null, y0 = 0;
+        rep.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        rep.addEventListener("touchend", function (e) {
+            if (x0 === null) { return; }
+            var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { go(i + ((dx < 0) !== rtl() ? 1 : -1)); }
+            x0 = null;
+        });
+        show(); sync();
     }
 
     /* ---------- the header menu ----------
@@ -623,7 +810,7 @@
         var t = d.querySelector(".ws-ThemeBtn");
         if (t) {
             var isDark = function () {
-                return b.classList.contains("ws-Scheme--dark") || b.classList.contains("ws-Design--midnight") || b.classList.contains("ws-Design--techgrid") ||
+                return b.classList.contains("ws-Scheme--dark") || /(?:^|\s)ws-Design--(midnight|techgrid|aurora|blueprint)(?:\s|$)/.test(b.className) ||
                     (b.classList.contains("ws-Scheme--auto") && !!W.matchMedia && W.matchMedia("(prefers-color-scheme: dark)").matches);
             };
             t.setAttribute("aria-label", msg("dark"));
@@ -660,15 +847,47 @@
     function scrolling() {
         var bar = d.querySelector(".ws-Progress"), top = d.querySelector(".ws-ToTop"), header = d.querySelector(".ws-Header");
         if (top) { top.setAttribute("aria-label", msg("top")); top.onclick = function () { W.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); }; }
+        var last = W.scrollY || 0;
         function on() {
             var y = W.scrollY || d.documentElement.scrollTop, h = d.documentElement.scrollHeight - W.innerHeight;
             b.classList.toggle("ws-is-scrolled", y > 8);
             if (bar) { bar.style.width = (h > 0 ? Math.min(100, y / h * 100) : 0) + "%"; }
             if (top) { top.classList.toggle("is-on", y > 700); }
+            // Hide Header on Scroll: away while reading down, back as soon as the visitor scrolls up (never while the phone menu is open)
+            if (Math.abs(y - last) > 6) {
+                b.classList.toggle("ws-is-down", b.classList.contains("ws-Fx--autohide") && y > last && y > 240 && !b.classList.contains("ws-Nav-open") && !(header && header.contains(d.activeElement)));
+                last = y;
+            }
         }
-        W.addEventListener("scroll", on, { passive: true });
-        if (header) { d.documentElement.style.setProperty("--ws-header-h", header.offsetHeight + "px"); }
+        // the header's height (the announcement bar included) is the scroll offset of the menu links and the place of the messages
+        function size() { if (header) { d.documentElement.style.setProperty("--ws-header-h", header.offsetHeight + "px"); } }
+        if (!scrolling.done) {
+            scrolling.done = true;
+            W.addEventListener("scroll", on, { passive: true });
+            W.addEventListener("resize", size);
+            if (header) { header.addEventListener("focusin", function () { b.classList.remove("ws-is-down"); }); }
+        }
+        size();
         on();
+    }
+    // the Announcement slot: a bar above the menu that the visitor can close (it stays closed for this visit, until its text changes)
+    function announce() {
+        var bar = d.querySelector(".ws-Announce");
+        if (!bar || bar.__ws) { return; }
+        bar.__ws = true;
+        var text = val(bar.textContent).replace(/\s+/g, " "), key = "ws-announce:" + location.pathname.split("/").slice(0, 5).join("/") + ":" + text.length + ":" + text.slice(0, 40);
+        var gone = false;
+        try { gone = sessionStorage.getItem(key) === "1"; } catch (e) { /* private mode */ }
+        if (!text || gone) { bar.hidden = true; return; }
+        b.classList.add("ws-Has-announce");
+        var x = d.createElement("button");
+        x.type = "button"; x.className = "ws-Announce-x"; x.setAttribute("aria-label", msg("close")); x.innerHTML = '<span aria-hidden="true">&times;</span>';
+        x.addEventListener("click", function () {
+            bar.hidden = true; b.classList.remove("ws-Has-announce");
+            try { sessionStorage.setItem(key, "1"); } catch (e) { /* private mode */ }
+            scrolling();
+        });
+        bar.appendChild(x);
     }
 
     /* ---------- reveal on scroll: only what starts below the fold ---------- */
@@ -694,6 +913,7 @@
         $$(".ws-R", root).forEach(function (r) { if (!r.hasAttribute("data-ws-base")) { r.setAttribute("data-ws-base", r.className.split(/\s+/).filter(function (c) { return c === "ws-R" || !/--/.test(c); }).join(" ")); } clean(r); });
         $$(".ws-Sec, .ws-Footer, .ws-Hero-slot", root === d ? d : root).forEach(function (s) { clean(s); });
         media(root); emphasis(root); heads(root); stars(root); plans(root); hours(root); compare(root); videos(root); maps(root); lightbox(root);
+        tabs(root); countdown(root); skills(root); faqs(root);
         $$(".ws-Hero", root).forEach(function (r) { slider(r, ".ws-Slide"); });
         $$(".ws-Quotes--carousel", root).forEach(function (r) { slider(r, ".ws-Quote"); });
         marquee(root); filters(root); counters(root); reveal(root);
@@ -703,7 +923,7 @@
         if (init.done) { return; }
         init.done = true;
         var look = hashLook();
-        if (look.page !== null || look.regions) { applyLook(look); }
+        if (look.page !== null || look.regions || look.dir) { applyLook(look); }
         fonts();
         // a transparent header needs a picture behind it: over any other first section it behaves like Classic
         if (b.classList.contains("ws-Header--transparent") && !d.querySelector(".ws-Hero-slot .ws-Hero--slider, .ws-Hero-slot .ws-Hero--fullbleed, .ws-Hero-slot .ws-Hero:not([class*='ws-Hero--'])")) {
@@ -713,12 +933,13 @@
         refresh(d);
         menu();
         extras();
+        announce();
         scrolling();
         b.classList.remove("ws-Loading");
         // the Designer changes the hash: page options apply at once, section options reload the page
         W.addEventListener("hashchange", function () {
             var nl = hashLook();
-            if (nl.regions !== look.regions) { location.reload(); return; }
+            if (nl.regions !== look.regions || nl.dir !== look.dir) { location.reload(); return; }
             look = nl; applyLook(nl); menu(); extras();
         });
         if (W.apex && apex.jQuery) { apex.jQuery(d).on("apexafterrefresh", function (e) { refresh(e.target); }); }

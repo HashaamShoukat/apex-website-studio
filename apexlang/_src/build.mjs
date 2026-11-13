@@ -70,7 +70,7 @@ LIMITS.push(`website.css ${bytes(css)} (static file)`, `website.js ${bytes(js)} 
 // ---------- Modern One Page ----------
 // applies a look passed in the URL (#ws=...) before the page is drawn, so the Designer preview does not flash;
 // ws-Loading keeps the sections hidden until website.js has set them up (website.css shows them after 4s anyway)
-const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(m){b.className=b.className.split(/\\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/)).join(" ")}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>`;
+const early = `<script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h),F=/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph|Reveal)--[\\w-]+$/;try{if(m){b.className=b.className.split(/\\s+/).filter(function(c){return!F.test(c)}).concat(decodeURIComponent(m[1]).split(/[\\s+,]+/).filter(function(c){return F.test(c)})).join(" ")}}catch(e){}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>`;
 const header = `<!DOCTYPE html>
 <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID!ATTR. app-&APP_ALIAS!ATTR." lang="&BROWSER_LANGUAGE!ATTR." #TEXT_DIRECTION#>
 <head>
@@ -93,6 +93,7 @@ ${early}
 #FORM_OPEN#
 <div class="ws-Progress" aria-hidden="true"></div>
 <header class="ws-Header" id="ws-header">
+  <div class="ws-Announce">#REGION_POSITION_02#</div>
   <div class="ws-Wrap ws-Header-in">
     <div class="ws-Brand-slot">#REGION_POSITION_07#</div>
     <a class="ws-Brand ws-Brand-default" href="#HOME_LINK#">#LOGO#</a>
@@ -194,9 +195,9 @@ ${block("footer", "html", footer, 8)}
             \`\`\`
     }
     comments {
-        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
+        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer, a short notice in Announcement (a bar above the menu that visitors can close). CSS and JavaScript come from the static files website-studio/website.css and website.js.
     }
-${options(PAGE, "page")}${slot("hero", "Hero", "REGION_POSITION_01")}${slot("logo", "Logo", "REGION_POSITION_07", { newRow: false })}${slot("menu", "Menu", "REGION_POSITION_08", { newRow: false })}${slot("headerButtons", "Header Buttons", "AFTER_NAVIGATION_BAR", { items: true, buttons: true, newRow: false })}${slot("body", "Body", "BODY", { items: true, buttons: true, grid: true })}${slot("footer", "Footer", "REGION_POSITION_05")}${slot("footerBottom", "Footer Bottom", "REGION_POSITION_06", { buttons: true })}${slot("inlineDialogs", "Inline Dialogs", "REGION_POSITION_04")}
+${options(PAGE, "page")}${slot("hero", "Hero", "REGION_POSITION_01")}${slot("announcement", "Announcement", "REGION_POSITION_02")}${slot("logo", "Logo", "REGION_POSITION_07", { newRow: false })}${slot("menu", "Menu", "REGION_POSITION_08", { newRow: false })}${slot("headerButtons", "Header Buttons", "AFTER_NAVIGATION_BAR", { items: true, buttons: true, newRow: false })}${slot("body", "Body", "BODY", { items: true, buttons: true, grid: true })}${slot("footer", "Footer", "REGION_POSITION_05")}${slot("footerBottom", "Footer Bottom", "REGION_POSITION_06", { buttons: true })}${slot("inlineDialogs", "Inline Dialogs", "REGION_POSITION_04")}
 )
 `;
 fs.mkdirSync(THEME + "page-templates", { recursive: true });

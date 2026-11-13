@@ -1,7 +1,8 @@
 // Website Studio templates and their template options. [css class, option name (<= 30 bytes), help]
 // Group ids are the template option group static ids (template-option-groups.apx), referenced as @page/<id>, @region/<id>, @report/<id>, @list/<id>.
 export const ACCENTS = [["ocean", "Ocean"], ["indigo", "Indigo"], ["violet", "Violet"], ["emerald", "Emerald"], ["rose", "Rose"], ["amber", "Amber"],
-                        ["slate", "Slate"], ["wine", "Wine"], ["tangerine", "Tangerine"], ["cyan", "Cyan"]];
+                        ["slate", "Slate"], ["wine", "Wine"], ["tangerine", "Tangerine"], ["cyan", "Cyan"],
+                        ["navy", "Navy"], ["forest", "Forest"], ["teal", "Teal"], ["gold", "Gold"], ["coral", "Coral"]];
 
 export const DESIGNS = [
     ["clean", "Clean", "White pages, soft shadows and rounded cards"],
@@ -18,8 +19,16 @@ export const DESIGNS = [
     ["organic", "Organic / Nature", "Earthy colours, soft organic shapes and a paper texture"],
     ["techgrid", "Tech Grid", "Dark, fine grid lines, monospace details and sharp corners"],
     ["swiss", "Swiss", "A strict grid, big sans-serif type, red details and hairline rules"],
-    ["retro", "Retro Print", "Newsprint colours, ink borders, halftone dots and stamped labels"]
+    ["retro", "Retro Print", "Newsprint colours, ink borders, halftone dots and stamped labels"],
+    ["aurora", "Aurora", "Always dark: slow northern lights behind the page, gradient words and glowing hairline cards"],
+    ["clay", "Clay", "Soft clay shapes: pastel cards with thick rounded edges and a gentle inner glow"],
+    ["blueprint", "Blueprint", "A technical drawing: the accent colour as paper, white lines, dashed frames and corner marks"],
+    ["sketch", "Hand-drawn", "Notebook paper, wobbly pencil frames, marker highlights and taped pictures"],
+    ["deco", "Art Deco", "Ivory or black with metal lines, double frames, stepped corners and widely spaced capitals"],
+    ["majlis", "Majlis", "Warm sand colours, a geometric star pattern, arched pictures and a diamond under each heading"]
 ];
+// designs that are dark whatever the Color Scheme says
+export const ALWAYS_DARK = ["midnight", "techgrid", "aurora", "blueprint"];
 
 export const FONTS = [
     ["", "System", "The visitor's system font. Nothing to download."],
@@ -29,7 +38,12 @@ export const FONTS = [
     ["tech", "Tech", "Sora headlines, IBM Plex Sans text"],
     ["poster", "Poster", "Anton capitals, Archivo text"],
     ["friendly", "Friendly", "Outfit for headlines and text"],
-    ["arabic", "Arabic", "IBM Plex Sans Arabic for Arabic and Latin text"]
+    ["arabic", "Arabic", "IBM Plex Sans Arabic for Arabic and Latin text"],
+    ["cairo", "Arabic - Cairo", "Cairo: a rounder Arabic and Latin typeface for headlines and text"],
+    ["kufi", "Arabic - Kufi", "Reem Kufi headlines, IBM Plex Sans Arabic text"],
+    ["classic", "Classic", "Playfair Display headlines, Source Sans 3 text"],
+    ["space", "Space", "Space Grotesk for headlines and text"],
+    ["hand", "Handwritten", "Caveat headlines, Nunito text"]
 ];
 
 // ---------- Modern One Page (page template) ----------
@@ -40,9 +54,9 @@ export const PAGE = {
           options: DESIGNS.slice(1).map(([id, n, h]) => ["ws-Design--" + id, n, h]) },
         { id: "ws-accent", name: "Accent Color", seq: 10, nul: "Theme Color", help: "Buttons, highlights and icons. Theme Color uses your theme style's primary colour (some designs bring their own colour instead).",
           options: ACCENTS.map(([id, n]) => ["ws-Accent--" + id, n]) },
-        { id: "ws-scheme", name: "Color Scheme", seq: 20, nul: "Light", help: "Midnight and Tech Grid are always dark. Sections set to Dark or Accent keep their own colours.",
+        { id: "ws-scheme", name: "Color Scheme", seq: 20, nul: "Light", help: "Midnight, Tech Grid, Aurora and Blueprint are always dark. Sections set to Dark or Accent keep their own colours.",
           options: [["ws-Scheme--dark", "Dark"], ["ws-Scheme--auto", "Follow Device Setting"]] },
-        { id: "ws-font", name: "Typeface", seq: 30, nul: "System", help: "Headline and text fonts. Every choice except System loads its fonts from Google Fonts. Arabic suits right-to-left websites.",
+        { id: "ws-font", name: "Typeface", seq: 30, nul: "System", help: "Headline and text fonts. Every choice except System loads its fonts from Google Fonts. The Arabic typefaces suit right-to-left websites.",
           options: FONTS.slice(1).map(([id, n, h]) => ["ws-Font--" + id, n, h]) },
         { id: "ws-header", name: "Header", seq: 40, nul: "Classic", help: "Transparent lays the header over the first section (use it with a Slider or Full Bleed hero); it turns solid when the visitor scrolls.",
           options: [["ws-Header--centered", "Centered Logo"], ["ws-Header--pill", "Floating Pill"], ["ws-Header--transparent", "Transparent over Hero"]] },
@@ -50,7 +64,9 @@ export const PAGE = {
         { id: "ws-space", name: "Section Spacing", seq: 60, nul: "Comfortable", options: [["ws-Space--compact", "Compact"], ["ws-Space--airy", "Airy"]] },
         { id: "ws-footer", name: "Footer", seq: 70, nul: "Dark", options: [["ws-Footer--light", "Light"], ["ws-Footer--accent", "Accent Color"]] },
         { id: "ws-ph", name: "Placeholder Images", seq: 80, nul: "Soft Gradient", help: "What a row without an image shows (IMAGE_URL and IMAGE_FILE empty). People always show their initials.",
-          options: [["ws-Ph--pattern", "Subtle Pattern"], ["ws-Ph--shapes", "Duotone Shapes"], ["ws-Ph--plain", "Plain Colour"]] }
+          options: [["ws-Ph--pattern", "Subtle Pattern"], ["ws-Ph--shapes", "Duotone Shapes"], ["ws-Ph--plain", "Plain Colour"]] },
+        { id: "ws-revstyle", name: "Reveal Style", seq: 90, nul: "Rise", help: "How sections come into view with Reveal on Scroll.",
+          options: [["ws-Reveal--fade", "Fade"], ["ws-Reveal--zoom", "Zoom"], ["ws-Reveal--blur", "Blur"], ["ws-Reveal--slide", "Slide from the Side"]] }
     ],
     singles: [
         ["ws-Fx--sticky", "Sticky Header", 100, "The header stays at the top while the visitor scrolls."],
@@ -59,7 +75,8 @@ export const PAGE = {
         ["ws-Fx--top", "Back to Top Button", 130, "A round button in the corner after the visitor has scrolled down."],
         ["ws-Fx--progress", "Scroll Progress Bar", 140, "A thin bar in the accent colour at the top of the page."],
         ["ws-Fx--theme", "Light/Dark Toggle", 150, "A button in the header that switches between light and dark; the choice is remembered in the browser."],
-        ["ws-Fx--chat", "WhatsApp Button", 160, "A floating WhatsApp button. The number comes from the substitution string WHATSAPP_NUMBER (international format, digits only)."]
+        ["ws-Fx--chat", "WhatsApp Button", 160, "A floating WhatsApp button. The number comes from the substitution string WHATSAPP_NUMBER (international format, digits only)."],
+        ["ws-Fx--autohide", "Hide Header on Scroll", 170, "With Sticky Header: the header slides away while the visitor scrolls down and comes back when they scroll up."]
     ]
 };
 
@@ -73,7 +90,9 @@ export const SECTION = {
           options: [["ws-Pad--tight", "Tight"], ["ws-Pad--roomy", "Roomy"], ["ws-Pad--none", "None"]] },
         { id: "ws-head", name: "Heading", seq: 30, nul: "Left", help: "The region title is the section heading. Put <p class=\"ws-Eyebrow\">...</p> and <p class=\"ws-Lead\">...</p> at the start of the region's Header text for a small label above and an intro below it.",
           options: [["ws-Head--center", "Centered"], ["ws-Head--split", "Split"], ["ws-Head--hidden", "Hidden"]] },
-        { id: "ws-width", name: "Width", seq: 40, nul: "Normal", options: [["ws-Width--narrow", "Narrow"], ["ws-Width--wide", "Wide"], ["ws-Width--full", "Full Width"]] }
+        { id: "ws-width", name: "Width", seq: 40, nul: "Normal", options: [["ws-Width--narrow", "Narrow"], ["ws-Width--wide", "Wide"], ["ws-Width--full", "Full Width"]] },
+        { id: "ws-edge", name: "Top Edge", seq: 50, nul: "Straight", help: "The shape of the section's top edge, drawn over the section before it. Use it on a section with a Background.",
+          options: [["ws-Edge--slant", "Slanted"], ["ws-Edge--curve", "Curved"], ["ws-Edge--round", "Rounded Corners"]] }
     ],
     singles: [
         ["ws-Sec--menu", "Show in Menu", 100, "Without a Website - Menu list in the Menu slot, the header menu is built from the sections with this option: the label is data-menu=\"...\" (Custom Attributes) or the region title, the link the Static ID."],
@@ -205,8 +224,9 @@ export const REPORTS = [
   <span class="ws-Step-t" data-opt="text">#DURATION#</span>
 </li>` },
     { id: "ws-faq", name: "Website - FAQ", base: "ws-Faqs", tag: "div",
-      cols: ["QUESTION", "ANSWER"], help: "Questions that open to show the answer.",
+      cols: ["QUESTION", "ANSWER"], help: "Questions that open to show the answer. Search engines get them as structured data (FAQPage).",
       groups: [{ id: "wsr-faq-layout", name: "Layout", nul: "List", options: [["ws-Faqs--columns", "Two Columns"]] }],
+      singles: [["ws-Faqs--search", "Search Box", 10, "A search field above the questions; only the questions with the words typed stay visible."]],
       row: `<details class="ws-Faq"><summary>#QUESTION#<span class="ws-Plus" aria-hidden="true"></span></summary><div class="ws-Faq-a">#ANSWER#</div></details>` },
     { id: "ws-jobs", name: "Website - Careers", base: "ws-Jobs", tag: "div",
       cols: ["TITLE", "TEAM", "LOCATION", "TYPE", "DESCRIPTION", "APPLY_LINK", "APPLY_LABEL"], help: "Open roles that open to show the description and an apply button. Filter Buttons groups them by TEAM.",
@@ -294,7 +314,47 @@ export const REPORTS = [
       row: `<div class="ws-Map">
   <div class="ws-Map-frame" data-map="#MAP_URL#" data-title="#TITLE#"></div>
   <div class="ws-Map-b"><h3 data-opt="text">#TITLE#</h3><p class="ws-Map-a" data-opt="text">#ADDRESS#</p><p class="ws-Muted" data-opt="text">#TEXT#</p><a class="ws-Btn ws-Btn--ghost" href="#LINK#">#LINK_LABEL#</a></div>
-</div>` }
+</div>` },
+    // ---------- new in v3 ----------
+    { id: "ws-banner", name: "Website - Banner", base: "ws-Banners", tag: "div",
+      cols: ["EYEBROW", "TITLE", "TEXT", ...IMG_COLS, "BUTTON_LABEL", "BUTTON_LINK", "BUTTON2_LABEL", "BUTTON2_LINK"],
+      help: "A call to action: a coloured band with a headline and one or two buttons. With Image Background the row's picture fills the band.",
+      groups: [{ id: "wsr-banner-style", name: "Style", nul: "Accent Color", options: [["ws-Banners--dark", "Dark"], ["ws-Banners--image", "Image Background"], ["ws-Banners--outline", "Outline"]] },
+               { id: "wsr-banner-layout", name: "Layout", nul: "Text and Buttons", options: [["ws-Banners--center", "Centered"]] }],
+      row: `<div class="ws-Banner">
+  ${img("ws-Banner-img")}
+  <div class="ws-Banner-b"><p class="ws-Eyebrow" data-opt="text">#EYEBROW#</p><h3 class="ws-Banner-t">#TITLE#</h3><p class="ws-Banner-x" data-opt="text">#TEXT#</p></div>
+  <div class="ws-Actions"><a class="ws-Btn" href="#BUTTON_LINK#">#BUTTON_LABEL#</a><a class="ws-Btn ws-Btn--ghost" href="#BUTTON2_LINK#">#BUTTON2_LABEL#</a></div>
+</div>` },
+    { id: "ws-tabs", name: "Website - Tabs", base: "ws-Tabs", tag: "div",
+      cols: ["LABEL", "ICON", "TITLE", "TEXT", ...IMG_COLS, "LINK", "LINK_LABEL"],
+      help: "One row is one tab: LABEL (and ICON) on the button, a title, text and picture in the panel. Arrow keys move between the tabs.",
+      groups: [{ id: "wsr-tabs-style", name: "Style", nul: "Underline", options: [["ws-Tabs--pills", "Pills"], ["ws-Tabs--side", "Tabs at the Side"]] }],
+      row: `<div class="ws-Tab" data-label="#LABEL#" data-tab-icon="#ICON#">
+  <div class="ws-Tab-b"><h3 class="ws-Zig-t">#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p><a class="ws-More" href="#LINK#">#LINK_LABEL#</a></div>
+  ${img("ws-Tab-img")}
+</div>` },
+    { id: "ws-countdown", name: "Website - Countdown", base: "ws-Countdown", tag: "div",
+      cols: ["TARGET_DATE", "TITLE", "TEXT", "DONE_TEXT", "BUTTON_LABEL", "BUTTON_LINK"],
+      help: "Days, hours, minutes and seconds until TARGET_DATE, a date and time with its time zone such as 2027-03-09T08:30:00+03:00. DONE_TEXT replaces the clock when the time has come.",
+      groups: [{ id: "wsr-countdown-layout", name: "Layout", nul: "Row", options: [["ws-Countdown--center", "Centered"]] },
+               { id: "wsr-countdown-style", name: "Numbers", nul: "Boxes", options: [["ws-Countdown--plain", "Plain"], ["ws-Countdown--tiles", "Dark Tiles"]] }],
+      row: `<div class="ws-Cd" data-to="#TARGET_DATE#" data-done="#DONE_TEXT#">
+  <div class="ws-Cd-b"><h3 class="ws-Banner-t" data-opt="text">#TITLE#</h3><p class="ws-Muted" data-opt="text">#TEXT#</p></div>
+  <div class="ws-Cd-clock"></div>
+  <a class="ws-Btn" href="#BUTTON_LINK#">#BUTTON_LABEL#</a>
+</div>` },
+    { id: "ws-skills", name: "Website - Skills", base: "ws-Skills", tag: "div",
+      cols: ["LABEL", "VALUE", "TEXT"],
+      help: "Skills, goals or survey results as bars that fill up when they scroll into view. VALUE is 0 to 100; TEXT is shown at the end of the bar (VALUE% without it).",
+      groups: [{ id: "wsr-skills-layout", name: "Layout", nul: "Bars", options: [["ws-Skills--columns", "Two Columns"], ["ws-Skills--rings", "Rings"]] }],
+      row: `<div class="ws-Skill" data-v="#VALUE#"><div class="ws-Skill-h"><b>#LABEL#</b><span class="ws-Skill-t">#TEXT#</span></div><div class="ws-Skill-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>` },
+    { id: "ws-ticker", name: "Website - Ticker", base: "ws-Ticker", tag: "div",
+      cols: ["TEXT", "ICON", "LINK"],
+      help: "A band of short texts that scrolls across the page without end: news, offers, key words. It stops while the pointer is over it.",
+      groups: [{ id: "wsr-ticker-style", name: "Style", nul: "Accent Color", options: [["ws-Ticker--dark", "Dark"], ["ws-Ticker--plain", "Plain"], ["ws-Ticker--outline", "Large Outline Type"]] },
+               { id: "wsr-ticker-speed", name: "Speed", nul: "Normal", options: [["ws-Speed--slow", "Slow"], ["ws-Speed--fast", "Fast"]] }],
+      row: `<a class="ws-Tick" href="#LINK#"><span class="fa #ICON#" data-icon="" aria-hidden="true"></span><span class="ws-Tick-t">#TEXT#</span></a>` }
 ];
 
 // option group ids per template type (template-option-groups.apx)

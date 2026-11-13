@@ -6,17 +6,17 @@
 
 ![Demo website](docs/images/website.png)
 
-Website Studio is a set of APEX templates and a small application to try them in. A page template, a section template, a menu template and **23 report templates** turn ordinary regions and SQL queries into a modern public website. Visitors never see that it is an APEX app.
+Website Studio is a set of APEX templates and a small application to try them in. A page template, a section template, a menu template and **28 report templates** turn ordinary regions and SQL queries into a modern public website. Visitors never see that it is an APEX app.
 
 ## Highlights
 
 - **12 starter websites:** 8 one-page and 4 multi-page. They cover a design studio, a company, a restaurant, an Arabic clinic, real estate, a conference, a portfolio and a SaaS product, with photos and content ready to copy.
-- **23 section types:** hero sliders, services, numbers, team, testimonials, pricing, news, products and food menus, photo galleries with a lightbox, events, opening hours, comparison tables, videos, maps and contact forms.
-- **27 looks:** 15 designs, 10 accent colours, light and dark, and 7 web typefaces including Arabic. Every look is a template option.
-- **A live Designer:** preview any option on a phone, tablet or desktop, then copy the options as APEXlang and the queries as SQL.
+- **28 section types:** hero sliders, services, numbers, team, testimonials, pricing, news, products and food menus, photo galleries with a lightbox, events, opening hours, comparison tables, videos, maps, tabs, countdowns, call-to-action banners, skill bars, scrolling tickers and contact forms.
+- **39 looks:** 21 designs, 15 accent colours, light and dark, and 12 web typefaces, three of them Arabic. Every look is a template option.
+- **A live Designer:** preview any option on a phone, tablet or desktop, left to right or right to left, then copy the options as APEXlang and the queries as SQL. *Surprise Me* tries a random look, and *Copy Link* shares yours.
 - **Every list is a SQL query:** replace the demo `select ... from dual` with your own tables.
 - **A real menu:** static or SQL lists with drop-downs and a More entry. On phones it opens as a drop-down, a full-screen overlay or a side drawer.
-- **Ready for the web:** phone-first layouts, lazy-loaded images, meta and Open Graph tags, a contact form with a spam trap, a WhatsApp button, and a light/dark toggle.
+- **Ready for the web:** phone-first layouts, lazy-loaded images, meta and Open Graph tags, a contact form with a spam trap, a WhatsApp button, a light/dark toggle, an announcement bar, and FAQ questions as structured data for search engines.
 - **Right to left:** the layout mirrors itself, and the built-in texts are in Arabic.
 
 ## Quick start
@@ -39,22 +39,22 @@ Website Studio is a set of APEX templates and a small application to try them in
 | **Modern One Page** | Page | The website: a header with the menu, a hero, the sections and a footer |
 | **Modern Section** | Region | One band of the page. The region title is the heading and the Static ID is the menu anchor |
 | **Website - Menu** | List | The header menu: static or SQL lists, drop-downs for child entries, and a phone menu |
-| **Website - Hero, Numbers, Services, Team, Testimonials, Logos, Pricing, Timeline, Process, FAQ, Careers, Portfolio, Links, Contact Details, News, Products, Photo Gallery, Image and Text, Events, Opening Hours, Comparison, Video, Map** | Classic Report | Each one turns the rows of a SQL query into a section |
+| **Website - Hero, Numbers, Services, Team, Testimonials, Logos, Pricing, Timeline, Process, FAQ, Careers, Portfolio, Links, Contact Details, News, Products, Photo Gallery, Image and Text, Events, Opening Hours, Comparison, Video, Map, Banner, Tabs, Countdown, Skills, Ticker** | Classic Report | Each one turns the rows of a SQL query into a section |
 
 ## Starter websites
 
 | Page | Alias | Website | Shows |
 |---|---|---|---|
 | 10 | `WEBSITE` | Halcyon, a design studio | Every classic section: slider, services, portfolio, team, careers, pricing, FAQ |
-| 11 | `COMPANY` | Meridian, an engineering company | Image-and-text rows, news, leadership, careers |
-| 12 | `RESTAURANT` | Osteria Lume | **SQL menu list**, food menu with filter, photo gallery, events, opening hours, map, booking form |
+| 11 | `COMPANY` | Meridian, an engineering company | Image-and-text rows, news, leadership, careers, a banner with a photo |
+| 12 | `RESTAURANT` | Osteria Lume | **SQL menu list**, food menu with filter, photo gallery, events, opening hours, map, booking form, a ticker and an announcement bar |
 | 13 | `CLINIC` | Al Shifa clinics, **in Arabic, right to left** | Arabic typeface, side drawer menu, doctors, opening hours, WhatsApp button, light/dark toggle |
 | 14 | `REAL-ESTATE` | Harbor & Stone | Listings with filter, agents, full-width map, overlay phone menu |
-| 15 | `CONFERENCE` | Northwind Data Summit | Agenda with filter, speakers, video, tickets, venue, sponsors |
-| 16 | `PORTFOLIO` | Lina Haddad, a designer | Editorial portfolio, experience timeline |
-| 17 | `SAAS` | Ledgerline | Bento features, comparison table, pricing, light/dark toggle |
+| 15 | `CONFERENCE` | Northwind Data Summit | Countdown, announcement bar, agenda with filter, speakers, video, tickets, venue, sponsors |
+| 16 | `PORTFOLIO` | Lina Haddad, a designer | Editorial portfolio, experience timeline, skills as rings, an outline ticker, a header that hides while reading |
+| 17 | `SAAS` | Ledgerline | Bento features, tabs, comparison table, pricing, FAQ with search, a curved section edge, light/dark toggle |
 
-Each website has a menu with child entries, an external link and a button, plus a contact form with spam protection. It also has meta and Open Graph tags and a preloaded hero photo.
+Each website has a menu with child entries, an external link and a button, plus a contact form with spam protection. It also has meta and Open Graph tags and a preloaded hero photo. The forms are demos: they send and store nothing until you add your code to the process *Send Message*, and their success message says so.
 
 ### Multi-page websites
 
@@ -93,19 +93,26 @@ The same content spread over several pages, with one menu, header and footer:
 | Tech Grid | Dark, fine grid lines, monospace details and sharp corners |
 | Swiss | A strict grid, big sans-serif type, red details and hairline rules |
 | Retro Print | Newsprint colours, ink borders, halftone dots and stamped labels |
+| Aurora | Always dark: slow northern lights behind the page, gradient words and glowing hairline cards |
+| Clay | Soft clay shapes: pastel cards with thick rounded edges and a gentle inner glow |
+| Blueprint | A technical drawing: the accent colour as paper, white lines, dashed frames |
+| Hand-drawn | Notebook paper, wobbly pencil frames, marker highlights and tilted pictures |
+| Art Deco | Ivory or black with metal lines, double frames and widely spaced capitals |
+| Majlis | Warm sand colours, a geometric star pattern, arched pictures and a diamond under each heading |
 
-Every design takes 10 **accent colours** (or your theme colour) and **light / dark / follow the device**. You can also set:
+Every design takes 15 **accent colours** (or your theme colour) and **light / dark / follow the device**. You can also set:
 
-- **Typefaces**: System, Grotesk, Serif, Luxe, Tech, Poster, Friendly and Arabic. All but System load from Google Fonts.
-- **Header**: classic, centred logo, a floating pill, or transparent over the hero. It can be sticky and can show a scroll progress bar. You can add a **light/dark toggle** and a **WhatsApp button**.
+- **Typefaces**: System, Grotesk, Serif, Luxe, Tech, Poster, Friendly, Classic, Space, Handwritten, and three Arabic ones (Arabic, Cairo, Kufi). All but System load from Google Fonts.
+- **Header**: classic, centred logo, a floating pill, or transparent over the hero. It can be sticky and can show a scroll progress bar. It can hide while the visitor scrolls down. You can add a **light/dark toggle**, a **WhatsApp button** and an **announcement bar** (a region in the Announcement slot that visitors can close).
 - **Menu**: alignment, how many entries before **More**, and the phone menu (drop-down, full-screen overlay or side drawer). The last entry can show as a button.
-- **Sections**: background, spacing, heading position and width.
+- **Sections**: background, spacing, heading position, width and the shape of the top edge (slanted, curved or rounded). Sections rise, fade, zoom, blur or slide into view.
 - **Report layouts**:
   - Hero: slider, split, centred or full bleed; large, full-screen, medium or compact (a page title band) height; normal, light or strong overlay; fade or slide; slow zoom. It can show a background video.
   - Services: cards, rows, bento or icons. Testimonials: carousel, wall or spotlight. Team: portraits, round photos or a list.
   - Portfolio: grid, editorial or large. Logos: marquee, grid or row.
   - News: cards, featured or list. Products: cards, menu or compact. Photos: grid, masonry or a strip.
-  - Filter buttons for portfolio, careers, products and events.
+  - Filter buttons for portfolio, careers, products and events. A search box for the FAQ.
+  - Banner: accent, dark, image background or outline. Tabs: underline, pills or at the side. Countdown: boxes, plain or dark tiles. Skills: bars, two columns or rings. Ticker: accent, dark, plain or large outline type.
 - **Placeholder images**: what a row without a photo shows (soft gradient, subtle pattern, duotone shapes or plain colour). People show their initials.
 
 ![Looks](docs/images/looks.png)

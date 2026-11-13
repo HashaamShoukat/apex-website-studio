@@ -17,7 +17,7 @@ classicReportTemplate ws-faq (
         previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
     }
     comments {
-        comments: Website - FAQ (Website Studio). Questions that open to show the answer. Columns (all optional): QUESTION, ANSWER.
+        comments: Website - FAQ (Website Studio). Questions that open to show the answer. Search engines get them as structured data (FAQPage). Columns (all optional): QUESTION, ANSWER.
     }
 
     templateOption faqs-columns (
@@ -26,6 +26,17 @@ classicReportTemplate ws-faq (
         sequence: 10
         appearance {
             cssClasses: ws-Faqs--columns
+        }
+    )
+
+    templateOption faqs-search (
+        name: Search Box
+        sequence: 10
+        appearance {
+            cssClasses: ws-Faqs--search
+        }
+        help {
+            helpText: A search field above the questions; only the questions with the words typed stay visible.
         }
     )
 )

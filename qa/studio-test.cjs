@@ -64,5 +64,6 @@ const { chromium } = require("playwright");
   }
   await p.screenshot({ path: __dirname + "/out/designer.png" });
   await b.close();
+  if (fails.length || errs.length) { process.exitCode = 1; }
   console.log(fails.length ? "FAILED:\n" + fails.join("\n") : "designer and gallery: all checks passed", errs.length ? "\nerrors: " + errs.join(" | ") : "");
 })();

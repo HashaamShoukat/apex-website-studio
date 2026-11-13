@@ -56,5 +56,25 @@ export const PRESETS = [
     { id: "corporate-ocean", name: "Corporate - Ocean", tags: "light corporate", page: "ws-Design--corporate ws-Accent--ocean ws-Font--serif ws-Header--centered",
       r: { [H]: ["ws-Hero--fullbleed", "ws-Hero--medium"], [T]: ["ws-Team--list"] } },
     { id: "playful-dark", name: "Playful - Dark", tags: "dark playful", page: "ws-Design--playful ws-Scheme--dark ws-Accent--amber ws-Font--friendly ws-Corners--round",
-      r: { [H]: ["ws-Hero--centered"], [Q]: ["ws-Quotes--wall"] } }
+      r: { [H]: ["ws-Hero--centered"], [Q]: ["ws-Quotes--wall"] } },
+    // ---------- v3 ----------
+    { id: "aurora", name: "Aurora", tags: "dark aurora", page: "ws-Design--aurora ws-Font--space ws-Header--pill ws-Reveal--blur",
+      r: { [H]: ["ws-Hero--centered"], [F]: ["ws-Features--bento"], [Q]: ["ws-Quotes--wall"] } },
+    { id: "aurora-rose", name: "Aurora - Rose", tags: "dark aurora", page: "ws-Design--aurora ws-Accent--rose ws-Font--friendly ws-Header--transparent", r: { [H]: ["ws-Hero--fullbleed"] } },
+    { id: "clay", name: "Clay", tags: "light clay", page: "ws-Design--clay ws-Font--friendly ws-Header--pill ws-Reveal--zoom",
+      r: { [H]: ["ws-Hero--split"], [T]: ["ws-Team--round"], [S]: ["ws-Steps--cards"] } },
+    { id: "clay-teal", name: "Clay - Teal", tags: "light clay", page: "ws-Design--clay ws-Accent--teal ws-Font--friendly", r: { [H]: ["ws-Hero--centered"], [F]: ["ws-Features--bento"] } },
+    { id: "blueprint", name: "Blueprint", tags: "dark blueprint", page: "ws-Design--blueprint ws-Font--space ws-Corners--square",
+      r: { [H]: ["ws-Hero--split"], [F]: ["ws-Features--rows"], [L]: ["ws-Logos--grid"], [TL]: ["ws-Timeline--list"] } },
+    { id: "sketch", name: "Hand-drawn", tags: "light sketch", page: "ws-Design--sketch ws-Font--hand ws-Ph--pattern",
+      r: { [H]: ["ws-Hero--split"], [Q]: ["ws-Quotes--wall"], [S]: ["ws-Steps--cards"] } },
+    { id: "deco", name: "Art Deco", tags: "light deco", page: "ws-Design--deco ws-Header--centered ws-Ph--plain",
+      r: { [H]: ["ws-Hero--centered"], [Q]: ["ws-Quotes--spotlight"], [F]: ["ws-Features--icons"] } },
+    { id: "deco-noir", name: "Art Deco - Noir", tags: "dark deco", page: "ws-Design--deco ws-Scheme--dark ws-Accent--gold ws-Font--classic ws-Header--transparent",
+      r: { [H]: ["ws-Hero--fullbleed", "ws-Hero--strong"], [W]: ["ws-Works--large"] } },
+    { id: "majlis", name: "Majlis", tags: "light majlis", page: "ws-Design--majlis ws-Font--classic ws-Footer--accent", r: { [H]: ["ws-Hero--split"], [Q]: ["ws-Quotes--spotlight"] } },
+    { id: "majlis-night", name: "Majlis - Night", tags: "dark majlis", page: "ws-Design--majlis ws-Scheme--dark ws-Accent--gold ws-Font--serif",
+      r: { [H]: ["ws-Hero--centered"], [F]: ["ws-Features--icons"] } },
+    { id: "navy", name: "Navy", tags: "light clean", page: "ws-Accent--navy ws-Font--classic ws-Corners--soft ws-Header--centered", r: { [H]: ["ws-Hero--split"], [F]: ["ws-Features--rows"] } },
+    { id: "coral", name: "Coral", tags: "light clean", page: "ws-Accent--coral ws-Font--space ws-Corners--round ws-Reveal--slide", r: { [Q]: ["ws-Quotes--wall"] } }
 ].map(p => ({ ...p, hash: "#ws=" + encodeURIComponent((PAGE_DEFAULTS + " " + p.page).trim()) + (Object.keys(p.r).length ? "&r=" + encodeURIComponent(Object.entries(p.r).map(([k, v]) => k + ":" + v.join("+")).join(",")) : "") }));

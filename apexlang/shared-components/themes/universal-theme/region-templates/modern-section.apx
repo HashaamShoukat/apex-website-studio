@@ -141,6 +141,33 @@ regionTemplate modern-section (
         }
     )
 
+    templateOption edge-slant (
+        name: Slanted
+        group: @region/ws-edge
+        sequence: 10
+        appearance {
+            cssClasses: ws-Edge--slant
+        }
+    )
+
+    templateOption edge-curve (
+        name: Curved
+        group: @region/ws-edge
+        sequence: 20
+        appearance {
+            cssClasses: ws-Edge--curve
+        }
+    )
+
+    templateOption edge-round (
+        name: Rounded Corners
+        group: @region/ws-edge
+        sequence: 30
+        appearance {
+            cssClasses: ws-Edge--round
+        }
+    )
+
     templateOption sec-menu (
         name: Show in Menu
         sequence: 100

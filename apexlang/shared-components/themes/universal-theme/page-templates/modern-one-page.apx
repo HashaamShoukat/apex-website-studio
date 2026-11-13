@@ -28,12 +28,13 @@ pageTemplate modern-one-page (
               <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
             </head>
             <body class="ws-Page #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody" data-ws-files="#APP_FILES#">
-            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h);if(m){b.className=b.className.split(/\s+/).filter(function(c){return!/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph)--/.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/)).join(" ")}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>
+            <script #APEX_CSP_NONCE_ATTRIBUTE#>(function(b,h){b.classList.add("ws-Loading");var m=/[#&]ws=([^&]*)/.exec(h),F=/^ws-(Design|Accent|Scheme|Font|Header|Corners|Space|Fx|Footer|Ph|Reveal)--[\w-]+$/;try{if(m){b.className=b.className.split(/\s+/).filter(function(c){return!F.test(c)}).concat(decodeURIComponent(m[1]).split(/[\s+,]+/).filter(function(c){return F.test(c)})).join(" ")}}catch(e){}try{var s=b.classList.contains("ws-Fx--theme")&&localStorage.getItem("ws-scheme");if(s){b.classList.remove("ws-Scheme--dark","ws-Scheme--auto");if(s==="dark")b.classList.add("ws-Scheme--dark")}}catch(e){}})(document.body,location.hash);</script>
             <noscript>&APP_TEXT$APEX_PAGE_NOSCRIPT.</noscript>
             <a href="#main" class="ws-Skip">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
             #FORM_OPEN#
             <div class="ws-Progress" aria-hidden="true"></div>
             <header class="ws-Header" id="ws-header">
+              <div class="ws-Announce">#REGION_POSITION_02#</div>
               <div class="ws-Wrap ws-Header-in">
                 <div class="ws-Brand-slot">#REGION_POSITION_07#</div>
                 <a class="ws-Brand ws-Brand-default" href="#HOME_LINK#">#LOGO#</a>
@@ -118,7 +119,7 @@ pageTemplate modern-one-page (
             ```
     }
     comments {
-        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer. CSS and JavaScript come from the static files website-studio/website.css and website.js.
+        comments: Modern One Page (Website Studio) - a one-page website. The header menu is a Website - Menu list region in the Menu slot, or else it is built from the sections (Modern Section regions with Show in Menu); the hero goes in the Hero slot, the footer columns in Footer, a short notice in Announcement (a bar above the menu that visitors can close). CSS and JavaScript come from the static files website-studio/website.css and website.js.
     }
 
     templateOption design-editorial (
@@ -289,6 +290,78 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption design-aurora (
+        name: Aurora
+        group: @page/ws-design
+        sequence: 150
+        appearance {
+            cssClasses: ws-Design--aurora
+        }
+        help {
+            helpText: Always dark: slow northern lights behind the page, gradient words and glowing hairline cards
+        }
+    )
+
+    templateOption design-clay (
+        name: Clay
+        group: @page/ws-design
+        sequence: 160
+        appearance {
+            cssClasses: ws-Design--clay
+        }
+        help {
+            helpText: Soft clay shapes: pastel cards with thick rounded edges and a gentle inner glow
+        }
+    )
+
+    templateOption design-blueprint (
+        name: Blueprint
+        group: @page/ws-design
+        sequence: 170
+        appearance {
+            cssClasses: ws-Design--blueprint
+        }
+        help {
+            helpText: A technical drawing: the accent colour as paper, white lines, dashed frames and corner marks
+        }
+    )
+
+    templateOption design-sketch (
+        name: Hand-drawn
+        group: @page/ws-design
+        sequence: 180
+        appearance {
+            cssClasses: ws-Design--sketch
+        }
+        help {
+            helpText: Notebook paper, wobbly pencil frames, marker highlights and taped pictures
+        }
+    )
+
+    templateOption design-deco (
+        name: Art Deco
+        group: @page/ws-design
+        sequence: 190
+        appearance {
+            cssClasses: ws-Design--deco
+        }
+        help {
+            helpText: Ivory or black with metal lines, double frames, stepped corners and widely spaced capitals
+        }
+    )
+
+    templateOption design-majlis (
+        name: Majlis
+        group: @page/ws-design
+        sequence: 200
+        appearance {
+            cssClasses: ws-Design--majlis
+        }
+        help {
+            helpText: Warm sand colours, a geometric star pattern, arched pictures and a diamond under each heading
+        }
+    )
+
     templateOption accent-ocean (
         name: Ocean
         group: @page/ws-accent
@@ -376,6 +449,51 @@ pageTemplate modern-one-page (
         sequence: 100
         appearance {
             cssClasses: ws-Accent--cyan
+        }
+    )
+
+    templateOption accent-navy (
+        name: Navy
+        group: @page/ws-accent
+        sequence: 110
+        appearance {
+            cssClasses: ws-Accent--navy
+        }
+    )
+
+    templateOption accent-forest (
+        name: Forest
+        group: @page/ws-accent
+        sequence: 120
+        appearance {
+            cssClasses: ws-Accent--forest
+        }
+    )
+
+    templateOption accent-teal (
+        name: Teal
+        group: @page/ws-accent
+        sequence: 130
+        appearance {
+            cssClasses: ws-Accent--teal
+        }
+    )
+
+    templateOption accent-gold (
+        name: Gold
+        group: @page/ws-accent
+        sequence: 140
+        appearance {
+            cssClasses: ws-Accent--gold
+        }
+    )
+
+    templateOption accent-coral (
+        name: Coral
+        group: @page/ws-accent
+        sequence: 150
+        appearance {
+            cssClasses: ws-Accent--coral
         }
     )
 
@@ -478,6 +596,66 @@ pageTemplate modern-one-page (
         }
         help {
             helpText: IBM Plex Sans Arabic for Arabic and Latin text
+        }
+    )
+
+    templateOption font-cairo (
+        name: Arabic - Cairo
+        group: @page/ws-font
+        sequence: 80
+        appearance {
+            cssClasses: ws-Font--cairo
+        }
+        help {
+            helpText: Cairo: a rounder Arabic and Latin typeface for headlines and text
+        }
+    )
+
+    templateOption font-kufi (
+        name: Arabic - Kufi
+        group: @page/ws-font
+        sequence: 90
+        appearance {
+            cssClasses: ws-Font--kufi
+        }
+        help {
+            helpText: Reem Kufi headlines, IBM Plex Sans Arabic text
+        }
+    )
+
+    templateOption font-classic (
+        name: Classic
+        group: @page/ws-font
+        sequence: 100
+        appearance {
+            cssClasses: ws-Font--classic
+        }
+        help {
+            helpText: Playfair Display headlines, Source Sans 3 text
+        }
+    )
+
+    templateOption font-space (
+        name: Space
+        group: @page/ws-font
+        sequence: 110
+        appearance {
+            cssClasses: ws-Font--space
+        }
+        help {
+            helpText: Space Grotesk for headlines and text
+        }
+    )
+
+    templateOption font-hand (
+        name: Handwritten
+        group: @page/ws-font
+        sequence: 120
+        appearance {
+            cssClasses: ws-Font--hand
+        }
+        help {
+            helpText: Caveat headlines, Nunito text
         }
     )
 
@@ -598,6 +776,42 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption reveal-fade (
+        name: Fade
+        group: @page/ws-revstyle
+        sequence: 10
+        appearance {
+            cssClasses: ws-Reveal--fade
+        }
+    )
+
+    templateOption reveal-zoom (
+        name: Zoom
+        group: @page/ws-revstyle
+        sequence: 20
+        appearance {
+            cssClasses: ws-Reveal--zoom
+        }
+    )
+
+    templateOption reveal-blur (
+        name: Blur
+        group: @page/ws-revstyle
+        sequence: 30
+        appearance {
+            cssClasses: ws-Reveal--blur
+        }
+    )
+
+    templateOption reveal-slide (
+        name: Slide from the Side
+        group: @page/ws-revstyle
+        sequence: 40
+        appearance {
+            cssClasses: ws-Reveal--slide
+        }
+    )
+
     templateOption fx-sticky (
         name: Sticky Header
         sequence: 100
@@ -675,9 +889,28 @@ pageTemplate modern-one-page (
         }
     )
 
+    templateOption fx-autohide (
+        name: Hide Header on Scroll
+        sequence: 170
+        appearance {
+            cssClasses: ws-Fx--autohide
+        }
+        help {
+            helpText: With Sticky Header: the header slides away while the visitor scrolls down and comes back when they scroll up.
+        }
+    )
+
     slot hero (
         name: Hero
         staticId: REGION_POSITION_01
+        gridLayout {
+            gridSupport: false
+        }
+    )
+
+    slot announcement (
+        name: Announcement
+        staticId: REGION_POSITION_02
         gridLayout {
             gridSupport: false
         }

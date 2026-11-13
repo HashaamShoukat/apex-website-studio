@@ -17,15 +17,17 @@ page 2 (
             // The preview iframe shows a real website page; the classes travel in its URL hash (#ws=<page classes>&r=@<template>:<classes>,...).
             (function ($) {
                 var DEF = "ws-Fx--sticky ws-Fx--reveal ws-Fx--count ws-Fx--top".split(" ");
-                var SELECTS = [{"item":"P2_DESIGN","group":"Design"},{"item":"P2_ACCENT","group":"Accent Color"},{"item":"P2_SCHEME","group":"Color Scheme"},{"item":"P2_FONT","group":"Typeface"},{"item":"P2_HEADER","group":"Header"},{"item":"P2_CORNERS","group":"Corners"},{"item":"P2_SPACE","group":"Section Spacing"},{"item":"P2_FOOTER","group":"Footer"},{"item":"P2_PH","group":"Placeholder Images"}];
-                var SWITCHES = [{"item":"P2_STICKY","css":"ws-Fx--sticky","label":"Sticky Header"},{"item":"P2_REVEAL","css":"ws-Fx--reveal","label":"Reveal on Scroll"},{"item":"P2_COUNT","css":"ws-Fx--count","label":"Count Up Numbers"},{"item":"P2_TOP","css":"ws-Fx--top","label":"Back to Top Button"},{"item":"P2_PROGRESS","css":"ws-Fx--progress","label":"Scroll Progress Bar"},{"item":"P2_THEME","css":"ws-Fx--theme","label":"Light/Dark Toggle"},{"item":"P2_CHAT","css":"ws-Fx--chat","label":"WhatsApp Button"}];
+                var SELECTS = [{"item":"P2_DESIGN","group":"Design"},{"item":"P2_ACCENT","group":"Accent Color"},{"item":"P2_SCHEME","group":"Color Scheme"},{"item":"P2_FONT","group":"Typeface"},{"item":"P2_HEADER","group":"Header"},{"item":"P2_CORNERS","group":"Corners"},{"item":"P2_SPACE","group":"Section Spacing"},{"item":"P2_FOOTER","group":"Footer"},{"item":"P2_PH","group":"Placeholder Images"},{"item":"P2_REVSTYLE","group":"Reveal Style"}];
+                var SWITCHES = [{"item":"P2_STICKY","css":"ws-Fx--sticky","label":"Sticky Header"},{"item":"P2_REVEAL","css":"ws-Fx--reveal","label":"Reveal on Scroll"},{"item":"P2_COUNT","css":"ws-Fx--count","label":"Count Up Numbers"},{"item":"P2_TOP","css":"ws-Fx--top","label":"Back to Top Button"},{"item":"P2_PROGRESS","css":"ws-Fx--progress","label":"Scroll Progress Bar"},{"item":"P2_THEME","css":"ws-Fx--theme","label":"Light/Dark Toggle"},{"item":"P2_CHAT","css":"ws-Fx--chat","label":"WhatsApp Button"},{"item":"P2_AUTOHIDE","css":"ws-Fx--autohide","label":"Hide Header on Scroll"}];
                 // [item, label, template, [[option, value]...]]
-                var SECTIONS = [["P2_HERO_LAYOUT","Hero - Layout","ws-hero",[["Slider","ws-Hero--slider"],["Split","ws-Hero--split"],["Centered","ws-Hero--centered"],["Full Bleed","ws-Hero--fullbleed"]]],["P2_HERO_HEIGHT","Hero - Height","ws-hero",[["Large","!wsr-hero-height"],["Full Screen","ws-Hero--full"],["Medium","ws-Hero--medium"],["Compact (page title)","ws-Hero--compact"]]],["P2_HERO_OVERLAY","Hero - Image Overlay","ws-hero",[["Normal","!wsr-hero-overlay"],["Light","ws-Hero--light"],["Strong","ws-Hero--strong"]]],["P2_HERO_MOVE","Hero - Transition","ws-hero",[["Fade","!wsr-hero-move"],["Slide","ws-Hero--slide"]]],["P2_HERO_ZOOM","Hero - Slow Zoom","ws-hero",[["On","ws-Hero--zoom"],["Off","-ws-Hero--zoom"]]],["P2_HERO_AUTOPLAY","Hero - Autoplay","ws-hero",[["6 Seconds","!wsr-autoplay"],["4 Seconds","ws-Auto--4"],["9 Seconds","ws-Auto--9"],["Off","ws-Auto--off"]]],["P2_MENU_ALIGN","Menu - Alignment","website-menu",[["Right","!wsm-align"],["Center","ws-Menu--center"],["Left","ws-Menu--left"]]],["P2_MENU_MAX","Menu - Visible Entries","website-menu",[["All","!wsm-max"],["3, then More","ws-Menu--max3"],["4, then More","ws-Menu--max4"],["5, then More","ws-Menu--max5"],["6, then More","ws-Menu--max6"],["7, then More","ws-Menu--max7"]]],["P2_MENU_MOBILE","Menu - On Phones","website-menu",[["Drop-down Panel","!wsm-mobile"],["Full-screen Overlay","ws-Menu--overlay"],["Side Drawer","ws-Menu--drawer"]]],["P2_MENU_CTA","Menu - Last Entry as Button","website-menu",[["On","ws-Menu--cta"],["Off","-ws-Menu--cta"]]],["P2_FEATURES_LAYOUT","Services - Layout","ws-features",[["Cards","!wsr-features-layout"],["Rows","ws-Features--rows"],["Bento","ws-Features--bento"],["Icons Only","ws-Features--icons"]]],["P2_TESTIMONIALS_LAYOUT","Testimonials - Layout","ws-testimonials",[["Carousel","ws-Quotes--carousel"],["Wall","ws-Quotes--wall"],["Spotlight","ws-Quotes--spotlight"]]],["P2_TEAM_LAYOUT","Team - Layout","ws-team",[["Portrait Cards","!wsr-team-layout"],["Round Photos","ws-Team--round"],["Compact List","ws-Team--list"]]],["P2_GALLERY_LAYOUT","Portfolio - Layout","ws-gallery",[["Grid","!wsr-works-layout"],["Editorial","ws-Works--editorial"],["Large","ws-Works--large"]]],["P2_LOGOS_LAYOUT","Logos - Layout","ws-logos",[["Scrolling Marquee","ws-Logos--marquee"],["Grid","ws-Logos--grid"],["Row","ws-Logos--row"]]],["P2_LOGOS_SPEED","Logos - Marquee Speed","ws-logos",[["Normal","!wsr-logos-speed"],["Slow","ws-Speed--slow"],["Fast","ws-Speed--fast"]]],["P2_STEPS_LAYOUT","Process - Layout","ws-steps",[["Connected","ws-Steps--line"],["Cards","ws-Steps--cards"]]],["P2_TIMELINE_LAYOUT","Timeline - Layout","ws-timeline",[["Alternating","ws-Timeline--alternate"],["List","ws-Timeline--list"]]],["P2_NEWS_LAYOUT","News - Layout","ws-news",[["Cards","!wsr-news-layout"],["First Post Large","ws-News--featured"],["List","ws-News--list"]]],["P2_PRODUCTS_LAYOUT","Products - Layout","ws-products",[["Cards","!wsr-products-layout"],["Menu List","ws-Products--menu"],["Compact","ws-Products--compact"]]],["P2_PHOTOS_LAYOUT","Photo Gallery - Layout","ws-photos",[["Grid","!wsr-photos-layout"],["Masonry","ws-Photos--masonry"],["Scrolling Strip","ws-Photos--strip"]]],["P2_EVENTS_LAYOUT","Events - Layout","ws-events",[["Agenda","!wsr-events-layout"],["Cards","ws-Events--cards"]]],["P2_HOURS_LAYOUT","Opening Hours - Layout","ws-hours",[["Table","!wsr-hours-layout"],["Cards","ws-Hours--cards"]]]];
-                var PRESET = {"ws-hero":["ws-Hero--zoom"],"ws-stats":[],"ws-features":[],"ws-team":[],"ws-testimonials":[],"ws-logos":[],"ws-pricing":["ws-Plans--lift"],"ws-timeline":[],"ws-steps":[],"ws-faq":[],"ws-jobs":["ws-Filter"],"ws-gallery":["ws-Filter"],"ws-links":[],"ws-contact":[],"ws-news":[],"ws-products":["ws-Filter"],"ws-photos":[],"ws-zigzag":[],"ws-events":[],"ws-hours":[],"ws-compare":[],"ws-video":[],"ws-map":[]}, TPL_NAME = {"ws-hero":"Website - Hero","ws-stats":"Website - Numbers","ws-features":"Website - Services","ws-team":"Website - Team","ws-testimonials":"Website - Testimonials","ws-logos":"Website - Logos","ws-pricing":"Website - Pricing","ws-timeline":"Website - Timeline","ws-steps":"Website - Process","ws-faq":"Website - FAQ","ws-jobs":"Website - Careers","ws-gallery":"Website - Portfolio","ws-links":"Website - Links","ws-contact":"Website - Contact Details","ws-news":"Website - News","ws-products":"Website - Products","ws-photos":"Website - Photo Gallery","ws-zigzag":"Website - Image and Text","ws-events":"Website - Events","ws-hours":"Website - Opening Hours","ws-compare":"Website - Comparison","ws-video":"Website - Video","ws-map":"Website - Map","website-menu":"Website - Menu"};
+                var SECTIONS = [["P2_HERO_LAYOUT","Hero - Layout","ws-hero",[["Slider","ws-Hero--slider"],["Split","ws-Hero--split"],["Centered","ws-Hero--centered"],["Full Bleed","ws-Hero--fullbleed"]]],["P2_HERO_HEIGHT","Hero - Height","ws-hero",[["Large","!wsr-hero-height"],["Full Screen","ws-Hero--full"],["Medium","ws-Hero--medium"],["Compact (page title)","ws-Hero--compact"]]],["P2_HERO_OVERLAY","Hero - Image Overlay","ws-hero",[["Normal","!wsr-hero-overlay"],["Light","ws-Hero--light"],["Strong","ws-Hero--strong"]]],["P2_HERO_MOVE","Hero - Transition","ws-hero",[["Fade","!wsr-hero-move"],["Slide","ws-Hero--slide"]]],["P2_HERO_ZOOM","Hero - Slow Zoom","ws-hero",[["On","ws-Hero--zoom"],["Off","-ws-Hero--zoom"]]],["P2_HERO_AUTOPLAY","Hero - Autoplay","ws-hero",[["6 Seconds","!wsr-autoplay"],["4 Seconds","ws-Auto--4"],["9 Seconds","ws-Auto--9"],["Off","ws-Auto--off"]]],["P2_MENU_ALIGN","Menu - Alignment","website-menu",[["Right","!wsm-align"],["Center","ws-Menu--center"],["Left","ws-Menu--left"]]],["P2_MENU_MAX","Menu - Visible Entries","website-menu",[["All","!wsm-max"],["3, then More","ws-Menu--max3"],["4, then More","ws-Menu--max4"],["5, then More","ws-Menu--max5"],["6, then More","ws-Menu--max6"],["7, then More","ws-Menu--max7"]]],["P2_MENU_MOBILE","Menu - On Phones","website-menu",[["Drop-down Panel","!wsm-mobile"],["Full-screen Overlay","ws-Menu--overlay"],["Side Drawer","ws-Menu--drawer"]]],["P2_MENU_CTA","Menu - Last Entry as Button","website-menu",[["On","ws-Menu--cta"],["Off","-ws-Menu--cta"]]],["P2_FEATURES_LAYOUT","Services - Layout","ws-features",[["Cards","!wsr-features-layout"],["Rows","ws-Features--rows"],["Bento","ws-Features--bento"],["Icons Only","ws-Features--icons"]]],["P2_TESTIMONIALS_LAYOUT","Testimonials - Layout","ws-testimonials",[["Carousel","ws-Quotes--carousel"],["Wall","ws-Quotes--wall"],["Spotlight","ws-Quotes--spotlight"]]],["P2_TEAM_LAYOUT","Team - Layout","ws-team",[["Portrait Cards","!wsr-team-layout"],["Round Photos","ws-Team--round"],["Compact List","ws-Team--list"]]],["P2_GALLERY_LAYOUT","Portfolio - Layout","ws-gallery",[["Grid","!wsr-works-layout"],["Editorial","ws-Works--editorial"],["Large","ws-Works--large"]]],["P2_LOGOS_LAYOUT","Logos - Layout","ws-logos",[["Scrolling Marquee","ws-Logos--marquee"],["Grid","ws-Logos--grid"],["Row","ws-Logos--row"]]],["P2_LOGOS_SPEED","Logos - Marquee Speed","ws-logos",[["Normal","!wsr-logos-speed"],["Slow","ws-Speed--slow"],["Fast","ws-Speed--fast"]]],["P2_STEPS_LAYOUT","Process - Layout","ws-steps",[["Connected","ws-Steps--line"],["Cards","ws-Steps--cards"]]],["P2_TIMELINE_LAYOUT","Timeline - Layout","ws-timeline",[["Alternating","ws-Timeline--alternate"],["List","ws-Timeline--list"]]],["P2_NEWS_LAYOUT","News - Layout","ws-news",[["Cards","!wsr-news-layout"],["First Post Large","ws-News--featured"],["List","ws-News--list"]]],["P2_PRODUCTS_LAYOUT","Products - Layout","ws-products",[["Cards","!wsr-products-layout"],["Menu List","ws-Products--menu"],["Compact","ws-Products--compact"]]],["P2_PHOTOS_LAYOUT","Photo Gallery - Layout","ws-photos",[["Grid","!wsr-photos-layout"],["Masonry","ws-Photos--masonry"],["Scrolling Strip","ws-Photos--strip"]]],["P2_EVENTS_LAYOUT","Events - Layout","ws-events",[["Agenda","!wsr-events-layout"],["Cards","ws-Events--cards"]]],["P2_HOURS_LAYOUT","Opening Hours - Layout","ws-hours",[["Table","!wsr-hours-layout"],["Cards","ws-Hours--cards"]]],["P2_FAQ_LAYOUT","FAQ - Layout","ws-faq",[["List","!wsr-faq-layout"],["Two Columns","ws-Faqs--columns"]]],["P2_FAQ_SEARCH","FAQ - Search Box","ws-faq",[["On","ws-Faqs--search"],["Off","-ws-Faqs--search"]]],["P2_BANNER_STYLE","Banner - Style","ws-banner",[["Accent Color","!wsr-banner-style"],["Dark","ws-Banners--dark"],["Image Background","ws-Banners--image"],["Outline","ws-Banners--outline"]]],["P2_BANNER_LAYOUT","Banner - Layout","ws-banner",[["Text and Buttons","!wsr-banner-layout"],["Centered","ws-Banners--center"]]],["P2_TABS_STYLE","Tabs - Style","ws-tabs",[["Underline","!wsr-tabs-style"],["Pills","ws-Tabs--pills"],["Tabs at the Side","ws-Tabs--side"]]],["P2_COUNTDOWN_LAYOUT","Countdown - Layout","ws-countdown",[["Row","!wsr-countdown-layout"],["Centered","ws-Countdown--center"]]],["P2_COUNTDOWN_STYLE","Countdown - Numbers","ws-countdown",[["Boxes","!wsr-countdown-style"],["Plain","ws-Countdown--plain"],["Dark Tiles","ws-Countdown--tiles"]]],["P2_SKILLS_LAYOUT","Skills - Layout","ws-skills",[["Bars","!wsr-skills-layout"],["Two Columns","ws-Skills--columns"],["Rings","ws-Skills--rings"]]],["P2_TICKER_STYLE","Ticker - Style","ws-ticker",[["Accent Color","!wsr-ticker-style"],["Dark","ws-Ticker--dark"],["Plain","ws-Ticker--plain"],["Large Outline Type","ws-Ticker--outline"]]],["P2_TICKER_SPEED","Ticker - Speed","ws-ticker",[["Normal","!wsr-ticker-speed"],["Slow","ws-Speed--slow"],["Fast","ws-Speed--fast"]]]];
+                var PRESET = {"ws-hero":["ws-Hero--zoom"],"ws-stats":[],"ws-features":[],"ws-team":[],"ws-testimonials":[],"ws-logos":[],"ws-pricing":["ws-Plans--lift"],"ws-timeline":[],"ws-steps":[],"ws-faq":[],"ws-jobs":["ws-Filter"],"ws-gallery":["ws-Filter"],"ws-links":[],"ws-contact":[],"ws-news":[],"ws-products":["ws-Filter"],"ws-photos":[],"ws-zigzag":[],"ws-events":[],"ws-hours":[],"ws-compare":[],"ws-video":[],"ws-map":[],"ws-banner":[],"ws-tabs":[],"ws-countdown":[],"ws-skills":[],"ws-ticker":[]}, TPL_NAME = {"ws-hero":"Website - Hero","ws-stats":"Website - Numbers","ws-features":"Website - Services","ws-team":"Website - Team","ws-testimonials":"Website - Testimonials","ws-logos":"Website - Logos","ws-pricing":"Website - Pricing","ws-timeline":"Website - Timeline","ws-steps":"Website - Process","ws-faq":"Website - FAQ","ws-jobs":"Website - Careers","ws-gallery":"Website - Portfolio","ws-links":"Website - Links","ws-contact":"Website - Contact Details","ws-news":"Website - News","ws-products":"Website - Products","ws-photos":"Website - Photo Gallery","ws-zigzag":"Website - Image and Text","ws-events":"Website - Events","ws-hours":"Website - Opening Hours","ws-compare":"Website - Comparison","ws-video":"Website - Video","ws-map":"Website - Map","ws-banner":"Website - Banner","ws-tabs":"Website - Tabs","ws-countdown":"Website - Countdown","ws-skills":"Website - Skills","ws-ticker":"Website - Ticker","website-menu":"Website - Menu"};
                 var SITES = window.WSD_SITES;   // static file website-studio/designer-sites.js
-                var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null;
+                var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null, share = "";
                 function esc(s) { return apex.util.escapeHTML(String(s)); }
                 function siteUrl() { return app + ($v("P2_SITE") || "WEBSITE") + ses; }
+                function site() { return SITES[$v("P2_SITE") || "WEBSITE"]; }
+                var ALWAYS_DARK = /--(midnight|techgrid|aurora|blueprint)$/;
 
                 // page options of a look: every select and switch follows the list of classes
                 function setPage(cls) {
@@ -43,14 +45,16 @@ page 2 (
                 }
                 // from the Gallery: #site=<page alias>&look=<page classes>&r=@<template>:<classes>,...
                 (function fromHash() {
-                    var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+                    var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); try { return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; } };
                     if (g("site") && SITES[g("site")]) { apex.item("P2_SITE").setValue(g("site"), null, true); }
+                    if (g("dir") === "rtl" || g("dir") === "ltr") { apex.item("P2_DIR").setValue(g("dir"), null, true); }
                     var look = g("look"), rs = {};
                     (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\s+]+/); } });
                     setPage((look !== null ? look : SITES[$v("P2_SITE") || "WEBSITE"].look).split(/[\s+]+/));
                     setSections(rs);
                 })();
-                $("#P2_SITE").on("change", function () { setPage(SITES[$v("P2_SITE")].look.split(/\s+/)); setSections({}); sqlPanel(); render(); });
+                function reset() { setPage(site().look.split(/\s+/)); setSections({}); apex.item("P2_DIR").setValue("", null, true); }
+                $("#P2_SITE").on("change", function () { reset(); sqlPanel(); render(); });
 
                 function chosen() {
                     var page = [], rows = [], extra = [], allDefaults = true, tpl = {}, changed = [];
@@ -73,23 +77,29 @@ page 2 (
                         changed.push({ tpl: s[2], label: s[1], option: $("#" + s[0] + " option:selected").text(), cls: v });
                     });
                     return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, tpl: tpl, changed: changed,
-                             regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(",") };
+                             regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(","), dir: $v("P2_DIR") };
                 }
                 function arr(list, n) {
                     var pad = new Array(n + 1).join(" ");
                     return list.length === 1 ? " " + list[0] + "\n" : " [\n" + list.map(function (x) { return pad + "    " + x + "\n"; }).join("") + pad + "]\n";
                 }
                 function relevance() {
-                    var dark = /midnight|techgrid/.test($v("P2_DESIGN"));
-                    $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "Midnight and Tech Grid are always dark" : null);
+                    var dark = ALWAYS_DARK.test($v("P2_DESIGN")), sticky = $v("P2_STICKY") === "Y" || /transparent/.test($v("P2_HEADER")), has = site().tpls;
+                    $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "This design is always dark" : null);
+                    $("#P2_AUTOHIDE_CONTAINER").toggleClass("wsd-Off", !sticky).attr("data-why", sticky ? null : "Needs Sticky Header");
+                    // only the section options of templates this website uses
+                    SECTIONS.forEach(function (s) { $("#" + s[0] + "_CONTAINER").toggle(s[2] === "website-menu" || has.indexOf(s[2]) >= 0); });
                 }
                 function render() {
-                    var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : ""), src = siteUrl();
+                    var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : "") + (c.dir ? "&dir=" + c.dir : ""), src = siteUrl();
                     relevance();
                     // section options and another site need a fresh page; page options follow the hash without a reload
-                    if (src + c.regions !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
+                    if (src + c.regions + c.dir !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
                     else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", src + hash); } }
-                    lastSrc = src + c.regions;
+                    lastSrc = src + c.regions + c.dir;
+                    // this look as a link to the Designer (Copy Link)
+                    share = location.href.split("#")[0].replace(/([?&])session=\d+&?/, "$1").replace(/[?&]$/, "") + "#site=" + encodeURIComponent($v("P2_SITE") || "WEBSITE") + "&look=" + encodeURIComponent(c.page.join(" ")) +
+                        (c.regions ? "&r=" + encodeURIComponent(c.regions) : "") + (c.dir ? "&dir=" + c.dir : "");
                     $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.map(function (r) {
                         return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
                     }).join("") + "</dl>" + (c.changed.length ? '<p class="wsd-H">Sections</p><dl class="wsd-List">' + c.changed.map(function (r) {
@@ -113,7 +123,7 @@ page 2 (
                 function showSql() { var x = SITES[$v("P2_SITE") || "WEBSITE"].sql[+$("#wsd-sqlpick").val() || 0]; $("#wsd-sql").text(x ? x.sql : ""); }
                 $(document).on("change", "#wsd-sqlpick", showSql);
 
-                $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).join(",")).on("change", render);
+                $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).concat("#P2_DIR").join(",")).on("change", render);
                 // Desktop: the page is laid out at 1280px and scaled down to fit the preview
                 function fit() {
                     var stage = document.getElementById("wsd-stage"), desk = $v("P2_DEVICE") === "DESKTOP", s = Math.min(1, stage.clientWidth / 1280);
@@ -125,7 +135,29 @@ page 2 (
                 $("#P2_DEVICE").on("change", fit);
                 $(window).on("resize apexwindowresized", fit);
                 fit();
-                function copy(text) { navigator.clipboard.writeText(text).then(function () { apex.message.showPageSuccess("Copied."); }); }
+                // copy to the clipboard; where the browser refuses, the text is shown selected so Ctrl+C still works
+                function copy(text) {
+                    var done = function () { apex.message.showPageSuccess("Copied."); };
+                    var manual = function () {
+                        var ta = document.createElement("textarea"), ok = false;
+                        ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:0;opacity:0"; document.body.appendChild(ta); ta.select();
+                        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+                        document.body.removeChild(ta);
+                        if (ok) { done(); return; }
+                        $("#wsd-manual").remove();
+                        $('<div id="wsd-manual" class="wsd-Manual"><p>Your browser did not allow copying. Select the text below and press Ctrl+C (Cmd+C on a Mac).</p><textarea readonly rows="6"></textarea></div>').insertAfter("#wsd-code").find("textarea").val(text).trigger("focus").trigger("select");
+                    };
+                    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, manual); } else { manual(); }
+                }
+                // Surprise Me: a random design, colour, typeface, header and corners (the switches stay as they are)
+                function pick(item) { var o = $("#" + item + " option"); return o.eq(Math.floor(Math.random() * o.length)).val(); }
+                $(document).on("click", ".js-wsd-random", function () {
+                    ["P2_DESIGN", "P2_ACCENT", "P2_FONT", "P2_HEADER", "P2_CORNERS", "P2_FOOTER"].forEach(function (i) { apex.item(i).setValue(pick(i), null, true); });
+                    apex.item("P2_SCHEME").setValue(Math.random() < .25 ? "ws-Scheme--dark" : "", null, true);
+                    render();
+                });
+                $(document).on("click", ".js-wsd-reset", function () { reset(); render(); });
+                $(document).on("click", ".js-wsd-link", function () { copy(share); });
                 $(document).on("click", ".js-wsd-copy", function () { copy($("#wsd-code").text()); });
                 $(document).on("click", ".js-wsd-copysql", function () { copy($("#wsd-sql").text()); });
                 $(document).on("click", ".js-wsd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
@@ -154,6 +186,8 @@ page 2 (
             .wsd-H { display: block; margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
             .wsd-Pick { width: 100%; max-width: 32rem; margin-bottom: .75rem; }
             .wsd-Off { opacity: .6; }
+            .wsd-Manual { margin: .75rem 0; padding: .75rem; border-radius: 8px; background: rgba(234,88,12,.08); font-size: .8125rem; }
+            .wsd-Manual textarea { width: 100%; margin-top: .5rem; font: .8125rem/1.5 monospace; }
             .wsd-Off[data-why]::after { content: attr(data-why); display: block; padding: 0 .75rem .25rem; font-size: .75rem; font-style: italic; }
             @media (max-width: 640px) { .wsd-Stage { height: 72vh; min-height: 460px; } }
             ```
@@ -296,6 +330,32 @@ page 2 (
         }
     )
 
+    pageItem P2_DIR (
+        type: selectList
+        label {
+            label: Direction
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Left to right;ltr,Right to left;rtl
+            nullDisplayValue: As on the website
+        }
+        layout {
+            sequence: 3
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
     pageItem P2_DESIGN (
         type: selectList
         label {
@@ -304,7 +364,7 @@ page 2 (
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Editorial;ws-Design--editorial,Bold;ws-Design--bold,Soft UI;ws-Design--soft,Glass;ws-Design--glass,Midnight;ws-Design--midnight,Minimal;ws-Design--minimal,Corporate;ws-Design--corporate,Startup / SaaS;ws-Design--saas,Elegant / Luxury;ws-Design--luxury,Playful;ws-Design--playful,Organic / Nature;ws-Design--organic,Tech Grid;ws-Design--techgrid,Swiss;ws-Design--swiss,Retro Print;ws-Design--retro
+            staticValues: STATIC2:Editorial;ws-Design--editorial,Bold;ws-Design--bold,Soft UI;ws-Design--soft,Glass;ws-Design--glass,Midnight;ws-Design--midnight,Minimal;ws-Design--minimal,Corporate;ws-Design--corporate,Startup / SaaS;ws-Design--saas,Elegant / Luxury;ws-Design--luxury,Playful;ws-Design--playful,Organic / Nature;ws-Design--organic,Tech Grid;ws-Design--techgrid,Swiss;ws-Design--swiss,Retro Print;ws-Design--retro,Aurora;ws-Design--aurora,Clay;ws-Design--clay,Blueprint;ws-Design--blueprint,Hand-drawn;ws-Design--sketch,Art Deco;ws-Design--deco,Majlis;ws-Design--majlis
             nullDisplayValue: Clean
         }
         layout {
@@ -330,7 +390,7 @@ page 2 (
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Ocean;ws-Accent--ocean,Indigo;ws-Accent--indigo,Violet;ws-Accent--violet,Emerald;ws-Accent--emerald,Rose;ws-Accent--rose,Amber;ws-Accent--amber,Slate;ws-Accent--slate,Wine;ws-Accent--wine,Tangerine;ws-Accent--tangerine,Cyan;ws-Accent--cyan
+            staticValues: STATIC2:Ocean;ws-Accent--ocean,Indigo;ws-Accent--indigo,Violet;ws-Accent--violet,Emerald;ws-Accent--emerald,Rose;ws-Accent--rose,Amber;ws-Accent--amber,Slate;ws-Accent--slate,Wine;ws-Accent--wine,Tangerine;ws-Accent--tangerine,Cyan;ws-Accent--cyan,Navy;ws-Accent--navy,Forest;ws-Accent--forest,Teal;ws-Accent--teal,Gold;ws-Accent--gold,Coral;ws-Accent--coral
             nullDisplayValue: Theme Color
         }
         layout {
@@ -382,7 +442,7 @@ page 2 (
         }
         lov {
             type: staticValues
-            staticValues: STATIC2:Grotesk;ws-Font--grotesk,Serif;ws-Font--serif,Luxe;ws-Font--luxe,Tech;ws-Font--tech,Poster;ws-Font--poster,Friendly;ws-Font--friendly,Arabic;ws-Font--arabic
+            staticValues: STATIC2:Grotesk;ws-Font--grotesk,Serif;ws-Font--serif,Luxe;ws-Font--luxe,Tech;ws-Font--tech,Poster;ws-Font--poster,Friendly;ws-Font--friendly,Arabic;ws-Font--arabic,Arabic - Cairo;ws-Font--cairo,Arabic - Kufi;ws-Font--kufi,Classic;ws-Font--classic,Space;ws-Font--space,Handwritten;ws-Font--hand
             nullDisplayValue: System
         }
         layout {
@@ -517,6 +577,32 @@ page 2 (
         }
         layout {
             sequence: 46
+            region: @options
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_REVSTYLE (
+        type: selectList
+        label {
+            label: Reveal Style
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Fade;ws-Reveal--fade,Zoom;ws-Reveal--zoom,Blur;ws-Reveal--blur,Slide from the Side;ws-Reveal--slide
+            nullDisplayValue: Rise
+        }
+        layout {
+            sequence: 51
             region: @options
             slot: regionBody
             alignment: left
@@ -694,6 +780,32 @@ page 2 (
             region: @options
             slot: regionBody
             alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        default {
+            type: static
+            staticValue: N
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_AUTOHIDE (
+        type: switch
+        label {
+            label: Hide Header on Scroll
+            alignment: left
+        }
+        layout {
+            sequence: 107
+            region: @options
+            slot: regionBody
+            alignment: left
+            startNewRow: false
         }
         appearance {
             template: @/optional-floating
@@ -1306,6 +1418,266 @@ page 2 (
         }
     )
 
+    pageItem P2_FAQ_LAYOUT (
+        type: selectList
+        label {
+            label: FAQ - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:List;!wsr-faq-layout,Two Columns;ws-Faqs--columns
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 240
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_FAQ_SEARCH (
+        type: selectList
+        label {
+            label: FAQ - Search Box
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:On;ws-Faqs--search,Off;-ws-Faqs--search
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 250
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BANNER_STYLE (
+        type: selectList
+        label {
+            label: Banner - Style
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Accent Color;!wsr-banner-style,Dark;ws-Banners--dark,Image Background;ws-Banners--image,Outline;ws-Banners--outline
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 260
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_BANNER_LAYOUT (
+        type: selectList
+        label {
+            label: Banner - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Text and Buttons;!wsr-banner-layout,Centered;ws-Banners--center
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 270
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TABS_STYLE (
+        type: selectList
+        label {
+            label: Tabs - Style
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Underline;!wsr-tabs-style,Pills;ws-Tabs--pills,Tabs at the Side;ws-Tabs--side
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 280
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_COUNTDOWN_LAYOUT (
+        type: selectList
+        label {
+            label: Countdown - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Row;!wsr-countdown-layout,Centered;ws-Countdown--center
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 290
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_COUNTDOWN_STYLE (
+        type: selectList
+        label {
+            label: Countdown - Numbers
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Boxes;!wsr-countdown-style,Plain;ws-Countdown--plain,Dark Tiles;ws-Countdown--tiles
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 300
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_SKILLS_LAYOUT (
+        type: selectList
+        label {
+            label: Skills - Layout
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Bars;!wsr-skills-layout,Two Columns;ws-Skills--columns,Rings;ws-Skills--rings
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 310
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TICKER_STYLE (
+        type: selectList
+        label {
+            label: Ticker - Style
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Accent Color;!wsr-ticker-style,Dark;ws-Ticker--dark,Plain;ws-Ticker--plain,Large Outline Type;ws-Ticker--outline
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 320
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
+    pageItem P2_TICKER_SPEED (
+        type: selectList
+        label {
+            label: Ticker - Speed
+            alignment: left
+        }
+        lov {
+            type: staticValues
+            staticValues: STATIC2:Normal;!wsr-ticker-speed,Slow;ws-Speed--slow,Fast;ws-Speed--fast
+            nullDisplayValue: As on the page
+        }
+        layout {
+            sequence: 330
+            region: @sections
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        sessionState {
+            storage: request
+        }
+    )
+
     region sql (
         name: Section SQL
         type: staticContent
@@ -1365,6 +1737,72 @@ page 2 (
         }
         sessionState {
             storage: request
+        }
+    )
+
+    button surprise (
+        buttonName: SURPRISE
+        label: Surprise Me
+        layout {
+            sequence: 12
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-random
+            icon: fa-random
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )
+
+    button reset-look (
+        buttonName: RESET_LOOK
+        label: Reset
+        layout {
+            sequence: 14
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-reset
+            icon: fa-undo
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )
+
+    button copy-link (
+        buttonName: COPY_LINK
+        label: Copy Link
+        layout {
+            sequence: 16
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-link
+            icon: fa-link
+        }
+        behavior {
+            action: definedByDynamicAction
         }
     )
 

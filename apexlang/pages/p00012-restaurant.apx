@@ -177,6 +177,106 @@ page 12 (
         )
     )
 
+    region today (
+        name: Today at Lume
+        title: Today at Lume
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select 'Pasta rolled every morning' as text,
+                       'fa-cutlery' as icon,
+                       null as link,
+                       1 as sort_order
+                  from dual
+                union all
+                select 'Bread from our wood oven' as text,
+                       null as icon,
+                       null as link,
+                       2 as sort_order
+                  from dual
+                union all
+                select 'Open every evening from six' as text,
+                       null as icon,
+                       null as link,
+                       3 as sort_order
+                  from dual
+                union all
+                select 'Family lunch on Sundays' as text,
+                       null as icon,
+                       null as link,
+                       4 as sort_order
+                  from dual
+                union all
+                select 'Book the long table for twelve' as text,
+                       null as icon,
+                       '#contact' as link,
+                       5 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--none
+                ws-Width--full
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: today
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-ticker
+            templateOptions: [
+                #DEFAULT#
+                ws-Speed--slow
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TEXT (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ICON (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column LINK (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 40
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
     region story (
         name: Our story
         title: Our story
@@ -197,7 +297,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 30
+            sequence: 40
             slot: body
         }
         appearance {
@@ -285,7 +385,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 40
+            sequence: 50
             slot: body
         }
         appearance {
@@ -419,7 +519,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 50
+            sequence: 60
             slot: body
         }
         appearance {
@@ -510,7 +610,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 60
+            sequence: 70
             slot: body
         }
         appearance {
@@ -615,7 +715,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 70
+            sequence: 80
             slot: body
         }
         appearance {
@@ -757,7 +857,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 80
+            sequence: 90
             slot: body
         }
         appearance {
@@ -840,7 +940,7 @@ page 12 (
                 ```
         }
         layout {
-            sequence: 90
+            sequence: 100
             slot: body
         }
         appearance {
@@ -920,7 +1020,7 @@ page 12 (
         title: Book a *table*
         type: staticContent
         layout {
-            sequence: 100
+            sequence: 110
             slot: body
         }
         appearance {
@@ -1054,6 +1154,25 @@ page 12 (
                 #DEFAULT#
                 ws-Menu--cta
             ]
+        }
+    )
+
+    region announcement (
+        name: Announcement
+        type: staticContent
+        source {
+            htmlCode: <p>Friday family lunch is back, from 13:00. <a href="#contact">Book a table</a></p>
+        }
+        layout {
+            sequence: 10
+            slot: announcement
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: announcement
         }
     )
 
@@ -1502,7 +1621,9 @@ page 12 (
                 ```
                 -- P12_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
                 if :P12_WEBSITE is null then
-                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- The starter only says thank you: NOTHING IS SENT OR STORED until you add your own code here.
+                    -- When you do, remove the "(Demo: ...)" note from this process's Success Message.
+                    -- To receive the message by email, use for example:
                     -- apex_mail.send(p_to   => 'hello@example.com',
                     --                p_from => 'noreply@example.com',
                     --                p_subj => 'Website message from ' || :P12_NAME,
@@ -1517,7 +1638,7 @@ page 12 (
             point: processing
         }
         successMessage {
-            successMessage: Thank you. We will confirm your table by phone within the hour.
+            successMessage: Thank you. We will confirm your table by phone within the hour. (Demo: nothing was sent or stored yet.)
         }
         serverSideCondition {
             whenButtonPressed: @send

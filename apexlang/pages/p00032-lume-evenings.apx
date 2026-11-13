@@ -275,6 +275,25 @@ page 32 (
         }
     )
 
+    region announcement (
+        name: Announcement
+        type: staticContent
+        source {
+            htmlCode: <p>Friday family lunch is back, from 13:00. <a href="f?p=&APP_ID.:LUME-BOOK:&APP_SESSION.">Book a table</a></p>
+        }
+        layout {
+            sequence: 10
+            slot: announcement
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: announcement
+        }
+    )
+
     region logo (
         name: Logo
         type: staticContent

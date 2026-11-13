@@ -91,7 +91,7 @@ export const SECTIONS = [
         { QUESTION: "Can we update the website ourselves?", ANSWER: "Always. We build on a CMS your team can edit and include a recorded training session with every site." },
         { QUESTION: "Do you offer payment in instalments?", ANSWER: "Yes. Projects are billed in three parts: at kickoff, at design approval and at launch." }
       ] },
-    { id: "start", title: "Have a project in *mind*?", html: "cta", sec: ["ws-Tone--gradient", "ws-Head--center", "ws-Width--narrow"],
+    { id: "start", title: "Have a project in *mind*?", html: "cta", sec: ["ws-Tone--gradient", "ws-Head--center", "ws-Width--narrow", "ws-Edge--slant"],
       header: '<p class="ws-Lead">Tell us about it. We reply to every message within two working days.</p>' },
     { id: "contact", menu: "Contact", title: "Let's make something *good*", form: true, sec: ["ws-Sec--menu"], css: "ws-Contact",
       header: '<p class="ws-Eyebrow">Contact</p><p class="ws-Lead">Tell us a little about your project and we will get back to you.</p>' },

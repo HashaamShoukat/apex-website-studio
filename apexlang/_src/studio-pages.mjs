@@ -1,7 +1,7 @@
 // Writes the Gallery (1), Designer (2) and How to Use (3) pages: node _src/studio-pages.mjs
 import fs from "node:fs";
 import { PRESETS, PAGE_DEFAULTS } from "./presets.mjs";
-import { DESIGNS, FONTS, REPORTS, PAGE, MENU } from "./options.mjs";
+import { DESIGNS, FONTS, ACCENTS, ALWAYS_DARK, REPORTS, PAGE, MENU } from "./options.mjs";
 import { SITES } from "./sites.mjs";
 import { MULTI } from "./multisites.mjs";
 // the Designer can preview the one-page websites and the home page of each multi-page website
@@ -125,12 +125,23 @@ const galleryLoad = `(function ($) {
             '<div class="wss-Card-actions"><a class="t-Button t-Button--small t-Button--hot" target="_blank" rel="noopener" href="' + esc(open) + '"><span class="t-Button-label">Open Website</span></a>' +
             '<a class="t-Button t-Button--small" href="' + esc(custom) + '"><span class="t-Button-label">Customize</span></a></div></div></article>';
     }).join("");
+    // the tag buttons and the search field work together
+    function filter() {
+        var f = $(".wss-Filter button[aria-pressed=true]").attr("data-f") || "", q = ($("#wss-q").val() || "").toLowerCase().trim(), n = 0;
+        $("#wss-gallery .wss-Card").each(function () {
+            var tags = " " + this.getAttribute("data-tags") + " ", name = $(this).find(".wss-Card-title").text().toLowerCase();
+            this.hidden = (!!f && tags.indexOf(" " + f + " ") < 0) || (!!q && name.indexOf(q) < 0 && tags.indexOf(q) < 0);
+            if (!this.hidden) { n++; }
+        });
+        $("#wss-none").prop("hidden", n > 0);
+    }
     $(document).on("click", ".wss-Filter button", function () {
-        var f = this.getAttribute("data-f");
         $(".wss-Filter button").attr("aria-pressed", "false");
         this.setAttribute("aria-pressed", "true");
-        $("#wss-gallery .wss-Card").each(function () { this.hidden = !!f && (" " + this.getAttribute("data-tags") + " ").indexOf(" " + f + " ") < 0; });
+        filter();
     });
+    $(document).on("input", "#wss-q", filter);
+    $(document).on("keydown", "#wss-q", function (e) { if (e.key === "Enter") { e.preventDefault(); } });
 })(apex.jQuery);`;
 const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem); border-radius: 18px; color: #ffffff;
             background: radial-gradient(circle at 86% 18%, rgba(255,255,255,.18), transparent 40%), linear-gradient(120deg, #7c2d12, #ea580c 52%, #db2777); }
@@ -143,6 +154,9 @@ const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3v
 .wss-Filter button { padding: .375rem .95rem; border-radius: 999px; border: 1px solid var(--ut-component-border-color, #d0d5dd); background: var(--ut-component-background-color, #fff); color: inherit; font: inherit; font-size: .875rem; cursor: pointer; }
 .wss-Filter button[aria-pressed="true"] { background: #7c2d12; border-color: #7c2d12; color: #ffffff; }
 .wss-Filter button:focus-visible { outline: 2px solid #ea580c; outline-offset: 2px; }
+.wss-Search { flex: 1 1 12rem; max-width: 18rem; min-height: 2.1rem; padding: .3rem .9rem; border-radius: 999px; border: 1px solid var(--ut-component-border-color, #d0d5dd); background: var(--ut-component-background-color, #fff); color: inherit; font: inherit; font-size: .875rem; }
+.wss-Search:focus-visible { outline: 2px solid #ea580c; outline-offset: 2px; }
+.wss-None { margin: 1rem 0; opacity: .8; }
 .wss-Grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1.25rem; }
 .wss-Card { display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; border: 1px solid var(--ut-component-border-color, #e4e7ec); background: var(--ut-component-background-color, #fff);
             box-shadow: 0 1px 2px rgba(16,24,40,.05); transition: box-shadow .2s ease, transform .2s ease; }
@@ -167,10 +181,11 @@ const galleryCss = `.wss-Hero { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3v
 @media (prefers-reduced-motion: reduce) { .wss-Card, .wss-Card-shot img { transition: none; } .wss-Card:hover { transform: none; } .wss-Card:hover .wss-Card-shot img { transform: none; } }`;
 const TAGS = [...new Set(PRESETS.flatMap(p => p.tags.split(" ")))];
 const TAG_NAME = { light: "Light", dark: "Dark", clean: "Clean", editorial: "Editorial", bold: "Bold", glass: "Glass", soft: "Soft UI", midnight: "Midnight", minimal: "Minimal",
-    corporate: "Corporate", saas: "SaaS", luxury: "Elegant", playful: "Playful", organic: "Organic", techgrid: "Tech Grid", swiss: "Swiss", retro: "Retro" };
+    corporate: "Corporate", saas: "SaaS", luxury: "Elegant", playful: "Playful", organic: "Organic", techgrid: "Tech Grid", swiss: "Swiss", retro: "Retro",
+    aurora: "Aurora", clay: "Clay", blueprint: "Blueprint", sketch: "Hand-drawn", deco: "Art Deco", majlis: "Majlis" };
 const galleryHero = `<div class="wss-Hero">
   <h1>One-page and multi-page websites for Oracle APEX</h1>
-  <p>A page template, a section template, a menu template and ${REPORTS.length} report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps and more. Every list comes from a SQL query. ${DESIGNS.length} designs, 10 accent colours, light and dark, ${FONTS.length - 1} typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
+  <p>A page template, a section template, a menu template and ${REPORTS.length} report templates - hero sliders, services, numbers, team, testimonials, clients, pricing, news, products and menus, photo galleries, events, opening hours, comparisons, videos, maps, tabs, countdowns, banners and more. Every list comes from a SQL query. ${DESIGNS.length} designs, ${ACCENTS.length} accent colours, light and dark, ${FONTS.length - 1} typefaces including Arabic, right-to-left ready. Every look is a template option. Start from a website below, fine-tune it in the Designer, copy the templates into your app.</p>
   <a class="t-Button t-Button--hot" href="f?p=&APP_ID.:DESIGNER:&APP_SESSION."><span class="t-Button-label">Open the Designer</span></a>
   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:WEBSITE:&APP_SESSION." target="_blank" rel="noopener"><span class="t-Button-label">See the demo website</span></a>
   <a class="t-Button wss-Ghost" href="f?p=&APP_ID.:HOW-TO-USE:&APP_SESSION."><span class="t-Button-label">How to use it</span></a>
@@ -186,7 +201,9 @@ const galleryHero = `<div class="wss-Hero">
 <div class="wss-Filter" role="group" aria-label="Filter">
   <button type="button" data-f="" aria-pressed="true">All</button>
 ${TAGS.map(t => `  <button type="button" data-f="${t}" aria-pressed="false">${TAG_NAME[t] || t}</button>`).join("\n")}
-</div>`;
+  <input type="search" id="wss-q" class="wss-Search" placeholder="Search looks" aria-label="Search looks" autocomplete="off">
+</div>
+<p class="wss-None" id="wss-none" role="status" hidden>No look matches. Try another word or press All.</p>`;
 const gallery = [pageHead(1, "Gallery", "HOME", "Website Studio - Gallery"), js(galleryFn, galleryLoad), cssBlock(galleryCss), pageSec, "",
     staticRegion("hero", "Website Studio", 10, galleryHero), "",
     staticRegion("gallery", "Gallery", 20, `<div class="wss-Grid" id="wss-gallery" data-files="#APP_FILES#" data-site="f?p=&APP_ID.:WEBSITE:&APP_SESSION." data-designer="f?p=&APP_ID.:DESIGNER:&APP_SESSION." data-app="f?p=&APP_ID.:" data-session=":&APP_SESSION."></div>`),
@@ -207,7 +224,9 @@ const SECTION_SPEC = [
     ["ws-team", "Team", ["wsr-team-layout"]], ["ws-gallery", "Portfolio", ["wsr-works-layout"]],
     ["ws-logos", "Logos", ["wsr-logos-layout", "wsr-logos-speed"]], ["ws-steps", "Process", ["wsr-steps-layout"]], ["ws-timeline", "Timeline", ["wsr-timeline-layout"]],
     ["ws-news", "News", ["wsr-news-layout"]], ["ws-products", "Products", ["wsr-products-layout"]], ["ws-photos", "Photo Gallery", ["wsr-photos-layout"]],
-    ["ws-events", "Events", ["wsr-events-layout"]], ["ws-hours", "Opening Hours", ["wsr-hours-layout"]]
+    ["ws-events", "Events", ["wsr-events-layout"]], ["ws-hours", "Opening Hours", ["wsr-hours-layout"]],
+    ["ws-faq", "FAQ", ["wsr-faq-layout", "ws-Faqs--search"]], ["ws-banner", "Banner", ["wsr-banner-style", "wsr-banner-layout"]], ["ws-tabs", "Tabs", ["wsr-tabs-style"]],
+    ["ws-countdown", "Countdown", ["wsr-countdown-layout", "wsr-countdown-style"]], ["ws-skills", "Skills", ["wsr-skills-layout"]], ["ws-ticker", "Ticker", ["wsr-ticker-style", "wsr-ticker-speed"]]
 ];
 // [item, label, template, [[option label, value]...]] - value: a class, !<group> (the group's empty choice) or -<class> (a switch off)
 const SECTIONS = SECTION_SPEC.flatMap(([tpl, label, parts]) => parts.map(part => {
@@ -221,7 +240,7 @@ const PRESET_OF = Object.fromEntries(REPORTS.map(r => [r.id, r.preset || []]));
 const TPL_NAME = Object.fromEntries([...REPORTS, MENU].map(r => [r.id, r.name]));
 // per site: the page options of its look, and the SQL of every section that shows pictures (for the SQL panel)
 const SITE_DATA = Object.fromEntries(DESIGNER_SITES.map(st => [st.alias, {
-    look: st.look, name: st.label, page: st.page,
+    look: st.look, name: st.label, page: st.page, tpls: [...new Set(st.sections.map(x => x.report).filter(Boolean))],
     sql: st.sections.filter(x => x.rows && x.rows.some(r => "IMAGE_FILE" in r || "IMAGE_URL" in r)).map(x => ({ id: x.id, name: (x.menu || x.title).replace(/\*/g, "") + " (" + TPL_NAME[x.report] + ")", sql: sql(x.rows) }))
 }]));
 // too big for the page's JavaScript (32 KB per property): a static file the Designer loads first (run build.mjs once after adding it)
@@ -237,9 +256,11 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     var SECTIONS = ${JSON.stringify(SECTIONS)};
     var PRESET = ${JSON.stringify(PRESET_OF)}, TPL_NAME = ${JSON.stringify(TPL_NAME)};
     var SITES = window.WSD_SITES;   // static file website-studio/designer-sites.js
-    var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null;
+    var frame = document.getElementById("wsd-frame"), app = frame.getAttribute("data-app"), ses = frame.getAttribute("data-session"), lastSrc = null, share = "";
     function esc(s) { return apex.util.escapeHTML(String(s)); }
     function siteUrl() { return app + ($v("P2_SITE") || "WEBSITE") + ses; }
+    function site() { return SITES[$v("P2_SITE") || "WEBSITE"]; }
+    var ALWAYS_DARK = /--(${ALWAYS_DARK.join("|")})$/;
 
     // page options of a look: every select and switch follows the list of classes
     function setPage(cls) {
@@ -257,14 +278,16 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     }
     // from the Gallery: #site=<page alias>&look=<page classes>&r=@<template>:<classes>,...
     (function fromHash() {
-        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); return m ? decodeURIComponent(m[1]) : null; };
+        var h = location.hash, g = function (k) { var m = new RegExp("[#&]" + k + "=([^&]*)").exec(h); try { return m ? decodeURIComponent(m[1]) : null; } catch (e) { return null; } };
         if (g("site") && SITES[g("site")]) { apex.item("P2_SITE").setValue(g("site"), null, true); }
+        if (g("dir") === "rtl" || g("dir") === "ltr") { apex.item("P2_DIR").setValue(g("dir"), null, true); }
         var look = g("look"), rs = {};
         (g("r") || "").split(",").forEach(function (p) { var i = p.indexOf(":"); if (i > 0) { rs[p.slice(0, i)] = p.slice(i + 1).split(/[\\s+]+/); } });
         setPage((look !== null ? look : SITES[$v("P2_SITE") || "WEBSITE"].look).split(/[\\s+]+/));
         setSections(rs);
     })();
-    $("#P2_SITE").on("change", function () { setPage(SITES[$v("P2_SITE")].look.split(/\\s+/)); setSections({}); sqlPanel(); render(); });
+    function reset() { setPage(site().look.split(/\\s+/)); setSections({}); apex.item("P2_DIR").setValue("", null, true); }
+    $("#P2_SITE").on("change", function () { reset(); sqlPanel(); render(); });
 
     function chosen() {
         var page = [], rows = [], extra = [], allDefaults = true, tpl = {}, changed = [];
@@ -287,23 +310,29 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
             changed.push({ tpl: s[2], label: s[1], option: $("#" + s[0] + " option:selected").text(), cls: v });
         });
         return { page: page, rows: rows, snippet: allDefaults ? ["#DEFAULT#"].concat(extra) : page, tpl: tpl, changed: changed,
-                 regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(",") };
+                 regions: Object.keys(tpl).map(function (k) { return "@" + k + ":" + tpl[k].join("+"); }).join(","), dir: $v("P2_DIR") };
     }
     function arr(list, n) {
         var pad = new Array(n + 1).join(" ");
         return list.length === 1 ? " " + list[0] + "\\n" : " [\\n" + list.map(function (x) { return pad + "    " + x + "\\n"; }).join("") + pad + "]\\n";
     }
     function relevance() {
-        var dark = /midnight|techgrid/.test($v("P2_DESIGN"));
-        $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "Midnight and Tech Grid are always dark" : null);
+        var dark = ALWAYS_DARK.test($v("P2_DESIGN")), sticky = $v("P2_STICKY") === "Y" || /transparent/.test($v("P2_HEADER")), has = site().tpls;
+        $("#P2_SCHEME_CONTAINER").toggleClass("wsd-Off", dark).attr("data-why", dark ? "This design is always dark" : null);
+        $("#P2_AUTOHIDE_CONTAINER").toggleClass("wsd-Off", !sticky).attr("data-why", sticky ? null : "Needs Sticky Header");
+        // only the section options of templates this website uses
+        SECTIONS.forEach(function (s) { $("#" + s[0] + "_CONTAINER").toggle(s[2] === "website-menu" || has.indexOf(s[2]) >= 0); });
     }
     function render() {
-        var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : ""), src = siteUrl();
+        var c = chosen(), hash = "#ws=" + encodeURIComponent(c.page.join(" ")) + (c.regions ? "&r=" + encodeURIComponent(c.regions) : "") + (c.dir ? "&dir=" + c.dir : ""), src = siteUrl();
         relevance();
         // section options and another site need a fresh page; page options follow the hash without a reload
-        if (src + c.regions !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
+        if (src + c.regions + c.dir !== lastSrc || !frame.getAttribute("src")) { frame.setAttribute("src", src + hash); }
         else { try { frame.contentWindow.location.hash = hash; } catch (e) { frame.setAttribute("src", src + hash); } }
-        lastSrc = src + c.regions;
+        lastSrc = src + c.regions + c.dir;
+        // this look as a link to the Designer (Copy Link)
+        share = location.href.split("#")[0].replace(/([?&])session=\\d+&?/, "$1").replace(/[?&]$/, "") + "#site=" + encodeURIComponent($v("P2_SITE") || "WEBSITE") + "&look=" + encodeURIComponent(c.page.join(" ")) +
+            (c.regions ? "&r=" + encodeURIComponent(c.regions) : "") + (c.dir ? "&dir=" + c.dir : "");
         $("#wsd-summary").html('<p class="wsd-H">Modern One Page</p><dl class="wsd-List">' + c.rows.map(function (r) {
             return "<dt>" + esc(r.group) + "</dt><dd" + (r.isDefault ? ' class="is-default"' : "") + ">" + esc(r.option) + "</dd>";
         }).join("") + "</dl>" + (c.changed.length ? '<p class="wsd-H">Sections</p><dl class="wsd-List">' + c.changed.map(function (r) {
@@ -327,7 +356,7 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     function showSql() { var x = SITES[$v("P2_SITE") || "WEBSITE"].sql[+$("#wsd-sqlpick").val() || 0]; $("#wsd-sql").text(x ? x.sql : ""); }
     $(document).on("change", "#wsd-sqlpick", showSql);
 
-    $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).join(",")).on("change", render);
+    $(SELECTS.concat(SWITCHES).map(function (s) { return "#" + s.item; }).concat(SECTIONS.map(function (s) { return "#" + s[0]; })).concat("#P2_DIR").join(",")).on("change", render);
     // Desktop: the page is laid out at 1280px and scaled down to fit the preview
     function fit() {
         var stage = document.getElementById("wsd-stage"), desk = $v("P2_DEVICE") === "DESKTOP", s = Math.min(1, stage.clientWidth / 1280);
@@ -339,7 +368,29 @@ const designerLoad = `// Designer: every choice is a template option (a CSS clas
     $("#P2_DEVICE").on("change", fit);
     $(window).on("resize apexwindowresized", fit);
     fit();
-    function copy(text) { navigator.clipboard.writeText(text).then(function () { apex.message.showPageSuccess("Copied."); }); }
+    // copy to the clipboard; where the browser refuses, the text is shown selected so Ctrl+C still works
+    function copy(text) {
+        var done = function () { apex.message.showPageSuccess("Copied."); };
+        var manual = function () {
+            var ta = document.createElement("textarea"), ok = false;
+            ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:0;opacity:0"; document.body.appendChild(ta); ta.select();
+            try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            if (ok) { done(); return; }
+            $("#wsd-manual").remove();
+            $('<div id="wsd-manual" class="wsd-Manual"><p>Your browser did not allow copying. Select the text below and press Ctrl+C (Cmd+C on a Mac).</p><textarea readonly rows="6"></textarea></div>').insertAfter("#wsd-code").find("textarea").val(text).trigger("focus").trigger("select");
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, manual); } else { manual(); }
+    }
+    // Surprise Me: a random design, colour, typeface, header and corners (the switches stay as they are)
+    function pick(item) { var o = $("#" + item + " option"); return o.eq(Math.floor(Math.random() * o.length)).val(); }
+    $(document).on("click", ".js-wsd-random", function () {
+        ["P2_DESIGN", "P2_ACCENT", "P2_FONT", "P2_HEADER", "P2_CORNERS", "P2_FOOTER"].forEach(function (i) { apex.item(i).setValue(pick(i), null, true); });
+        apex.item("P2_SCHEME").setValue(Math.random() < .25 ? "ws-Scheme--dark" : "", null, true);
+        render();
+    });
+    $(document).on("click", ".js-wsd-reset", function () { reset(); render(); });
+    $(document).on("click", ".js-wsd-link", function () { copy(share); });
     $(document).on("click", ".js-wsd-copy", function () { copy($("#wsd-code").text()); });
     $(document).on("click", ".js-wsd-copysql", function () { copy($("#wsd-sql").text()); });
     $(document).on("click", ".js-wsd-open", function () { window.open(frame.getAttribute("src"), "_blank"); });
@@ -363,6 +414,8 @@ const designerCss = `.wsd-Stage { position: relative; display: flex; justify-con
 .wsd-H { display: block; margin: 1rem 0 .5rem; font-size: .875rem; font-weight: 700; }
 .wsd-Pick { width: 100%; max-width: 32rem; margin-bottom: .75rem; }
 .wsd-Off { opacity: .6; }
+.wsd-Manual { margin: .75rem 0; padding: .75rem; border-radius: 8px; background: rgba(234,88,12,.08); font-size: .8125rem; }
+.wsd-Manual textarea { width: 100%; margin-top: .5rem; font: .8125rem/1.5 monospace; }
 .wsd-Off[data-why]::after { content: attr(data-why); display: block; padding: 0 .75rem .25rem; font-size: .75rem; font-style: italic; }
 @media (max-width: 640px) { .wsd-Stage { height: 72vh; min-height: 460px; } }`;
 const sel = (name, label, seq, values, nul, def, region = "options") => `    pageItem ${name} (
@@ -528,6 +581,7 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
         }
     )`, "",
     sel("P2_SITE", "Website", 1, DESIGNER_SITES.map(st => `${lov(st.label)};${st.alias}`).join(","), false, "WEBSITE"), "",
+    sel("P2_DIR", "Direction", 3, "Left to right;ltr,Right to left;rtl", "As on the website", ""), "",
     ...PAGE_SELECTS.map((x, i) => sel(x.item, x.group, (i + 1) * 5 + 1, x.options.map(([c, n]) => `${lov(n)};${c}`).join(","), x.nul, "") + "\n"),
     ...PAGE_SWITCHES.map((x, i) => sw(x.item, x.label, 100 + i, PAGE.defaults.includes(x.css) ? "Y" : "N", i % 2 === 0) + "\n"),
     ...SECTIONS.map(([item, label, , o], i) => sel(item, label, (i + 1) * 10, o.map(([n, c]) => `${lov(n)};${c}`).join(","), "As on the page", "", "sections") + "\n"),
@@ -558,6 +612,69 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
         }
     )`, "",
     radio("P2_DEVICE", "Preview On", 10, "Desktop;DESKTOP,Tablet;TABLET,Phone;PHONE", "DESKTOP"), "",
+`    button surprise (
+        buttonName: SURPRISE
+        label: Surprise Me
+        layout {
+            sequence: 12
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-random
+            icon: fa-random
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )`, "",
+`    button reset-look (
+        buttonName: RESET_LOOK
+        label: Reset
+        layout {
+            sequence: 14
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-reset
+            icon: fa-undo
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )`, "",
+`    button copy-link (
+        buttonName: COPY_LINK
+        label: Copy Link
+        layout {
+            sequence: 16
+            region: @preview
+            slot: edit
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            cssClasses: js-wsd-link
+            icon: fa-link
+        }
+        behavior {
+            action: definedByDynamicAction
+        }
+    )`, "",
 `    button open-full (
         buttonName: OPEN_FULL
         label: Open Full Page
@@ -579,6 +696,8 @@ const designer = [pageHead(2, "Designer", "DESIGNER", "Website Studio - Designer
             action: definedByDynamicAction
         }
     )`, "", ")", ""].join("\n");
+if (Buffer.byteLength(designerLoad, "utf8") > 32000) { throw new Error("Designer JavaScript is " + Buffer.byteLength(designerLoad, "utf8") + " bytes - the limit is 32767"); }
+console.log("designer JavaScript", Buffer.byteLength(designerLoad, "utf8"), "bytes");
 write("p00002-designer.apx", designer);
 
 // ---------- 3 How to Use ----------
@@ -644,6 +763,7 @@ const howHtml = `<div class="wss-Doc">
   <li><strong>Contact form</strong>: page items and a button in a Modern Section region with the CSS class <code>ws-Contact</code>, and a process that stores or emails the message. Put a <em>Website - Contact Details</em> report in its Sub Regions.</li>
   <li><strong>Footer</strong>: regions with the <em>Blank with Attributes</em> template in the <em>Footer</em> slot (a <em>Website - Links</em> report with layout List makes a link column) and <em>Footer Bottom</em> for the copyright line.</li>
   <li><strong>Logo</strong>: a Static Content region in the <em>Logo</em> slot (or the application logo).</li>
+  <li><strong>Announcement</strong> (optional): a Static Content region in the <em>Announcement</em> slot, for example <code>&lt;p&gt;Early prices end on 31 December. &lt;a href="#tickets"&gt;Get tickets&lt;/a&gt;&lt;/p&gt;</code>. It shows as a bar above the menu; a visitor who closes it does not see it again during that visit.</li>
 </ol>
 
 <h3>4. The menu</h3>
@@ -720,16 +840,21 @@ ${reportRows}
 </table>
 
 <h3>8. Arabic and right to left</h3>
-<p>The templates use logical CSS, so a page in a right-to-left language mirrors itself: menu, sliders, arrows, drawers and the WhatsApp button. Run the application in Arabic (<strong>Globalization &gt; Application Primary Language</strong>, or a translated application) and APEX sets <code>dir="rtl"</code>; the Arabic clinic starter sets it from its <em>HTML Header</em> instead, so it works in an English application too. Pick the Typeface <em>Arabic</em> (IBM Plex Sans Arabic). Texts such as "Menu" and "Back to top" are built in for Arabic; for other languages create the text messages <code>WEBSITE_STUDIO.MENU</code>, <code>.BACK_TO_TOP</code>, <code>.ALL</code>, <code>.PREVIOUS</code>, <code>.NEXT</code>, <code>.SLIDE</code>, <code>.APPLY</code>, <code>.MORE</code>, <code>.CLOSE</code>, <code>.PLAY</code>, <code>.DARK_MODE</code> and <code>.MAP</code>.</p>
+<p>The templates use logical CSS, so a page in a right-to-left language mirrors itself: menu, sliders, arrows, drawers and the WhatsApp button. Run the application in Arabic (<strong>Globalization &gt; Application Primary Language</strong>, or a translated application) and APEX sets <code>dir="rtl"</code>; the Arabic clinic starter sets it from its <em>HTML Header</em> instead, so it works in an English application too. Pick one of the Arabic typefaces: <em>Arabic</em> (IBM Plex Sans Arabic), <em>Arabic - Cairo</em> or <em>Arabic - Kufi</em>. Texts such as "Menu" and "Back to top" are built in for Arabic; for other languages create the text messages <code>WEBSITE_STUDIO.MENU</code>, <code>.BACK_TO_TOP</code>, <code>.ALL</code>, <code>.PREVIOUS</code>, <code>.NEXT</code>, <code>.SLIDE</code>, <code>.APPLY</code>, <code>.MORE</code>, <code>.CLOSE</code>, <code>.PLAY</code>, <code>.DARK_MODE</code>, <code>.MAP</code>, <code>.PAUSE</code>, <code>.RESUME</code>, <code>.SEARCH</code>, <code>.NONE</code>, <code>.YES</code>, <code>.NO</code>, <code>.DAYS</code>, <code>.HOURS</code>, <code>.MINUTES</code>, <code>.SECONDS</code> and <code>.PHOTO</code>.</p>
 
-<h3>9. WhatsApp, light and dark, search engines, spam</h3>
+<h3>9. Countdown, top edges, WhatsApp, light and dark, search engines, spam</h3>
 <ul>
+  <li><strong>Countdown</strong>: <code>TARGET_DATE</code> is a date and time with its time zone, so every visitor counts down to the same moment: <code>to_char(event_start, 'YYYY-MM-DD"T"HH24:MI:SS') || '+03:00' as target_date</code>.</li>
+  <li><strong>Top Edge</strong> (Modern Section option): Slanted, Curved or Rounded Corners let a coloured section rise over the one before it. Use it on sections with a Background.</li>
+  <li><strong>Hide Header on Scroll</strong> and <strong>Reveal Style</strong> (page options): the sticky header slides away while the visitor reads down; sections can rise, fade, zoom, blur or slide into view.</li>
+  <li><strong>FAQ</strong>: the <em>Search Box</em> option adds a search field, and the questions are also given to search engines as structured data (FAQPage).</li>
+  <li><strong>The Designer</strong>: <em>Surprise Me</em> tries a random look, <em>Copy Link</em> gives you a link that opens the Designer with your look, and <em>Direction</em> shows any website right to left.</li>
   <li><strong>WhatsApp Button</strong> (page Template Option): a floating button that opens a chat. The number is the substitution string <code>WHATSAPP_NUMBER</code> in <strong>Shared Components &gt; Application Definition</strong>, in international format, digits only (<code>966500000000</code>). Without digits the button hides itself.</li>
   <li><strong>Light/Dark Toggle</strong>: a button in the header; the visitor's choice is remembered in the browser.</li>
   <li><strong>Search engines</strong>: put a short description and Open Graph tags in the page's <strong>HTML Header</strong> - every starter does: <code>&lt;meta name="description" content="..."&gt;</code>, <code>og:title</code>, <code>og:description</code>, <code>og:image</code>. For <code>og:image</code> use a full https address when you can: link previews in WhatsApp and LinkedIn need it. Give the page a clear <strong>Title</strong>, use <code>IMAGE_ALT</code>, and turn on <strong>Friendly URLs</strong> in the application's definition.</li>
   <li><strong>Speed</strong>: pictures load as they scroll into view; the starters preload the first hero picture with <code>&lt;link rel="preload" as="image" href="&#35;APP_FILES&#35;website-studio/img/..."&gt;</code> in the HTML Header. Keep photos under about 300 KB (1600 px wide for heroes, 800 px for cards).</li>
   <li><strong>Spam</strong>: the starters add a hidden field (<code>P11_WEBSITE</code>, CSS class <code>ws-Honeypot</code> on its column). People never see it; robots fill it in, and the process then sends nothing.</li>
-  <li><strong>Sending the message</strong>: the process <em>Send Message</em> has an <code>apex_mail.send</code> example in its comments. Email needs the instance's mail settings (ask your APEX administrator).</li>
+  <li><strong>Sending the message</strong>: the starters do not send or store anything yet, and their success message says so ("Demo: nothing was sent or stored yet"). The process <em>Send Message</em> has an <code>apex_mail.send</code> example in its comments; add your code, test that a message arrives, then remove the note from the process's Success Message. Email needs the instance's mail settings (ask your APEX administrator).</li>
 </ul>
 
 <h3>10. Good to know</h3>

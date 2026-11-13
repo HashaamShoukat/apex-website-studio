@@ -1,0 +1,67 @@
+classicReportTemplate ws-ticker (
+    name: Website - Ticker
+    templateClass: custom1
+    type: namedColumn
+    reportTemplate {
+        top: <div class="ws-R ws-Ticker #COMPONENT_CSS_CLASSES#" id="report_#DOM_ID#" data-region-id="#DOM_ID#">
+        bottom: </div>
+    }
+    rowTemplate1 {
+        template: <a class="ws-Tick" href="#LINK#"><span class="fa #ICON#" data-icon="" aria-hidden="true"></span><span class="ws-Tick-t">#TEXT#</span></a>
+    }
+    pagination {
+        template: <span class="t-Report-paginationText">#TEXT#</span>
+        nextPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT#</a>
+        previousPage: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS#</a>
+        nextSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--next">#PAGINATION_NEXT_SET#</a>
+        previousSet: <a href="#LINK#" class="t-Button t-Button--small t-Button--noUI t-Report-paginationLink t-Report-paginationLink--prev">#PAGINATION_PREVIOUS_SET#</a>
+    }
+    comments {
+        comments: Website - Ticker (Website Studio). A band of short texts that scrolls across the page without end: news, offers, key words. It stops while the pointer is over it. Columns (all optional): TEXT, ICON, LINK.
+    }
+
+    templateOption ticker-dark (
+        name: Dark
+        group: @report/wsr-ticker-style
+        sequence: 10
+        appearance {
+            cssClasses: ws-Ticker--dark
+        }
+    )
+
+    templateOption ticker-plain (
+        name: Plain
+        group: @report/wsr-ticker-style
+        sequence: 20
+        appearance {
+            cssClasses: ws-Ticker--plain
+        }
+    )
+
+    templateOption ticker-outline (
+        name: Large Outline Type
+        group: @report/wsr-ticker-style
+        sequence: 30
+        appearance {
+            cssClasses: ws-Ticker--outline
+        }
+    )
+
+    templateOption speed-slow (
+        name: Slow
+        group: @report/wsr-ticker-speed
+        sequence: 10
+        appearance {
+            cssClasses: ws-Speed--slow
+        }
+    )
+
+    templateOption speed-fast (
+        name: Fast
+        group: @report/wsr-ticker-speed
+        sequence: 20
+        appearance {
+            cssClasses: ws-Speed--fast
+        }
+    )
+)

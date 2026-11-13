@@ -165,6 +165,101 @@ page 15 (
         )
     )
 
+    region countdown (
+        name: Countdown
+        title: Countdown
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```
+                select '2027-03-09T08:30:00+03:00' as target_date,
+                       'Doors open in' as title,
+                       '9 March 2027, 8:30 in the morning, Riyadh time.' as text,
+                       'The summit has started. Welcome!' as done_text,
+                       'Get tickets' as button_label,
+                       '#tickets' as button_link,
+                       1 as sort_order
+                  from dual
+                order by sort_order
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @modern-section
+            templateOptions: [
+                ws-Pad--tight
+                ws-Head--hidden
+            ]
+        }
+        advanced {
+            htmlDomId: countdown
+        }
+        reportLayout {
+            numberOfRowsType: staticValue
+            numberOfRows: 100
+        }
+        componentAppearance {
+            templateType: theme
+            template: @ws-countdown
+            templateOptions: [
+                #DEFAULT#
+            ]
+        }
+        messages {
+            whenNoDataFound: Nothing to show yet.
+        }
+
+        column TARGET_DATE (
+            layout {
+                sequence: 10
+            }
+        )
+
+        column TITLE (
+            layout {
+                sequence: 20
+            }
+        )
+
+        column TEXT (
+            layout {
+                sequence: 30
+            }
+        )
+
+        column DONE_TEXT (
+            layout {
+                sequence: 40
+            }
+        )
+
+        column BUTTON_LABEL (
+            layout {
+                sequence: 50
+            }
+        )
+
+        column BUTTON_LINK (
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SORT_ORDER (
+            layout {
+                sequence: 70
+            }
+            sorting {
+                defaultSequence: 1
+            }
+        )
+    )
+
     region numbers (
         name: The summit in numbers
         title: The summit in numbers
@@ -197,7 +292,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 30
+            sequence: 40
             slot: body
         }
         appearance {
@@ -314,7 +409,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 40
+            sequence: 50
             slot: body
         }
         appearance {
@@ -447,7 +542,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 50
+            sequence: 60
             slot: body
         }
         appearance {
@@ -530,7 +625,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 60
+            sequence: 70
             slot: body
         }
         appearance {
@@ -640,7 +735,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 70
+            sequence: 80
             slot: body
         }
         appearance {
@@ -761,7 +856,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 80
+            sequence: 90
             slot: body
         }
         appearance {
@@ -862,7 +957,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 90
+            sequence: 100
             slot: body
         }
         appearance {
@@ -974,7 +1069,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 100
+            sequence: 110
             slot: body
         }
         appearance {
@@ -1048,7 +1143,7 @@ page 15 (
                 ```
         }
         layout {
-            sequence: 110
+            sequence: 120
             slot: body
         }
         appearance {
@@ -1102,7 +1197,7 @@ page 15 (
         title: Questions about *tickets*?
         type: staticContent
         layout {
-            sequence: 120
+            sequence: 130
             slot: body
         }
         appearance {
@@ -1238,6 +1333,25 @@ page 15 (
                 ws-Menu--cta
                 ws-Menu--center
             ]
+        }
+    )
+
+    region announcement (
+        name: Announcement
+        type: staticContent
+        source {
+            htmlCode: <p>Early prices end on 31 December. <a href="#tickets">Get tickets</a></p>
+        }
+        layout {
+            sequence: 10
+            slot: announcement
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: #DEFAULT#
+        }
+        advanced {
+            htmlDomId: announcement
         }
     )
 
@@ -1691,7 +1805,9 @@ page 15 (
                 ```
                 -- P15_WEBSITE is a hidden honeypot field: people leave it empty, spam robots fill it in.
                 if :P15_WEBSITE is null then
-                    -- The starter only says thank you. To receive the message by email, use for example:
+                    -- The starter only says thank you: NOTHING IS SENT OR STORED until you add your own code here.
+                    -- When you do, remove the "(Demo: ...)" note from this process's Success Message.
+                    -- To receive the message by email, use for example:
                     -- apex_mail.send(p_to   => 'hello@example.com',
                     --                p_from => 'noreply@example.com',
                     --                p_subj => 'Website message from ' || :P15_NAME,
@@ -1706,7 +1822,7 @@ page 15 (
             point: processing
         }
         successMessage {
-            successMessage: Thanks for your message. We will reply within one working day.
+            successMessage: Thanks for your message. We will reply within one working day. (Demo: nothing was sent or stored yet.)
         }
         serverSideCondition {
             whenButtonPressed: @send
